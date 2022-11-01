@@ -43,10 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
     String key = "E48348231D7FB1DB9A8AF0B03A9668CC";
     String data, jsonparsingData;
-    TextView text, title_text, description_text;
+    TextView text, title_text, definition_text;
     EditText search_text;
     XmlPullParser xpp;
     String str;
+    String word, definition;
 
     ArrayList stringArr = new ArrayList<>();
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         text = (TextView) findViewById(R.id.apitext);
         title_text = (TextView)findViewById(R.id.titletext);
-        description_text = (TextView)findViewById(R.id.descriptiontext);
+        definition_text = (TextView)findViewById(R.id.definitiontext);
         search_text = (EditText)findViewById(R.id.searchText);
 
 
@@ -73,14 +74,8 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             data=getJsonData();
                             Log.e("data", data);
-                            title_text.setText(str);
-
-
                             getJsonParsingData(data);
-                            text.setText(stringArr.toString());
-                            //Log.e("jsonparsingData", jsonparsingData);
-                            //Log.e("jsonparsingData", "jsonparsingData");
-
+                            //text.setText(data);
 
 
                         } catch (UnsupportedEncodingException e) {
@@ -92,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                text.setText(data); //여기서 실행 안됨
+                                search_text.setText(null);
+                                //text.setText(data);
+                                title_text.setText(word); //
+                                definition_text.setText(definition); //
 
                             }
                         });
@@ -152,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         // 대괄호 [] = jsonArray / 중괄호 {} jsonObject
         Log.e("F:getJsonParsingData", "getJsonParsingData");
         String getdata = data;
-        String word, definition;
+
 
         JSONObject jsonObject = new JSONObject(getdata);
         Log.e("jsonObject", jsonObject.toString());
@@ -166,33 +164,52 @@ public class MainActivity extends AppCompatActivity {
 
         JSONArray item = new JSONArray(item3);
 
-        for (int i =0; i < item.length(); i++){
+        for (int i =0; i < 1; i++){
             JSONObject subJsonObject = item.getJSONObject(i);
             word = subJsonObject.getString("word");
             Log.e("word", word);
-
             stringArr.add(word);
-
-
             String sense3 = subJsonObject.getString("sense");
-            Log.e("sense3", sense3);
-
+            //Log.e("sense3", sense3);
             JSONArray sense = new JSONArray(sense3);
 
-            for (int j = 0; j<sense.length(); j++){
+            for (int j = 0; j<1; j++){
                 JSONObject subJsonObject2 = sense.getJSONObject(j);
                 definition = subJsonObject2.getString("definition");
                 Log.e("definition", definition);
                 stringArr.add(definition);
             }
 
-
         }
+
+// 전체 값 출력
+//        for (int i =0; i < item.length(); i++){
+//            JSONObject subJsonObject = item.getJSONObject(i);
+//            word = subJsonObject.getString("word");
+//            Log.e("word", word);
+//
+//            stringArr.add(word);
+//
+//
+//            String sense3 = subJsonObject.getString("sense");
+//            //Log.e("sense3", sense3);
+//
+//            JSONArray sense = new JSONArray(sense3);
+//
+//            for (int j = 0; j<sense.length(); j++){
+//                JSONObject subJsonObject2 = sense.getJSONObject(j);
+//                definition = subJsonObject2.getString("definition");
+//                Log.e("definition", definition);
+//                stringArr.add(definition);
+//            }
+//
+//        }
 
         for (int k = 0; k < stringArr.size(); k++){
             String kk = (String) stringArr.get(k);
             Log.e("stringArr",kk);
         }
+
 
 
         return getdata.toString();
