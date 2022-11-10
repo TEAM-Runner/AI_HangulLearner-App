@@ -1,8 +1,10 @@
 package com.example.code221029.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -49,7 +51,10 @@ class CameraActivity : AppCompatActivity() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+
+
     }
+
 
     private fun takePhoto() {
         // Get a stable reference of the modifiable image capture use case
@@ -179,4 +184,5 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 }
+
 
