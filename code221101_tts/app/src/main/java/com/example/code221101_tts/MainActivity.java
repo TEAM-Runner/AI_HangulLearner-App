@@ -143,11 +143,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         CharSequence text = input_text.getText();
         tts.setPitch((float)1.1); // 음성 톤 높이 지정
         tts.setSpeechRate((float)0.5); // 음성 속도 지정
+        Log.e("tts","tts");
 
         // 첫 번째 매개변수: 음성 출력을 할 텍스트
         // 두 번째 매개변수: 1. TextToSpeech.QUEUE_FLUSH - 진행중인 음성 출력을 끊고 이번 TTS의 음성 출력
         //                 2. TextToSpeech.QUEUE_ADD - 진행중인 음성 출력이 끝난 후에 이번 TTS의 음성 출력
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "id1");
+        Log.e("tts.speak","tts.speak");
+
     }
 
     @Override

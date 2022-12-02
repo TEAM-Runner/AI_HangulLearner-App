@@ -14,8 +14,8 @@ import com.google.mlkit.vision.text.Text;
 public class TextGraphic extends GraphicOverlay.Graphic {
 
     private static final String TAG = "TextGraphic";
-    private static final int TEXT_COLOR = Color.RED;
-    private static final float TEXT_SIZE = 54.0f;
+    private static final int TEXT_COLOR = Color.BLUE;
+    private static final float TEXT_SIZE = 0.0f; //54.0f
     private static final float STROKE_WIDTH = 4.0f;
 
     private final Paint rectPaint;

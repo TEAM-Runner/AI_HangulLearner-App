@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tts_dic_choice</title>
+    <style>
+        .flutterText_div {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        // 글자인식한 문장
+        //const text = "저 멀리 깊고 푸른 바다 속에, 물고기 한 마리가 살고 있었습니다. 그 물고기는 보통 물고기가 아니라 온 바다에서 가장 아름다운 물고기였습니다. 파랑, 초록, 자줏빛 바늘 사이사이에 반짝반짝 빛나는 은빛 비늘이 박혀 있었거든요. 다른 물고기들도 그 물고기의 아름다운 모습에 감탄했습니다. 물고기들은 그 물고기를 무지개 물고기라고 불렀습니다. 물고기들은 무지개 물고기에게 말을 붙였습니다. \"얘, 무지개 물고기야. 이리 와서 우리랑 같이 놀자!\" 하지만 무지개 물고기는 한 마디 대꾸도 없이 잘난 체하면서 획 지나가 버렸습니다. 예쁜 비늘을 반짝이면서 말이예요."
+
+        const text = "저 멀리 깊고 푸른 바다 속에, 물고기 한 마리가 살고 있었습니다. 그 물고기는 보통 물고기가 아니라 온 바다에서 가장 아름다운 물고기였습니다. 파랑, 초록, 자줏빛 바늘 사이사이에 반짝반짝 빛나는 은빛 비늘이 박혀 있었거든요. 다른 물고기들도 그 물고기의 아름다운 모습에 감탄했습니다. 물고기들은 그 물고기를 무지개 물고기라고 불렀습니다. 물고기들은 무지개 물고기에게 말을 붙였습니다."
+
+        // text를 한 문장씩 끊어서 출력하는 함수
+        $(document).ready(function () {
+            var textArr = text.split(".");
+            //document.getElementById('message').value = ''; //textarea 값 저장후 삭제
+
+            if (textArr != "") {
+                for (var i = 0; i < textArr.length - 1; i++) {
+                    textArr.join("\n");
+                    //document.body.writeln(textArr[i]);
+                    //var button = $("<input>").attr("type", "text").attr("id", "buttonID").val(textArr[i]);
+                    $("#flutterText_div").append(textArr[i]);
+                    $("#flutterText_div").append('<br>');
+
+                }
+                textArr.length = 0;
+            }
+
+        });
+
+        // 사전 기능 버튼 클릭: word_button copy.html로 text 전달하는 함수
+        $(document).on("click", "#word_button", function () { // 사전 기능 버튼을 클릭하면
+            var buttonVal = text; // text 값이 buttonVal로 들어감
+            buttonValen = encodeURIComponent(buttonVal); // URL로 변환
+            window.open("word_button copy.html?buttonVal="+buttonVal);
+        }); 
+
+        // 음성 출력 버튼 클릭: tts.html로 text 전달하는 함수
+        $(document).on("click", "#tts", function () { // 사전 기능 버튼을 클릭하면
+            var buttonVal = text; // text 값이 buttonVal로 들어감
+            buttonValen = encodeURIComponent(buttonVal); // URL로 변환
+            window.open("tts.html?buttonVal="+buttonVal);
+        });
+
+    </script>
+    <div id=flutterText_div></div>
+    <button id="word_button">사전</button>
+    <button id="tts">음성</button>
+
+
+
+</body>
+
+</html>

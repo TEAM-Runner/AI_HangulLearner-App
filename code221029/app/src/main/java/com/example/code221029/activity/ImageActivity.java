@@ -45,6 +45,8 @@ import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions;
 
+
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Comparator;
@@ -228,7 +230,7 @@ public class ImageActivity extends AppCompatActivity implements AdapterView.OnIt
                 mSelectedImage = getBitmapFromAsset(this, "korean_text_sample.jpg");
                 break;
             case 2:
-                mSelectedImage=getBitmapFromAsset(this, "camera_temp_sample.jpg");
+                mSelectedImage=getBitmapFromAsset(this, "test_sample.png");
                 break;
         }
         if (mSelectedImage != null) {
