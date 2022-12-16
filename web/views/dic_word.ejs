@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tts</title>
+    <link rel="stylesheet" href="/bootstrap.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-custom-2">
+        <a class="navbar-brand" href="/">I HANGUL</a>
+    </nav>
+
+    <button class= "customBtn-dicword-word"> <%= word %> </button>
+
+    <div class="customDiv-meanButtonBox">
+<!--    <%= i+1 %>-->
+        <% if(meanArray.length < 3) {%>
+            <% for(var i = 0; i < meanArray.length; i++) {%>
+                <button class= "customBtn-dicword-mean" id="meanButtonID" value="<%= meanArray[i] %>"> <%- meanArray[i] %> </button>
+            <% } %>
+        <% } else {%>
+            <% for(var i = 0; i < 3; i++) {%>
+                <button class= "customBtn-dicword-mean" id="meanButtonID" value="<%= meanArray[i] %>"> <%- meanArray[i] %> </button>
+            <% } %>
+        <% } %>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        //TTS start
+        var TTStext = "안녕하십니까";
+
+        $(document).on("click", "#meanButtonID", function () {
+            TTStext = $(this).attr('value');
+            //alert(TTStext);
+            speak(TTStext, {
+                rate: 1,
+                pitch: 1.2,
+                lang: "ko-KR"
+            })
+        })
+
+        function speak(text, opt_prop) {
+            if (typeof SpeechSynthesisUtterance === "undefined" || typeof window.speechSynthesis === "undefined") {
+                alert("이 브라우저는 음성 합성을 지원하지 않습니다.")
+                return
+            }
+
+            window.speechSynthesis.cancel() // 현재 읽고있다면 초기화
+
+            const prop = opt_prop || {}
+
+            const speechMsg = new SpeechSynthesisUtterance()
+            speechMsg.rate = prop.rate || 3 // 속도: 0.1 ~ 10
+            speechMsg.pitch = prop.pitch || 1.3 // 음높이: 0 ~ 2
+
+            speechMsg.lang = prop.lang || "ko-KR"
+            speechMsg.text = text
+
+            // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
+            window.speechSynthesis.speak(speechMsg)
+        }
+
+        const btnRead = document.getElementById("btn-read")
+        btnRead.addEventListener("click", e => {
+            speak(TTStext, {
+                rate: 1,
+                pitch: 1.2,
+                lang: "ko-KR"
+            })
+        })
+
+    </script>
+
+
+
+
+
+
+
+</body>
+</html>
+
