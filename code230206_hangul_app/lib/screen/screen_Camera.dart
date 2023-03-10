@@ -108,6 +108,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 
   Future<void> _scanImage() async{
+
+    // final String testtext = '저 멀리 깊고 푸른 바다 속에, 물고기 한 마리가 살고 있었습니다. 그 물고기는 보통 물고기가 아니라 온 바다에서 가장 아름다운 물고기였습니다. 파랑, 초록, 자줏빛 바늘 사이사이에 반짝반짝 빛나는 은빛 비늘이 박혀 있었거든요. 다른 물고기들도 그 물고기의 아름다운 모습에 감탄했습니다. 물고기들은 그 물고기를 무지개 물고기라고 불렀습니다. 물고기들은 무지개 물고기에게 말을 붙였습니다.';
+    // final String testtext = '이 책에서는 아이들이 일상생활 속에서 어떻게 친구를 사귀고, 친구와 무엇을 할 수 있는지 알려 준다. 또 친구에게 내 마음을 잘 전달하고 친구의 마음을 현명하게 이해하는 법을 여러 가지 상황 예시를 통해 살펴본다. 어떤 행동이 친구를 속상하게 하는지, 친구와 다퉜을 때는 어떻게 해야 하는지, 좋은 친구가 되려면 무엇을 해야 하는지 등 친구 관계에서 감정을 잘 표현하고 마음을 이해하는 방법을 알려 준다.';
+
     if (_controller == null) return;
 
     final navigator = Navigator.of(context);
@@ -118,8 +122,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       final recognizedText = await textRecogizer.processImage(inputImage);
 
       await navigator.push(
+          // 기본 코드
           MaterialPageRoute(builder: (context) => ResultScreen(text: recognizedText.text))
-      );
+
+          // // 테스트용 코드
+          // MaterialPageRoute(builder: (context) => ResultScreen(text: testtext))
+
+    );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));
     }

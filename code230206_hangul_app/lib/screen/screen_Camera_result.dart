@@ -8,9 +8,25 @@ import 'package:flutter/material.dart';
 import 'screen_dic.dart';
 import 'screen_tts.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget  {
   final String text;
-  const ResultScreen({super.key, required this.text});
+  const ResultScreen({Key? key, required this.text}) : super(key: key);
+
+  @override
+  _ResultScreenState  createState() => _ResultScreenState ();
+}
+
+class _ResultScreenState  extends State<ResultScreen> {
+  late TextEditingController _textFieldController;
+  late String _text;
+
+  @override
+  void initState() {
+    super.initState();
+    // _textFieldController.text = widget.text;
+    _textFieldController = TextEditingController(text: "${widget.text}");
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +38,13 @@ class ResultScreen extends StatelessWidget {
     double width = screenSize.width;
     double height = screenSize.height;
 
+    // TextEditingController _textFieldController = TextEditingController();
+
+
     //임시 전달 텍스트
-    final String testtext = '저 멀리 깊고 푸른 바다 속에, 물고기 한 마리가 살고 있었습니다. 그 물고기는 보통 물고기가 아니라 온 바다에서 가장 아름다운 물고기였습니다. 파랑, 초록, 자줏빛 바늘 사이사이에 반짝반짝 빛나는 은빛 비늘이 박혀 있었거든요. 다른 물고기들도 그 물고기의 아름다운 모습에 감탄했습니다. 물고기들은 그 물고기를 무지개 물고기라고 불렀습니다. 물고기들은 무지개 물고기에게 말을 붙였습니다.';
+    // final String testtext = '저 멀리 깊고 푸른 바다 속에, 물고기 한 마리가 살고 있었습니다. 그 물고기는 보통 물고기가 아니라 온 바다에서 가장 아름다운 물고기였습니다. 파랑, 초록, 자줏빛 바늘 사이사이에 반짝반짝 빛나는 은빛 비늘이 박혀 있었거든요. 다른 물고기들도 그 물고기의 아름다운 모습에 감탄했습니다. 물고기들은 그 물고기를 무지개 물고기라고 불렀습니다. 물고기들은 무지개 물고기에게 말을 붙였습니다.';
+    // _textFieldController = TextEditingController(text: _text);
+
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -48,15 +69,25 @@ class ResultScreen extends StatelessWidget {
               padding: EdgeInsets.only(right: width*0.04, left: width*0.04), //const EdgeInsets.all(width*0.1),
               child: Column(
                 children: <Widget>[
-                  Text(text, // 기본 코드
-                    style: TextStyle(fontSize: width * 0.045),
+                  Padding(
+                    padding: EdgeInsets.all(width * 0.048),
                   ),
-
-                  // 테스트용 코드
-                  // flutter 에뮬레이터 카메라에서 글자를 촬영할 수 없어서 테스트용 코드 전송
-                  // Text(testtext,
-                  //   style: TextStyle(fontSize: width * 0.045),
-                  // ),
+                  SizedBox(
+                    height: 200, // set the height of the field
+                    child: TextFormField(
+                      controller: _textFieldController,
+                      // initialValue: widget.text,
+                      decoration: InputDecoration(
+                        labelText: 'Label text',
+                        border: OutlineInputBorder(),
+                      ),
+                      style: TextStyle(fontSize: width * 0.045),
+                      maxLines: null, // allow the field to expand vertically
+                      onChanged: (text) {
+                        // handle the text change here
+                      },
+                    ),
+                  ),
 
                   Padding(
                     padding: EdgeInsets.all(width * 0.048),
@@ -76,8 +107,7 @@ class ResultScreen extends StatelessWidget {
                               Navigator.pushNamed(
                                   context,
                                   DicScreen.DicScreenRouteName,
-                                  arguments: DicScreen(DicScreenText: text)); //기본 코드
-                              // arguments: DicScreen(DicScreenText: testtext)); //테스트용 코드
+                                  arguments: DicScreen(DicScreenText: _textFieldController.text.trim()));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.deepPurple,
@@ -104,8 +134,7 @@ class ResultScreen extends StatelessWidget {
                               Navigator.pushNamed(
                                   context,
                                   TTSScreen.TTSScreenRouteName,
-                                  arguments: TTSScreen(TTSScreenText: text)); // 기본 코드
-                              // arguments: TTSScreen(TTSScreenText: testtext)); // 테스트용 코드
+                                  arguments: TTSScreen(TTSScreenText: _textFieldController.text.trim()));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.deepPurple,
@@ -118,6 +147,8 @@ class ResultScreen extends StatelessWidget {
               ),
             ),
           ),
+
+
         )
     );
   }

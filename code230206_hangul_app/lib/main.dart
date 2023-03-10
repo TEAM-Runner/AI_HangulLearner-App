@@ -11,29 +11,57 @@
 
 // (2) 학습 게임 기능 -> 아직 X
 
-
-import 'package:code230206_hangul_app/screen/screen_tts.dart';
+import 'package:code230206_hangul_app/screen/snackBarWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+import 'package:flutter/gestures.dart';
+
+import 'screen/snackBarWidget.dart';
 import 'screen/screen_home.dart';
-import 'package:camera/camera.dart';
 import 'screen/screen_Camera.dart';
 import 'screen/screen_dic.dart';
-import 'screen/screen_tts.dart';
 import 'screen/screen_dic_open.dart';
+import 'screen/screen_tts.dart';
+import 'screen/snackBarWidget.dart';
+import 'screen/screen_auth_authPage.dart';
+import 'screen/screen_auth_Login.dart';
+import 'screen/screen_auth_SignUp.dart';
 
-void main() {
+import 'package:path/path.dart' as Path;
+import 'package:camera/camera.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   String DicScreenText = '';
   String TTSScreenText = '';
   String DicOpenScreenText= '';
   runApp(MaterialApp(
+    scaffoldMessengerKey: SnackBarWidget.messengerKey,
+    navigatorKey: navigatorKey,
+    debugShowCheckedModeBanner: false,
+
+    // login, sign up 화면 prefix icon color 위해 추가
+    theme: ThemeData().copyWith(
+      colorScheme: ThemeData().colorScheme.copyWith(
+        primary: Colors.deepPurple,
+      ),
+    ),
     title: 'GP App',
     initialRoute: '/',
     routes: {
-      '/':(context) => HomeScreen(),
+      // '/':(context) => HomeScreen(),
+      '/':(context) => LoginScreen(),
+
       '/DicScreen':(context) => DicScreen(DicScreenText: DicScreenText),
       '/TTSScreen':(context) => TTSScreen(TTSScreenText: TTSScreenText),
       '/DicOpenScreen':(context) => DicOpenScreen(DicOpenScreenText: DicOpenScreenText),
     },
   ));
 }
+
+
