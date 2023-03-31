@@ -38,46 +38,47 @@ class _DicScreen extends State<DicScreen> {
 
     return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            toolbarHeight: width*0.15,
-            title: Text("I HANGUL"),
-            centerTitle: true,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
-                  gradient: LinearGradient(
-                      colors: [Colors.deepPurpleAccent,Colors.deepPurple],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter
-                  )
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+              toolbarHeight: width*0.15,
+              title: Text("I HANGUL"),
+              centerTitle: true,
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
+                    gradient: LinearGradient(
+                        colors: [Colors.deepPurpleAccent,Colors.deepPurple],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter
+                    )
+                ),
               ),
-            ),
 
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(width * 0.024),
-                ),
-                Text(
-                  '궁금한 단어를 클릭하세요',
-                  style: TextStyle(
-                    fontSize: width * 0.045,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(width * 0.024),
-                ),
-                Wrap(
-                    children: _buildButtonsWithWords(width, height, testSentence, testSentenceArray, buttonsList)
-                ),
-              ],
             ),
-          )
+            body: SingleChildScrollView(
+              padding: EdgeInsets.all(width * 0.024),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(width * 0.024),
+                  ),
+                  Text(
+                    '궁금한 단어를 클릭하세요',
+                    style: TextStyle(
+                      fontSize: width * 0.045,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(width * 0.024),
+                  ),
+                  Wrap(
+                      children: _buildButtonsWithWords(width, height, testSentence, testSentenceArray, buttonsList)
+                  ),
+                ],
+              ),
+            )
         )
     );
 

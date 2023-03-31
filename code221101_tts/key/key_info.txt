@@ -1,2 +1,0 @@
-키: tts_test
-비밀번호: qwerty

@@ -65,7 +65,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         toolbarHeight: width * 0.15,
-        title: const Text('Starred Words'),
+        title: const Text("I HANGUL"),
         centerTitle: true,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -84,56 +84,56 @@ class _VocabularyListScreenState extends State<VocabularyListScreen> {
       body: Padding(
         padding: EdgeInsets.all(width * 0.03),
         child: starredWords.isEmpty
-            ? Center(child: const Text('No starred words.'))
+            ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
             : ListView.builder(
-                itemCount: starredWords.length,
-                itemBuilder: (_, index) {
-                  final String word = starredWords[index]['word'];
-                  return Card(
-                    child: ListTile(
-                      title: Text(
-                        starredWords[index]['word'],
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      subtitle: Text(
-                        starredWords[index]['meaning'],
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.star),
-                        color: Colors.orangeAccent,
-                        // onPressed: () {_toggleWordStarred(word);},
-                        onPressed: () async {
-                          showDialog(
-                              context: context,
-                              barrierDismissible: true, // 바깥 터치시 close
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  content: Text('단어를 삭제하시겠습니까?'),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('아니요'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: const Text('네'),
-                                      onPressed: () {
-                                        _toggleWordStarred(word);
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              }
-                          );
-                        }
-                      ),
-                    ),
-                  );
-                },
+          itemCount: starredWords.length,
+          itemBuilder: (_, index) {
+            final String word = starredWords[index]['word'];
+            return Card(
+              child: ListTile(
+                title: Text(
+                  starredWords[index]['word'],
+                  style: const TextStyle(fontSize: 20),
+                ),
+                subtitle: Text(
+                  starredWords[index]['meaning'],
+                  style: const TextStyle(fontSize: 20),
+                ),
+                trailing: IconButton(
+                    icon: Icon(Icons.star),
+                    color: Colors.orangeAccent,
+                    // onPressed: () {_toggleWordStarred(word);},
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: true, // 바깥 터치시 close
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Text('단어를 삭제하시겠습니까?'),
+                              actions: [
+                                TextButton(
+                                  child: const Text('아니요'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('네'),
+                                  onPressed: () {
+                                    _toggleWordStarred(word);
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          }
+                      );
+                    }
+                ),
               ),
+            );
+          },
+        ),
       ),
     );
   }

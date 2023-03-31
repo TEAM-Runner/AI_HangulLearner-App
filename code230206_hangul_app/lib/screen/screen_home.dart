@@ -12,6 +12,10 @@ import 'screen_Camera.dart';
 import 'dart:ui';
 import 'screen_profile.dart';
 import 'screen_vacabularyList.dart';
+import 'screen_game.dart';
+import 'screen_game_result.dart';
+import 'screen_game_wrongWordList.dart';
+import 'package:tuple/tuple.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -31,77 +35,77 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          toolbarHeight: width*0.15,
-          actions: <Widget>[
-            new IconButton(
-              icon: new Icon(Icons.person_outline_sharp),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
-              },
-            ),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            toolbarHeight: width*0.15,
+            actions: <Widget>[
+              new IconButton(
+                icon: new Icon(Icons.person_outline_sharp),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+                },
+              ),
 
-          ],
-          title: Text("I HANGUL"),
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
-                gradient: LinearGradient(
-                    colors: [Colors.deepPurpleAccent,Colors.deepPurple],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter
-                )
-            ),
-          ),
-
-        ),
-
-        body: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20.0),
-              height: height*0.33,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.all(10),
-                  ),
-                  makeButton('카메라', 1 , '궁금한 부분을', '촬영하세요', 1),
-                  const Padding(
-                    padding: EdgeInsets.all(10),
-                  ),
-                  makeButton('학습게임', 2 , '학습게임으로 단어를', '공부하세요', 2),
-                  const Padding(
-                    padding: EdgeInsets.all(10),
-                  ),
-
-                  // 단어장 기능은 학습게임용 DB를 이용하면 쉽게 만들 수 있을 것 같아 넣어둠
-                  // 프로젝트 진행 속도에 따라 생략 가능
-                  makeButton('(임시)단어장', 3 , '지금까지 공부한', '단어를 복습하세요', 3),
-                  const Padding(
-                    padding: EdgeInsets.all(10),
-                  ),
-                ],
+            ],
+            title: Text("I HANGUL"),
+            centerTitle: true,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
+                  gradient: LinearGradient(
+                      colors: [Colors.deepPurpleAccent,Colors.deepPurple],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter
+                  )
               ),
             ),
 
-            // ElevatedButton(
-            //   onPressed: () {
-            //     // FirebaseAuth.instance.signOut(); // 임시 로그아웃
-            //     Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
-            // },
-            //   style: ElevatedButton.styleFrom(
-            //       padding: EdgeInsets.all(10),
-            //       backgroundColor: Colors.deepPurple),
-            //   child: Text('(임시 버튼) 회원 정보 수정', style: TextStyle(fontSize: width * 0.036),),
-            // ),
-          ],
-        )
+          ),
+
+          body: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20.0),
+                height: height*0.33,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.all(10),
+                    ),
+                    makeButton('카메라', 1 , '궁금한 부분을', '촬영하세요', 1),
+                    const Padding(
+                      padding: EdgeInsets.all(10),
+                    ),
+                    makeButton('학습게임', 2 , '학습게임으로 단어를', '공부하세요', 2),
+                    const Padding(
+                      padding: EdgeInsets.all(10),
+                    ),
+
+                    // 단어장 기능은 학습게임용 DB를 이용하면 쉽게 만들 수 있을 것 같아 넣어둠
+                    // 프로젝트 진행 속도에 따라 생략 가능
+                    makeButton('단어장', 3 , '지금까지 공부한', '단어를 복습하세요', 3),
+                    const Padding(
+                      padding: EdgeInsets.all(10),
+                    ),
+                  ],
+                ),
+              ),
+
+              // ElevatedButton(
+              //   onPressed: () {
+              //     // FirebaseAuth.instance.signOut(); // 임시 로그아웃
+              //     Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+              // },
+              //   style: ElevatedButton.styleFrom(
+              //       padding: EdgeInsets.all(10),
+              //       backgroundColor: Colors.deepPurple),
+              //   child: Text('(임시 버튼) 회원 정보 수정', style: TextStyle(fontSize: width * 0.036),),
+              // ),
+            ],
+          )
       ),
     );
   }
@@ -128,6 +132,25 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
           if (onPressNumber == 2){ //학습게임 버튼 클릭
+            // screen_game.dart로 연결
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => ConsonantGame()));
+
+
+            // (임시) screen_game_result.dart로 연결
+            List<Tuple3<String, String, bool>> gameResultTestList = [
+              Tuple3('word1', 'mean1', true),
+              Tuple3('word2', 'mean2', false),
+              Tuple3('word3', 'mean3', true),
+              Tuple3('word4', 'mean4', false),
+              Tuple3('word5', 'mean5', true),
+              Tuple3('word6', 'mean6', true),
+              Tuple3('word7', 'mean7', true),
+              Tuple3('word8', 'mean8', true),
+              Tuple3('word9', 'mean9', true),
+              Tuple3('word10', 'mean10', true),
+            ];
+            Navigator.pushNamed(context, GameResultScreen.GameResultScreenRouteName, arguments: GameResultScreen(GameResultScreenText: gameResultTestList));
+
           }
           if (onPressNumber == 3){//(임시)단어장 버튼 클릭
             Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyListScreen()));

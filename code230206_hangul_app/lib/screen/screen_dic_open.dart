@@ -10,6 +10,8 @@ import 'package:html/parser.dart' as parser;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+
 
 
 //Web scraping 참고: https://github.com/muath-gh/flutter_web_scraping
@@ -52,7 +54,7 @@ class _DicOpenScreen extends State<DicOpenScreen> {
   }
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
 
     // 스크린 사이즈 정의
     Size screenSize = MediaQuery.of(context).size;
@@ -113,7 +115,7 @@ class _DicOpenScreen extends State<DicOpenScreen> {
                           itemBuilder: (_, index) {
                             String word = dicWords[index].txt_emph;
                             return FutureBuilder<DocumentSnapshot>(
-                              future: wordsRef.doc(word).get(),
+                                future: wordsRef.doc(word).get(),
                                 builder: (context, snapshot){
                                   if (snapshot.hasData && snapshot.data!.exists) {
                                     _starred[index] = true; // set _starred[index] to true if the word exists in Firestore
@@ -202,22 +204,141 @@ class _DicOpenScreen extends State<DicOpenScreen> {
     final word = txt_emph;
     await wordsRef.doc(word).delete();
   }
-  //
-  // Future<void> checkWordExists(String word, int index) async {
-  //   final docSnapshot = await FirebaseFirestore.instance.collection('words').doc(word).get();
-  //
-  //   if (docSnapshot.exists) {
-  //     setState(() {
-  //       _starred[index] = true;
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _starred[index] = false;
-  //     });
-  //   }
-  // }
+//
+// Future<void> checkWordExists(String word, int index) async {
+//   final docSnapshot = await FirebaseFirestore.instance.collection('words').doc(word).get();
+//
+//   if (docSnapshot.exists) {
+//     setState(() {
+//       _starred[index] = true;
+//     });
+//   } else {
+//     setState(() {
+//       _starred[index] = false;
+//     });
+//   }
+// }
 
 }
+
+
+// 뜻이 하나만 있는 경우: 리다이렉트 되는 새 url에서 supid, wordid를 구해 finalUrl을 정의해야 함
+class WebScraper {
+  final String searchWord;
+
+  WebScraper(this.searchWord);
+
+  Future<List<dicWord>> extractData() async {
+    final initialUrl = "https://dic.daum.net/search.do?q=${Uri.encodeComponent(searchWord)}&dic=kor";
+    var response = await http.get(Uri.parse(initialUrl));
+
+    final RegExp expSupid = RegExp('supid=(.*?)[\'"]');
+    final RegExp expWordid = RegExp('wordid=(.*?)[\'"]');
+
+    final matchSupid = expSupid.firstMatch(response.body);
+    final supid = matchSupid?.group(1);
+    final matchWordid = expWordid.firstMatch(response.body);
+    final wordid = matchWordid?.group(1);
+
+    final finalUrl = 'https://dic.daum.net/word/view.do?wordid=$wordid=${Uri.encodeComponent(searchWord)}&supid=$supid';
+    debugPrint('finalUrl: $finalUrl');
+
+    response = await http.get(Uri.parse(finalUrl));
+    final dicWords = <dicWord>[];
+
+    if (response.statusCode == 200) {
+      final html = parser.parse(response.body);
+
+      final container = html.querySelectorAll('.inner_top');
+
+      for (final element in container) {
+        // ver3 -> 한 개 뜻이 있는 경우
+        final txt_emph = element.querySelector('.txt_cleanword')?.text;
+        final txt_mean = element.querySelector('.txt_mean')?.text;
+        //.clean_word .tit_cleantype2 .txt_cleanword
+
+        if (txt_emph != null && txt_mean != null) {
+          dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean));
+        }
+      }
+    }
+
+    return dicWords;
+  }
+}
+
+
+
+
+
+// 리다이렉트 uri 구하기 전 버전
+
+// class WebScraper {
+//   final String searchWord;
+//
+//   WebScraper(this.searchWord);
+//
+//   Future<List<dicWord>> extractData() async {
+//     // final url = "https://dic.daum.net/search.do?q=${Uri.encodeComponent(searchWord)}&dic=kor";
+//     final url = "https://dic.daum.net/word/view.do?wordid=kkw000174450&q=%EC%96%91%ED%84%B8&supid=kku000219012";
+//     debugPrint('url: $url');
+//
+//     final response = await http.get(Uri.parse(url));
+//
+//     final dicWords = <dicWord>[];
+//
+//     if (response.statusCode == 200) {
+//       final html = parser.parse(response.body);
+//
+//
+//       // // 단어 여러개인 경우 ***************************
+//       // final container = html.querySelectorAll('.search_box');
+//       //
+//       // for (final element in container) {
+//       //   // ver 1 -> 1번 단어만 나옴
+//       //   // final txt_emph = element.querySelector('.txt_cleansch .txt_emph1')?.text;
+//       //   // final txt_mean = element.querySelector('.list_search .txt_search')?.text;
+//       //
+//       //
+//       //   //ver2 -> 1번 단어만 나옴
+//       //   // final txt_emph = element.querySelector('.search_word .txt_searchword .txt_emph1')?.text;
+//       //   // final txt_mean = element.querySelector('.list_search .txt_search')?.text;
+//       //   //
+//       //
+//       //   // ver3 -> 여러 뜻이 있는 경우 / 1번 단어만 나옴
+//       //   // final txt_emph = element.querySelector('.txt_cleansch .txt_emph1')?.text;
+//       //   // final txt_mean = element.querySelector('.list_search .txt_search')?.text;
+//       //
+//       //   // ver3 -> 한 개 뜻이 있는 경우
+//       //   final txt_emph = element.querySelector('.inner_top .screen_out')?.text;
+//       //   final txt_mean = element.querySelector('.inner_top .screen_out')?.text;
+//       //   //.clean_word .tit_cleantype2 .txt_cleanword
+//       //
+//       //   if (txt_emph != null && txt_mean != null) {
+//       //     dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean));
+//       //   }
+//       // }
+//
+//       // // 단어 하나인 경우 ***************************
+//       final container = html.querySelectorAll('.inner_top');
+//
+//
+//       for (final element in container) {
+//         // ver3 -> 한 개 뜻이 있는 경우
+//         final txt_emph = element.querySelector('.clean_word')?.text;
+//         final txt_mean = element.querySelector('.txt_mean')?.text;
+//         //.clean_word .tit_cleantype2 .txt_cleanword
+//
+//         if (txt_emph != null && txt_mean != null) {
+//           dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean));
+//         }
+//       }
+//     }
+//
+//     return dicWords;
+//   }
+// }
+
 
 // 네이버 버전
 //
@@ -263,49 +384,6 @@ class _DicOpenScreen extends State<DicOpenScreen> {
 //   }
 // }
 
-class WebScraper {
-  final String searchWord;
-
-  WebScraper(this.searchWord);
-
-  Future<List<dicWord>> extractData() async {
-    final url = "https://dic.daum.net/search.do?q=${Uri.encodeComponent(searchWord)}&dic=kor";
-
-    final response = await http.get(Uri.parse(url));
-
-    final dicWords = <dicWord>[];
-
-    if (response.statusCode == 200) {
-      final html = parser.parse(response.body);
-
-      // final container = html.querySelectorAll('.card_word');
-      final container = html.querySelectorAll('.search_box');
-
-
-
-      for (final element in container) {
-        // ver 1 -> 1번 단어만 나옴
-        // final txt_emph = element.querySelector('.txt_cleansch .txt_emph1')?.text;
-        // final txt_mean = element.querySelector('.list_search .txt_search')?.text;
-
-
-        // ver2 -> 1번 단어만 나옴
-        // final txt_emph = element.querySelector('.search_word .txt_searchword .txt_emph1')?.text;
-        // final txt_mean = element.querySelector('.list_search .txt_search')?.text;
-
-
-        final txt_emph = element.querySelector('.txt_cleansch .txt_emph1')?.text;
-        final txt_mean = element.querySelector('.list_search .txt_search')?.text;
-
-        if (txt_emph != null && txt_mean != null) {
-          dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean));
-        }
-      }
-    }
-
-    return dicWords;
-  }
-}
 
 
 // 다음 사전 클린 버전

@@ -73,12 +73,12 @@ class _ResultScreenState  extends State<ResultScreen> {
                     padding: EdgeInsets.all(width * 0.048),
                   ),
                   SizedBox(
-                    height: 200, // set the height of the field
+                    height: 400, // set the height of the field
                     child: TextFormField(
                       controller: _textFieldController,
                       // initialValue: widget.text,
                       decoration: InputDecoration(
-                        labelText: 'Label text',
+                        labelText: '글자 인식 결과',
                         border: OutlineInputBorder(),
                       ),
                       style: TextStyle(fontSize: width * 0.045),

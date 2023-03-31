@@ -1,1 +1,0 @@
-# fl_mlkit_text_recognize_example
