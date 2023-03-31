@@ -14,6 +14,7 @@
 import 'package:code230206_hangul_app/screen/snackBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:tuple/tuple.dart';
 
 import 'screen/snackBarWidget.dart';
 import 'screen/screen_home.dart';
@@ -25,6 +26,8 @@ import 'screen/snackBarWidget.dart';
 import 'screen/screen_auth_authPage.dart';
 import 'screen/screen_auth_Login.dart';
 import 'screen/screen_auth_SignUp.dart';
+import 'screen/screen_game_result.dart';
+import 'screen/screen_game_wrongWordList.dart';
 
 import 'package:path/path.dart' as Path;
 import 'package:camera/camera.dart';
@@ -40,6 +43,9 @@ void main() async{
   String DicScreenText = '';
   String TTSScreenText = '';
   String DicOpenScreenText= '';
+  List<Tuple3<String, String, bool>>  GameResultScreenText = [];
+  List<Tuple3<String, String, bool>>  GameWrongWordListScreenText = [];
+
   runApp(MaterialApp(
     scaffoldMessengerKey: SnackBarWidget.messengerKey,
     navigatorKey: navigatorKey,
@@ -60,6 +66,9 @@ void main() async{
       '/DicScreen':(context) => DicScreen(DicScreenText: DicScreenText),
       '/TTSScreen':(context) => TTSScreen(TTSScreenText: TTSScreenText),
       '/DicOpenScreen':(context) => DicOpenScreen(DicOpenScreenText: DicOpenScreenText),
+      '/GameResultScreen':(context) => GameResultScreen(GameResultScreenText: GameResultScreenText),
+      '/GameWrongWordListScreen':(context) => GameWrongWordListScreen(GameWrongWordListScreenText: GameWrongWordListScreenText),
+
     },
   ));
 }

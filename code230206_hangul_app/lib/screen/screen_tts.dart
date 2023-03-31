@@ -46,46 +46,50 @@ class _TTSScreen extends State<TTSScreen> {
 
     return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            toolbarHeight: width*0.15,
-            title: Text("I HANGUL"),
-            centerTitle: true,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
-                  gradient: LinearGradient(
-                      colors: [Colors.deepPurpleAccent,Colors.deepPurple],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter
-                  )
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+              toolbarHeight: width*0.15,
+              title: Text("I HANGUL"),
+              centerTitle: true,
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
+                    gradient: LinearGradient(
+                        colors: [Colors.deepPurpleAccent,Colors.deepPurple],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter
+                    )
+                ),
               ),
-            ),
 
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(width * 0.024),
-                ),
-                Text(
-                  '궁금한 단어를 클릭하세요',
-                  style: TextStyle(
-                    fontSize: width * 0.045,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(width * 0.024),
-                ),
-                Wrap(
-                    children: _buildButtonsWithWords(width, height, testSentence, testSentenceArray, buttonsList)
-                ),
-              ],
             ),
-          )
+            body: SingleChildScrollView(
+              padding: EdgeInsets.all(width * 0.024),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(width * 0.024),
+                  ),
+                  Text(
+                    '궁금한 단어를 클릭하세요',
+                    style: TextStyle(
+                      fontSize: width * 0.045,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(width * 0.024),
+                  ),
+                  Wrap(
+                    children: _buildButtonsWithWords(width, height, testSentence, testSentenceArray, buttonsList),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(width * 0.036),
+                  ),
+                ],
+              ),
+            )
         )
     );
   }
@@ -95,13 +99,15 @@ class _TTSScreen extends State<TTSScreen> {
     List<String> testSentenceArray = testSentence.split('.');
     for (int i = 0; i < testSentenceArray.length-1; i++) {
       // word = testSentenceArray[i];
-      buttonsList.add(ElevatedButton(
-          onPressed: () {tts.speak(testSentenceArray[i]);},
-          child: Text(testSentenceArray[i]),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.deepPurple,
+      buttonsList.add(
+          ElevatedButton(
+              onPressed: () {tts.speak(testSentenceArray[i]);},
+              child: Text(testSentenceArray[i]),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                padding: EdgeInsets.all(width * 0.024),
+              )
           )
-      )
       );
     }
     return buttonsList;
