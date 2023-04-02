@@ -122,7 +122,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       final inputImage = InputImage.fromFile(file);
       final recognizedText = await textRecogizer.processImage(inputImage);
 
-      await navigator.push(
+      await navigator.pushReplacement(
         // 기본 코드
         //   MaterialPageRoute(builder: (context) => ResultScreen(text: recognizedText.text))
 
@@ -135,8 +135,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       );
     } catch (e) {
       // 테스트용 코드
-      await navigator.push(
-          MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: testtext))
+      await navigator.pushReplacement(
+        MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: testtext))
       );
       // 기본 코드
       // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));

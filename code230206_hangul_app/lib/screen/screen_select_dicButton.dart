@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as parser;
+import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'screen_select_TtsButton.dart';
 import 'screen_select_modifyButton.dart';
 
@@ -19,10 +23,63 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
   List<String> _textWordArray = [];
   String? _selectedWord;
 
+
+  // firestore 단어 저장 부분
+  late User? user;
+  late DocumentReference userRef;
+  late CollectionReference wordsRef;
+
+  List<dicWord> dicWords = [];
+  List<bool> _starred = [];
+
+
+  void _initializeUserRef() {
+    user = FirebaseAuth.instance.currentUser;
+    userRef = FirebaseFirestore.instance.collection('users').doc(user!.uid);
+    wordsRef = userRef.collection('words');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeUserRef();
+    _starred = List.generate(dicWords.length, (_) => false);
+    // updateStarredList();
+
+  }
+
+  void _toggleStarred(int index) async {
+    String word = dicWords[index].txt_emph;
+    DocumentSnapshot snapshot = await wordsRef.doc(word).get();
+    bool isStarred = snapshot.exists;
+    // setState(() {
+    //   _starred[index] = !isStarred; // toggle the value of _starred at index
+    // });
+    // print('***  _starred  *** ' + _starred.toString());
+    // if (isStarred) {
+    //   await  wordsRef.doc(word).set({'word': dicWords[index].txt_emph, 'meaning': dicWords[index].txt_mean}); // Firestore에 단어가 없을 경우 추가
+    // } else {
+    //   await wordsRef.doc(word).delete(); // Firestore에서 단어 삭제
+    // }
+    setState(() {
+      _starred[index] = !_starred[index];
+    });
+    print('***  _starred  *** ' + _starred.toString());
+
+    if (_starred[index]){
+      wordsRef.doc(word).set({'word': dicWords[index].txt_emph, 'meaning': dicWords[index].txt_mean}); // Firestore에 단어가 없을 경우 추가
+    } else {
+      wordsRef.doc(word).delete(); // Firestore에서 단어 삭제
+    }
+  }
+
+
+
   _SelectDicButtonScreen(String text) {
     _text = text;
     _textWordArray = text.split(' ');
   }
+
 
   bool _isSelected(String word) {
     return _selectedWord == word;
@@ -40,69 +97,113 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
 
   void _showPopup(String word) {
     showModalBottomSheet(
-        context: context,
-        barrierColor: Colors.transparent,
-        backgroundColor: Color(0xFFD5D5D5),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(20),
-          ),
+      context: context,
+      barrierColor: Colors.transparent,
+      backgroundColor: Color(0xFFD5D5D5),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
         ),
+      ),
+      builder: (context) {
+        // final webScraper = WebScraper(word);
+        final WebScraper webScraper = WebScraper('$word');
 
-        builder: (context) {
-          // final webScraper = WebScraper(word);
-          // final args = ModalRoute.of(context)!.settings.arguments as SelectDicScreen;
-          final WebScraper webScraper = WebScraper('$word');
-
-          return Container(
-            height: 300.0,
-            child: FutureBuilder(
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return FutureBuilder(
               future: webScraper.extractData(),
-              builder: (BuildContext context, AsyncSnapshot<List<dicWord>> snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (context, index) {
-                      final dicWord = snapshot.data![index];
-                      return ListTile(
-                        title: Text(dicWord.txt_emph),
-                        subtitle: Text(dicWord.txt_mean),
-                      );
-                    },
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text("Error: ${snapshot.error}"),
+              builder: (_, snapShot) {
+                if (snapShot.hasData) {
+                  dicWords = snapShot.data as List<dicWord>;
+                  if (_starred.length != dicWords.length) {
+                    _starred = List.generate(dicWords.length, (_) => false);
+                  }
+
+                  return Column(
+                    children: [
+                      SizedBox(height: 10),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: dicWords.length,
+                        itemBuilder: (_, index) {
+                          String word = dicWords[index].txt_emph;
+                          return FutureBuilder<DocumentSnapshot>(
+                            future: wordsRef.doc(word).get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data!.exists) {
+                                _starred[index] = true;
+                              } else {
+                                _starred[index] = false;
+                              }
+
+                              return Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        onPrimary: Colors.black,
+                                      ),
+                                      child: ListTile(
+                                        title: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 5),
+                                          child: ListTile(
+                                            title: Padding(
+                                              padding: const EdgeInsets.only(bottom: 10),
+                                              child: Text(dicWords[index].txt_emph, style: const TextStyle(fontSize: 20)),
+                                            ),
+                                          ),
+                                        ),
+                                        subtitle: Text(dicWords[index].txt_mean, style: const TextStyle(fontSize: 15)),
+                                        trailing: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _toggleStarred(index);
+                                            });
+                                          },
+                                          icon: Icon(
+                                            _starred[index] ? Icons.star : Icons.star_border,
+                                            color: Colors.amber,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
               },
-            ),
-          );
-        }
-      // builder: (context) => Container(
-      //   height: 100.0,
-      //   child: Column(
-      //     children: [
-      //       Center(
-      //         child: Text('$word'),
-      //       ),
-      //     ],
-      //   )
-      // ),
+            );
+          },
+        );
+      },
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    // List<Widget> words = _selectedWords.map((word) => _buildWord(word)).toList();
-
-    // final args = ModalRoute.of(context)!.settings.arguments as SelectDicScreen;
-    // final WebScraper webScraper = WebScraper(args.text);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('I HANGUL'),
@@ -250,5 +351,3 @@ class dicWord {
   dicWord(
       {required this.txt_emph, required this.txt_mean});
 }
-
-
