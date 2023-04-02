@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용" />
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,7 +78,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680429606674</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update">
+      <created>1680429751838</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680429751838</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -93,6 +102,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="build: add screen_dic_tts_select.dart" />
     <MESSAGE value="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>
