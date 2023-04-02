@@ -20,9 +20,25 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
   }
   @override
   Widget build(BuildContext context) {
+
+    // 스크린 사이즈 정의
+    Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    double width = screenSize.width;
+    double height = screenSize.height;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('I HANGUL'),
+        backgroundColor: Color(0xFFF3F3F3),
+        elevation: 0.0,
+        title: Text(
+          "I HANGUL",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Container(
         width: double.infinity,
@@ -41,6 +57,11 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                 ToggleSwitch(
                   initialLabelIndex: 0,
                   labels: ['수정', 'dic', 'tts'],
+                  customTextStyles: [
+                    TextStyle(fontSize: width * 0.045),
+                    TextStyle(fontSize: width * 0.045),
+                    TextStyle(fontSize: width * 0.045),
+                  ],
                   radiusStyle: true,
                   onToggle: (index) {
                     if (index == 0) {
@@ -71,8 +92,8 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                   },
                   minWidth: 90.0,
                   cornerRadius: 20.0,
-                  activeBgColor: [Colors.deepPurple],
-                  activeFgColor: Colors.white,
+                  activeBgColor: [Color(0xFFC0EB75)],
+                  activeFgColor: Colors.black,
                   inactiveBgColor: Colors.white,
                   inactiveFgColor: Colors.black,
                 ),

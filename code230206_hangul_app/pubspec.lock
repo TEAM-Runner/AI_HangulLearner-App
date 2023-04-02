@@ -141,6 +141,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  dynamic_text_highlighting:
+    dependency: "direct main"
+    description:
+      name: dynamic_text_highlighting
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   email_validator:
     dependency: "direct main"
     description:

@@ -23,7 +23,6 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
   List<String> _textWordArray = [];
   String? _selectedWord;
 
-
   // firestore 단어 저장 부분
   late User? user;
   late DocumentReference userRef;
@@ -32,6 +31,10 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
   List<dicWord> dicWords = [];
   List<bool> _starred = [];
 
+  _SelectDicButtonScreen(String text) {
+    _text = text;
+    _textWordArray = text.split(' ');
+  }
 
   void _initializeUserRef() {
     user = FirebaseAuth.instance.currentUser;
@@ -45,41 +48,26 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
     _initializeUserRef();
     _starred = List.generate(dicWords.length, (_) => false);
     // updateStarredList();
-
   }
 
+  // showModalBottomSheet에서 star icon 상태 업데이트 위한 함수
   void _toggleStarred(int index) async {
     String word = dicWords[index].txt_emph;
     DocumentSnapshot snapshot = await wordsRef.doc(word).get();
-    bool isStarred = snapshot.exists;
-    // setState(() {
-    //   _starred[index] = !isStarred; // toggle the value of _starred at index
-    // });
-    // print('***  _starred  *** ' + _starred.toString());
-    // if (isStarred) {
-    //   await  wordsRef.doc(word).set({'word': dicWords[index].txt_emph, 'meaning': dicWords[index].txt_mean}); // Firestore에 단어가 없을 경우 추가
-    // } else {
-    //   await wordsRef.doc(word).delete(); // Firestore에서 단어 삭제
-    // }
     setState(() {
       _starred[index] = !_starred[index];
     });
     print('***  _starred  *** ' + _starred.toString());
 
-    if (_starred[index]){
-      wordsRef.doc(word).set({'word': dicWords[index].txt_emph, 'meaning': dicWords[index].txt_mean}); // Firestore에 단어가 없을 경우 추가
+    if (_starred[index]) {
+      wordsRef.doc(word).set({
+        'word': dicWords[index].txt_emph,
+        'meaning': dicWords[index].txt_mean
+      }); // Firestore에 단어가 없을 경우 추가
     } else {
       wordsRef.doc(word).delete(); // Firestore에서 단어 삭제
     }
   }
-
-
-
-  _SelectDicButtonScreen(String text) {
-    _text = text;
-    _textWordArray = text.split(' ');
-  }
-
 
   bool _isSelected(String word) {
     return _selectedWord == word;
@@ -99,7 +87,7 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
     showModalBottomSheet(
       context: context,
       barrierColor: Colors.transparent,
-      backgroundColor: Color(0xFFD5D5D5),
+      backgroundColor: Color(0xFFEFEFEF),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
@@ -155,15 +143,22 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
                                       ),
                                       child: ListTile(
                                         title: Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 5),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5),
                                           child: ListTile(
                                             title: Padding(
-                                              padding: const EdgeInsets.only(bottom: 10),
-                                              child: Text(dicWords[index].txt_emph, style: const TextStyle(fontSize: 20)),
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              child: Text(
+                                                  dicWords[index].txt_emph,
+                                                  style: const TextStyle(
+                                                      fontSize: 20)),
                                             ),
                                           ),
                                         ),
-                                        subtitle: Text(dicWords[index].txt_mean, style: const TextStyle(fontSize: 15)),
+                                        subtitle: Text(dicWords[index].txt_mean,
+                                            style:
+                                                const TextStyle(fontSize: 15)),
                                         trailing: IconButton(
                                           onPressed: () {
                                             setState(() {
@@ -171,7 +166,9 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
                                             });
                                           },
                                           icon: Icon(
-                                            _starred[index] ? Icons.star : Icons.star_border,
+                                            _starred[index]
+                                                ? Icons.star
+                                                : Icons.star_border,
                                             color: Colors.amber,
                                           ),
                                         ),
@@ -200,13 +197,26 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    // 스크린 사이즈 정의
+    Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    double width = screenSize.width;
+    double height = screenSize.height;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('I HANGUL'),
+        backgroundColor: Color(0xFFF3F3F3),
+        elevation: 0.0,
+        title: Text(
+          "I HANGUL",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Container(
         width: double.infinity,
@@ -225,6 +235,11 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
                 ToggleSwitch(
                   initialLabelIndex: 1,
                   labels: ['수정', 'dic', 'tts'],
+                  customTextStyles: [
+                    TextStyle(fontSize: width * 0.045),
+                    TextStyle(fontSize: width * 0.045),
+                    TextStyle(fontSize: width * 0.045),
+                  ],
                   radiusStyle: true,
                   onToggle: (index) {
                     if (index == 0) {
@@ -255,8 +270,8 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
                   },
                   minWidth: 90.0,
                   cornerRadius: 20.0,
-                  activeBgColor: [Colors.deepPurple],
-                  activeFgColor: Colors.white,
+                  activeBgColor: [Color(0xFFC0EB75)],
+                  activeFgColor: Colors.black,
                   inactiveBgColor: Colors.white,
                   inactiveFgColor: Colors.black,
                 ),
@@ -266,7 +281,6 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
               ],
             ),
             SizedBox(height: 16.0),
-
             Wrap(
               spacing: 4.0,
               runSpacing: 4.0,
@@ -285,7 +299,7 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
                       color: isSelected ? Colors.yellow : null,
                       borderRadius: BorderRadius.circular(4.0),
                     ),
-                    child: Text(word),
+                    child: Text(word, style: TextStyle(fontSize: width * 0.045),),
                   ),
                 );
               }).toList(),
@@ -297,8 +311,6 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
   }
 }
 
-
-
 // 뜻이 하나만 있는 경우: 리다이렉트 되는 새 url에서 supid, wordid를 구해 finalUrl을 정의해야 함
 class WebScraper {
   final String searchWord;
@@ -306,7 +318,8 @@ class WebScraper {
   WebScraper(this.searchWord);
 
   Future<List<dicWord>> extractData() async {
-    final initialUrl = "https://dic.daum.net/search.do?q=${Uri.encodeComponent(searchWord)}&dic=kor";
+    final initialUrl =
+        "https://dic.daum.net/search.do?q=${Uri.encodeComponent(searchWord)}&dic=kor";
     var response = await http.get(Uri.parse(initialUrl));
 
     final RegExp expSupid = RegExp('supid=(.*?)[\'"]');
@@ -317,7 +330,8 @@ class WebScraper {
     final matchWordid = expWordid.firstMatch(response.body);
     final wordid = matchWordid?.group(1);
 
-    final finalUrl = 'https://dic.daum.net/word/view.do?wordid=$wordid=${Uri.encodeComponent(searchWord)}&supid=$supid';
+    final finalUrl =
+        'https://dic.daum.net/word/view.do?wordid=$wordid=${Uri.encodeComponent(searchWord)}&supid=$supid';
     debugPrint('finalUrl: $finalUrl');
 
     response = await http.get(Uri.parse(finalUrl));
@@ -345,9 +359,8 @@ class WebScraper {
 }
 
 class dicWord {
-  String txt_emph ='init';
+  String txt_emph = 'init';
   String txt_mean = 'init';
 
-  dicWord(
-      {required this.txt_emph, required this.txt_mean});
+  dicWord({required this.txt_emph, required this.txt_mean});
 }

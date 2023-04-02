@@ -55,7 +55,7 @@ void main() async{
     // login, sign up 화면 prefix icon color 위해 추가
     theme: ThemeData().copyWith(
       colorScheme: ThemeData().colorScheme.copyWith(
-        primary: Colors.deepPurple,
+        primary: Color(0xFFC0EB75),
       ),
     ),
     title: 'GP App',
@@ -73,5 +73,6 @@ void main() async{
     },
   ));
 }
+
 
 

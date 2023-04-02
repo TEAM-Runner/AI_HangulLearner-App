@@ -142,6 +142,13 @@
             </list>
           </value>
         </entry>
+        <entry key="dynamic_text_highlighting">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/dynamic_text_highlighting-2.2.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="email_validator">
           <value>
             <list>
@@ -746,6 +753,7 @@
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cross_file-0.3.3+4/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/csslib-0.17.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/dynamic_text_highlighting-2.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/email_validator-2.1.17/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.3.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/ffi-2.0.1/lib" />

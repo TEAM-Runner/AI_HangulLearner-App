@@ -36,31 +36,27 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Color(0xFFF3F3F3),
             elevation: 0.0,
-            toolbarHeight: width*0.15,
+            // toolbarHeight: width*0.15,
             actions: <Widget>[
-              new IconButton(
-                icon: new Icon(Icons.person_outline_sharp),
+              IconButton(
+                icon: Icon(
+                  Icons.more_horiz,
+                  color: Colors.black,
+                ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
                 },
               ),
-
             ],
-            title: Text("I HANGUL"),
-            centerTitle: true,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
-                  gradient: LinearGradient(
-                      colors: [Colors.deepPurpleAccent,Colors.deepPurple],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter
-                  )
+            title: Text(
+              "I HANGUL",
+              style: TextStyle(
+                color: Colors.black,
               ),
             ),
-
+            centerTitle: true,
           ),
 
           body: Column(
@@ -164,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.deepPurple, width: 2.0) // border line color
+                  // side: BorderSide(color: Color(0xFFC0EB75), width: 2.0) // border line color
               )),),
         child: Column(
           // mainAxisSize: MainAxisSize.min,

@@ -62,24 +62,15 @@ class _VocabularyListScreenState extends State<VocabularyListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0xFFF3F3F3),
         elevation: 0.0,
-        toolbarHeight: width * 0.15,
-        title: const Text("I HANGUL"),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-            gradient: LinearGradient(
-              colors: [Colors.deepPurpleAccent, Colors.deepPurple],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-            ),
+        title: Text(
+          "I HANGUL",
+          style: TextStyle(
+            color: Colors.black,
           ),
         ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.all(width * 0.03),
