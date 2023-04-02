@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read and write access to authenticated users only
+    match /{document=**} {
+      allow read, write: if request.time < timestamp.date(2023, 4, 7)
+          && request.auth != null;
+    }
+    
+    // Allow write access to the 'users' collection only if the user ID matches
+    // the document ID
+    match /users/{userId} {
+      allow write: if request.auth.uid == userId;
+    }
+  }
+}
