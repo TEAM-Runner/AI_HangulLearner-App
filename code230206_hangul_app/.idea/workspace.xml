@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="build: Save the word to firestore by pressing the star icon&#10;&#10;- screen_select_dicButton.dart: &#10;  1) star_border 아이콘 클릭 -&gt; star 아이콘으로 변경, firestore에 단어와 뜻 저장됨&#10;  2) star 아이콘 클릭 -&gt; star_border 아이콘으로 변경, firestore에 저장된 단어와 뜻 삭제됨&#10;- 기존의 screen_dic.dart, screen_dic_open.dart를 통합">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_profile.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +93,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680438751988</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정">
+      <created>1680450862327</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680450862327</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -121,6 +119,7 @@
     <MESSAGE value="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용" />
     <MESSAGE value="update" />
     <MESSAGE value="build: Save the word to firestore by pressing the star icon&#10;&#10;- screen_select_dicButton.dart: &#10;  1) star_border 아이콘 클릭 -&gt; star 아이콘으로 변경, firestore에 단어와 뜻 저장됨&#10;  2) star 아이콘 클릭 -&gt; star_border 아이콘으로 변경, firestore에 저장된 단어와 뜻 삭제됨&#10;- 기존의 screen_dic.dart, screen_dic_open.dart를 통합" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: Save the word to firestore by pressing the star icon&#10;&#10;- screen_select_dicButton.dart: &#10;  1) star_border 아이콘 클릭 -&gt; star 아이콘으로 변경, firestore에 단어와 뜻 저장됨&#10;  2) star 아이콘 클릭 -&gt; star_border 아이콘으로 변경, firestore에 저장된 단어와 뜻 삭제됨&#10;- 기존의 screen_dic.dart, screen_dic_open.dart를 통합" />
+    <MESSAGE value="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정" />
   </component>
 </project>
