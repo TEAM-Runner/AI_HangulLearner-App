@@ -11,13 +11,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'screen_game_result.dart';
 
 final quizNumber = 2; // 전체 퀴즈수
-var finalIndex = false;
 
 class GameScreen extends StatefulWidget {
   @override
   _GameScreenState createState() => _GameScreenState();
 }
-
 
 class _GameScreenState extends State<GameScreen> {
 
@@ -28,6 +26,9 @@ class _GameScreenState extends State<GameScreen> {
 
   // gameWordList의 index 저장
   int index = 0;
+
+  // 게임이 끝나는 시점을 알리는 변수
+  bool endGameReady = false;
 
   // 게임에 사용할 단어 리스트. bool은 모두 false로 초기화
   List<List<dynamic>> gameWordList = List.generate(quizNumber, (_) => ['', '', false]);
@@ -90,24 +91,19 @@ class _GameScreenState extends State<GameScreen> {
     setState(() {});
   }
 
-
-  // 게임 결과 화면으로 넘어갈 때 계속 RangeError발생
-  // RangeError (index): Invalid value: Not in inclusive range 0..9: 10
   void getCorrectAnswer() {
     setState(() {
       gameWordList[index][2] = true;
       _controller.clear();
       _buttonText = 'hint 받기';
       timesController = 0;
-      index++;
+      if (index < quizNumber - 1 ){
+        index++;
+      } else {
+        endGameReady = true;
+      }
 
-      print('***  getCorrectAnswer_index  *** ' + index.toString());
-
-      // if (index < quizNumber-1){
-      // }
-
-
-      if (index == quizNumber) {
+      if (endGameReady) {
         Navigator.pushReplacementNamed(
             context,
             GameResultScreen.GameResultScreenRouteName,
@@ -125,17 +121,18 @@ class _GameScreenState extends State<GameScreen> {
         _buttonText = 'hint 받기';
         timesController = 0;
 
-        if (index <quizNumber-1){
+        if (index <quizNumber){
           index++;
+        } else {
+          endGameReady = true;
         }
 
-        if (index == quizNumber) {
+        if (endGameReady) {
           Navigator.pushReplacementNamed(
               context,
               GameResultScreen.GameResultScreenRouteName,
               arguments: GameResultScreen(GameResultScreenText: gameWordList)
           );
-
         }}
       );
     }
@@ -166,6 +163,7 @@ class _GameScreenState extends State<GameScreen> {
     return regex.hasMatch(str);
   }
 
+  // 초성 추출 함수
   String? getFirstConsonant(String str) {
     final Map<int, String> initialConsonants = {
       4352: 'ㄱ',
@@ -259,6 +257,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _buildQuizCard(List gameWordList, double width, double height) {
+    print('***  _buildQuizCard_index  *** ' + index.toString());
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -288,7 +287,6 @@ class _GameScreenState extends State<GameScreen> {
 
               onSubmitted: (input) {
                 if (_checkAnswer(input)){
-                  getCorrectAnswer();
                   showDialog( // true - 정답인 경우
                       context: context,
                       builder: (context) => AlertDialog(
@@ -297,13 +295,13 @@ class _GameScreenState extends State<GameScreen> {
                         actions: [TextButton(child: Text('OK'),
                             onPressed: () {
                           Navigator.of(context).pop();
+                          getCorrectAnswer();
                             })],));
                 } else {
-                  getWrongAnswer();
-                  print('***  timesController  *** ' + timesController.toString());
-                  print('***  _controller.text  *** ' + _controller.text);
-                  print('***  gameWordList[index].item1  *** ' + gameWordList[index][0]);
-                  print('***  index  *** ' + index.toString());
+                  // print('***  timesController  *** ' + timesController.toString());
+                  // print('***  _controller.text  *** ' + _controller.text);
+                  // print('***  gameWordList[index].item1  *** ' + gameWordList[index][0]);
+                  // print('***  index  *** ' + index.toString());
 
                   showDialog( // false - 오답인 경우
                       context: context,
@@ -313,6 +311,7 @@ class _GameScreenState extends State<GameScreen> {
                         actions: [TextButton(child: Text('OK'),
                             onPressed: () {
                               Navigator.of(context).pop();
+                              getWrongAnswer();
                             })],));
                 }
               }
