@@ -9,7 +9,9 @@ import 'package:tuple/tuple.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'screen_game_result.dart';
-final quizNumber = 10; // 전체 퀴즈수
+
+final quizNumber = 2; // 전체 퀴즈수
+var finalIndex = false;
 
 class GameScreen extends StatefulWidget {
   @override
@@ -99,7 +101,13 @@ class _GameScreenState extends State<GameScreen> {
       timesController = 0;
       index++;
 
-      if (index >= quizNumber) {
+      print('***  getCorrectAnswer_index  *** ' + index.toString());
+
+      // if (index < quizNumber-1){
+      // }
+
+
+      if (index == quizNumber) {
         Navigator.pushReplacementNamed(
             context,
             GameResultScreen.GameResultScreenRouteName,
@@ -107,7 +115,6 @@ class _GameScreenState extends State<GameScreen> {
         );
       }
     });
-    print('***  getCorrectAnswer_gameWordList  *** ' + gameWordList.toString());
   }
 
   void getWrongAnswer() {
@@ -117,9 +124,12 @@ class _GameScreenState extends State<GameScreen> {
         _controller.clear();
         _buttonText = 'hint 받기';
         timesController = 0;
-        index++;
 
-        if (index >= quizNumber) {
+        if (index <quizNumber-1){
+          index++;
+        }
+
+        if (index == quizNumber) {
           Navigator.pushReplacementNamed(
               context,
               GameResultScreen.GameResultScreenRouteName,
@@ -140,7 +150,6 @@ class _GameScreenState extends State<GameScreen> {
 
   // 답 체크
   bool _checkAnswer(String input) {
-    // index++;
     bool answer =
         isKorean(input) && _controller.text == gameWordList[index][0];
     print('***  answer  *** ' + answer.toString());
@@ -156,6 +165,50 @@ class _GameScreenState extends State<GameScreen> {
     final regex = RegExp('[\\uAC00-\\uD7AF]+');
     return regex.hasMatch(str);
   }
+
+  String? getFirstConsonant(String str) {
+    final Map<int, String> initialConsonants = {
+      4352: 'ㄱ',
+      4353: 'ㄲ',
+      4354: 'ㄴ',
+      4355: 'ㄷ',
+      4356: 'ㄸ',
+      4357: 'ㄹ',
+      4358: 'ㅁ',
+      4359: 'ㅂ',
+      4360: 'ㅃ',
+      4361: 'ㅅ',
+      4362: 'ㅆ',
+      4363: 'ㅇ',
+      4364: 'ㅈ',
+      4365: 'ㅉ',
+      4366: 'ㅊ',
+      4367: 'ㅋ',
+      4368: 'ㅌ',
+      4369: 'ㅍ',
+      4370: 'ㅎ'
+    };
+
+    if (str == null) {
+      throw Exception('한글이 아닙니다');
+    } else {
+      List<int> runes = str.runes.toList();
+      String result = '';
+
+      for (int i = 0; i < runes.length; i++) {
+        int unicode = runes[i];
+        if (unicode < 44032 || unicode > 55203) {
+          throw Exception('한글이 아닙니다');
+        }
+        int index = (unicode - 44032) ~/ 588;
+        result += initialConsonants[4352 + index]!;
+      }
+
+      return result;
+    }
+
+  }
+
 
   @override
   void initState() {
@@ -225,7 +278,7 @@ class _GameScreenState extends State<GameScreen> {
               ),
             ),
           ),
-          Text(gameWordList[index][0], style: TextStyle(fontSize: 48)),
+          Text(getFirstConsonant(gameWordList[index][0]) ?? '', style: TextStyle(fontSize: 48)),
           Text(gameWordList[index][1], style: TextStyle(fontSize: 20)),
           SizedBox(height: 30),
           TextField(
