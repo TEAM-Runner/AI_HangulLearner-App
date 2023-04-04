@@ -318,6 +318,7 @@ class WebScraper {
   WebScraper(this.searchWord);
 
   Future<List<dicWord>> extractData() async {
+
     final initialUrl =
         "https://dic.daum.net/search.do?q=${Uri.encodeComponent(searchWord)}&dic=kor";
     var response = await http.get(Uri.parse(initialUrl));
@@ -344,8 +345,8 @@ class WebScraper {
 
       for (final element in container) {
         // ver3 -> 한 개 뜻이 있는 경우
-        final txt_emph = element.querySelector('.txt_cleanword')?.text;
-        final txt_mean = element.querySelector('.txt_mean')?.text;
+        final txt_emph = element.querySelector('.txt_cleanword')?.text?.trim();
+        final txt_mean = element.querySelector('.txt_mean')?.text?.trim();
         //.clean_word .tit_cleantype2 .txt_cleanword
 
         if (txt_emph != null && txt_mean != null) {
