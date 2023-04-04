@@ -51,6 +51,7 @@ class _GameScreenState extends State<GameScreen> {
   String _buttonText = 'hint 받기';
   int timesController = 0;
   final _controller = TextEditingController();
+  String _quizWord = '';
 
   void _initializeUserRef() {
     user = FirebaseAuth.instance.currentUser!;
@@ -88,7 +89,7 @@ class _GameScreenState extends State<GameScreen> {
       }
     }
     print('***  gameWordList  *** ' + gameWordList.toString());
-    setState(() {});
+    _getQuizWord();
   }
 
   void getCorrectAnswer() {
@@ -97,8 +98,11 @@ class _GameScreenState extends State<GameScreen> {
       _controller.clear();
       _buttonText = 'hint 받기';
       timesController = 0;
+
+
       if (index < quizNumber - 1 ){
         index++;
+        _getQuizWord();
       } else {
         endGameReady = true;
       }
@@ -113,7 +117,7 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  void getWrongAnswer() {
+  void _getWrongAnswer() {
     if (timesController == 1) {
       setState(() {
         gameWordList[index][2] = false;
@@ -123,6 +127,7 @@ class _GameScreenState extends State<GameScreen> {
 
         if (index <quizNumber){
           index++;
+          _getQuizWord();
         } else {
           endGameReady = true;
         }
@@ -140,51 +145,26 @@ class _GameScreenState extends State<GameScreen> {
 
   }
 
-  // 힌트
-  void setHint() {
-    _buttonText = gameWordList[index][0];
-  }
 
   // 답 체크
   bool _checkAnswer(String input) {
     bool answer =
-        isKorean(input) && _controller.text == gameWordList[index][0];
-    print('***  answer  *** ' + answer.toString());
-    print('***  index  *** ' + index.toString());
-    print('***  _controller.text  *** ' + _controller.text.toString());
-    print('***  isKorean  *** ' + isKorean(input).toString());
-    print('***   ==  *** ' + _controller.text ==
-        gameWordList[index][0].toString());
+        _isKorean(input) && _controller.text == gameWordList[index][0];
     return answer;
   }
 
-  bool isKorean(String str) {
+  bool _isKorean(String str) {
     final regex = RegExp('[\\uAC00-\\uD7AF]+');
     return regex.hasMatch(str);
   }
 
   // 초성 추출 함수
-  String? getFirstConsonant(String str) {
+  String? _getFirstConsonant(String str) {
     final Map<int, String> initialConsonants = {
-      4352: 'ㄱ',
-      4353: 'ㄲ',
-      4354: 'ㄴ',
-      4355: 'ㄷ',
-      4356: 'ㄸ',
-      4357: 'ㄹ',
-      4358: 'ㅁ',
-      4359: 'ㅂ',
-      4360: 'ㅃ',
-      4361: 'ㅅ',
-      4362: 'ㅆ',
-      4363: 'ㅇ',
-      4364: 'ㅈ',
-      4365: 'ㅉ',
-      4366: 'ㅊ',
-      4367: 'ㅋ',
-      4368: 'ㅌ',
-      4369: 'ㅍ',
-      4370: 'ㅎ'
+      4352: 'ㄱ', 4353: 'ㄲ', 4354: 'ㄴ', 4355: 'ㄷ', 4356: 'ㄸ',
+      4357: 'ㄹ', 4358: 'ㅁ', 4359: 'ㅂ', 4360: 'ㅃ', 4361: 'ㅅ',
+      4362: 'ㅆ', 4363: 'ㅇ', 4364: 'ㅈ', 4365: 'ㅉ', 4366: 'ㅊ',
+      4367: 'ㅋ', 4368: 'ㅌ', 4369: 'ㅍ', 4370: 'ㅎ'
     };
 
     if (str == null) {
@@ -201,10 +181,21 @@ class _GameScreenState extends State<GameScreen> {
         int index = (unicode - 44032) ~/ 588;
         result += initialConsonants[4352 + index]!;
       }
-
       return result;
     }
 
+  }
+
+  // 힌트
+
+  void _getQuizWord() {
+    _quizWord = _getFirstConsonant(gameWordList[index][0]) ?? '';
+    print('***  setQuizWord_quizWord  *** ' + _quizWord);
+  }
+
+  void _getHint() {
+    _quizWord = _quizWord.replaceFirst(_quizWord[0], gameWordList[index][0][0]);
+    print('***  _quizWord  *** ' + _quizWord.toString());
   }
 
 
@@ -213,8 +204,8 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
     _initializeUserRef();
     _getStarredWords();
-  }
 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -257,7 +248,6 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _buildQuizCard(List gameWordList, double width, double height) {
-    print('***  _buildQuizCard_index  *** ' + index.toString());
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -277,7 +267,8 @@ class _GameScreenState extends State<GameScreen> {
               ),
             ),
           ),
-          Text(getFirstConsonant(gameWordList[index][0]) ?? '', style: TextStyle(fontSize: 48)),
+          Text(_quizWord, style: TextStyle(fontSize: 48)),
+          // Text(getQuizWord(gameWordList[index][0]) ?? '', style: TextStyle(fontSize: 48)),
           Text(gameWordList[index][1], style: TextStyle(fontSize: 20)),
           SizedBox(height: 30),
           TextField(
@@ -298,11 +289,6 @@ class _GameScreenState extends State<GameScreen> {
                           getCorrectAnswer();
                             })],));
                 } else {
-                  // print('***  timesController  *** ' + timesController.toString());
-                  // print('***  _controller.text  *** ' + _controller.text);
-                  // print('***  gameWordList[index].item1  *** ' + gameWordList[index][0]);
-                  // print('***  index  *** ' + index.toString());
-
                   showDialog( // false - 오답인 경우
                       context: context,
                       builder: (context) => AlertDialog(
@@ -311,7 +297,7 @@ class _GameScreenState extends State<GameScreen> {
                         actions: [TextButton(child: Text('OK'),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              getWrongAnswer();
+                              _getWrongAnswer();
                             })],));
                 }
               }
@@ -325,7 +311,7 @@ class _GameScreenState extends State<GameScreen> {
                 SizedBox(width: 32),
                 TextButton(
                   child: Text(_buttonText, style: TextStyle(fontSize: 32)),
-                  onPressed: () => setState(setHint),
+                  onPressed: () => setState(_getHint),
                 ),
               ],
             ),

@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix RangeError in screen_game.dart&#10;&#10;- index 변수 문제로 발생하던 RangeError 해결&#10;  (게임의 마지막 문제에서 index가 gameWordList의 범위를 초과하게 되는 에러가 있었음) &#10;- bool endGameReady를 추가해 에러 해결함">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add trim strings in WebScraper class in screen_select_dicButton.dart&#10;&#10;- txt_emph, txt_mean에 trim strings 추가&#10;- 이전에는 개행문자가 함께 저장 -&gt; 초성게임에서 문제가 발생했음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680619006618</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Add trim strings in WebScraper class in screen_select_dicButton.dart&#10;&#10;- txt_emph, txt_mean에 trim strings 추가&#10;- 이전에는 개행문자가 함께 저장 -&gt; 초성게임에서 문제가 발생했음">
+      <created>1680619976309</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1680619976309</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -152,6 +159,7 @@
     <MESSAGE value="build: modify screen_game.dart&#10;&#10;- 초성게임과 firestore 연동 완료&#10;  1) firstore에 저장된 단어를 gameWordList에 저장&#10;  2) firstore에 저장된 단어가 10개 미만이라면 기본적으로 저장된 gameBasicWordList 이용&#10;- 단어 전달 형태 tuple -&gt; list로 변경&#10;- 맞은 단어는 true, 틀린 단어는 false로 gameWordList에  저장&#10;- screen_game_result.dart 스크린과 연결" />
     <MESSAGE value="Add getFirstConsonant function&#10;&#10;- getFirstConsonant: 주어진 문자열에서 초성을 추출하는 함수&#10;- 오직 한국어일 경우에만 초성을 반환함" />
     <MESSAGE value="Fix RangeError in screen_game.dart&#10;&#10;- index 변수 문제로 발생하던 RangeError 해결&#10;  (게임의 마지막 문제에서 index가 gameWordList의 범위를 초과하게 되는 에러가 있었음) &#10;- bool endGameReady를 추가해 에러 해결함" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix RangeError in screen_game.dart&#10;&#10;- index 변수 문제로 발생하던 RangeError 해결&#10;  (게임의 마지막 문제에서 index가 gameWordList의 범위를 초과하게 되는 에러가 있었음) &#10;- bool endGameReady를 추가해 에러 해결함" />
+    <MESSAGE value="Add trim strings in WebScraper class in screen_select_dicButton.dart&#10;&#10;- txt_emph, txt_mean에 trim strings 추가&#10;- 이전에는 개행문자가 함께 저장 -&gt; 초성게임에서 문제가 발생했음" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add trim strings in WebScraper class in screen_select_dicButton.dart&#10;&#10;- txt_emph, txt_mean에 trim strings 추가&#10;- 이전에는 개행문자가 함께 저장 -&gt; 초성게임에서 문제가 발생했음" />
   </component>
 </project>
