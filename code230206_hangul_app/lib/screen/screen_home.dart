@@ -129,21 +129,21 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (onPressNumber == 2){ //학습게임 버튼 클릭
             // screen_game.dart로 연결
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ConsonantGame()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => GameScreen()));
 
 
-            // // (임시) screen_game_result.dart로 연결
-            // List<Tuple3<String, String, bool>> gameResultTestList = [
-            //   Tuple3('word1', 'mean1', true),
-            //   Tuple3('word2', 'mean2', false),
-            //   Tuple3('word3', 'mean3', true),
-            //   Tuple3('word4', 'mean4', false),
-            //   Tuple3('word5', 'mean5', true),
-            //   Tuple3('word6', 'mean6', true),
-            //   Tuple3('word7', 'mean7', true),
-            //   Tuple3('word8', 'mean8', true),
-            //   Tuple3('word9', 'mean9', true),
-            //   Tuple3('word10', 'mean10', true),
+            // (임시) screen_game_result.dart로 연결
+            // List<List<dynamic>> gameResultTestList = [
+            //   ['사과', 'mean1', false],
+            //   ['바나나', 'mean2', false],
+            //   ['딸기', 'mean3', false],
+            //   ['포도', 'mean4', false],
+            //   ['오렌지', 'mean5', false],
+            //   ['배', 'mean6', false],
+            //   ['키위', 'mean7', false],
+            //   ['블루베리', 'mean8', false],
+            //   ['복숭아', 'mean9', false],
+            //   ['오렌지', 'mean10', false],
             // ];
             // Navigator.pushNamed(context, GameResultScreen.GameResultScreenRouteName, arguments: GameResultScreen(GameResultScreenText: gameResultTestList));
 

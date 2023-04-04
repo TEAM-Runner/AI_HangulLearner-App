@@ -6,7 +6,7 @@ import 'screen_game_wrongWordList.dart';
 class GameResultScreen extends StatefulWidget {
   static const String GameResultScreenRouteName = "/GameResultScreen";
   // GameResultScreen({required this.words, required String GameResultScreenText});
-  final List<Tuple3<String, String, bool>> GameResultScreenText;
+  final List<List<dynamic>> GameResultScreenText;
   GameResultScreen({required this.GameResultScreenText});
 
   @override
@@ -25,11 +25,11 @@ class _GameResultScreenState extends State<GameResultScreen>{
     final double height = screenSize.height;
 
     final args = ModalRoute.of(context)!.settings.arguments as GameResultScreen;
-    final List<Tuple3<String, String, bool>> words = List.from((args.GameResultScreenText));
+    final List<List<dynamic>> words = List.from((args.GameResultScreenText));
 
     int correctCount = 0;
     for (var word in words) {
-      if (word.item3 == true) { correctCount++; }
+      if (word[2] == true) { correctCount++; }
     }
 
     String message;
@@ -46,24 +46,15 @@ class _GameResultScreenState extends State<GameResultScreen>{
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Color(0xFFF3F3F3),
             elevation: 0.0,
-            toolbarHeight: width * 0.15,
-            title: const Text('Starred Words'),
-            centerTitle: true,
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-                gradient: LinearGradient(
-                  colors: [Colors.deepPurpleAccent, Colors.deepPurple],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ),
+            title: Text(
+              "I HANGUL",
+              style: TextStyle(
+                color: Colors.black,
               ),
             ),
+            centerTitle: true,
           ),
           body: Center(
             child: Column(
@@ -80,19 +71,32 @@ class _GameResultScreenState extends State<GameResultScreen>{
                   onPressed: () {
                     Navigator.pushNamed(context, GameWrongWordListScreen.GameWrongWordListScreenRouteName, arguments: GameWrongWordListScreen(GameWrongWordListScreenText: words));
                   },
-                  child: Text('단어 다시보기'),
+                  child: Text('단어 다시보기',
+                    style: TextStyle(
+                        fontSize: 20,
+                      color: Colors.black
+                    ),
+                  ),
                 ),
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     // 랭킹 화면으로 연결
                   },
-                  child: Text('기록 확인하기'),
+                  child: Text('기록 확인하기',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black
+                    ),),
                 ),
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {Navigator.pop(context);},
-                  child: Text('게임 나가기'),
+                  child: Text('게임 나가기',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black
+                    ),),
                 ),
               ],
             ),

@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="build: modify screen_game.dart&#10;&#10;- 초성게임과 firestore 연동 완료&#10;  1) firstore에 저장된 단어를 gameWordList에 저장&#10;  2) firstore에 저장된 단어가 10개 미만이라면 기본적으로 저장된 gameBasicWordList 이용&#10;- 단어 전달 형태 tuple -&gt; list로 변경&#10;- 맞은 단어는 true, 틀린 단어는 false로 gameWordList에  저장&#10;- screen_game_result.dart 스크린과 연결">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680450862327</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="build: modify screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어로 문장의 index를 알아내는 부분에서 발생한 오류 수정 완료&#10; 1) 단어를 클릭하면 그 단어가 포함된 문장을 읽어줌&#10; 2) 단어를 클릭하면 그 단어가 포함된 문장을 노란색 highlight로 표시함&#10;- TTS로 읽는 부분 실시간으로 표시하는 기능 추가 필요">
+      <created>1680510129357</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680510129357</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -120,6 +132,8 @@
     <MESSAGE value="update" />
     <MESSAGE value="build: Save the word to firestore by pressing the star icon&#10;&#10;- screen_select_dicButton.dart: &#10;  1) star_border 아이콘 클릭 -&gt; star 아이콘으로 변경, firestore에 단어와 뜻 저장됨&#10;  2) star 아이콘 클릭 -&gt; star_border 아이콘으로 변경, firestore에 저장된 단어와 뜻 삭제됨&#10;- 기존의 screen_dic.dart, screen_dic_open.dart를 통합" />
     <MESSAGE value="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정" />
+    <MESSAGE value="build: modify screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어로 문장의 index를 알아내는 부분에서 발생한 오류 수정 완료&#10; 1) 단어를 클릭하면 그 단어가 포함된 문장을 읽어줌&#10; 2) 단어를 클릭하면 그 단어가 포함된 문장을 노란색 highlight로 표시함&#10;- TTS로 읽는 부분 실시간으로 표시하는 기능 추가 필요" />
+    <MESSAGE value="build: modify screen_game.dart&#10;&#10;- 초성게임과 firestore 연동 완료&#10;  1) firstore에 저장된 단어를 gameWordList에 저장&#10;  2) firstore에 저장된 단어가 10개 미만이라면 기본적으로 저장된 gameBasicWordList 이용&#10;- 단어 전달 형태 tuple -&gt; list로 변경&#10;- 맞은 단어는 true, 틀린 단어는 false로 gameWordList에  저장&#10;- screen_game_result.dart 스크린과 연결" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: modify screen_game.dart&#10;&#10;- 초성게임과 firestore 연동 완료&#10;  1) firstore에 저장된 단어를 gameWordList에 저장&#10;  2) firstore에 저장된 단어가 10개 미만이라면 기본적으로 저장된 gameBasicWordList 이용&#10;- 단어 전달 형태 tuple -&gt; list로 변경&#10;- 맞은 단어는 true, 틀린 단어는 false로 gameWordList에  저장&#10;- screen_game_result.dart 스크린과 연결" />
   </component>
 </project>

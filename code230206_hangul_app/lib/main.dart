@@ -43,8 +43,8 @@ void main() async{
   String DicScreenText = '';
   String TTSScreenText = '';
   String DicOpenScreenText= '';
-  List<Tuple3<String, String, bool>>  GameResultScreenText = [];
-  List<Tuple3<String, String, bool>>  GameWrongWordListScreenText = [];
+  List<List<dynamic>>  GameResultScreenText = [];
+  List<List<dynamic>>  GameWrongWordListScreenText = [];
 
 
   runApp(MaterialApp(

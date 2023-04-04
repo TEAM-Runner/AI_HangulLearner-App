@@ -1,9 +1,9 @@
 // *** 단어장 스크린 ***
 // firestore에 저장된 단어/뜻 리스트를 보여주는 스크린
 
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class VocabularyListScreen extends StatefulWidget {
   const VocabularyListScreen({Key? key}) : super(key: key);
@@ -59,6 +59,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen> {
     final Size screenSize = MediaQuery.of(context).size;
     final double width = screenSize.width;
     final double height = screenSize.height;
+
 
     return Scaffold(
       appBar: AppBar(
