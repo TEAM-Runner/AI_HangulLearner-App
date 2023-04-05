@@ -97,101 +97,91 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
         // final webScraper = WebScraper(word);
         final WebScraper webScraper = WebScraper('$word');
 
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return FutureBuilder(
-              future: webScraper.extractData(),
-              builder: (_, snapShot) {
-                if (snapShot.hasData) {
-                  dicWords = snapShot.data as List<dicWord>;
-                  if (_starred.length != dicWords.length) {
-                    _starred = List.generate(dicWords.length, (_) => false);
-                  }
+        return SizedBox(
+          height: 300,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return FutureBuilder(
+                future: webScraper.extractData(),
+                builder: (_, snapShot) {
+                  if (snapShot.hasData) {
+                    dicWords = snapShot.data as List<dicWord>;
+                    if (_starred.length != dicWords.length) {
+                      _starred = List.generate(dicWords.length, (_) => false);
+                    }
 
-                  return Column(
-                    children: [
-                      SizedBox(height: 10),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: dicWords.length,
-                        itemBuilder: (_, index) {
-                          String word = dicWords[index].txt_emph;
-                          return FutureBuilder<DocumentSnapshot>(
-                            future: wordsRef.doc(word).get(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData && snapshot.data!.exists) {
-                                _starred[index] = true;
-                              } else {
-                                _starred[index] = false;
-                              }
-
-                              return Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
+                    return Column(
+                      children: [
+                        SizedBox(height: 10),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: dicWords.length,
+                          separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+                          itemBuilder: (_, index) {
+                            String word = dicWords[index].txt_emph;
+                            return FutureBuilder<DocumentSnapshot>(
+                              future: wordsRef.doc(word).get(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData && snapshot.data!.exists) {
+                                  _starred[index] = true;
+                                } else {
+                                  _starred[index] = false;
+                                }
+                                return Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Container(
+                                    // decoration: BoxDecoration(
+                                    //   border: Border.all(
+                                    //     color: Colors.grey,
+                                    //     width: 1,
+                                    //   ),
+                                    //   borderRadius: BorderRadius.circular(9),
+                                    // ),
                                     child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        // add tts or ... tts 보류
+                                      },
                                       style: ElevatedButton.styleFrom(
                                         primary: Colors.white,
                                         onPrimary: Colors.black,
-                                      ),
-                                      child: ListTile(
-                                        title: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 5),
-                                          child: ListTile(
-                                            title: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 10),
-                                              child: Text(
-                                                  dicWords[index].txt_emph,
-                                                  style: const TextStyle(
-                                                      fontSize: 20)),
-                                            ),
-                                          ),
-                                        ),
-                                        subtitle: Text(dicWords[index].txt_mean,
-                                            style:
-                                                const TextStyle(fontSize: 15)),
-                                        trailing: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _toggleStarred(index);
-                                            });
-                                          },
-                                          icon: Icon(
-                                            _starred[index]
-                                                ? Icons.star
-                                                : Icons.star_border,
-                                            color: Colors.amber,
-                                          ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15.0),
+                                        ),                                    ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(1),
+                                        child: ListTile(
+                                          title: Text(dicWords[index].txt_emph,
+                                              style: const TextStyle(fontSize: 24)),
+                                          subtitle: Text(dicWords[index].txt_mean,
+                                              style: const TextStyle(fontSize: 20)),
+                                          trailing: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                _toggleStarred(index);
+                                              });
+                                            },
+                                            icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
+                                              color: Colors.amber,),),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 10),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            );
-          },
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              );
+            },
+          ),
         );
       },
     );
