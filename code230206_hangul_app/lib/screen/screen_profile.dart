@@ -138,62 +138,83 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
                 initialValue: _auth.currentUser!.email,
                 decoration: InputDecoration(
-                  labelText: 'Email',
+                  labelText: "이메일",
                   border: OutlineInputBorder(),
                 ),
                 enabled: false,
+                style: TextStyle(fontSize: 24),
               ),
               SizedBox(height: 16),
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  labelText: 'Name',
+                  labelText: "이름",
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter your name';
+                    return "이름을 입력해주세요";
                   }
                   return null;
                 },
+                style: TextStyle(fontSize: 24),
               ),
-
+              Expanded(
+                child: Container(),
+              ),
+              SizedBox(height: 32),
+              SizedBox(
+                width: width * 0.5,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _updateUserName();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("수정되었습니다"),
+                      ));
+                    }
+                  },
+                  child: Text("변경사항 저장",
+                    style: TextStyle(fontSize: 20, color: Colors.black),),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F3F3)),
+                  ),
+                )
+              ),
               SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _updateUserName();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('Profile updated'),
-                    ));
-                  }
-                },
-                child: Text('Save'),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
+              SizedBox(
+                width: width * 0.5,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: _showChangePasswordDialog,
+                  child: Text("비밀번호 변경",
+                    style: TextStyle(fontSize: 20, color: Colors.black),),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F3F3)),
+                  ),
                 ),
               ),
               SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _showChangePasswordDialog,
-                child: Text("Change Password"),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Navigator.pop(context);
-                },
-                child: Text("Logout"),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.deepPurple,
+              SizedBox(
+                width: width * 0.5,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pop(context);
+                  },
+                  child: Text("로그아웃",
+                    style: TextStyle(fontSize: 20, color: Colors.black),),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F3F3)),
+                  ),
                 ),
               ),
             ],

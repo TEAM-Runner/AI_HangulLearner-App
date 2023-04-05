@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add Text recognition result editing function in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 기능 추가&#10;- 사전/음성출력 버튼 클릭하면 수정한 텍스트를 전달함">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_game_result.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game_result.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_profile.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680702989499</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일">
+      <created>1680704322195</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1680704322195</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -197,6 +205,7 @@
     <MESSAGE value="Add all sentences read button in screen_select_TtsButton.dart&#10;&#10;- 글자인식한 모든 문장을 읽는 FloatingActionButton 추가&#10;- _speakAllSentences: 글자인식한 모든 문장을 읽어주는 함수" />
     <MESSAGE value="Add TTS speed control button in screen_select_TtsButton.dart&#10;&#10;- TTS 속도를 조절하는 AnimatedToggleSwitch 추가&#10;- 느림/보통/빠름의 3단계로 조절" />
     <MESSAGE value="Add Text recognition result editing function in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 기능 추가&#10;- 사전/음성출력 버튼 클릭하면 수정한 텍스트를 전달함" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Text recognition result editing function in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 기능 추가&#10;- 사전/음성출력 버튼 클릭하면 수정한 텍스트를 전달함" />
+    <MESSAGE value="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일" />
   </component>
 </project>
