@@ -38,7 +38,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   }
 
 
-  // tts 단어 읽어주는 함수 - 단어를 클릭했을 때 그 단어가 포함된 문장 전체 읽기 위해
+  // 단어를 tts로 읽어주는 함수 - 단어를 클릭했을 때 그 단어가 포함된 문장 전체 읽기 위해
   void _speakWord(int index) async {
     // String word = _textWordArray[index]; // 현재 읽을 단어 = 단어 리스트[매개변수 인덱스]
 
@@ -48,13 +48,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     // _wordToSentenceIndexMap를 이용해 해결
     int? sentenceIndex = _wordToSentenceIndexMap[index];
 
-
     if (sentenceIndex != -1) { // 문장 인덱스가 -1이 아니라면
       _speakSentence(sentenceIndex!); // tts 문장 읽어주는 함수 실행
     }
   }
 
-  // tts 문장 읽어주는 함수
+  // 1개 문장을 tts로 읽어주는 함수
   void _speakSentence(int index) async {
     setState(() {
       _currentSentenceIndex = index; // index를 매개변수로 받아서 현재 인덱스에 저장
@@ -63,6 +62,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     await _tts.speak(_textSentenceArray[index]); // index위치의 문장 tts로 읽기 시작
   }
 
+  // 모든 문장을 tts로 읽어주는 함수
+  void _speakAllSentences() async {
+    final allSentenceString = _textSentenceArray.join('. '); // 모든 텍스트를 string에 저장
+    await _tts.stop(); // 실행되고 있는 tts 중단
+    await _tts.speak(allSentenceString); // string을 tts로 읽기 시작
+  }
 
 
   @override
@@ -151,8 +156,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 String wordValue = word.value;
                 int? sentenceIndex = _wordToSentenceIndexMap[index]; // 단어의 인덱스에 따라 문장의 인덱스를 가져와 저장
 
-                print('***  sentenceIndex  *** ' + sentenceIndex.toString());
-
 
                 // 선택한 단어가 포함된 문장 노란색으로 highlight 표시
                 // -> 텍스트에 같은 단어 2개가 나올 경우,
@@ -179,6 +182,20 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 );
               }).toList(),
             ),
+            Expanded(
+              child: Container(),
+            ),
+            Container(
+              // margin: EdgeInsets.only(bottom: height * 0.04),
+              child: FloatingActionButton(
+                onPressed: () {
+                  _speakAllSentences();
+                  },
+                child: Icon(Icons.volume_up_outlined, color: Colors.black,),
+                backgroundColor: Color(0xFFC0EB75),
+              ),
+            ),
+            SizedBox(height: 16.0),
           ],
         ),
       ),
