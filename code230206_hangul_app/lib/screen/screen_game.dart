@@ -52,6 +52,7 @@ class _GameScreenState extends State<GameScreen> {
   int timesController = 0;
   final _controller = TextEditingController();
   String _quizWord = '';
+  Color isHintClicked = Colors.white;
 
   void _initializeUserRef() {
     user = FirebaseAuth.instance.currentUser!;
@@ -98,7 +99,7 @@ class _GameScreenState extends State<GameScreen> {
       _controller.clear();
       _buttonText = 'hint 받기';
       timesController = 0;
-
+      isHintClicked = Colors.white;
 
       if (index < quizNumber - 1 ){
         index++;
@@ -124,8 +125,9 @@ class _GameScreenState extends State<GameScreen> {
         _controller.clear();
         _buttonText = 'hint 받기';
         timesController = 0;
+        isHintClicked = Colors.white;
 
-        if (index <quizNumber){
+        if (index < quizNumber - 1 ){
           index++;
           _getQuizWord();
         } else {
@@ -255,69 +257,96 @@ class _GameScreenState extends State<GameScreen> {
             color: Color(0xFFF3F3F3),
         ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.fromLTRB(0, width*0.024, 0, width*0.024),
-            child: Text(
-              'Q' + (index+1).toString() + '.',
-              style: TextStyle(
-                fontSize: width*0.06,
-                fontWeight: FontWeight.bold
-              ),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Container(),
             ),
-          ),
-          Text(_quizWord, style: TextStyle(fontSize: 48)),
-          // Text(getQuizWord(gameWordList[index][0]) ?? '', style: TextStyle(fontSize: 48)),
-          Text(gameWordList[index][1], style: TextStyle(fontSize: 20)),
-          SizedBox(height: 30),
-          TextField(
-              controller: _controller,
-              decoration: InputDecoration(hintText: '정답을 입력해주세요.', hintStyle: TextStyle(fontSize: 24)),
-              textAlign: TextAlign.center,
+            Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: <Widget>[
+                    Text('Q' + (index+1).toString() + '.', //퀴즈 번호
+                      style: TextStyle(fontSize: width*0.06, fontWeight: FontWeight.bold),),
+                    SizedBox(height: 10),
+                    Text(_quizWord, style: TextStyle(fontSize: 46)), // 퀴즈 초성
+                    SizedBox(height: 10),
+                    Text(gameWordList[index][1],
+                        style: TextStyle(fontSize: 22), textAlign: TextAlign.center,), // 퀴즈 단어의 뜻
+                    SizedBox(height: 30),
+                    SizedBox(
+                      width: width * 0.5,
+                      child: TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                              hintText: '정답을 입력해주세요.',
+                              hintStyle: TextStyle(fontSize: 20)),
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.center,
 
-              onSubmitted: (input) {
-                if (_checkAnswer(input)){
-                  showDialog( // true - 정답인 경우
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('정답'),
-                        content: Image.asset('assets/images/right.png', width: 100, height: 100,),
-                        actions: [TextButton(child: Text('OK'),
-                            onPressed: () {
-                          Navigator.of(context).pop();
-                          getCorrectAnswer();
-                            })],));
-                } else {
-                  showDialog( // false - 오답인 경우
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('틀렸어요'),
-                        content: Image.asset('assets/images/wrong.png', width: 100, height: 100,),
-                        actions: [TextButton(child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              _getWrongAnswer();
-                            })],));
-                }
-              }
-          ),
-          SizedBox(height: 30),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/key_color.png', height: 50, width: 50),
-                SizedBox(width: 32),
-                TextButton(
-                  child: Text(_buttonText, style: TextStyle(fontSize: 32)),
-                  onPressed: () => setState(_getHint),
-                ),
-              ],
+
+                          onSubmitted: (input) {
+                            if (_checkAnswer(input)){
+                              showDialog( // true - 정답인 경우
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text('정답'),
+                                    content: Image.asset('assets/images/right.png', width: 100, height: 100,),
+                                    actions: [TextButton(child: Text('OK'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          getCorrectAnswer();
+                                        })],));
+                            } else {
+                              showDialog( // false - 오답인 경우
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text('틀렸어요'),
+                                    content: Image.asset('assets/images/wrong.png', width: 100, height: 100,),
+                                    actions: [TextButton(child: Text('OK'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          _getWrongAnswer();
+                                        })],));
+                            }
+                          }
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    InkWell(
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.matrix(
+                          isHintClicked == Colors.white ? [
+                            1, 0, 0, 0, 0,
+                            0, 1, 0, 0, 0,
+                            0, 0, 1, 0, 0,
+                            0, 0, 0, 1, 0,
+                          ] : [ // 필터 없는 경우
+                            0.2126,0.7152,0.0722,0,0,
+                            0.2126,0.7152,0.0722,0,0,
+                            0.2126,0.7152,0.0722,0,0,
+                            0,0,0,1,0,
+                          ] // 회색 필터
+                        ),
+                        child: Image.asset('assets/images/key_color.png', height: 50, width: 50,),
+                      ),
+                      onTap: () { // 힌트 1번만 클릭 가능
+                        if(isHintClicked != Colors.white) {
+                          return;
+                        }
+                        isHintClicked = Colors.grey;
+                        setState(() {});
+                        _getHint();
+                      },
+                    ),
+                  ],
+                )
             ),
-          ),
-        ],
-      ),
+            Expanded(
+              child: Container(),
+            ),
+          ]
+      )
     );
   }
 }
