@@ -3,6 +3,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'screen_select_dicButton.dart';
 import 'screen_select_modifyButton.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
 class SelectTtsButtonScreen extends StatefulWidget {
   final String text;
@@ -18,22 +19,23 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   List<String> _textWordArray = []; // 단어를 저장하는 리스트
   List<String> _textSentenceArray = []; // 문장을 저장하는 리스트
   Map<int, int> _wordToSentenceIndexMap = {};
+  int _toggleSwitchvalue = 1;
 
   int _currentSentenceIndex = -1; // 현재 문장의 인덱스 표시 (처음 아무것도 선택X -> -1)
   final FlutterTts _tts = FlutterTts(); // tts
+  List _ttsSpeed = [0.2, 0.3, 0.5]; // tts 속도 저장 리스트. 느림 - 보통 - 빠름
+  int _ttsSpeedindex = 1; // _ttsSpeed 리스트의 인덱스 저장
+
 
   // 초기화
   _SelectTtsButtonScreenState(this._text) {
     _textWordArray = _text.split(' '); // 단어 리스트 -> ' ' 공백문자 단위로 split
     _textSentenceArray = _text.split('. '); // 문장 리스트 -> '.' 온점 단위로 split
-    print('***  _textWordArray  *** ' + _textSentenceArray[0].toString());
-    print('***  _textSentenceArray  *** ' + _textSentenceArray[0].toString());
 
     _tts.setLanguage('kor'); // tts - 언어 한국어
-    _tts.setSpeechRate(0.5); // tts - 읽기 속도
+    _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도. 기본 보통 속도
     FindWordToSentenceIndex findWordToSentenceIndex = FindWordToSentenceIndex(_text, _textWordArray, _textSentenceArray);
     _wordToSentenceIndexMap = findWordToSentenceIndex._wordToSentenceIndexMap;
-    print('***  _wordToSentenceIndexMap  *** ' + _wordToSentenceIndexMap[10].toString());
 
   }
 
@@ -58,17 +60,42 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     setState(() {
       _currentSentenceIndex = index; // index를 매개변수로 받아서 현재 인덱스에 저장
     });
+    _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
     await _tts.stop(); // 실행되고 있는 tts 중단
-    await _tts.speak(_textSentenceArray[index]); // index위치의 문장 tts로 읽기 시작
+    await _tts.speak(_textSentenceArray[_currentSentenceIndex]); // index위치의 문장 tts로 읽기 시작
   }
 
   // 모든 문장을 tts로 읽어주는 함수
   void _speakAllSentences() async {
     final allSentenceString = _textSentenceArray.join('. '); // 모든 텍스트를 string에 저장
+    _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
     await _tts.stop(); // 실행되고 있는 tts 중단
     await _tts.speak(allSentenceString); // string을 tts로 읽기 시작
   }
 
+  // void _setTtsSpeed(_ttsSpeedindex){
+  //   _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
+  // }
+
+  Widget alternativeIconBuilder(BuildContext context, SizeProperties<int> local,
+      GlobalToggleProperties<int> global) {
+    IconData data = Icons.access_time_rounded;
+    switch (local.value) {
+      case 0: // TTS 속도 빠르게
+        data = Icons.add;
+        break;
+      case 1: // TTS 속도 보통
+        data = Icons.exposure_zero_outlined;
+        break;
+      case 2: // TTS 속도 느리게
+        data = Icons.remove;
+        break;
+    }
+    return Icon(
+      data,
+      size: local.iconSize.shortestSide,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -185,23 +212,79 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
             Expanded(
               child: Container(),
             ),
-            Container(
-              // margin: EdgeInsets.only(bottom: height * 0.04),
-              child: FloatingActionButton(
-                onPressed: () {
-                  _speakAllSentences();
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(),
+                ),
+                Container(
+                  // margin: EdgeInsets.only(bottom: height * 0.04),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      _speakAllSentences();
+                    },
+                    child: Icon(Icons.volume_up_outlined, color: Colors.black,),
+                    backgroundColor: Color(0xFFC0EB75),
+                  ),
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+
+                AnimatedToggleSwitch<int>.size(
+                  textDirection: TextDirection.rtl,
+                  current: _toggleSwitchvalue,
+                  values: const [0, 1, 2],
+                  // iconOpacity: 0.2,
+                  // indicatorSize: const Size.fromWidth(100),
+                  customIconBuilder: (context, local, global) {
+                    switch (_toggleSwitchvalue) {
+                      case 0: // TTS 속도 느리게
+                        _ttsSpeedindex = 2;
+                        break;
+                      case 1: // TTS 속도 보통
+                        _ttsSpeedindex = 1;
+                        break;
+                      case 2: // TTS 속도 빠르게
+                        _ttsSpeedindex = 0;
+                        break;
+                      default: // 기본 - TTS 속도 보통
+                        _ttsSpeedindex = 1;
+                        break;
+                    }
+                    print('***  _ttsSpeedindex  *** ' + _ttsSpeedindex.toString());
+
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        alternativeIconBuilder(context, local, global),
+                      ],
+                    );
                   },
-                child: Icon(Icons.volume_up_outlined, color: Colors.black,),
-                backgroundColor: Color(0xFFC0EB75),
-              ),
+                  borderColor: Color(0xFFC0EB75),
+                  colorBuilder: (i) => i.isEven ? Color(0xFFC0EB75) : Color(0xFFC0EB75),
+                  onChanged: (i) => setState(() =>
+                  _toggleSwitchvalue = i,
+                  ),
+                ),
+
+                Expanded(
+                  child: Container(),
+                ),
+              ],
             ),
+
             SizedBox(height: 16.0),
           ],
         ),
       ),
     );
   }
+
 }
+
 
 // 단어 리스트의 인덱스에서 문장 리스트의 인덱스를 알아내는 클래스
 // 단어를 클릭했을 때 그 단어가 위치한 문장을 알려줌
