@@ -13,18 +13,18 @@ class SelectModifyButtonScreen extends StatefulWidget {
 }
 
 class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
-  late String _text;
+  final String _text; // 이전 화면에서 받아온 텍스트
+  TextEditingController _textEditingController = TextEditingController();
+  String returnText = '';
 
-  _SelectModifyButtonScreen(String text) {
-    _text = text;
+  _SelectModifyButtonScreen(this._text) {
+    _textEditingController.text = _text;
+    returnText = _text;
   }
   @override
   Widget build(BuildContext context) {
-
     // 스크린 사이즈 정의
-    Size screenSize = MediaQuery
-        .of(context)
-        .size;
+    Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
 
@@ -69,7 +69,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectModifyButtonScreen(text: _text),
+                              SelectModifyButtonScreen(text: returnText),
                         ),
                       );
                     } else if (index == 1) {
@@ -77,7 +77,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectDicButtonScreen(text: _text),
+                              SelectDicButtonScreen(text: returnText),
                         ),
                       );
                     } else if (index == 2) {
@@ -85,7 +85,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectTtsButtonScreen(text: _text),
+                              SelectTtsButtonScreen(text: returnText),
                         ),
                       );
                     }
@@ -101,6 +101,29 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                   child: Container(),
                 ),
               ],
+            ),
+            // SizedBox(height: 16.0),
+            Container(
+              padding: EdgeInsets.only(left: 6.0, right: 6.0, bottom: 6.0, top: 0.0),
+              child: TextField(
+                controller: _textEditingController,
+                decoration: const InputDecoration(
+                  // labelText: 'modify text',
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                ),
+                style: TextStyle(
+                  fontSize: width * 0.045,
+                  height: 2.0,
+                  wordSpacing: 2.0,
+                ),
+                maxLines: null,
+                onChanged: (text) {
+                  returnText = text;
+                  print('***  returnText  *** ' + returnText);
+                },
+              ),
             ),
           ],
         ),

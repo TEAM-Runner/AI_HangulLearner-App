@@ -183,7 +183,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 String wordValue = word.value;
                 int? sentenceIndex = _wordToSentenceIndexMap[index]; // 단어의 인덱스에 따라 문장의 인덱스를 가져와 저장
 
-
                 // 선택한 단어가 포함된 문장 노란색으로 highlight 표시
                 // -> 텍스트에 같은 단어 2개가 나올 경우,
                 // 선택된 문장과 단어 A1이, 선택되지 않은 문장에도 같은 단어 A2가 존재한다면
