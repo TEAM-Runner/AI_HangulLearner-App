@@ -72,6 +72,37 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   // gameWordList 세팅. 랜덤으로 10개 저장
+  // void _generateGameWordList() {
+  //   final random = Random();
+  //
+  //   // Combine starredWords and gameBasicWordList into a new list, and remove duplicates
+  //   List<Map<String, dynamic>> combinedList =
+  //   List<Map<String, dynamic>>.from(starredWords.map((word) => word.data()));
+  //   for (var word in gameBasicWordList) {
+  //     if (!combinedList.any((element) => element['word'] == word['word'])) {
+  //       combinedList.add(word);
+  //     }
+  //   }
+  //
+  //   // If there are more than 10 saved words, get a random word from starredWords
+  //   // use combinedList if less than 10 stored words
+  //   for (int i = 0; i < quizNumber; i++) {
+  //     if (i < combinedList.length) {
+  //       int index = random.nextInt(combinedList.length);
+  //       gameWordList[i] = [        combinedList[index]['word'],
+  //         combinedList[index]['meaning'],
+  //         false,
+  //       ];
+  //     } else {
+  //       // handle the case where combinedList doesn't have enough words
+  //       gameWordList[i] = gameBasicWordList[i % gameBasicWordList.length];
+  //     }
+  //   }
+  //   print('*** gameWordList *** ' + gameWordList.toString());
+  //   _getQuizWord();
+  // }
+
+  // gameWordList 세팅. 랜덤으로 10개 저장
   void _generateGameWordList() {
     final random = Random();
 
@@ -234,7 +265,7 @@ class _GameScreenState extends State<GameScreen> {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.white)),
           width: width * 0.85,
-          height: height * 0.7,
+          height: height * 0.55,
           child: Swiper(physics: NeverScrollableScrollPhysics(),
           loop: false,
           itemCount: 11,
@@ -259,11 +290,11 @@ class _GameScreenState extends State<GameScreen> {
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              child: Container(),
-            ),
+            // Expanded(
+            //   child: Container(),
+            // ),
             Padding(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 30.0),
                 child: Column(
                   children: <Widget>[
                     Text('Q' + (index+1).toString() + '.', //퀴즈 번호

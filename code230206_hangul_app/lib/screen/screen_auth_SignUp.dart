@@ -71,7 +71,7 @@ class _SignUpWidget extends State<SignUpWidget> {
                       // name 입력되었는지 확인
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) => value != null && value.length < 1
-                          ? 'Enter your name'
+                          ? '이름을 입력해 주세요'
                           : null,
                     ),
                     SizedBox(height: height * 0.01),
@@ -89,7 +89,7 @@ class _SignUpWidget extends State<SignUpWidget> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) =>
                       email != null && !EmailValidator.validate(email)
-                          ? 'Enter a valid email'
+                          ? '유효한 이메일을 입력해 주세요'
                           : null,
                     ),
                     SizedBox(height: height * 0.01),
@@ -113,7 +113,7 @@ class _SignUpWidget extends State<SignUpWidget> {
                       // password 유효한지 확인
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) => value != null && value.length < 6
-                          ? 'Enter min. 6 characters'
+                          ? '6글자 이상 입력해주세요'
                           : null,
                     ),
                     SizedBox(height: height*0.06),
@@ -121,22 +121,22 @@ class _SignUpWidget extends State<SignUpWidget> {
                       onPressed: signUp,
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size.fromHeight(50),
-                          backgroundColor: Colors.deepPurple),
-                      child: Text('SignUp', style: TextStyle(fontSize: width * 0.045),),
+                          backgroundColor: Color(0xFFF3F3F3)),
+                      child: Text('회원가입', style: TextStyle(fontSize: width * 0.045,  color: Colors.black),),
                     ),
                     SizedBox(height: height*0.02),
                     RichText(
                         text: TextSpan(
                             style: TextStyle(color: Colors.black, fontSize: width * 0.036),
-                            text: 'Already have an account?   ',
+                            text: '이미 계정이 있으신가요?   ',
                             children: [
                               TextSpan(
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = widget.onClickedSignUp,
-                                  text: 'Log In',
+                                  text: '로그인',
                                   style: TextStyle(
                                     decoration: TextDecoration.underline,
-                                    color: Colors.deepPurple,
+                                    color: Colors.black,
                                   )
                               )
                             ]

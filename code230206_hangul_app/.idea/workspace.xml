@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update dictionary search result popup UI&#10;&#10;- 사전 검색 결과를 보여주는 showModalBottomSheet 팝업창 UI 변경">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update Hint Button in screen_game.dart&#10;&#10;- 초성게임 화면에서 열쇠 클릭하면 회색으로 변경 -&gt; 힌트 보여주도록 업데이트">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_SignUp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_SignUp.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_forgotPassword.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_forgotPassword.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680709606818</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Update Hint Button in screen_game.dart&#10;&#10;- 초성게임 화면에서 열쇠 클릭하면 회색으로 변경 -&gt; 힌트 보여주도록 업데이트">
+      <created>1680714773657</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1680714773657</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -221,6 +231,7 @@
     <MESSAGE value="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일" />
     <MESSAGE value="Update profile screen UI in screen_profile.dart&#10;&#10;- fontSize, Button style, Button color 등 profile 스크린 ui 변경" />
     <MESSAGE value="Update dictionary search result popup UI&#10;&#10;- 사전 검색 결과를 보여주는 showModalBottomSheet 팝업창 UI 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update dictionary search result popup UI&#10;&#10;- 사전 검색 결과를 보여주는 showModalBottomSheet 팝업창 UI 변경" />
+    <MESSAGE value="Update Hint Button in screen_game.dart&#10;&#10;- 초성게임 화면에서 열쇠 클릭하면 회색으로 변경 -&gt; 힌트 보여주도록 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Hint Button in screen_game.dart&#10;&#10;- 초성게임 화면에서 열쇠 클릭하면 회색으로 변경 -&gt; 힌트 보여주도록 업데이트" />
   </component>
 </project>

@@ -56,7 +56,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (email) =>
                         email != null && !EmailValidator.validate(email)
-                            ? 'Enter a vaild email'
+                            ? '유효한 이메일을 입력해 주세요'
                             : null,
                       ),
 
@@ -65,8 +65,8 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         onPressed: resetPassword,
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size.fromHeight(50),
-                            backgroundColor: Colors.deepPurple),
-                        child: Text('Reset Password', style: TextStyle(fontSize: width * 0.045),),
+                            backgroundColor: Color(0xFFF3F3F3)),
+                        child: Text('비밀번호 재설정', style: TextStyle(fontSize: width * 0.045, color: Colors.black),),
                       ),
                     ],
                   ),
@@ -87,7 +87,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
     try {
      await FirebaseAuth.instance
          .sendPasswordResetEmail(email: emailController.text.trim());
-     SnackBarWidget.showSnackBar('Password Reset Email Sent');
+     SnackBarWidget.showSnackBar('비밀번호 재설정 이메일이 발송되었습니다');
      Navigator.of(context).popUntil((route) => route.isFirst);
    } on FirebaseAuthException catch (e) {
       print(e);

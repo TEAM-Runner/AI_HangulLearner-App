@@ -110,16 +110,16 @@ class _LoginWidget extends State<LoginWidget> {
                     onPressed: signIn,
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size.fromHeight(50),
-                    backgroundColor: Colors.deepPurple),
-                    child: Text('Login', style: TextStyle(fontSize: width * 0.045),),
+                    backgroundColor: Color(0xFFF3F3F3)),
+                    child: Text('로그인', style: TextStyle(fontSize: width * 0.045, color: Colors.black),),
                   ),
                   SizedBox(height: height*0.02),
                   GestureDetector(
                     child: Text(
-                      'Forgot Password?',
+                      "비밀번호를 잊으셨나요?",
                       style: TextStyle(
                         decoration: TextDecoration.underline,
-                        color: Colors.deepPurple,
+                        color: Colors.black,
                         fontSize: width * 0.036,
                       ),
                     ),
@@ -131,15 +131,15 @@ class _LoginWidget extends State<LoginWidget> {
                   RichText(
                       text: TextSpan(
                           style: TextStyle(color: Colors.black, fontSize: width * 0.036),
-                          text: 'No account?   ',
+                          text: '계정이 없으신가요?   ',
                           children: [
                             TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = widget.onClickedSignUp,
-                                text: 'Sign Up',
+                                text: '회원가입',
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
-                                  color: Colors.deepPurple,
+                                  // color: Colors.deepPurple,
                                 )
                             )
                           ]
