@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'screen_game_wrongWordList.dart';
 
-
 class GameResultScreen extends StatefulWidget {
   static const String GameResultScreenRouteName = "/GameResultScreen";
   // GameResultScreen({required this.words, required String GameResultScreenText});
@@ -13,10 +12,7 @@ class GameResultScreen extends StatefulWidget {
   _GameResultScreenState createState() => _GameResultScreenState();
 }
 
-
-class _GameResultScreenState extends State<GameResultScreen>{
-
-
+class _GameResultScreenState extends State<GameResultScreen> {
   @override
   Widget build(BuildContext context) {
     // 스크린 사이즈 정의
@@ -29,7 +25,9 @@ class _GameResultScreenState extends State<GameResultScreen>{
 
     int correctCount = 0;
     for (var word in words) {
-      if (word[2] == true) { correctCount++; }
+      if (word[2] == true) {
+        correctCount++;
+      }
     }
 
     String message;
@@ -45,65 +43,85 @@ class _GameResultScreenState extends State<GameResultScreen>{
 
     return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xFFF3F3F3),
-            elevation: 0.0,
-            title: Text(
-              "I HANGUL",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-            centerTitle: true,
+      appBar: AppBar(
+        backgroundColor: Color(0xFFF3F3F3),
+        elevation: 0.0,
+        title: Text(
+          "I HANGUL",
+          style: TextStyle(
+            color: Colors.black,
           ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '$correctCount/${words.length}',
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 16),
-                Text( message, style: TextStyle(fontSize: 24),),
-                SizedBox(height: 32),
-                ElevatedButton(
+        ),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(),
+            ),
+            Text(
+              '$correctCount/${words.length}',
+              style: TextStyle(fontSize: 48),
+            ),
+            SizedBox(height: 16),
+            Text(
+              message,
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 32),
+            SizedBox(
+                width: width * 0.5, // <-- Your width
+                height: 50, // <-- Your height
+                child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, GameWrongWordListScreen.GameWrongWordListScreenRouteName, arguments: GameWrongWordListScreen(GameWrongWordListScreenText: words));
+                    Navigator.pushNamed(context,
+                        GameWrongWordListScreen.GameWrongWordListScreenRouteName,
+                        arguments: GameWrongWordListScreen(
+                            GameWrongWordListScreenText: words));
                   },
-                  child: Text('단어 다시보기',
-                    style: TextStyle(
-                        fontSize: 20,
-                      color: Colors.black
-                    ),
+                  child: Text(
+                    '단어 다시보기',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    // 랭킹 화면으로 연결
-                  },
-                  child: Text('기록 확인하기',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),),
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {Navigator.pop(context);},
-                  child: Text('게임 나가기',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),),
-                ),
-              ],
             ),
-          ),
-        )
-    );
+            SizedBox(height: 16),
+            SizedBox(
+              width: width * 0.5, // <-- Your width
+              height: 50, // <-- Your height
+              child: ElevatedButton(
+                onPressed: () {
+                  // 랭킹 화면으로 연결
+                },
+                child: Text('기록 확인하기',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black
+                  ),),
+              ),
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              width: width * 0.5, // <-- Your width
+              height: 50, // <-- Your height
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  '게임 나가기',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }
-
-
