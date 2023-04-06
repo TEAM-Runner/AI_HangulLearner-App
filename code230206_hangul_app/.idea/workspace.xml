@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update login, signUp, forgotPassword UI&#10;&#10;- login, signUp, forgotPassword UI 컬러 변경&#10;- 버튼 글자, validation 메시지 한글로 변경">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update button labels in modify, dictionary, TTS screen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680718970150</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Update button labels in modify, dictionary, TTS screen">
+      <created>1680781153908</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1680781153908</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -240,6 +244,7 @@
     <MESSAGE value="Update dictionary search result popup UI&#10;&#10;- 사전 검색 결과를 보여주는 showModalBottomSheet 팝업창 UI 변경" />
     <MESSAGE value="Update Hint Button in screen_game.dart&#10;&#10;- 초성게임 화면에서 열쇠 클릭하면 회색으로 변경 -&gt; 힌트 보여주도록 업데이트" />
     <MESSAGE value="Update login, signUp, forgotPassword UI&#10;&#10;- login, signUp, forgotPassword UI 컬러 변경&#10;- 버튼 글자, validation 메시지 한글로 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update login, signUp, forgotPassword UI&#10;&#10;- login, signUp, forgotPassword UI 컬러 변경&#10;- 버튼 글자, validation 메시지 한글로 변경" />
+    <MESSAGE value="Update button labels in modify, dictionary, TTS screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update button labels in modify, dictionary, TTS screen" />
   </component>
 </project>

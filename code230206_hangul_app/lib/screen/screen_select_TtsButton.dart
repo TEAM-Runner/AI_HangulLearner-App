@@ -7,7 +7,6 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
 class SelectTtsButtonScreen extends StatefulWidget {
   final String text;
-
   SelectTtsButtonScreen({required this.text});
 
   @override
@@ -18,13 +17,15 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   final String _text; // 이전 화면에서 받아온 텍스트
   List<String> _textWordArray = []; // 단어를 저장하는 리스트
   List<String> _textSentenceArray = []; // 문장을 저장하는 리스트
-  Map<int, int> _wordToSentenceIndexMap = {};
-  int _toggleSwitchvalue = 1;
+  Map<int, int> _wordToSentenceIndexMap = {}; // 단어 인덱스와 문장 인덱스 매핑. 단어에서 문장 인덱스 알아내기 위해
+  int _toggleSwitchvalue = 1; // tts 속도를 지정하는 토글 스위치 인덱스
 
   int _currentSentenceIndex = -1; // 현재 문장의 인덱스 표시 (처음 아무것도 선택X -> -1)
   final FlutterTts _tts = FlutterTts(); // tts
   List _ttsSpeed = [0.2, 0.3, 0.5]; // tts 속도 저장 리스트. 느림 - 보통 - 빠름
   int _ttsSpeedindex = 1; // _ttsSpeed 리스트의 인덱스 저장
+
+  List<bool> isSelected = [];// 노란색 highlight를 표시할 것인지 판단하는 bool 리스트
 
 
   // 초기화
@@ -36,6 +37,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도. 기본 보통 속도
     FindWordToSentenceIndex findWordToSentenceIndex = FindWordToSentenceIndex(_text, _textWordArray, _textSentenceArray);
     _wordToSentenceIndexMap = findWordToSentenceIndex._wordToSentenceIndexMap;
+    isSelected = List.generate(_textWordArray.length, (_) => false); // isSelecte를 모두 false로 초기화
 
   }
 
@@ -45,9 +47,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     // String word = _textWordArray[index]; // 현재 읽을 단어 = 단어 리스트[매개변수 인덱스]
 
     // 단어로 문장 인덱스 알아내기
-    // -> 텍스트에 같은 단어 2개가 나올 경우,
-    // 두 번째로 나온 단어를 클릭해도 첫 번째 단어가 나온 문장을 재생하는 문제가 있었음
-    // _wordToSentenceIndexMap를 이용해 해결
     int? sentenceIndex = _wordToSentenceIndexMap[index];
 
     if (sentenceIndex != -1) { // 문장 인덱스가 -1이 아니라면
@@ -59,36 +58,64 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   void _speakSentence(int index) async {
     setState(() {
       _currentSentenceIndex = index; // index를 매개변수로 받아서 현재 인덱스에 저장
+      _setIsSelected();
+
     });
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
-    await _tts.stop(); // 실행되고 있는 tts 중단
+    _StopSpeakTts();
+    // await _tts.stop(); // 실행되고 있는 tts 중단
     await _tts.speak(_textSentenceArray[_currentSentenceIndex]); // index위치의 문장 tts로 읽기 시작
   }
 
   // 모든 문장을 tts로 읽어주는 함수
   void _speakAllSentences() async {
+    setState(() {
+      _currentSentenceIndex = -1;
+      _setIsSelected();
+    });
+    // _setIsSelected();
+    // _currentSentenceIndex = -1;
     final allSentenceString = _textSentenceArray.join('. '); // 모든 텍스트를 string에 저장
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
-    await _tts.stop(); // 실행되고 있는 tts 중단
+
+    _StopSpeakTts();
+    // await _tts.stop(); // 실행되고 있는 tts 중단
     await _tts.speak(allSentenceString); // string을 tts로 읽기 시작
   }
 
-  // void _setTtsSpeed(_ttsSpeedindex){
-  //   _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
-  // }
+  // 실행되고 있는 tts를 중단하는 함수
+  void _StopSpeakTts() async {
+    await _tts.stop();
+  }
+
+  // 노란색 highlight 할 단어를 세팅하는 함수
+  void _setIsSelected() {
+    isSelected = List.generate(_textWordArray.length, (_) => false); // isSelecte를 모두 false로 초기화
+
+    if (_currentSentenceIndex == -1){
+      isSelected = List.filled(_textWordArray.length, false);
+    } else {
+      _wordToSentenceIndexMap.forEach((key, value) {
+        if (value == _currentSentenceIndex) {
+          isSelected[key] = true;
+        }
+      });
+    }
+
+  }
 
   Widget alternativeIconBuilder(BuildContext context, SizeProperties<int> local,
       GlobalToggleProperties<int> global) {
     IconData data = Icons.access_time_rounded;
     switch (local.value) {
       case 0: // TTS 속도 빠르게
-        data = Icons.add;
+        data = Icons.arrow_forward_ios;
         break;
       case 1: // TTS 속도 보통
-        data = Icons.exposure_zero_outlined;
+        data = Icons.play_arrow_outlined;
         break;
       case 2: // TTS 속도 느리게
-        data = Icons.remove;
+        data = Icons.arrow_back_ios;
         break;
     }
     return Icon(
@@ -135,6 +162,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   ],
                   radiusStyle: true,
                   onToggle: (index) {
+                    _StopSpeakTts();
                     if (index == 0) {
                       Navigator.pushReplacement(
                         context,
@@ -184,10 +212,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 int? sentenceIndex = _wordToSentenceIndexMap[index]; // 단어의 인덱스에 따라 문장의 인덱스를 가져와 저장
 
                 // 선택한 단어가 포함된 문장 노란색으로 highlight 표시
-                // -> 텍스트에 같은 단어 2개가 나올 경우,
-                // 선택된 문장과 단어 A1이, 선택되지 않은 문장에도 같은 단어 A2가 존재한다면
-                // 선택된 문장에 있는 단어 A1뿐만 아니라 A2에도 highlight 표시가 되는 문제가 있었음
-                bool isSelected = _currentSentenceIndex != -1 && sentenceIndex != null && sentenceIndex == _currentSentenceIndex;
+                // isSelected[index] = _currentSentenceIndex != -1 && sentenceIndex != null && sentenceIndex == _currentSentenceIndex;
 
                 return GestureDetector(
                   onTap: () {
@@ -199,7 +224,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   child: Container(
                     padding: EdgeInsets.all(2.0),
                     decoration: BoxDecoration(
-                      color: isSelected ? Colors.yellow : null,
+                      color: isSelected[index] ? Colors.yellow : null,
+                      // color: isSelected[index] ? Colors.yellow : null,
                       borderRadius: BorderRadius.circular(4.0),
                     ),
                     child: Text(wordValue, style: TextStyle(fontSize: width * 0.045),),
@@ -295,7 +321,6 @@ class FindWordToSentenceIndex {
   Map<int, int> _wordToSentenceIndexMap = {};
   // Map<int, int> get wordToSentenceIndexMap => _wordToSentenceIndexMap;
 
-
   FindWordToSentenceIndex(this._text, this._textWordArray, this._textSentenceArray){
     int sentenceIndex = 0;
     int wordIndex = 0;
@@ -308,5 +333,7 @@ class FindWordToSentenceIndex {
         wordIndex = 0;
       }
     }
+    print('***  _wordToSentenceIndexMap  *** ' + _wordToSentenceIndexMap.toString());
   }
+
 }
