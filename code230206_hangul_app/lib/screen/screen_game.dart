@@ -71,38 +71,6 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  // gameWordList 세팅. 랜덤으로 10개 저장
-  // void _generateGameWordList() {
-  //   final random = Random();
-  //
-  //   // Combine starredWords and gameBasicWordList into a new list, and remove duplicates
-  //   List<Map<String, dynamic>> combinedList =
-  //   List<Map<String, dynamic>>.from(starredWords.map((word) => word.data()));
-  //   for (var word in gameBasicWordList) {
-  //     if (!combinedList.any((element) => element['word'] == word['word'])) {
-  //       combinedList.add(word);
-  //     }
-  //   }
-  //
-  //   // If there are more than 10 saved words, get a random word from starredWords
-  //   // use combinedList if less than 10 stored words
-  //   for (int i = 0; i < quizNumber; i++) {
-  //     if (i < combinedList.length) {
-  //       int index = random.nextInt(combinedList.length);
-  //       gameWordList[i] = [        combinedList[index]['word'],
-  //         combinedList[index]['meaning'],
-  //         false,
-  //       ];
-  //     } else {
-  //       // handle the case where combinedList doesn't have enough words
-  //       gameWordList[i] = gameBasicWordList[i % gameBasicWordList.length];
-  //     }
-  //   }
-  //   print('*** gameWordList *** ' + gameWordList.toString());
-  //   _getQuizWord();
-  // }
-
-  // gameWordList 세팅. 랜덤으로 10개 저장
   void _generateGameWordList() {
     final random = Random();
 

@@ -56,7 +56,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                 ),
                 ToggleSwitch(
                   initialLabelIndex: 0,
-                  labels: ['수정', 'dic', 'tts'],
+                  labels: ['수정', '사전', '음성'],
                   customTextStyles: [
                     TextStyle(fontSize: width * 0.045),
                     TextStyle(fontSize: width * 0.045),

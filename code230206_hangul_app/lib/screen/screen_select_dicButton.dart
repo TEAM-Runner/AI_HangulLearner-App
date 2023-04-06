@@ -224,7 +224,7 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
                 ),
                 ToggleSwitch(
                   initialLabelIndex: 1,
-                  labels: ['수정', 'dic', 'tts'],
+                  labels: ['수정', '사전', '음성'],
                   customTextStyles: [
                     TextStyle(fontSize: width * 0.045),
                     TextStyle(fontSize: width * 0.045),

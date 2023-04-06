@@ -127,7 +127,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 ),
                 ToggleSwitch(
                   initialLabelIndex: 2,
-                  labels: ['수정', 'dic', 'tts'],
+                  labels: ['수정', '사전', '음성'],
                   customTextStyles: [
                     TextStyle(fontSize: width * 0.045),
                     TextStyle(fontSize: width * 0.045),
