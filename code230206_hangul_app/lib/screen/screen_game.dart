@@ -10,7 +10,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'screen_game_result.dart';
 
-final quizNumber = 2; // 전체 퀴즈수
+final quizNumber = 5; // 전체 퀴즈수
 
 class GameScreen extends StatefulWidget {
   @override
@@ -219,6 +219,10 @@ class _GameScreenState extends State<GameScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xFFF3F3F3),
         elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text(
           "I HANGUL",
           style: TextStyle(

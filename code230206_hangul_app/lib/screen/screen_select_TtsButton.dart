@@ -81,6 +81,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     _StopSpeakTts();
     // await _tts.stop(); // 실행되고 있는 tts 중단
     await _tts.speak(allSentenceString); // string을 tts로 읽기 시작
+    print('***  _wordToSentenceIndexMap  *** ' + _wordToSentenceIndexMap.toString());
+
   }
 
   // 실행되고 있는 tts를 중단하는 함수
@@ -333,7 +335,7 @@ class FindWordToSentenceIndex {
         wordIndex = 0;
       }
     }
-    print('***  _wordToSentenceIndexMap  *** ' + _wordToSentenceIndexMap.toString());
+    // print('***  _wordToSentenceIndexMap  *** ' + _wordToSentenceIndexMap.toString());
   }
 
 }

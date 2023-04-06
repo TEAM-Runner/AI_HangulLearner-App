@@ -1,6 +1,8 @@
 // *** 단어장 스크린 ***
 // firestore에 저장된 단어/뜻 리스트를 보여주는 스크린
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -65,6 +67,10 @@ class _VocabularyListScreenState extends State<VocabularyListScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xFFF3F3F3),
         elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text(
           "I HANGUL",
           style: TextStyle(

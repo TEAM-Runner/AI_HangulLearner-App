@@ -5,6 +5,8 @@
 // 카메라 버튼 클릭 -> screen_Camera.dart로 연결됨
 // 학습 게임 버튼 틀릭 -> 아직 기능 X
 
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Color(0xFFF3F3F3),
             elevation: 0.0,
             // toolbarHeight: width*0.15,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: ()=> exit(0),
+            ),
             actions: <Widget>[
               IconButton(
                 icon: Icon(
@@ -71,11 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
-                    makeButton('카메라', 1 , '궁금한 부분을', '촬영하세요', 1),
+                    makeButton('책 읽어주기', 1 , '궁금한 부분을', '촬영하세요', 1),
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
-                    makeButton('학습게임', 2 , '학습게임으로 단어를', '공부하세요', 2),
+                    makeButton('학습게임', 2 , '게임으로 단어를', '공부하세요', 2),
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
