@@ -107,28 +107,32 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
               ],
             ),
             // SizedBox(height: 16.0),
-            Container(
-              padding: EdgeInsets.only(left: 6.0, right: 6.0, bottom: 6.0, top: 0.0),
-              child: TextField(
-                controller: _textEditingController,
-                decoration: const InputDecoration(
-                  // labelText: 'modify text',
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
+            Expanded(child:
+              SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(left: 6.0, right: 6.0, bottom: 6.0, top: 0.0),
+                  child: TextField(
+                    controller: _textEditingController,
+                    decoration: const InputDecoration(
+                      // labelText: 'modify text',
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                    ),
+                    style: TextStyle(
+                      fontSize: width * 0.045,
+                      height: 2.0,
+                      wordSpacing: 2.0,
+                    ),
+                    maxLines: null,
+                    onChanged: (text) {
+                      returnText = text;
+                      print('***  returnText  *** ' + returnText);
+                    },
+                  ),
                 ),
-                style: TextStyle(
-                  fontSize: width * 0.045,
-                  height: 2.0,
-                  wordSpacing: 2.0,
-                ),
-                maxLines: null,
-                onChanged: (text) {
-                  returnText = text;
-                  print('***  returnText  *** ' + returnText);
-                },
-              ),
-            ),
+              )
+            )
           ],
         ),
       ),

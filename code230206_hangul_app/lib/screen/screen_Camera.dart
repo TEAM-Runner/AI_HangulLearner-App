@@ -111,8 +111,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Future<void> _scanImage() async{
 
     // final String testtext = '저 멀리 깊고 푸른 바다 속에, 물고기 한 마리가 살고 있었습니다. 그 물고기는 보통 물고기가 아니라 온 바다에서 가장 아름다운 물고기였습니다. 파랑, 초록, 자줏빛 바늘 사이사이에 반짝반짝 빛나는 은빛 비늘이 박혀 있었거든요. 다른 물고기들도 그 물고기의 아름다운 모습에 감탄했습니다. 물고기들은 그 물고기를 무지개 물고기라고 불렀습니다. 물고기들은 무지개 물고기에게 말을 붙였습니다.';
-    final String testtext = '아이린은 양털 장화를 신고, 빨간 모자와 목도리를 두르고, 두꺼운 외투를 입고, 벙어리장갑을 꼈습니다. 그런 다음 엄마의 뜨거운 이마에 여섯 번이나 입을 맞추고, 한번 더 맞추었습니다. 아이린은 엄마의 이불이 잘 덮였나 확인하고 나서 커다란 옷 상자를 들고 살며시 밖으로 나왔습니다. 그리고 문을 꼭 닫았습니다.';
+    // final String testtext = '아이린은 양털 장화를 신고, 빨간 모자와 목도리를 두르고, 두꺼운 외투를 입고, 벙어리장갑을 꼈습니다. 그런 다음 엄마의 뜨거운 이마에 여섯 번이나 입을 맞추고, 한번 더 맞추었습니다. 아이린은 엄마의 이불이 잘 덮였나 확인하고 나서 커다란 옷 상자를 들고 살며시 밖으로 나왔습니다. 그리고 문을 꼭 닫았습니다. 아이린은 양털 장화를 신고, 빨간 모자와 목도리를 두르고, 두꺼운 외투를 입고, 벙어리장갑을 꼈습니다. 그런 다음 엄마의 뜨거운 이마에 여섯 번이나 입을 맞추고, 한번 더 맞추었습니다. 아이린은 엄마의 이불이 잘 덮였나 확인하고 나서 커다란 옷 상자를 들고 살며시 밖으로 나왔습니다. 그리고 문을 꼭 닫았습니다. 아이린은 양털 장화를 신고, 빨간 모자와 목도리를 두르고, 두꺼운 외투를 입고, 벙어리장갑을 꼈습니다. 그런 다음 엄마의 뜨거운 이마에 여섯 번이나 입을 맞추고, 한번 더 맞추었습니다. 아이린은 엄마의 이불이 잘 덮였나 확인하고 나서 커다란 옷 상자를 들고 살며시 밖으로 나왔습니다. 그리고 문을 꼭 닫았습니다.';
 
+    final String testtext = '아이린은 양별 장화를 신고, 빨간 모자와 목도리를 두르고, 두꺼운 외부를 입고,\n어리장갑을 것습니다. 그런 다음 엄마의 뜨거운 이마에 여섯 번이나 입을 맞추고,\n한번맛었습니다 . 아이린은 엄마의 이블이 잘 덮었나 화인하고 나서 커다란\n상자를 들고 살미시 박으로 나왔습니다. 그리고 문을 꼭 닫았습니다.';
     if (_controller == null) return;
 
     final navigator = Navigator.of(context);
@@ -124,22 +125,22 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       await navigator.pushReplacement(
         // 기본 코드
-          MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: recognizedText.text))
+        //   MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: recognizedText.text))
 
         // 1차 테스트용 코드: screen_Camera_result.dart로 연결
         // MaterialPageRoute(builder: (context) => ResultScreen(text: testtext))
 
         // 2차 테스트용 코드: 지도교수님과 면담 후 인터페이스 수정용
-        // MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: testtext))
+        MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: testtext))
 
       );
     } catch (e) {
       // 테스트용 코드
-      // await navigator.pushReplacement(
-      //   MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: testtext))
-      // );
+      await navigator.pushReplacement(
+        MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: testtext))
+      );
       // 기본 코드
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));
     }
   }
 }

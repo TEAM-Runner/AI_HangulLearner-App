@@ -275,29 +275,33 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
               ],
             ),
             SizedBox(height: 16.0),
-            Wrap(
-              spacing: 4.0,
-              runSpacing: 4.0,
-              children: _textWordArray.map((word) {
-                bool isSelected = _selectedWord == word;
-                return GestureDetector(
-                  onTap: () {
-                    _toggleSelected(word);
-                    if (_isSelected(word)) {
-                      _showPopup(word);
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(2.0),
-                    decoration: BoxDecoration(
-                      color: isSelected ? Colors.yellow : null,
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: Text(word, style: TextStyle(fontSize: width * 0.045),),
+            Expanded(
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    spacing: 4.0,
+                    runSpacing: 4.0,
+                    children: _textWordArray.map((word) {
+                      bool isSelected = _selectedWord == word;
+                      return GestureDetector(
+                        onTap: () {
+                          _toggleSelected(word);
+                          if (_isSelected(word)) {
+                            _showPopup(word);
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(2.0),
+                          decoration: BoxDecoration(
+                            color: isSelected ? Colors.yellow : null,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Text(word, style: TextStyle(fontSize: width * 0.045),),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
-            ),
+                )
+            )
           ],
         ),
       ),

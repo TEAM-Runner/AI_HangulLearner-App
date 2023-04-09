@@ -204,41 +204,45 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
               ],
             ),
             SizedBox(height: 16.0),
-            Wrap(
-              spacing: 4.0, // 단어 사이 간격
-              runSpacing: 4.0, // 문장 사이 간격
-
-              children: _textWordArray.asMap().entries.map((word) {
-                int index = word.key;
-                String wordValue = word.value;
-                int? sentenceIndex = _wordToSentenceIndexMap[index]; // 단어의 인덱스에 따라 문장의 인덱스를 가져와 저장
-
-                // 선택한 단어가 포함된 문장 노란색으로 highlight 표시
-                // isSelected[index] = _currentSentenceIndex != -1 && sentenceIndex != null && sentenceIndex == _currentSentenceIndex;
-
-                return GestureDetector(
-                  onTap: () {
-                    _speakWord(index);
-                    setState(() {
-                      _currentSentenceIndex = sentenceIndex!;
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(2.0),
-                    decoration: BoxDecoration(
-                      color: isSelected[index] ? Colors.yellow : null,
-                      // color: isSelected[index] ? Colors.yellow : null,
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: Text(wordValue, style: TextStyle(fontSize: width * 0.045),),
-
-                  ),
-                );
-              }).toList(),
-            ),
             Expanded(
-              child: Container(),
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    spacing: 4.0, // 단어 사이 간격
+                    runSpacing: 4.0, // 문장 사이 간격
+
+                    children: _textWordArray.asMap().entries.map((word) {
+                      int index = word.key;
+                      String wordValue = word.value;
+                      int? sentenceIndex = _wordToSentenceIndexMap[index]; // 단어의 인덱스에 따라 문장의 인덱스를 가져와 저장
+
+                      // 선택한 단어가 포함된 문장 노란색으로 highlight 표시
+                      // isSelected[index] = _currentSentenceIndex != -1 && sentenceIndex != null && sentenceIndex == _currentSentenceIndex;
+
+                      return GestureDetector(
+                        onTap: () {
+                          _speakWord(index);
+                          setState(() {
+                            _currentSentenceIndex = sentenceIndex!;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(2.0),
+                          decoration: BoxDecoration(
+                            color: isSelected[index] ? Colors.yellow : null,
+                            // color: isSelected[index] ? Colors.yellow : null,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Text(wordValue, style: TextStyle(fontSize: width * 0.045),),
+
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                )
             ),
+            // Expanded(
+            //   child: Container(),
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
