@@ -33,7 +33,7 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
 
   _SelectDicButtonScreen(String text) {
     _text = text;
-    _textWordArray = text.split(' ');
+    _textWordArray = text.split('\n').expand((line) => line.split(' ')).toList();
   }
 
   void _initializeUserRef() {
@@ -130,13 +130,6 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
                                 return Padding(
                                   padding: EdgeInsets.all(16),
                                   child: Container(
-                                    // decoration: BoxDecoration(
-                                    //   border: Border.all(
-                                    //     color: Colors.grey,
-                                    //     width: 1,
-                                    //   ),
-                                    //   borderRadius: BorderRadius.circular(9),
-                                    // ),
                                     child: ElevatedButton(
                                       onPressed: () {
                                         // add tts or ... tts 보류

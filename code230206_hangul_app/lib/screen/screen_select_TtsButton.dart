@@ -30,8 +30,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   // 초기화
   _SelectTtsButtonScreenState(this._text) {
-    _textWordArray = _text.split(' '); // 단어 리스트 -> ' ' 공백문자 단위로 split
-    _textSentenceArray = _text.split('. '); // 문장 리스트 -> '.' 온점 단위로 split
+    _textWordArray = _text.split('\n').expand((line) => line.split(' ')).toList();
+    _textSentenceArray = _text.split(RegExp('[.!?]')); // 문장 리스트 -> '.', '?', '!' 문장 단위로 split
 
     _tts.setLanguage('kor'); // tts - 언어 한국어
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도. 기본 보통 속도

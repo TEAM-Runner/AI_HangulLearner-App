@@ -10,7 +10,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'screen_game_result.dart';
 
-final quizNumber = 5; // 전체 퀴즈수
+final quizNumber = 3; // 전체 퀴즈수
 
 class GameScreen extends StatefulWidget {
   @override
@@ -73,12 +73,13 @@ class _GameScreenState extends State<GameScreen> {
 
   void _generateGameWordList() {
     final random = Random();
-
     // 저장된 단어가 10개보다 많은 경우 starredWords에서 랜덤으로 단어 가져옴
     // 저장된 단어가 10개보다 적은 경우 gameBasicWordList 사용
     for (int i = 0; i < quizNumber; i++) {
+
       if (i < starredWords.length) {
-        int index = random.nextInt(starredWords.length);
+
+        int index = (random.nextInt(starredWords.length));
         gameWordList[i] = [
           starredWords[index]['word'],
           starredWords[index]['meaning'],
