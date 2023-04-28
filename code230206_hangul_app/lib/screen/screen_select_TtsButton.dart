@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'screen_select_dicButton.dart';
@@ -19,6 +20,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   List<String> _textSentenceArray = []; // 문장을 저장하는 리스트
   Map<int, int> _wordToSentenceIndexMap = {}; // 단어 인덱스와 문장 인덱스 매핑. 단어에서 문장 인덱스 알아내기 위해
   int _toggleSwitchvalue = 1; // tts 속도를 지정하는 토글 스위치 인덱스
+  List<String> _TTSWordArray = []; // TTS로 읽을 단어들을 저장하는 리스트
 
   int _currentSentenceIndex = -1; // 현재 문장의 인덱스 표시 (처음 아무것도 선택X -> -1)
   final FlutterTts _tts = FlutterTts(); // tts
@@ -44,27 +46,79 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   // 단어를 tts로 읽어주는 함수 - 단어를 클릭했을 때 그 단어가 포함된 문장 전체 읽기 위해
   void _speakWord(int index) async {
-    // String word = _textWordArray[index]; // 현재 읽을 단어 = 단어 리스트[매개변수 인덱스]
+    int? sentenceIndex = _wordToSentenceIndexMap[index]; // 단어로 문장 인덱스 알아내기
 
-    // 단어로 문장 인덱스 알아내기
-    int? sentenceIndex = _wordToSentenceIndexMap[index];
+    // _TTSWordArray.clear();
+    isSelected = List.generate(_textWordArray.length, (_) => false); // isSelecte를 모두 false로 초기화
+    int sentenceFirstWordIndex = -1; // 클릭한 문장의 첫 번째 단어 인덱스
+    int sentenceWordLength = 0; // 클릭한 문장의 길이
+    bool found = false; // 첫 번재 단어를 찾는 flag
+
+    if (_currentSentenceIndex == -1) {
+      isSelected = List.filled(_textWordArray.length, false);
+    }
+    else {
+      _wordToSentenceIndexMap.forEach((key, value) {
+        if (value == sentenceIndex && !found) {
+          sentenceFirstWordIndex = key;
+          found = true; // flag를 true로 세팅
+        }
+        if (value == sentenceIndex) {
+          sentenceWordLength++; // 길이 하나씩 증가시킴
+        }
+      });
+      // print('***  sentenceFirstWordIndex  *** ' + sentenceFirstWordIndex.toString());
+      // print('***  sentenceWordLength  *** ' + sentenceWordLength.toString());
+    }
+    for (int i = sentenceFirstWordIndex; i < sentenceFirstWordIndex + sentenceWordLength; i++) {
+      if (i >= _textWordArray.length) {
+        break;
+      }
+      _TTSWordArray.add(_textWordArray[i]);
+    }
+    print('***  _TTSWordArray  *** ' + _TTSWordArray.toString());
 
     if (sentenceIndex != -1) { // 문장 인덱스가 -1이 아니라면
-      _speakSentence(sentenceIndex!); // tts 문장 읽어주는 함수 실행
+      _speakSentence(_TTSWordArray); // tts 문장 읽어주는 함수 실행
     }
   }
 
   // 1개 문장을 tts로 읽어주는 함수
-  void _speakSentence(int index) async {
+  void _speakSentence(List _TTSWordArray) async {
     setState(() {
-      _currentSentenceIndex = index; // index를 매개변수로 받아서 현재 인덱스에 저장
       _setIsSelected();
-
     });
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
     _StopSpeakTts();
     // await _tts.stop(); // 실행되고 있는 tts 중단
-    await _tts.speak(_textSentenceArray[_currentSentenceIndex]); // index위치의 문장 tts로 읽기 시작
+
+    // await _tts.awaitSpeakCompletion(true); // TTS로 읽는 게 끝날 때까지 기다리기
+
+    // for (int i = 0; i<_TTSWordArray.length; i++){
+    //   await _tts.speak(_TTSWordArray[i]);
+    // }
+
+    // TTS 출력 중 _TTSWordArray가 변경되었는지 확인하는 코드
+    // 변경되었다면 while 루프를 멈추고 변경된 코드를 다시 실행
+    List<String> originalList = List.from(_TTSWordArray); // _TTSWordArray의 복사본 생성
+    print('***  originalList  *** ' + originalList.toString());
+
+    int i = 0;
+    while (i < _TTSWordArray.length) {
+      await _tts.speak(_TTSWordArray[i]);
+
+      if (!listEquals(originalList, _TTSWordArray)) { // _TTSWordArray가 변경되었다면 처음부터 다시 실행
+        // await Future.delayed(Duration(seconds: 1)); // 1초 동안만 정지
+        i = 0;
+        originalList = List.from(_TTSWordArray); // 변경된 _TTSWordArray의 복사본 업데이트
+        print('***  originalList  *** ' + originalList.toString());
+
+      } else {
+        i++;
+      }
+
+    }
+
   }
 
   // 모든 문장을 tts로 읽어주는 함수
@@ -73,8 +127,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       _currentSentenceIndex = -1;
       _setIsSelected();
     });
-    // _setIsSelected();
-    // _currentSentenceIndex = -1;
+
     final allSentenceString = _textSentenceArray.join('. '); // 모든 텍스트를 string에 저장
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
 
@@ -220,10 +273,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
                       return GestureDetector(
                         onTap: () {
-                          _speakWord(index);
                           setState(() {
+                            _StopSpeakTts();
+                            _TTSWordArray.clear();
                             _currentSentenceIndex = sentenceIndex!;
                           });
+                          _speakWord(index);
                         },
                         child: Container(
                           padding: EdgeInsets.all(2.0),

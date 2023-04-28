@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tuple/tuple.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:auto_size_text/auto_size_text.dart';
 import 'screen_game_result.dart';
 
 final quizNumber = 3; // 전체 퀴즈수

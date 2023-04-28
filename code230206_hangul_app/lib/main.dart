@@ -74,5 +74,78 @@ void main() async{
   ));
 }
 
-
-
+//
+//
+//
+// import 'package:flutter/material.dart';
+// import 'package:flutter_tts/flutter_tts.dart';
+//
+// FlutterTts flutterTts = FlutterTts();
+//
+// Future<void> speak(String text) async {
+//   await flutterTts.speak(text);
+// }
+//
+// void main() {
+//   runApp(MyApp());
+// }
+//
+// class MyApp extends StatefulWidget {
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
+//
+// class _MyAppState extends State<MyApp> {
+//
+//   String a = 'hi';
+//   String b = 'this';
+//   String c = 'is';
+//   String d = 'book';
+//
+//   bool isPlaying = false;
+//
+//   @override
+//   void dispose() {
+//     super.dispose();
+//     flutterTts.stop();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('Text-to-Speech Demo'),
+//         ),
+//         body: Center(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Text('Press the button to start'),
+//               SizedBox(height: 20),
+//               ElevatedButton(
+//                 onPressed: () async {
+//                   setState(() {
+//                     isPlaying = true;
+//                   });
+//                   await flutterTts.awaitSpeakCompletion(true);
+//                   await speak(a);
+//                   // await flutterTts.awaitSpeakCompletion(true);
+//                   await speak(b);
+//                   await speak(c);
+//                   await speak(d);
+//                   setState(() {
+//                     isPlaying = false;
+//                   });
+//                 },
+//                 child: Text('Start'),
+//               ),
+//               SizedBox(height: 20),
+//               isPlaying ? CircularProgressIndicator() : Container(),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

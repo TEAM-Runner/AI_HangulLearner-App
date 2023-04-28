@@ -44,7 +44,6 @@ dependencies:
   toggle_switch: ^2.0.1
   dynamic_text_highlighting: ^2.2.0
   card_swiper: ^2.0.4
-  auto_size_text: ^3.0.0 # UI 디자인에 따라 필요 없을수도 있음
   animated_toggle_switch: ^0.6.2
 
   # The following adds the Cupertino Icons font to your application.
