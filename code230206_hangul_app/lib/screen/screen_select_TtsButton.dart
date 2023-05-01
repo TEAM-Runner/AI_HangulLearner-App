@@ -5,6 +5,8 @@ import 'screen_select_dicButton.dart';
 import 'screen_select_modifyButton.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'dart:async';
+
 
 class SelectTtsButtonScreen extends StatefulWidget {
   final String text;
@@ -29,6 +31,9 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   List<bool> isSelected = [];// 노란색 highlight를 표시할 것인지 판단하는 bool 리스트
 
+  StreamController<List<bool>> _streamController = StreamController<List<bool>>.broadcast();
+  // StreamController _streamController = StreamController();
+  Stream get stream => _streamController.stream;
 
   // 초기화
   _SelectTtsButtonScreenState(this._text) {
@@ -40,6 +45,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     FindWordToSentenceIndex findWordToSentenceIndex = FindWordToSentenceIndex(_text, _textWordArray, _textSentenceArray);
     _wordToSentenceIndexMap = findWordToSentenceIndex._wordToSentenceIndexMap;
     isSelected = List.generate(_textWordArray.length, (_) => false); // isSelecte를 모두 false로 초기화
+
+
+    // stream 동기화 관련
+    // isSelectedController = StreamController<List<bool>>.broadcast();
+    // isSelected[index] = false;
+    // isSelectedController.add(isSelected);
 
   }
 
@@ -70,6 +81,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       // print('***  sentenceFirstWordIndex  *** ' + sentenceFirstWordIndex.toString());
       // print('***  sentenceWordLength  *** ' + sentenceWordLength.toString());
     }
+    _TTSWordArray.add(sentenceIndex.toString()); // sentenceIndex를 맨 첫번째에 저장
+
     for (int i = sentenceFirstWordIndex; i < sentenceFirstWordIndex + sentenceWordLength; i++) {
       if (i >= _textWordArray.length) {
         break;
@@ -86,39 +99,50 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   // 1개 문장을 tts로 읽어주는 함수
   void _speakSentence(List _TTSWordArray) async {
     setState(() {
-      _setIsSelected();
+      // _setIsSelected();
+      _setIsSelected_2(-1);
     });
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
     _StopSpeakTts();
-    // await _tts.stop(); // 실행되고 있는 tts 중단
+    await _tts.awaitSpeakCompletion(true); // TTS로 읽는 게 끝날 때까지 기다리기
 
-    // await _tts.awaitSpeakCompletion(true); // TTS로 읽는 게 끝날 때까지 기다리기
-
-    // for (int i = 0; i<_TTSWordArray.length; i++){
-    //   await _tts.speak(_TTSWordArray[i]);
-    // }
+    int firstKeyIndex = findFirstKeyByValue(_wordToSentenceIndexMap, _currentSentenceIndex);
+    _setIsSelected_2(firstKeyIndex);
+    // print('***  firstKeyIndex  *** ' + firstKeyIndex.toString());
 
     // TTS 출력 중 _TTSWordArray가 변경되었는지 확인하는 코드
     // 변경되었다면 while 루프를 멈추고 변경된 코드를 다시 실행
     List<String> originalList = List.from(_TTSWordArray); // _TTSWordArray의 복사본 생성
     print('***  originalList  *** ' + originalList.toString());
 
-    int i = 0;
+    int i = 1; // 맨 앞에 저장된 sentenceIndex는 제외하고 TTS 출력
     while (i < _TTSWordArray.length) {
+      print('***  _TTSWordArray.length  *** ' + _TTSWordArray.length.toString());
+
+      // _setIsSelected_2(int._TTSWordArray[0], i);
       await _tts.speak(_TTSWordArray[i]);
 
       if (!listEquals(originalList, _TTSWordArray)) { // _TTSWordArray가 변경되었다면 처음부터 다시 실행
-        // await Future.delayed(Duration(seconds: 1)); // 1초 동안만 정지
-        i = 0;
+
+        firstKeyIndex = findFirstKeyByValue(_wordToSentenceIndexMap, _currentSentenceIndex);
+        _setIsSelected_2(firstKeyIndex);
+        print('***  !listEquals is called  *** ' + firstKeyIndex.toString());
+
+
+
+        i = 1;
         originalList = List.from(_TTSWordArray); // 변경된 _TTSWordArray의 복사본 업데이트
-        print('***  originalList  *** ' + originalList.toString());
 
       } else {
+        if (i < _TTSWordArray.length - 1){
+          _setIsSelected_2(firstKeyIndex+i);
+
+        }
+
         i++;
+
       }
-
     }
-
   }
 
   // 모든 문장을 tts로 읽어주는 함수
@@ -156,8 +180,38 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
         }
       });
     }
-
   }
+
+  // 문장 번호로 단어 인덱스를 알아내는 함수
+  int findFirstKeyByValue(Map<int, int> map, int value) {
+    for (var entry in map.entries) {
+      if (entry.value == value) {
+        return entry.key;
+      }
+    }
+    return -1;
+  }
+
+  // 노란색 highlight 할 단어를 세팅하는 함수
+  void _setIsSelected_2(firstKeyIndex) {
+    print('***  _setIsSelected_2 is called  *** ' + firstKeyIndex.toString());
+
+    isSelected = List.generate(_textWordArray.length, (_) => false); // isSelecte를 모두 false로 초기화
+
+    if (firstKeyIndex == -1){
+      isSelected = List.generate(_textWordArray.length, (_) => false); // isSelecte를 모두 false로 초기화
+    } else {
+      isSelected[firstKeyIndex] = true;
+      print('***  _setIsSelected_2 : firstKeyIndex  *** ' + firstKeyIndex.toString());
+    }
+
+    _streamController.add(isSelected);
+  }
+
+
+
+
+
 
   Widget alternativeIconBuilder(BuildContext context, SizeProperties<int> local,
       GlobalToggleProperties<int> global) {
@@ -268,29 +322,34 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                       String wordValue = word.value;
                       int? sentenceIndex = _wordToSentenceIndexMap[index]; // 단어의 인덱스에 따라 문장의 인덱스를 가져와 저장
 
-                      // 선택한 단어가 포함된 문장 노란색으로 highlight 표시
-                      // isSelected[index] = _currentSentenceIndex != -1 && sentenceIndex != null && sentenceIndex == _currentSentenceIndex;
-
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _StopSpeakTts();
-                            _TTSWordArray.clear();
-                            _currentSentenceIndex = sentenceIndex!;
-                          });
-                          _speakWord(index);
+                      return StreamBuilder(
+                        stream: _streamController.stream,
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          List<bool> isSelected = snapshot.data ?? List.generate(_textWordArray.length, (_) => false);
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                // _StopSpeakTts();
+                                _TTSWordArray.clear();
+                                _currentSentenceIndex = sentenceIndex!;
+                              });
+                              _speakWord(index);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(2.0),
+                              decoration: BoxDecoration(
+                                color: isSelected[index] ? Colors.yellow : null,
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              child: Text(
+                                wordValue,
+                                style: TextStyle(fontSize: width * 0.045),
+                              ),
+                            ),
+                          );
                         },
-                        child: Container(
-                          padding: EdgeInsets.all(2.0),
-                          decoration: BoxDecoration(
-                            color: isSelected[index] ? Colors.yellow : null,
-                            // color: isSelected[index] ? Colors.yellow : null,
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          child: Text(wordValue, style: TextStyle(fontSize: width * 0.045),),
-
-                        ),
                       );
+
                     }).toList(),
                   ),
                 )
@@ -394,7 +453,7 @@ class FindWordToSentenceIndex {
         wordIndex = 0;
       }
     }
-    // print('***  _wordToSentenceIndexMap  *** ' + _wordToSentenceIndexMap.toString());
+    print('***  _wordToSentenceIndexMap  *** ' + _wordToSentenceIndexMap.toString());
   }
 
 }
