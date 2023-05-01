@@ -13,26 +13,12 @@
 
 import 'package:code230206_hangul_app/screen/snackBarWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'package:tuple/tuple.dart';
-
-import 'screen/snackBarWidget.dart';
-import 'screen/screen_home.dart';
-import 'screen/screen_Camera.dart';
 import 'screen/screen_dic.dart';
 import 'screen/screen_dic_open.dart';
 import 'screen/screen_tts.dart';
-import 'screen/snackBarWidget.dart';
-import 'screen/screen_auth_authPage.dart';
 import 'screen/screen_auth_Login.dart';
-import 'screen/screen_auth_SignUp.dart';
 import 'screen/screen_game_result.dart';
 import 'screen/screen_game_wrongWordList.dart';
-
-import 'package:path/path.dart' as Path;
-import 'package:camera/camera.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 
@@ -61,7 +47,6 @@ void main() async{
     title: 'GP App',
     initialRoute: '/',
     routes: {
-      // '/':(context) => HomeScreen(),
       '/':(context) => LoginScreen(),
 
       '/DicScreen':(context) => DicScreen(DicScreenText: DicScreenText),

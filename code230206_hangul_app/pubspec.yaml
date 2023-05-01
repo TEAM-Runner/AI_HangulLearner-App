@@ -57,6 +57,8 @@ dependencies:
   email_validator: ^2.1.17
   firebase_core: ^2.7.1
 
+  #vocabulary_list
+  hangul: ^0.4.0
 
 
 dev_dependencies:

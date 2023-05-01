@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // 단어장 기능은 학습게임용 DB를 이용하면 쉽게 만들 수 있을 것 같아 넣어둠
                     // 프로젝트 진행 속도에 따라 생략 가능
-                    makeButton('단어장', 3 , '지금까지 공부한', '단어를 복습하세요', 3),
+                    makeButton('내가 찾은 단어', 3 , '지금까지 공부한', '단어를 복습하세요', 3),
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
@@ -135,7 +135,9 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (onPressNumber == 2){ //학습게임 버튼 클릭
             // screen_game.dart로 연결
-            Navigator.push(context, MaterialPageRoute(builder: (context) => GameScreen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GameScreen()));
 
 
             // (임시) screen_game_result.dart로 연결

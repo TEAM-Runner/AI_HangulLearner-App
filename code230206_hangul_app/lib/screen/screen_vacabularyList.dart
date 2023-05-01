@@ -1,11 +1,12 @@
 // *** 단어장 스크린 ***
 // firestore에 저장된 단어/뜻 리스트를 보여주는 스크린
 
-import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hangul/hangul.dart';
 
 class VocabularyListScreen extends StatefulWidget {
   const VocabularyListScreen({Key? key}) : super(key: key);
@@ -41,6 +42,28 @@ class _VocabularyListScreenState extends State<VocabularyListScreen> {
     });
   }
 
+  //sort word list random
+  void _randomOrderStarredWords(){
+    //TO DO
+    setState(() {
+      starredWords.shuffle(Random());
+    });
+  }
+
+  //sort word list consonant order
+  void _consonantOrderStarredWords(){
+    //TO DO
+    setState(() {
+      _getStarredWords();
+    });
+  }
+
+  String _getFirstConsonant(String word) {
+    final syllables = HangulSyllable.fromString(word);
+    final firstConsonant = syllables.cho;
+    return firstConsonant;
+  }
+
   void _toggleWordStarred(String word) async {
     final DocumentReference wordRef = wordsRef.doc(word);
     final bool exists = await wordRef
@@ -53,6 +76,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen> {
     }
     _getStarredWords();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,60 +104,71 @@ class _VocabularyListScreenState extends State<VocabularyListScreen> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(width * 0.03),
-        child: starredWords.isEmpty
-            ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
-            : ListView.builder(
-          itemCount: starredWords.length,
-          itemBuilder: (_, index) {
-            final String word = starredWords[index]['word'];
-            return Card(
-              child: ListTile(
-                title: Text(
-                  starredWords[index]['word'],
-                  style: const TextStyle(fontSize: 20),
-                ),
-                subtitle: Text(
-                  starredWords[index]['meaning'],
-                  style: const TextStyle(fontSize: 20),
-                ),
-                trailing: IconButton(
-                    icon: Icon(Icons.star),
-                    color: Colors.orangeAccent,
-                    // onPressed: () {_toggleWordStarred(word);},
-                    onPressed: () async {
-                      showDialog(
-                          context: context,
-                          barrierDismissible: true, // 바깥 터치시 close
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: Text('단어를 삭제하시겠습니까?'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('아니요'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                TextButton(
-                                  child: const Text('네'),
-                                  onPressed: () {
-                                    _toggleWordStarred(word);
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(onPressed: _randomOrderStarredWords, child: Text("random")),
+              TextButton(onPressed: _consonantOrderStarredWords, child: Text("consonat")),
+            ],),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(width * 0.03),
+              child: starredWords.isEmpty
+                  ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
+                  : ListView.builder(
+                itemCount: starredWords.length+19,
+                itemBuilder: (_, index) {
+                  final String word = starredWords[index]['word'];
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        starredWords[index]['word'],
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      subtitle: Text(
+                        starredWords[index]['meaning'],
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      trailing: IconButton(
+                          icon: Icon(Icons.star),
+                          color: Colors.orangeAccent,
+                          // onPressed: () {_toggleWordStarred(word);},
+                          onPressed: () async {
+                            showDialog(
+                                context: context,
+                                barrierDismissible: true, // 바깥 터치시 close
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: Text('단어를 삭제하시겠습니까?'),
+                                    actions: [
+                                      TextButton(
+                                        child: const Text('아니요'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text('네'),
+                                        onPressed: () {
+                                          _toggleWordStarred(word);
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                }
                             );
                           }
-                      );
-                    }
-                ),
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ),
+            ),
+          )
+        ]),
     );
   }
 }
