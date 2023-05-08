@@ -59,6 +59,7 @@ dependencies:
 
   #vocabulary_list
   hangul: ^0.4.0
+  floating_action_bubble_custom: ^1.0.0+2
 
 
 dev_dependencies:

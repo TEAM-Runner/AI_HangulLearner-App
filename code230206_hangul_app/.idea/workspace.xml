@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update sentences split feature in dictionary, TTS screen&#10;&#10;- '\n'가 입력되었을 때 단어 리스트를 나누도록 업데이트(사전, TTS)&#10;- '?', '!'가 입력되었을 때 문장 리스트를 나누도록 업데이트(TTS)">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Set sort order,VocabularyListScreen&#10;&#10;-랜덤하고 가나다순">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
@@ -37,17 +34,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
-    <property name="cidr.known.project.marker" value="true" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
-    <property name="show.migrate.to.gradle.popup" value="false" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "io.flutter.reload.alreadyRun": "true",
+    "last_opened_file_path": "E:/workspace/AndroidStudio/untitled",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\DaMin\Documents\GitHub\AI_HangulLearner-App\code230206_hangul_app\assets\images" />
@@ -243,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681482624685</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Set sort order,VocabularyListScreen&#10;&#10;-랜덤하고 가나다순">
+      <created>1682942588806</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1682942588806</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -282,6 +287,7 @@
     <MESSAGE value="Update Appbar UI&#10;&#10;- Appbar 뒤로가기 버튼 UI 업데이트" />
     <MESSAGE value="Add ScrollView in modification, dictionary, TTS screen&#10;&#10;- 수정, 사전, 음성 스크린에 SingleChildScrollView 추가" />
     <MESSAGE value="Update sentences split feature in dictionary, TTS screen&#10;&#10;- '\n'가 입력되었을 때 단어 리스트를 나누도록 업데이트(사전, TTS)&#10;- '?', '!'가 입력되었을 때 문장 리스트를 나누도록 업데이트(TTS)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update sentences split feature in dictionary, TTS screen&#10;&#10;- '\n'가 입력되었을 때 단어 리스트를 나누도록 업데이트(사전, TTS)&#10;- '?', '!'가 입력되었을 때 문장 리스트를 나누도록 업데이트(TTS)" />
+    <MESSAGE value="Set sort order,VocabularyListScreen&#10;&#10;-랜덤하고 가나다순" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set sort order,VocabularyListScreen&#10;&#10;-랜덤하고 가나다순" />
   </component>
 </project>
