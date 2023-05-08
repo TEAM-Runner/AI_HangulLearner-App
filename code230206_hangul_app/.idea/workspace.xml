@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="add Floating Button,VocabularyListScreen&#10;&#10;-random, order, hide word, hide meaning">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="add Function hidde word or meaning,VocabularyListScreen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
     </list>
@@ -253,7 +253,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683520921051</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="add Function hidde word or meaning,VocabularyListScreen">
+      <created>1683522179047</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1683522179047</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -268,7 +275,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용" />
     <MESSAGE value="update" />
     <MESSAGE value="build: Save the word to firestore by pressing the star icon&#10;&#10;- screen_select_dicButton.dart: &#10;  1) star_border 아이콘 클릭 -&gt; star 아이콘으로 변경, firestore에 단어와 뜻 저장됨&#10;  2) star 아이콘 클릭 -&gt; star_border 아이콘으로 변경, firestore에 저장된 단어와 뜻 삭제됨&#10;- 기존의 screen_dic.dart, screen_dic_open.dart를 통합" />
     <MESSAGE value="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정" />
@@ -293,6 +299,7 @@
     <MESSAGE value="Update sentences split feature in dictionary, TTS screen&#10;&#10;- '\n'가 입력되었을 때 단어 리스트를 나누도록 업데이트(사전, TTS)&#10;- '?', '!'가 입력되었을 때 문장 리스트를 나누도록 업데이트(TTS)" />
     <MESSAGE value="Set sort order,VocabularyListScreen&#10;&#10;-랜덤하고 가나다순" />
     <MESSAGE value="add Floating Button,VocabularyListScreen&#10;&#10;-random, order, hide word, hide meaning" />
-    <option name="LAST_COMMIT_MESSAGE" value="add Floating Button,VocabularyListScreen&#10;&#10;-random, order, hide word, hide meaning" />
+    <MESSAGE value="add Function hidde word or meaning,VocabularyListScreen" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Function hidde word or meaning,VocabularyListScreen" />
   </component>
 </project>
