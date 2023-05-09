@@ -128,8 +128,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
         _setIsSelected_2(firstKeyIndex);
         print('***  !listEquals is called  *** ' + firstKeyIndex.toString());
 
-
-
         i = 1;
         originalList = List.from(_TTSWordArray); // 변경된 _TTSWordArray의 복사본 업데이트
 
@@ -138,9 +136,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
           _setIsSelected_2(firstKeyIndex+i);
 
         }
-
         i++;
-
       }
     }
   }
@@ -149,17 +145,24 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   void _speakAllSentences() async {
     setState(() {
       _currentSentenceIndex = -1;
-      _setIsSelected();
+      _setIsSelected_2(-1);
     });
-
-    final allSentenceString = _textSentenceArray.join('. '); // 모든 텍스트를 string에 저장
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedindex]); // tts - 읽기 속도
-
     _StopSpeakTts();
-    // await _tts.stop(); // 실행되고 있는 tts 중단
-    await _tts.speak(allSentenceString); // string을 tts로 읽기 시작
-    print('***  _wordToSentenceIndexMap  *** ' + _wordToSentenceIndexMap.toString());
+    await _tts.awaitSpeakCompletion(true); // TTS로 읽는 게 끝날 때까지 기다리기
 
+    int firstKeyIndex = 0;
+    // int firstKeyIndex = findFirstKeyByValue(_wordToSentenceIndexMap, _currentSentenceIndex);
+    _setIsSelected_2(firstKeyIndex);
+
+    int i = 0;
+    while (i < _textWordArray.length){
+      _setIsSelected_2(i);
+      await _tts.speak(_textWordArray[i]); // string을 tts로 읽기 시작
+      i++;
+    }
+    // await _tts.speak(allSentenceString); // string을 tts로 읽기 시작
+    print('***  _speakAllSentences : i  *** ' + i.toString());
   }
 
   // 실행되고 있는 tts를 중단하는 함수
@@ -168,19 +171,19 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   }
 
   // 노란색 highlight 할 단어를 세팅하는 함수
-  void _setIsSelected() {
-    isSelected = List.generate(_textWordArray.length, (_) => false); // isSelecte를 모두 false로 초기화
-
-    if (_currentSentenceIndex == -1){
-      isSelected = List.filled(_textWordArray.length, false);
-    } else {
-      _wordToSentenceIndexMap.forEach((key, value) {
-        if (value == _currentSentenceIndex) {
-          isSelected[key] = true;
-        }
-      });
-    }
-  }
+  // void _setIsSelected() {
+  //   isSelected = List.generate(_textWordArray.length, (_) => false); // isSelecte를 모두 false로 초기화
+  //
+  //   if (_currentSentenceIndex == -1){
+  //     isSelected = List.filled(_textWordArray.length, false);
+  //   } else {
+  //     _wordToSentenceIndexMap.forEach((key, value) {
+  //       if (value == _currentSentenceIndex) {
+  //         isSelected[key] = true;
+  //       }
+  //     });
+  //   }
+  // }
 
   // 문장 번호로 단어 인덱스를 알아내는 함수
   int findFirstKeyByValue(Map<int, int> map, int value) {
@@ -368,6 +371,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   // margin: EdgeInsets.only(bottom: height * 0.04),
                   child: FloatingActionButton(
                     onPressed: () {
+                      setState(() {
+                        _TTSWordArray.clear();
+                        // _currentSentenceIndex = sentenceIndex!;
+                      });
                       _speakAllSentences();
                     },
                     child: Icon(Icons.volume_up_outlined, color: Colors.black,),
@@ -377,6 +384,23 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 Expanded(
                   child: Container(),
                 ),
+
+                // 정지 버튼 - 수정 필요
+                // Container(
+                //   // margin: EdgeInsets.only(bottom: height * 0.04),
+                //   child: FloatingActionButton(
+                //     onPressed: () {
+                //       _TTSWordArray.clear();
+                //       _StopSpeakTts();
+                //       // _tts.stop();
+                //     },
+                //     child: Icon(Icons.stop, color: Colors.black,),
+                //     backgroundColor: Color(0xFFC0EB75),
+                //   ),
+                // ),
+                // Expanded(
+                //   child: Container(),
+                // ),
 
                 AnimatedToggleSwitch<int>.size(
                   textDirection: TextDirection.rtl,
