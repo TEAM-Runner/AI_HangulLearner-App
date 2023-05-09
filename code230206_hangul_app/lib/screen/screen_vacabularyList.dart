@@ -9,6 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hangul/hangul.dart';
 import 'package:floating_action_bubble_custom/floating_action_bubble_custom.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+
 
 class VocabularyListScreen extends StatefulWidget {
   const VocabularyListScreen({Key? key}) : super(key: key);
@@ -31,6 +33,10 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   bool _hiddenWord = false;
   bool _hiddenMeaning = false;
 
+  //TTS
+  final FlutterTts _tts = FlutterTts(); // tts
+
+
   void _initializeUserRef() {
     user = FirebaseAuth.instance.currentUser!;
     wordsRef = FirebaseFirestore.instance
@@ -51,8 +57,12 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     );
 
     final curvedAnimation =
-        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+    //TTS
+    _tts.setLanguage('kor'); // tts - 언어 한국어
+    _tts.setSpeechRate(0.3); // tts - 읽기 속도. 기본 보통 속도
   }
 
   void _getStarredWords() async {
@@ -99,15 +109,32 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     setState(() {});
   }
 
-  String _getFirstConsonant(String word) {
-    final syllables = HangulSyllable.fromString(word);
-    final firstConsonant = syllables.cho;
-    return firstConsonant;
+  //Read words and meanings in TTS
+  void _speakTTS() async {
+    final List<String> starredWordsList = [];
+    for (final doc in starredWords) {
+      starredWordsList.add('${doc['word']}. ${doc['meaning']}.');
+    }
+    final String speakWords = starredWordsList.join(' ');
+    _tts.speak(speakWords);
+    print('***  _speakTTS : joinedWords  *** ' + speakWords.toString());
   }
 
-  void _insertToStartedWords(){
-
+  //Stop speaking TTS
+  void _StopSpeakTts() async {
+    await _tts.stop();
   }
+
+
+  // String _getFirstConsonant(String word) {
+  //   final syllables = HangulSyllable.fromString(word);
+  //   final firstConsonant = syllables.cho;
+  //   return firstConsonant;
+  // }
+  //
+  // void _insertToStartedWords(){
+  //
+  // }
 
   void _toggleWordStarred(String word) async {
     final DocumentReference wordRef = wordsRef.doc(word);
@@ -185,6 +212,21 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                 bubbleColor: Color.fromARGB(255, 255, 255, 255),
                 icon: Icons.hide_source,
                 onPressed: _fullDisplay),
+
+            BubbleMenu(
+                title: "전체 읽기",
+                style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+                iconColor: Color.fromARGB(255, 51, 153, 255),
+                bubbleColor: Color.fromARGB(255, 255, 255, 255),
+                icon: Icons.volume_up_outlined,
+                onPressed: _speakTTS),
+            BubbleMenu(
+                title: "읽기 중단",
+                style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+                iconColor: Color.fromARGB(255, 51, 153, 255),
+                bubbleColor: Color.fromARGB(255, 255, 255, 255),
+                icon: Icons.stop,
+                onPressed: _StopSpeakTts),
           ],
 
           // animation controller
@@ -209,135 +251,137 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               child: starredWords.isEmpty
                   ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
                   : ListView.builder(
-                      itemCount: starredWords.length,
-                      itemBuilder: (_, index) {
-                        final String word = starredWords[index]['word'];
-                        if (_hiddenWord == false && _hiddenMeaning == false) {
-                          return Card(
-                            child: ListTile(
-                              title: Text(
-                                starredWords[index]['word'],
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              subtitle: Text(
-                                starredWords[index]['meaning'],
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              trailing: IconButton(
-                                  icon: Icon(Icons.star),
-                                  color: Colors.orangeAccent,
-                                  // onPressed: () {_toggleWordStarred(word);},
-                                  onPressed: () async {
-                                    showDialog(
-                                        context: context,
-                                        barrierDismissible:
-                                            true, // 바깥 터치시 close
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            content: Text('단어를 삭제하시겠습니까?'),
-                                            actions: [
-                                              TextButton(
-                                                child: const Text('아니요'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: const Text('네'),
-                                                onPressed: () {
-                                                  _toggleWordStarred(word);
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  }),
-                            ),
-                          );
-                        }
-                        else if (_hiddenWord == true) {
-                          return Card(
-                            child: ListTile(
-                              subtitle: Text(
-                                starredWords[index]['meaning'],
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              trailing: IconButton(
-                                  icon: Icon(Icons.star),
-                                  color: Colors.orangeAccent,
-                                  // onPressed: () {_toggleWordStarred(word);},
-                                  onPressed: () async {
-                                    showDialog(
-                                        context: context,
-                                        barrierDismissible:
-                                            true, // 바깥 터치시 close
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            content: Text('단어를 삭제하시겠습니까?'),
-                                            actions: [
-                                              TextButton(
-                                                child: const Text('아니요'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: const Text('네'),
-                                                onPressed: () {
-                                                  _toggleWordStarred(word);
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  }),
-                            ),
-                          );
-                        }
-                        else if (_hiddenMeaning == true) {
-                          return Card(
-                            child: ListTile(
-                              title: Text(
-                                starredWords[index]['word'],
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              trailing: IconButton(
-                                  icon: Icon(Icons.star),
-                                  color: Colors.orangeAccent,
-                                  // onPressed: () {_toggleWordStarred(word);},
-                                  onPressed: () async {
-                                    showDialog(
-                                        context: context,
-                                        barrierDismissible:
-                                            true, // 바깥 터치시 close
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            content: Text('단어를 삭제하시겠습니까?'),
-                                            actions: [
-                                              TextButton(
-                                                child: const Text('아니요'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: const Text('네'),
-                                                onPressed: () {
-                                                  _toggleWordStarred(word);
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  }),
-                            ),
-                          );
-                        }
-                      },
-                    ),
+                itemCount: starredWords.length,
+                itemBuilder: (_, index) {
+                  final String word = starredWords[index]['word'];
+                  if (_hiddenWord == false && _hiddenMeaning == false) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(
+                          starredWords[index]['word'],
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(
+                          starredWords[index]['meaning'],
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        trailing: IconButton(
+                            icon: Icon(Icons.star),
+                            color: Colors.orangeAccent,
+                            // onPressed: () {_toggleWordStarred(word);},
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                  true, // 바깥 터치시 close
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: Text('단어를 삭제하시겠습니까?'),
+                                      actions: [
+                                        TextButton(
+                                          child: const Text('아니요'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text('네'),
+                                          onPressed: () {
+                                            _toggleWordStarred(word);
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }),
+                      ),
+                    );
+                  }
+                  else if (_hiddenWord == true) {
+                    return Card(
+                      child: ListTile(
+                        subtitle: Text(
+                          starredWords[index]['meaning'],
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        trailing: IconButton(
+                            icon: Icon(Icons.star),
+                            color: Colors.orangeAccent,
+                            // onPressed: () {_toggleWordStarred(word);},
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                  true, // 바깥 터치시 close
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: Text('단어를 삭제하시겠습니까?'),
+                                      actions: [
+                                        TextButton(
+                                          child: const Text('아니요'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text('네'),
+                                          onPressed: () {
+                                            _toggleWordStarred(word);
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }),
+                      ),
+                    );
+                  }
+                  else if (_hiddenMeaning == true) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(
+                          starredWords[index]['word'],
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        trailing: IconButton(
+                            icon: Icon(Icons.star),
+                            color: Colors.orangeAccent,
+                            // onPressed: () {_toggleWordStarred(word);},
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                  true, // 바깥 터치시 close
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: Text('단어를 삭제하시겠습니까?'),
+                                      actions: [
+                                        TextButton(
+                                          child: const Text('아니요'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text('네'),
+                                          onPressed: () {
+                                            _toggleWordStarred(word);
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }),
+                      ),
+                    );
+                  }
+                  // Error: A non-null value must be returned since the return type 'Widget' doesn't allow null.
+                  return Container(); // 위 에러 발생해서 추가함
+                },
+              ),
             ),
           )
         ]));
