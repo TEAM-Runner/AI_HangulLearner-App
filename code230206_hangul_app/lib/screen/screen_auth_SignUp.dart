@@ -1,5 +1,6 @@
 // *** sign up 스크린 ***
 
+import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:code230206_hangul_app/main.dart';
@@ -63,7 +64,7 @@ class _SignUpWidget extends State<SignUpWidget> {
                       cursorColor: Colors.black,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                          labelText: 'Name',
+                          labelText: '이름',
                           prefixIcon: Icon(Icons.person_outline_sharp),
                           border: OutlineInputBorder()
                       ),
@@ -80,7 +81,7 @@ class _SignUpWidget extends State<SignUpWidget> {
                       cursorColor: Colors.black,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: '이메일',
                           prefixIcon: Icon(Icons.email_outlined),
                           border: OutlineInputBorder()
                       ),
@@ -98,7 +99,7 @@ class _SignUpWidget extends State<SignUpWidget> {
                       // cursorColor: Colors.black,
                       textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
-                          labelText: 'Password',
+                          labelText: '비밀번호',
                           prefixIcon: Icon(Icons.password_outlined),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -122,7 +123,7 @@ class _SignUpWidget extends State<SignUpWidget> {
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size.fromHeight(50),
                           backgroundColor: Color(0xFFF3F3F3)),
-                      child: Text('회원가입', style: TextStyle(fontSize: width * 0.045,  color: Colors.black),),
+                      child: Text('회원가입', style: TextStyle(fontSize: width * 0.045,  color: MyColor.accentColor),),
                     ),
                     SizedBox(height: height*0.02),
                     RichText(

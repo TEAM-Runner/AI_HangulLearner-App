@@ -69,29 +69,30 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 20.0),
-                height: height*0.33,
+                height: height*1.0,
                 child: ListView(
-                  scrollDirection: Axis.horizontal,
+                  scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
-                    makeButton('책 읽어주기', 1 , '궁금한 부분을', '촬영하세요', 1),
-                    const Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
-                    makeButton('학습게임', 2 , '게임으로 단어를', '공부하세요', 2),
+                    makeButton('책 읽어주기', 1 , '궁금한 부분을 찰칵','', 1),
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
 
                     // 단어장 기능은 학습게임용 DB를 이용하면 쉽게 만들 수 있을 것 같아 넣어둠
                     // 프로젝트 진행 속도에 따라 생략 가능
-                    makeButton('내가 찾은 단어', 3 , '지금까지 공부한', '단어를 복습하세요', 3),
+                    makeButton('내가 찾은 단어', 3 , '내가 찾은 단어 알아보기', '', 3),
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
+
+                    makeButton('게임', 2 , '게임으로 실력 향상!', '', 2),
+                    const Padding(
+                      padding: EdgeInsets.all(10),
+                    ),
+                    Text("추천단어"),
+                    //TODO: Recommended Words for Review
+                    Placeholder(),
                   ],
                 ),
               ),
@@ -198,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 1:
         return Icons.camera_alt_outlined;
       case 2:
-        return Icons.sticky_note_2_outlined;
+        return Icons.videogame_asset_outlined;
       case 3:
         return Icons.book_outlined;
     }

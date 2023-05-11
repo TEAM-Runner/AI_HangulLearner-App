@@ -2,6 +2,7 @@
 // screen_login.dart에서 forgot password를 클릭하면 나오는 스크린
 // 이메일을 입력하고 비밀번호를 변경할 수 있음
 
+import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -49,7 +50,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         cursorColor: Colors.black,
                         textInputAction: TextInputAction.done,
                         decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: '이메일',
                             prefixIcon: Icon(Icons.email_outlined),
                             border: OutlineInputBorder()
                         ),
@@ -66,7 +67,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size.fromHeight(50),
                             backgroundColor: Color(0xFFF3F3F3)),
-                        child: Text('비밀번호 재설정', style: TextStyle(fontSize: width * 0.045, color: Colors.black),),
+                        child: Text('비밀번호 재설정', style: TextStyle(fontSize: width * 0.045, color: MyColor.accentColor),),
                       ),
                     ],
                   ),
