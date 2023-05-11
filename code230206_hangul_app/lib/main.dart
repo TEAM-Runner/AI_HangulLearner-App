@@ -11,8 +11,11 @@
 
 // (2) 학습 게임 기능 -> 아직 X
 
+
+import 'package:code230206_hangul_app/screen/screen_splash.dart';
 import 'package:code230206_hangul_app/screen/snackBarWidget.dart';
 import 'package:flutter/material.dart';
+import 'configuration/my_style.dart';
 import 'screen/screen_dic.dart';
 import 'screen/screen_dic_open.dart';
 import 'screen/screen_tts.dart';
@@ -39,15 +42,17 @@ void main() async{
     debugShowCheckedModeBanner: false,
 
     // login, sign up 화면 prefix icon color 위해 추가
+    //rgb(169, 227, 75)       #a9e34b
     theme: ThemeData().copyWith(
       colorScheme: ThemeData().colorScheme.copyWith(
         primary: Color(0xFFC0EB75),
       ),
     ),
     title: 'GP App',
-    initialRoute: '/',
+    initialRoute: 'splash',
     routes: {
       '/':(context) => LoginScreen(),
+      'splash':(context) => const SpalshScreen(),
 
       '/DicScreen':(context) => DicScreen(DicScreenText: DicScreenText),
       '/TTSScreen':(context) => TTSScreen(TTSScreenText: TTSScreenText),
