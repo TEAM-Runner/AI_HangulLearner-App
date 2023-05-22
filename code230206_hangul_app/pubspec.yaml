@@ -45,6 +45,7 @@ dependencies:
   dynamic_text_highlighting: ^2.2.0
   card_swiper: ^2.0.4
   animated_toggle_switch: ^0.6.2
+  alphabet_scroll_view: ^0.3.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
