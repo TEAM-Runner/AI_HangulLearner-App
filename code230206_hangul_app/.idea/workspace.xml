@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add TTS read button and stop button in VocabularyList&#10;&#10;- 단어장 스크린에 전체 읽기 버튼, 읽기 중단 버튼 추가">
-      <change afterPath="$PROJECT_DIR$/lib/configuration/hangul_scroll.dart" afterDir="false" />
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/configuration/hangul_scroll.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/configuration/hangul_scroll.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +266,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683635808122</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경">
+      <created>1684775875712</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1684775875712</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -285,7 +288,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="build: Save the word to firestore by pressing the star icon&#10;&#10;- screen_select_dicButton.dart: &#10;  1) star_border 아이콘 클릭 -&gt; star 아이콘으로 변경, firestore에 단어와 뜻 저장됨&#10;  2) star 아이콘 클릭 -&gt; star_border 아이콘으로 변경, firestore에 저장된 단어와 뜻 삭제됨&#10;- 기존의 screen_dic.dart, screen_dic_open.dart를 통합" />
     <MESSAGE value="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정" />
     <MESSAGE value="build: modify screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어로 문장의 index를 알아내는 부분에서 발생한 오류 수정 완료&#10; 1) 단어를 클릭하면 그 단어가 포함된 문장을 읽어줌&#10; 2) 단어를 클릭하면 그 단어가 포함된 문장을 노란색 highlight로 표시함&#10;- TTS로 읽는 부분 실시간으로 표시하는 기능 추가 필요" />
     <MESSAGE value="build: modify screen_game.dart&#10;&#10;- 초성게임과 firestore 연동 완료&#10;  1) firstore에 저장된 단어를 gameWordList에 저장&#10;  2) firstore에 저장된 단어가 10개 미만이라면 기본적으로 저장된 gameBasicWordList 이용&#10;- 단어 전달 형태 tuple -&gt; list로 변경&#10;- 맞은 단어는 true, 틀린 단어는 false로 gameWordList에  저장&#10;- screen_game_result.dart 스크린과 연결" />
@@ -310,17 +312,7 @@
     <MESSAGE value="add Floating Button,VocabularyListScreen&#10;&#10;-random, order, hide word, hide meaning" />
     <MESSAGE value="add Function hidde word or meaning,VocabularyListScreen" />
     <MESSAGE value="Update Read all button feature in TTS&#10;&#10;- 전체 읽기 버튼을 클릭했을 때 현재 TTS로 읽고 있는 단어만 노란색 강조 표시하도록 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Read all button feature in TTS&#10;&#10;- 전체 읽기 버튼을 클릭했을 때 현재 TTS로 읽고 있는 단어만 노란색 강조 표시하도록 변경" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/main.dart</url>
-          <line>157</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경" />
   </component>
 </project>

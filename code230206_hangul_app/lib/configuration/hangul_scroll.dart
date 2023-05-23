@@ -28,7 +28,9 @@ class AlphabetScrollView extends StatefulWidget {
         required this.selectedTextStyle,
         required this.unselectedTextStyle,
         this.itemExtent = 40,
-        required this.itemBuilder})
+        required this.itemBuilder,
+        required this.screenHeight, // add to calculate scroll position
+      })
       : super(key: key);
 
   final List<AlphaModel> list;
@@ -38,6 +40,9 @@ class AlphabetScrollView extends StatefulWidget {
   final Widget Function(String)? overlayWidget;
   final TextStyle selectedTextStyle;
   final TextStyle unselectedTextStyle;
+  final double screenHeight; // add to calculate scroll position
+
+
 
   Widget Function(BuildContext, int, String) itemBuilder;
 
@@ -56,16 +61,11 @@ class _AlphabetScrollViewState extends State<AlphabetScrollView> {
     if (widget.isAlphabetsFiltered) {
       List<String> temp = [];
       alphabets.forEach((letter) {
-        // final koreanCharacter = getKoreanCharacter2(letter);
-        print("init 1 - koreanCharacter: $letter");
         AlphaModel? firstAlphabetElement;
         try {
           firstAlphabetElement = _list.firstWhere(
                 (item) {
               final itemKoreanCharacter = getKoreanCharacter(item.key);
-              print("init 2 - itemKoreanCharacter: $itemKoreanCharacter");
-
-              // return itemKoreanCharacter == koreanCharacter;
               return itemKoreanCharacter == letter;
 
             },
@@ -93,6 +93,7 @@ class _AlphabetScrollViewState extends State<AlphabetScrollView> {
     }
     super.initState();
   }
+
 
   ScrollController listController = ScrollController();
   final _selectedIndexNotifier = ValueNotifier<int>(0);
@@ -124,19 +125,13 @@ class _AlphabetScrollViewState extends State<AlphabetScrollView> {
   void calculateFirstIndex() {
 
     _filteredAlphabets.forEach((letter) {
-      // AlphaModel? firstElement = _list.firstWhereOrNull(
-      //     (item) => item.key.startsWith(letter));
       AlphaModel? firstElement = _list.firstWhereOrNull((item) {
         final koreanCharacter = getKoreanCharacter(item.key);
-        print("calculateFirstIndex 1 - letter: $letter");
-        print("calculateFirstIndex 2 - koreanCharacter: $koreanCharacter");
-
         return koreanCharacter == letter;
       });
 
       if (firstElement != null) {
         int index = _list.indexOf(firstElement);
-        // print("AlphaModel: key = ${firstElement.key}, secondaryKey = ${firstElement.secondaryKey}");
         final koreanCharacter = getKoreanCharacter(firstElement.key);
         firstIndexPosition[letter] = index;
       }
@@ -156,14 +151,9 @@ class _AlphabetScrollViewState extends State<AlphabetScrollView> {
   // }
 
   String? getKoreanCharacter(String word) {
-    print("getKoreanCharacter word: $word");
 
     final koreanCharacter = word.characters.first;
-    print("getKoreanCharacter koreanCharacter: $koreanCharacter");
-
-
     final unicodeValue = koreanCharacter.codeUnitAt(0);
-    print("getKoreanCharacter unicodeValue: $unicodeValue");
     List<String> initialConsonants = [
       "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ",
       "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
@@ -174,8 +164,7 @@ class _AlphabetScrollViewState extends State<AlphabetScrollView> {
     if (unicodeValue >= 0xAC00 && unicodeValue <= 0xD7A3) {
       final consonantIndex = ((unicodeValue - 0xAC00) ~/ (21 * 28));
       // final consonantUnicode = 0x1100 + consonantIndex;
-      print("consonantIndex: $consonantIndex");
-      print(initialConsonants[consonantIndex]);
+
       return initialConsonants[consonantIndex];
     }
 
@@ -190,12 +179,10 @@ class _AlphabetScrollViewState extends State<AlphabetScrollView> {
     final int finalConsonantCount = 28;
 
     int code = character.codeUnitAt(0);
-    print("getKoreanCharacter2 code: $code");
 
     if (code >= 12593 && code <= 12622) {
       int index = code - base;
       int consonantIndex = index ~/ (vowelCount * finalConsonantCount);
-      print("getKoreanCharacter2 consonantIndex: $consonantIndex");
 
       return consonantIndex + 1;
     } else {
@@ -206,14 +193,26 @@ class _AlphabetScrollViewState extends State<AlphabetScrollView> {
 
 
 
-
+  // final GlobalKey _listKey = GlobalKey();
   void scrolltoIndex(int x, Offset offset) {
+    print("scrolltoIndex offset: $offset");
     int index = firstIndexPosition[_filteredAlphabets[x].toLowerCase()]!;
-    final scrollToPostion = widget.itemExtent * index;
+    final int itemCount = (widget.screenHeight / widget.itemExtent).ceil();
+    final scrollToPosition  = widget.itemExtent * index;
+
+    // final cardPosition = offset.dy;
+    // final cardHeight = (context.findRenderObject() as RenderBox).size.height;
+    // final scrollToPosition  = widget.itemExtent * index - cardPosition + cardHeight / 2;
+
+    // print("scrolltoIndex cardPosition: $cardPosition");
+    // print("scrolltoIndex cardHeight: $cardHeight");
+    // print("scrolltoIndex scrollToPosition: $scrollToPosition");
+
     if (index != null) {
-      listController.animateTo((scrollToPostion),
+      listController.animateTo((scrollToPosition ),
           duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     }
+
     positionNotifer.value = offset;
   }
 

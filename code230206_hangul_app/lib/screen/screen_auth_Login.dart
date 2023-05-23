@@ -1,6 +1,5 @@
 // *** login 스크린 ***
 
-import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:code230206_hangul_app/main.dart';
@@ -80,7 +79,7 @@ class _LoginWidget extends State<LoginWidget> {
                     cursorColor: Colors.black,
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        labelText: '이메일',
+                        labelText: 'Email',
                         // labelStyle: TextStyle(color: Colors.black54),
                         prefixIcon: Icon(
                           Icons.email_outlined,
@@ -100,7 +99,7 @@ class _LoginWidget extends State<LoginWidget> {
                     cursorColor: Colors.black,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                        labelText: '비밀번호',
+                        labelText: 'Password',
                         prefixIcon: Icon(Icons.password_outlined),
                         border: OutlineInputBorder()
                     ),
@@ -112,9 +111,9 @@ class _LoginWidget extends State<LoginWidget> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size.fromHeight(50),
                     backgroundColor: Color(0xFFF3F3F3)),
-                    child: Text('로그인', style: TextStyle(fontSize: width * 0.045, color: MyColor.accentColor),),
+                    child: Text('로그인', style: TextStyle(fontSize: width * 0.045, color: Colors.black),),
                   ),
-                  SizedBox(height: height*0.04),
+                  SizedBox(height: height*0.02),
                   GestureDetector(
                     child: Text(
                       "비밀번호를 잊으셨나요?",
