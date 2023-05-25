@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update screen_home.dart&#10;&#10;- SingleChildScrollView 추가&#10;- makeButton 함수 수정&#10;- UI update">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix the problem of duplicate quizzes&#10;&#10;- screen_game.dart에서 퀴즈가 중복으로 출제되는 문제 해결">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -298,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685019777465</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Fix the problem of duplicate quizzes&#10;&#10;- screen_game.dart에서 퀴즈가 중복으로 출제되는 문제 해결">
+      <created>1685020961544</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1685020961544</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -313,7 +320,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix RangeError in screen_game.dart&#10;&#10;- index 변수 문제로 발생하던 RangeError 해결&#10;  (게임의 마지막 문제에서 index가 gameWordList의 범위를 초과하게 되는 에러가 있었음) &#10;- bool endGameReady를 추가해 에러 해결함" />
     <MESSAGE value="Add trim strings in WebScraper class in screen_select_dicButton.dart&#10;&#10;- txt_emph, txt_mean에 trim strings 추가&#10;- 이전에는 개행문자가 함께 저장 -&gt; 초성게임에서 문제가 발생했음" />
     <MESSAGE value="Add _getQuizWord and Fix _getHint functions in screen_game.dart&#10;&#10;- 힌트 기능 수정: 힌트 버튼을 클릭하면 문제의 첫 번째 초성이 글자(답)로 변경되도록 수정" />
     <MESSAGE value="Add all sentences read button in screen_select_TtsButton.dart&#10;&#10;- 글자인식한 모든 문장을 읽는 FloatingActionButton 추가&#10;- _speakAllSentences: 글자인식한 모든 문장을 읽어주는 함수" />
@@ -338,6 +344,7 @@
     <MESSAGE value="Add word categories to vacabulary screen&#10;&#10;- screen_vacabularyList.dart에 단어 카테고리 추가&#10;- 카테고리의 초성 버튼을 눌렀을 때 해당 초성의 단어가 있는 경우 -&gt; 그 단어들만 표시&#10;- 없는 경우 -&gt; 화면에 아무 단어도 표시하지 않음" />
     <MESSAGE value="Add game replay button" />
     <MESSAGE value="Update screen_home.dart&#10;&#10;- SingleChildScrollView 추가&#10;- makeButton 함수 수정&#10;- UI update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update screen_home.dart&#10;&#10;- SingleChildScrollView 추가&#10;- makeButton 함수 수정&#10;- UI update" />
+    <MESSAGE value="Fix the problem of duplicate quizzes&#10;&#10;- screen_game.dart에서 퀴즈가 중복으로 출제되는 문제 해결" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix the problem of duplicate quizzes&#10;&#10;- screen_game.dart에서 퀴즈가 중복으로 출제되는 문제 해결" />
   </component>
 </project>

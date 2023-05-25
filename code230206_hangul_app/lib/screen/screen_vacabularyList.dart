@@ -68,27 +68,54 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
   //scroll
   List<String> initialConsonants = [
+    "모두",
     "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ",
     "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
     "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ",
-    "ㅋ", "ㅌ", "ㅍ", "ㅎ", "모두"
+    "ㅋ", "ㅌ", "ㅍ", "ㅎ",
   ];
   Map<String, String> starredWordsMap = {};
   Map<String, String> filteredWordsMap = {};
 
+  // Function to display the entire list of words
+  // When '모두' category is selected
   void _getStarredWords() async {
     final QuerySnapshot querySnapshot = await wordsRef.get();
     setState(() {
       starredWords = querySnapshot.docs;
     });
+    print(starredWords[0]['word']);
+    starredWordsMap.clear();
+    for (int i = 0; i < starredWords.length; i++){
+      String word = starredWords[i]['word'];
+      String meaning = starredWords[i]['meaning'];
+      starredWordsMap[word] = meaning;
+      print("_getStarredWords word: $word");
+    }
+
+    print("_getStarredWords starredWordsMap: $starredWordsMap");
+    setState(() {}); // UI Update
+
+  }
+
+  // Function that shows only the words of the corresponding initial consonant category
+  // When 'ㄱ'~'ㅎ' category is selected
+  void _getStarredWordsCategory(String initialConsonant) async {
+
+    final QuerySnapshot querySnapshot = await wordsRef.get();
+    setState(() {
+      starredWords = querySnapshot.docs;
+    });
+    print(starredWords[0]['word']);
+    starredWordsMap.clear();
     for (int i = 0; i < starredWords.length; i++){
       String word = starredWords[i]['word'];
       String meaning = starredWords[i]['meaning'];
       starredWordsMap[word] = meaning;
     }
-  }
 
-  void _getStarredWords2(String initialConsonant) async {
+    //
+
     filteredWordsMap = {};
     bool checkConsonant = false; // 단어 카테고리에 표시할 단어가 있는지 체크
 
@@ -111,10 +138,10 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
       filteredWordsMap.clear();
       starredWordsMap.clear();
     }
-    setState(() {}); // UI setting
+    setState(() {}); // UI Update
   }
 
-  // scroll - 초성 추출 함수
+  // extract initial consonant
   String? _getFirstConsonant(String str) {
     final Map<int, String> initialConsonants = {
       4352: 'ㄱ', 4353: 'ㄲ', 4354: 'ㄴ', 4355: 'ㄷ', 4356: 'ㄸ',
@@ -192,16 +219,9 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     await _tts.stop();
   }
 
-  List<String> _getStarredWordsList() {
-    final List<String> starredWordsList = [];
-    for (final doc in starredWords) {
-      starredWordsList.add('${doc['word']}. ${doc['meaning']}.');
-    }
-    return starredWordsList;
-  }
-
-
-  void _toggleWordStarred(String word) async {
+  // delete StarredWords
+  // When star icon is toggled
+  void _deleteStarredWords(String word) async {
     final DocumentReference wordRef = wordsRef.doc(word);
     final bool exists = await wordRef
         .get()
@@ -211,11 +231,20 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     } else {
       await wordRef.set({'word': word});
     }
-    _getStarredWords();
+
+    // If the user is selecting the '모두' category
+    if (initialConsonantsIndex == 0) {
+      _getStarredWords();
+    }
+
+    // If the user is selecting the 'ㄱ'~'ㅎ' category
+    if (initialConsonantsIndex > 0){
+      _getStarredWordsCategory(initialConsonants[initialConsonantsIndex]);
+    }
   }
 
-  // scroll
-  int selectedIndex = 0;
+  // Index of initialConsonants
+  int initialConsonantsIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -341,7 +370,6 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                   trailing: IconButton(
                                       icon: Icon(Icons.star),
                                       color: Colors.orangeAccent,
-                                      // onPressed: () {_toggleWordStarred(word);},
                                       onPressed: () async {
                                         showDialog(
                                             context: context,
@@ -360,7 +388,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                                   TextButton(
                                                     child: const Text('네'),
                                                     onPressed: () {
-                                                      _toggleWordStarred(word);
+                                                      _deleteStarredWords(word);
                                                       Navigator.of(context).pop();
                                                     },
                                                   ),
@@ -400,7 +428,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                                   TextButton(
                                                     child: const Text('네'),
                                                     onPressed: () {
-                                                      _toggleWordStarred(word);
+                                                      _deleteStarredWords(word);
                                                       Navigator.of(context).pop();
                                                     },
                                                   ),
@@ -440,7 +468,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                                   TextButton(
                                                     child: const Text('네'),
                                                     onPressed: () {
-                                                      _toggleWordStarred(word);
+                                                      _deleteStarredWords(word);
                                                       Navigator.of(context).pop();
                                                     },
                                                   ),
@@ -471,15 +499,15 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                 // height: 20,
                                 child: ListTile(
                                   title: Text(initialConsonants[index]),
-                                  tileColor: selectedIndex == index ? MyColor.primaryColor : null,
+                                  tileColor: initialConsonantsIndex == index ? MyColor.primaryColor : null,
                                   dense: true,
                                   visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   onTap: () {
                                     setState(() {
-                                      selectedIndex = index; // Update the selected index
+                                      initialConsonantsIndex = index; // Update the selected index
                                     });
-                                    _getStarredWords2(initialConsonants[index]);
-                                    if (index == initialConsonants.length-1){
+                                    _getStarredWordsCategory(initialConsonants[index]);
+                                    if (index == 0){
                                       _getStarredWords();
                                     }
                                   },
