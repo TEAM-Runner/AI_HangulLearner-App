@@ -72,13 +72,17 @@ class _GameScreenState extends State<GameScreen> {
 
   void _generateGameWordList() {
     final random = Random();
+    final uniqueWordIndices = <int>{}; // 단어가 중복으로 저장되지 않도록 하는 set
+
     // 저장된 단어가 10개보다 많은 경우 starredWords에서 랜덤으로 단어 가져옴
     // 저장된 단어가 10개보다 적은 경우 gameBasicWordList 사용
     for (int i = 0; i < quizNumber; i++) {
-
       if (i < starredWords.length) {
-
-        int index = (random.nextInt(starredWords.length));
+        int index;
+        do {
+          index = random.nextInt(starredWords.length);
+        } while(uniqueWordIndices.contains(index));
+        uniqueWordIndices.add(index);
         gameWordList[i] = [
           starredWords[index]['word'],
           starredWords[index]['meaning'],
@@ -88,7 +92,6 @@ class _GameScreenState extends State<GameScreen> {
         gameWordList[i] = gameBasicWordList[i];
       }
     }
-    print('***  gameWordList  *** ' + gameWordList.toString());
     _getQuizWord();
   }
 
@@ -205,7 +208,6 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
     _initializeUserRef();
     _getStarredWords();
-
   }
 
   @override
