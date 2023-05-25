@@ -65,56 +65,49 @@ class _HomeScreenState extends State<HomeScreen> {
             centerTitle: true,
           ),
 
-          body: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 20.0),
-                height: height*1.0,
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    makeButton('책 읽어주기', 1 , '궁금한 부분을 찰칵','', 1),
-                    const Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                  height: height*1.0,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      makeButton('책 읽어주기', 1 , '궁금한 부분을 찰칵', 1),
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
 
-                    // 단어장 기능은 학습게임용 DB를 이용하면 쉽게 만들 수 있을 것 같아 넣어둠
-                    // 프로젝트 진행 속도에 따라 생략 가능
-                    makeButton('내가 찾은 단어', 3 , '내가 찾은 단어 알아보기', '', 3),
-                    const Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
+                      makeButton('내가 찾은 단어', 3 , '내가 찾은 단어 알아보기', 3),
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
 
-                    makeButton('게임', 2 , '게임으로 실력 향상!', '', 2),
-                    const Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
-                    Text("추천단어"),
-                    //TODO: Recommended Words for Review
-                    Placeholder(),
-                  ],
-                ),
-              ),
+                      makeButton('게임', 2 , '게임으로 실력 향상!', 2),
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
 
-              // ElevatedButton(
-              //   onPressed: () {
-              //     // FirebaseAuth.instance.signOut(); // 임시 로그아웃
-              //     Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
-              // },
-              //   style: ElevatedButton.styleFrom(
-              //       padding: EdgeInsets.all(10),
-              //       backgroundColor: Colors.deepPurple),
-              //   child: Text('(임시 버튼) 회원 정보 수정', style: TextStyle(fontSize: width * 0.036),),
-              // ),
-            ],
+                      Text("추천단어", style: TextStyle(fontSize: width * 0.045),),
+                      //TODO: Recommended Words for Review
+                      Placeholder(),
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ],
+                  ),
+                  )
+              ],
+            ),
           )
       ),
     );
   }
 
-  // 카메라, 학습게임, (임시)단어장 버튼을 만드는 위젯
-  Widget makeButton(String title, int iconNunber, String firstString, String secondString, int onPressNumber){
+  // 카메라, 학습게임, 단어장 버튼을 만드는 위젯
+  Widget makeButton(String title, int iconNumber, String buttonText, int onPressNumber){
     Size screenSize = MediaQuery
         .of(context)
         .size;
@@ -139,30 +132,12 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => GameScreen()));
-
-
-            // (임시) screen_game_result.dart로 연결
-            // List<List<dynamic>> gameResultTestList = [
-            //   ['사과', 'mean1', false],
-            //   ['바나나', 'mean2', false],
-            //   ['딸기', 'mean3', false],
-            //   ['포도', 'mean4', false],
-            //   ['오렌지', 'mean5', false],
-            //   ['배', 'mean6', false],
-            //   ['키위', 'mean7', false],
-            //   ['블루베리', 'mean8', false],
-            //   ['복숭아', 'mean9', false],
-            //   ['오렌지', 'mean10', false],
-            // ];
-            // Navigator.pushNamed(context, GameResultScreen.GameResultScreenRouteName, arguments: GameResultScreen(GameResultScreenText: gameResultTestList));
-
           }
-          if (onPressNumber == 3){//(임시)단어장 버튼 클릭
+          if (onPressNumber == 3){//단어장 버튼 클릭
             Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyListScreen()));
           }
         },
         style: ButtonStyle(
-
           foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
           backgroundColor:
           MaterialStateProperty.all<Color>(Colors.white),
@@ -177,23 +152,24 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(padding: EdgeInsets.only(top:width*0.12)),
             Text(title, style: TextStyle(fontSize: width * 0.045),),
             Padding(padding: EdgeInsets.only(top:width*0.03)), // <-- Text
-            SizedBox(width: width*0.3,),
+            // SizedBox(width: width*0.3,),
 
             Icon( // <-- Icon
-              // Icons.sticky_note_2_outlined,
-              _choiceIcon(iconNunber),
+              _choiceIcon(iconNumber),
               size: width*0.1,
             ),
+
             Padding(padding: EdgeInsets.only(top:width*0.03)),
-            Text(firstString, style: TextStyle(fontSize: width * 0.036),),
-            Text(secondString, style: TextStyle(fontSize: width * 0.036),),
+            Text(buttonText, style: TextStyle(fontSize: width * 0.036),),
+            Padding(padding: EdgeInsets.only(top:width*0.12)),
+
           ],
         ),
       ),
     );
   }
 
-  // 카메라, 학습게임, (임시)단어장 버튼의 아이콘을 리턴하는 함수
+  // 카메라, 학습게임, 단어장 버튼의 아이콘을 리턴하는 함수
   _choiceIcon(int num) {
     switch(num) {
       case 1:
