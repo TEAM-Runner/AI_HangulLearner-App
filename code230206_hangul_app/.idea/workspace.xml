@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="update ui">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="update ui2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
     </list>
@@ -21,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -303,7 +308,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685028055051</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="update ui2">
+      <created>1685030723277</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1685030723277</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -311,14 +323,25 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="fix_button" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add trim strings in WebScraper class in screen_select_dicButton.dart&#10;&#10;- txt_emph, txt_mean에 trim strings 추가&#10;- 이전에는 개행문자가 함께 저장 -&gt; 초성게임에서 문제가 발생했음" />
     <MESSAGE value="Add _getQuizWord and Fix _getHint functions in screen_game.dart&#10;&#10;- 힌트 기능 수정: 힌트 버튼을 클릭하면 문제의 첫 번째 초성이 글자(답)로 변경되도록 수정" />
     <MESSAGE value="Add all sentences read button in screen_select_TtsButton.dart&#10;&#10;- 글자인식한 모든 문장을 읽는 FloatingActionButton 추가&#10;- _speakAllSentences: 글자인식한 모든 문장을 읽어주는 함수" />
     <MESSAGE value="Add TTS speed control button in screen_select_TtsButton.dart&#10;&#10;- TTS 속도를 조절하는 AnimatedToggleSwitch 추가&#10;- 느림/보통/빠름의 3단계로 조절" />
@@ -343,6 +366,7 @@
     <MESSAGE value="Add game replay button" />
     <MESSAGE value="Update screen_home.dart&#10;&#10;- SingleChildScrollView 추가&#10;- makeButton 함수 수정&#10;- UI update" />
     <MESSAGE value="update ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui" />
+    <MESSAGE value="update ui2" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui2" />
   </component>
 </project>

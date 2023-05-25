@@ -33,6 +33,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   //hidden
   bool _hiddenWord = false;
   bool _hiddenMeaning = false;
+  bool _isPalysoud = false;
 
   //TTS
   final FlutterTts _tts = FlutterTts(); // tts
@@ -348,9 +349,20 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               Checkbox(
                 value: _hiddenWord,
                 onChanged: (value) {
-                  setState(() {
-                    _hiddenWord = value!;
-                  });
+                  if(_hiddenWord==false&&_hiddenMeaning==false){
+                    setState(() {
+                      _hiddenWord = true;
+                    });
+                  }else if(_hiddenWord==true&&_hiddenMeaning==false){
+                    setState(() {
+                      _hiddenWord = false;
+                    });
+                  }else if(_hiddenWord==false&&_hiddenMeaning==true){
+                    setState(() {
+                      _hiddenWord = true;
+                      _hiddenMeaning=false;
+                    });
+                  }
                 },
               ),
               Text("단어숨기"),
@@ -358,16 +370,31 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               Checkbox(
                 value: _hiddenMeaning,
                 onChanged: (value) {
-                  setState(() {
-                    _hiddenMeaning = value!;
-                  });
+                  if(_hiddenWord==false&&_hiddenMeaning==false){
+                    setState(() {
+                      _hiddenMeaning = true;
+                    });
+                  }else if(_hiddenWord==false&&_hiddenMeaning==true){
+                    setState(() {
+                      _hiddenMeaning = false;
+                    });
+                  }else if(_hiddenWord==true&&_hiddenMeaning==false){
+                    setState(() {
+                      _hiddenWord = false;
+                      _hiddenMeaning=true;
+                    });
+                  }
                 },
               ),
               Text("뜻숨기"),
               Spacer(),
               IconButton(
-                icon: Icon(Icons.keyboard_voice),
-                onPressed: () {},
+                icon: Icon(_isPalysoud?CupertinoIcons.pause:Icons.keyboard_voice),
+                onPressed: () {
+                  setState(() {
+                    _isPalysoud=!_isPalysoud;
+                  });
+                },
               ),
               Spacer(),
               DropdownButton(
@@ -413,18 +440,16 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                 itemBuilder: (_, index) {
                                   final String word =
                                       starredWordsMap.keys.elementAt(index);
-                                  if (_hiddenWord == false &&
-                                      _hiddenMeaning == false) {
                                     return Card(
                                       child: ListTile(
                                         title: Text(
                                           starredWordsMap.keys.elementAt(index),
-                                          style: const TextStyle(fontSize: 20),
+                                          style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
                                         ),
                                         subtitle: Text(
                                           starredWordsMap.values
                                               .elementAt(index),
-                                          style: const TextStyle(fontSize: 20),
+                                          style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
                                         ),
                                         trailing: IconButton(
                                             icon: Icon(Icons.star),
@@ -467,104 +492,6 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                             }),
                                       ),
                                     );
-                                  } else if (_hiddenWord == true) {
-                                    return Card(
-                                      child: ListTile(
-                                        subtitle: Text(
-                                          starredWordsMap.keys.elementAt(index),
-                                          style: const TextStyle(fontSize: 20),
-                                        ),
-                                        trailing: IconButton(
-                                            icon: Icon(Icons.star),
-                                            color: Colors.orangeAccent,
-                                            // onPressed: () {_toggleWordStarred(word);},
-                                            onPressed: () async {
-                                              showDialog(
-                                                  context: context,
-                                                  barrierDismissible:
-                                                      true, // 바깥 터치시 close
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      content:
-                                                          Text('단어를 삭제하시겠습니까?'),
-                                                      actions: [
-                                                        TextButton(
-                                                          child:
-                                                              const Text('아니요'),
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                        ),
-                                                        TextButton(
-                                                          child:
-                                                              const Text('네'),
-                                                          onPressed: () {
-                                                            _toggleWordStarred(
-                                                                word);
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                        ),
-                                                      ],
-                                                    );
-                                                  });
-                                            }),
-                                      ),
-                                    );
-                                  } else if (_hiddenMeaning == true) {
-                                    return Card(
-                                      child: ListTile(
-                                        title: Text(
-                                          starredWordsMap.values
-                                              .elementAt(index),
-                                          style: const TextStyle(fontSize: 20),
-                                        ),
-                                        trailing: IconButton(
-                                            icon: Icon(Icons.star),
-                                            color: Colors.orangeAccent,
-                                            // onPressed: () {_toggleWordStarred(word);},
-                                            onPressed: () async {
-                                              showDialog(
-                                                  context: context,
-                                                  barrierDismissible:
-                                                      true, // 바깥 터치시 close
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      content:
-                                                          Text('단어를 삭제하시겠습니까?'),
-                                                      actions: [
-                                                        TextButton(
-                                                          child:
-                                                              const Text('아니요'),
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                        ),
-                                                        TextButton(
-                                                          child:
-                                                              const Text('네'),
-                                                          onPressed: () {
-                                                            _toggleWordStarred(
-                                                                word);
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                        ),
-                                                      ],
-                                                    );
-                                                  });
-                                            }),
-                                      ),
-                                    );
-                                  }
                                   // Error: A non-null value must be returned since the return type 'Widget' doesn't allow null.
                                   return Container(); // 위 에러 발생해서 추가함
                                 },
