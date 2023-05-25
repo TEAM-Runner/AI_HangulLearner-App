@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'screen_game_wrongWordList.dart';
+import 'screen_game.dart';
 
 class GameResultScreen extends StatefulWidget {
   static const String GameResultScreenRouteName = "/GameResultScreen";
@@ -97,10 +98,12 @@ class _GameResultScreenState extends State<GameResultScreen> {
                   height: 50, // <-- Your height
                   child: ElevatedButton(
                     onPressed: () {
-                      // 랭킹 화면으로 연결
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => GameScreen()));
                     },
                     child: Text(
-                      '기록 확인하기',
+                      '다시풀기',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
