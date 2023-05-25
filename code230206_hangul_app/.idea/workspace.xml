@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update vacabulary screen to use hangul_scroll&#10;&#10;- screen_vacabularyList.dart가 alphabet_scroll.dart를 이용하도록 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/configuration/hangul_scroll.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/configuration/hangul_scroll.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -273,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684775875712</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Update vacabulary screen to use hangul_scroll&#10;&#10;- screen_vacabularyList.dart가 alphabet_scroll.dart를 이용하도록 수정">
+      <created>1684863504016</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1684863504016</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -288,7 +292,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정" />
     <MESSAGE value="build: modify screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어로 문장의 index를 알아내는 부분에서 발생한 오류 수정 완료&#10; 1) 단어를 클릭하면 그 단어가 포함된 문장을 읽어줌&#10; 2) 단어를 클릭하면 그 단어가 포함된 문장을 노란색 highlight로 표시함&#10;- TTS로 읽는 부분 실시간으로 표시하는 기능 추가 필요" />
     <MESSAGE value="build: modify screen_game.dart&#10;&#10;- 초성게임과 firestore 연동 완료&#10;  1) firstore에 저장된 단어를 gameWordList에 저장&#10;  2) firstore에 저장된 단어가 10개 미만이라면 기본적으로 저장된 gameBasicWordList 이용&#10;- 단어 전달 형태 tuple -&gt; list로 변경&#10;- 맞은 단어는 true, 틀린 단어는 false로 gameWordList에  저장&#10;- screen_game_result.dart 스크린과 연결" />
     <MESSAGE value="Add getFirstConsonant function&#10;&#10;- getFirstConsonant: 주어진 문자열에서 초성을 추출하는 함수&#10;- 오직 한국어일 경우에만 초성을 반환함" />
@@ -313,6 +316,7 @@
     <MESSAGE value="add Function hidde word or meaning,VocabularyListScreen" />
     <MESSAGE value="Update Read all button feature in TTS&#10;&#10;- 전체 읽기 버튼을 클릭했을 때 현재 TTS로 읽고 있는 단어만 노란색 강조 표시하도록 변경" />
     <MESSAGE value="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경" />
+    <MESSAGE value="Update vacabulary screen to use hangul_scroll&#10;&#10;- screen_vacabularyList.dart가 alphabet_scroll.dart를 이용하도록 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update vacabulary screen to use hangul_scroll&#10;&#10;- screen_vacabularyList.dart가 alphabet_scroll.dart를 이용하도록 수정" />
   </component>
 </project>
