@@ -343,7 +343,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
       body: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Checkbox(
                 value: _hiddenWord,
@@ -354,6 +354,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                 },
               ),
               Text("단어숨기"),
+              Spacer(),
               Checkbox(
                 value: _hiddenMeaning,
                 onChanged: (value) {
@@ -363,14 +364,41 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                 },
               ),
               Text("뜻숨기"),
-              TextButton.icon(onPressed: _speakTTS, icon: Icon(Icons.keyboard_voice), label: Text("음성"),),
-              DropdownButton(items: <DropdownMenuItem<String>>[
-                DropdownMenuItem(child: Text("1111",style: TextStyle(color: value=="1"?Colors.red:Colors.grey),),value: "1",),
-              ], onChanged: (selectedIndex){
-
-              }),
+              Spacer(),
+              IconButton(
+                icon: Icon(Icons.keyboard_voice),
+                onPressed: () {},
+              ),
+              Spacer(),
+              DropdownButton(
+                  items: const <DropdownMenuItem<String>>[
+                DropdownMenuItem(child: Text("가다순", style: TextStyle(color: Colors.black),), value: "1",),
+                DropdownMenuItem(child: Text("랜텀순", style: TextStyle(color: Colors.black),), value: "2",),
+                DropdownMenuItem(child: Text("최신순", style: TextStyle(color: Colors.black),), value: "3",),
+              ],
+                  value: "1",
+                  elevation: 10,
+                  icon: Icon(Icons.reorder),
+                  onChanged: (selectValue) {
+                    if(selectValue == "1"){
+                      setState(() {
+                        _consonantOrderStarredWords();
+                      });
+                    }
+                    if(selectValue == "2"){
+                      setState(() {
+                        _randomOrderStarredWords();
+                      });
+                    }
+                    if(selectValue == "3"){
+                      setState(() {
+                        //TODO 시산순
+                      });
+                    }
+                  }),
             ],
           ),
+
           Expanded(
             child: Padding(
                 padding: EdgeInsets.all(width * 0.01),
