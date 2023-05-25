@@ -13,6 +13,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:code230206_hangul_app/configuration/hangul_scroll.dart';
 import 'package:code230206_hangul_app/configuration/my_style.dart';
 
+
+
 class VocabularyListScreen extends StatefulWidget {
   const VocabularyListScreen({Key? key}) : super(key: key);
 
@@ -38,6 +40,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   //TTS
   final FlutterTts _tts = FlutterTts(); // tts
 
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +53,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     );
 
     final curvedAnimation =
-        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
     //TTS
@@ -66,45 +69,54 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
         .collection('words');
   }
 
-  //scroll
+  // Initial consonant category button list
   List<String> initialConsonants = [
-    "ㄱ",
-    "ㄲ",
-    "ㄴ",
-    "ㄷ",
-    "ㄸ",
-    "ㄹ",
-    "ㅁ",
-    "ㅂ",
-    "ㅃ",
-    "ㅅ",
-    "ㅆ",
-    "ㅇ",
-    "ㅈ",
-    "ㅉ",
-    "ㅊ",
-    "ㅋ",
-    "ㅌ",
-    "ㅍ",
-    "ㅎ",
-    "모두"
+    "모두",
+    "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ",
+    "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
+    "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ",
+    "ㅋ", "ㅌ", "ㅍ", "ㅎ",
   ];
-  Map<String, String> starredWordsMap = {};
-  Map<String, String> filteredWordsMap = {};
+  Map<String, String> starredWordsMap = {}; // List of words/meanings displayed on the screen
+  Map<String, String> filteredWordsMap = {}; // List for initial consonant category filtering
 
+  // Function to display the entire list of words
+  // When '모두' category is selected
   void _getStarredWords() async {
     final QuerySnapshot querySnapshot = await wordsRef.get();
     setState(() {
       starredWords = querySnapshot.docs;
     });
-    for (int i = 0; i < starredWords.length; i++) {
+    print(starredWords[0]['word']);
+    starredWordsMap.clear();
+    for (int i = 0; i < starredWords.length; i++){
+      String word = starredWords[i]['word'];
+      String meaning = starredWords[i]['meaning'];
+      starredWordsMap[word] = meaning;
+      print("_getStarredWords word: $word");
+    }
+    print("_getStarredWords starredWordsMap: $starredWordsMap");
+    setState(() {}); // UI Update
+  }
+
+  // Function that shows only the words of the corresponding initial consonant category
+  // When 'ㄱ'~'ㅎ' category is selected
+  void _getStarredWordsCategory(String initialConsonant) async {
+
+    final QuerySnapshot querySnapshot = await wordsRef.get();
+    setState(() {
+      starredWords = querySnapshot.docs;
+    });
+    print(starredWords[0]['word']);
+    starredWordsMap.clear();
+    for (int i = 0; i < starredWords.length; i++){
       String word = starredWords[i]['word'];
       String meaning = starredWords[i]['meaning'];
       starredWordsMap[word] = meaning;
     }
-  }
 
-  void _getStarredWords2(String initialConsonant) async {
+    //
+
     filteredWordsMap = {};
     bool checkConsonant = false; // 단어 카테고리에 표시할 단어가 있는지 체크
 
@@ -127,31 +139,16 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
       filteredWordsMap.clear();
       starredWordsMap.clear();
     }
-    setState(() {}); // UI setting
+    setState(() {}); // UI Update
   }
 
-  // scroll - 초성 추출 함수
+  // extract initial consonant
   String? _getFirstConsonant(String str) {
     final Map<int, String> initialConsonants = {
-      4352: 'ㄱ',
-      4353: 'ㄲ',
-      4354: 'ㄴ',
-      4355: 'ㄷ',
-      4356: 'ㄸ',
-      4357: 'ㄹ',
-      4358: 'ㅁ',
-      4359: 'ㅂ',
-      4360: 'ㅃ',
-      4361: 'ㅅ',
-      4362: 'ㅆ',
-      4363: 'ㅇ',
-      4364: 'ㅈ',
-      4365: 'ㅉ',
-      4366: 'ㅊ',
-      4367: 'ㅋ',
-      4368: 'ㅌ',
-      4369: 'ㅍ',
-      4370: 'ㅎ'
+      4352: 'ㄱ', 4353: 'ㄲ', 4354: 'ㄴ', 4355: 'ㄷ', 4356: 'ㄸ',
+      4357: 'ㄹ', 4358: 'ㅁ', 4359: 'ㅂ', 4360: 'ㅃ', 4361: 'ㅅ',
+      4362: 'ㅆ', 4363: 'ㅇ', 4364: 'ㅈ', 4365: 'ㅉ', 4366: 'ㅊ',
+      4367: 'ㅋ', 4368: 'ㅌ', 4369: 'ㅍ', 4370: 'ㅎ'
     };
     if (str == null) {
       throw Exception('한글이 아닙니다');
@@ -161,26 +158,27 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
       if (unicode < 44032 || unicode > 55203) {
         print("_getFirstConsonant unicode : $unicode");
-        throw Exception(
-            'unicode range error : unicode < 44032 || unicode > 55203');
+        throw Exception('unicode range error : unicode < 44032 || unicode > 55203');
       }
       int index = (unicode - 44032) ~/ 588;
       result += initialConsonants[4352 + index]!;
       return result;
     }
+
   }
 
   //sort word list random
   void _randomOrderStarredWords() {
-    //TO DO
-    setState(() {
-      starredWords.shuffle(Random());
-    });
+
+    List<MapEntry<String, String>> entries = starredWordsMap.entries.toList();
+    entries.shuffle();
+    starredWordsMap = Map.fromEntries(entries);
+
+    setState(() {});
   }
 
   //sort word list consonant order
   void _consonantOrderStarredWords() {
-    //TO DO
     setState(() {
       _getStarredWords();
     });
@@ -223,15 +221,9 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     await _tts.stop();
   }
 
-  List<String> _getStarredWordsList() {
-    final List<String> starredWordsList = [];
-    for (final doc in starredWords) {
-      starredWordsList.add('${doc['word']}. ${doc['meaning']}.');
-    }
-    return starredWordsList;
-  }
-
-  void _toggleWordStarred(String word) async {
+  // delete StarredWords
+  // When star icon is toggled
+  void _deleteStarredWords(String word) async {
     final DocumentReference wordRef = wordsRef.doc(word);
     final bool exists = await wordRef
         .get()
@@ -241,11 +233,22 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     } else {
       await wordRef.set({'word': word});
     }
-    _getStarredWords();
+
+    // If the user is selecting the '모두' category
+    if (initialConsonantsIndex == 0) {
+      _getStarredWords();
+    }
+
+    // If the user is selecting the 'ㄱ'~'ㅎ' category
+    if (initialConsonantsIndex > 0){
+      _getStarredWordsCategory(initialConsonants[initialConsonantsIndex]);
+    }
   }
 
-  // scroll
-  int selectedIndex = 0;
+  // Index of initialConsonants
+  int initialConsonantsIndex = 0;
+
+  String dropdownValue = "가나순";
 
   @override
   Widget build(BuildContext context) {
@@ -270,6 +273,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
         ),
         centerTitle: true,
       ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       // Init Floating Action Bubble
       floatingActionButton: FloatingActionBubble(
@@ -289,27 +293,6 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               bubbleColor: Color.fromARGB(255, 255, 255, 255),
               icon: Icons.bar_chart,
               onPressed: _randomOrderStarredWords),
-          BubbleMenu(
-              title: "only meaning",
-              style: TextStyle(color: Color.fromARGB(255, 255, 162, 0)),
-              iconColor: Color.fromARGB(255, 255, 162, 0),
-              bubbleColor: Color.fromARGB(255, 255, 255, 255),
-              icon: Icons.hide_source,
-              onPressed: _hideWords),
-          BubbleMenu(
-              title: "only words     ",
-              style: TextStyle(color: Color.fromARGB(255, 255, 162, 0)),
-              iconColor: Color.fromARGB(255, 255, 162, 0),
-              bubbleColor: Color.fromARGB(255, 255, 255, 255),
-              icon: Icons.hide_source,
-              onPressed: _hideMeaning),
-          BubbleMenu(
-              title: "full display      ",
-              style: TextStyle(color: Color.fromARGB(255, 255, 162, 0)),
-              iconColor: Color.fromARGB(255, 255, 162, 0),
-              bubbleColor: Color.fromARGB(255, 255, 255, 255),
-              icon: Icons.hide_source,
-              onPressed: _fullDisplay),
           BubbleMenu(
               title: "전체 읽기",
               style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
@@ -365,7 +348,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                   }
                 },
               ),
-              Text("단어숨기"),
+              Text("단어숨김"),
               Spacer(),
               Checkbox(
                 value: _hiddenMeaning,
@@ -386,7 +369,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                   }
                 },
               ),
-              Text("뜻숨기"),
+              Text("뜻숨김"),
               Spacer(),
               IconButton(
                 icon: Icon(_isPalysoud?CupertinoIcons.pause:Icons.keyboard_voice),
@@ -399,27 +382,28 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               Spacer(),
               DropdownButton(
                   items: const <DropdownMenuItem<String>>[
-                DropdownMenuItem(child: Text("가다순", style: TextStyle(color: Colors.black),), value: "1",),
-                DropdownMenuItem(child: Text("랜텀순", style: TextStyle(color: Colors.black),), value: "2",),
-                DropdownMenuItem(child: Text("최신순", style: TextStyle(color: Colors.black),), value: "3",),
-              ],
-                  value: "1",
+                    DropdownMenuItem(child: Text("가나순", style: TextStyle(color: Colors.black),), value: "가나순",),
+                    DropdownMenuItem(child: Text("랜덤순", style: TextStyle(color: Colors.black),), value: "랜덤순",),
+                    DropdownMenuItem(child: Text("최신순", style: TextStyle(color: Colors.black),), value: "최신순",),
+                  ],
+                  value: dropdownValue,
                   elevation: 10,
                   icon: Icon(Icons.reorder),
                   onChanged: (selectValue) {
-                    if(selectValue == "1"){
+                    dropdownValue = selectValue!;
+                    if(dropdownValue == "가나순"){
                       setState(() {
                         _consonantOrderStarredWords();
                       });
                     }
-                    if(selectValue == "2"){
+                    if(dropdownValue == "랜덤순"){
                       setState(() {
                         _randomOrderStarredWords();
                       });
                     }
-                    if(selectValue == "3"){
+                    if(dropdownValue == "최신순"){
                       setState(() {
-                        //TODO 시산순
+                        //TODO 시간순
                       });
                     }
                   }),
@@ -436,66 +420,66 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                         child: starredWordsMap.isEmpty
                             ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
                             : ListView.builder(
-                                itemCount: starredWordsMap.length,
-                                itemBuilder: (_, index) {
-                                  final String word =
-                                      starredWordsMap.keys.elementAt(index);
-                                    return Card(
-                                      child: ListTile(
-                                        title: Text(
-                                          starredWordsMap.keys.elementAt(index),
-                                          style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
-                                        ),
-                                        subtitle: Text(
-                                          starredWordsMap.values
-                                              .elementAt(index),
-                                          style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
-                                        ),
-                                        trailing: IconButton(
-                                            icon: Icon(Icons.star),
-                                            color: Colors.orangeAccent,
-                                            // onPressed: () {_toggleWordStarred(word);},
-                                            onPressed: () async {
-                                              showDialog(
-                                                  context: context,
-                                                  barrierDismissible:
-                                                      true, // 바깥 터치시 close
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      content:
-                                                          Text('단어를 삭제하시겠습니까?'),
-                                                      actions: [
-                                                        TextButton(
-                                                          child:
-                                                              const Text('아니요'),
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                        ),
-                                                        TextButton(
-                                                          child:
-                                                              const Text('네'),
-                                                          onPressed: () {
-                                                            _toggleWordStarred(
-                                                                word);
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                        ),
-                                                      ],
-                                                    );
-                                                  });
-                                            }),
-                                      ),
-                                    );
-                                  // Error: A non-null value must be returned since the return type 'Widget' doesn't allow null.
-                                  return Container(); // 위 에러 발생해서 추가함
-                                },
-                              )),
+                          itemCount: starredWordsMap.length,
+                          itemBuilder: (_, index) {
+                            final String word =
+                            starredWordsMap.keys.elementAt(index);
+                            return Card(
+                              child: ListTile(
+                                title: Text(
+                                  starredWordsMap.keys.elementAt(index),
+                                  style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
+                                ),
+                                subtitle: Text(
+                                  starredWordsMap.values
+                                      .elementAt(index),
+                                  style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
+                                ),
+                                trailing: IconButton(
+                                    icon: Icon(Icons.star),
+                                    color: Colors.orangeAccent,
+                                    // onPressed: () {_toggleWordStarred(word);},
+                                    onPressed: () async {
+                                      showDialog(
+                                          context: context,
+                                          barrierDismissible:
+                                          true, // 바깥 터치시 close
+                                          builder:
+                                              (BuildContext context) {
+                                            return AlertDialog(
+                                              content:
+                                              Text('단어를 삭제하시겠습니까?'),
+                                              actions: [
+                                                TextButton(
+                                                  child:
+                                                  const Text('아니요'),
+                                                  onPressed: () {
+                                                    Navigator.of(
+                                                        context)
+                                                        .pop();
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child:
+                                                  const Text('네'),
+                                                  onPressed: () {
+                                                    _deleteStarredWords(
+                                                        word);
+                                                    Navigator.of(
+                                                        context)
+                                                        .pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    }),
+                              ),
+                            );
+                            // Error: A non-null value must be returned since the return type 'Widget' doesn't allow null.
+                            return Container(); // 위 에러 발생해서 추가함
+                          },
+                        )),
                   ),
                   Column(
                     children: <Widget>[
@@ -511,19 +495,19 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                               // height: 20,
                               child: ListTile(
                                 title: Text(initialConsonants[index]),
-                                tileColor: selectedIndex == index
+                                tileColor: initialConsonantsIndex == index
                                     ? MyColor.primaryColor
                                     : null,
                                 dense: true,
                                 visualDensity:
-                                    VisualDensity(horizontal: 0, vertical: -4),
+                                VisualDensity(horizontal: 0, vertical: -4),
                                 onTap: () {
                                   setState(() {
-                                    selectedIndex =
+                                    initialConsonantsIndex =
                                         index; // Update the selected index
                                   });
-                                  _getStarredWords2(initialConsonants[index]);
-                                  if (index == initialConsonants.length - 1) {
+                                  _getStarredWordsCategory(initialConsonants[index]);
+                                  if (index == 0) {
                                     _getStarredWords();
                                   }
                                 },
@@ -541,3 +525,4 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     );
   }
 }
+
