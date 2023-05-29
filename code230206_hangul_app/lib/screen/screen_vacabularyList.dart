@@ -35,7 +35,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   //hidden
   bool _hiddenWord = false;
   bool _hiddenMeaning = false;
-  bool _isPalysoud = false;
+  bool isPlaysound = false;
 
   //TTS
   final FlutterTts _tts = FlutterTts(); // tts
@@ -179,9 +179,11 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
   //sort word list consonant order
   void _consonantOrderStarredWords() {
-    setState(() {
-      _getStarredWords();
-    });
+    List<MapEntry<String, String>> entries = starredWordsMap.entries.toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+    starredWordsMap = Map.fromEntries(entries);
+
+    setState(() {});
   }
 
   //hide word
@@ -207,13 +209,17 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
   //Read words and meanings in TTS
   void _speakTTS() async {
-    final List<String> starredWordsList = [];
-    for (final doc in starredWords) {
-      starredWordsList.add('${doc['word']}. ${doc['meaning']}.');
-    }
-    final String speakWords = starredWordsList.join(' ');
+    String speakWords = "";
+    starredWordsMap.forEach((word, meaning) {
+      speakWords += word + '. ' + meaning + '. ';
+    });
     _tts.speak(speakWords);
-    print('***  _speakTTS : joinedWords  *** ' + speakWords.toString());
+    print("_speakTTS speakWords: $speakWords");
+  }
+
+  void _speakTTScard(String cardString) async {
+    _tts.speak(cardString);
+    print("_speakTTScard cardString: $cardString");
   }
 
   //Stop speaking TTS
@@ -274,61 +280,62 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
         centerTitle: true,
       ),
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // Init Floating Action Bubble
-      floatingActionButton: FloatingActionBubble(
-        // Menu items
-        items: <Widget>[
-          BubbleMenu(
-              title: "    Order",
-              style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
-              iconColor: Color.fromARGB(255, 51, 153, 255),
-              bubbleColor: Color.fromARGB(255, 255, 255, 255),
-              icon: Icons.bar_chart,
-              onPressed: _consonantOrderStarredWords),
-          BubbleMenu(
-              title: "Random",
-              style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
-              iconColor: Color.fromARGB(255, 51, 153, 255),
-              bubbleColor: Color.fromARGB(255, 255, 255, 255),
-              icon: Icons.bar_chart,
-              onPressed: _randomOrderStarredWords),
-          BubbleMenu(
-              title: "전체 읽기",
-              style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
-              iconColor: Color.fromARGB(255, 51, 153, 255),
-              bubbleColor: Color.fromARGB(255, 255, 255, 255),
-              icon: Icons.volume_up_outlined,
-              onPressed: _speakTTS),
-          BubbleMenu(
-              title: "읽기 중단",
-              style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
-              iconColor: Color.fromARGB(255, 51, 153, 255),
-              bubbleColor: Color.fromARGB(255, 255, 255, 255),
-              icon: Icons.stop,
-              onPressed: _StopSpeakTts),
-        ],
-
-        // animation controller
-        animation: _animation,
-
-        // On pressed change animation state
-        onPressed: () => _animationController.isCompleted
-            ? _animationController.reverse()
-            : _animationController.forward(),
-
-        // Floating Action button Icon color
-        iconColor: Colors.blue,
-
-        // Flaoting Action button Icon
-        iconData: Icons.add_circle_outline,
-        backgroundColor: Colors.white,
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // // Init Floating Action Bubble
+      // floatingActionButton: FloatingActionBubble(
+      //   // Menu items
+      //   items: <Widget>[
+      //     BubbleMenu(
+      //         title: "    Order",
+      //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+      //         iconColor: Color.fromARGB(255, 51, 153, 255),
+      //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
+      //         icon: Icons.bar_chart,
+      //         onPressed: _consonantOrderStarredWords),
+      //     BubbleMenu(
+      //         title: "Random",
+      //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+      //         iconColor: Color.fromARGB(255, 51, 153, 255),
+      //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
+      //         icon: Icons.bar_chart,
+      //         onPressed: _randomOrderStarredWords),
+      //     BubbleMenu(
+      //         title: "전체 읽기",
+      //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+      //         iconColor: Color.fromARGB(255, 51, 153, 255),
+      //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
+      //         icon: Icons.volume_up_outlined,
+      //         onPressed: _speakTTS),
+      //     BubbleMenu(
+      //         title: "읽기 중단",
+      //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+      //         iconColor: Color.fromARGB(255, 51, 153, 255),
+      //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
+      //         icon: Icons.stop,
+      //         onPressed: _StopSpeakTts),
+      //   ],
+      //
+      //   // animation controller
+      //   animation: _animation,
+      //
+      //   // On pressed change animation state
+      //   onPressed: () => _animationController.isCompleted
+      //       ? _animationController.reverse()
+      //       : _animationController.forward(),
+      //
+      //   // Floating Action button Icon color
+      //   iconColor: Colors.blue,
+      //
+      //   // Flaoting Action button Icon
+      //   iconData: Icons.add_circle_outline,
+      //   backgroundColor: Colors.white,
+      // ),
       body: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              Spacer(),
               Checkbox(
                 value: _hiddenWord,
                 onChanged: (value) {
@@ -372,11 +379,16 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               Text("뜻숨김"),
               Spacer(),
               IconButton(
-                icon: Icon(_isPalysoud?CupertinoIcons.pause:Icons.keyboard_voice),
+                icon: Icon(isPlaysound?CupertinoIcons.pause:Icons.keyboard_voice),
                 onPressed: () {
                   setState(() {
-                    _isPalysoud=!_isPalysoud;
+                    isPlaysound=!isPlaysound;
                   });
+                  if (isPlaysound){
+                    _speakTTS();
+                  } else {
+                    _StopSpeakTts();
+                  }
                 },
               ),
               Spacer(),
@@ -407,6 +419,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                       });
                     }
                   }),
+              Spacer(),
             ],
           ),
 
@@ -435,6 +448,10 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                       .elementAt(index),
                                   style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
                                 ),
+                                onTap: () {
+                                  _StopSpeakTts();
+                                  _speakTTScard((starredWordsMap.keys.elementAt(index) + '. ' + starredWordsMap.values.elementAt(index)).toString());
+                                },
                                 trailing: IconButton(
                                     icon: Icon(Icons.star),
                                     color: Colors.orangeAccent,
@@ -502,6 +519,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                 visualDensity:
                                 VisualDensity(horizontal: 0, vertical: -4),
                                 onTap: () {
+                                  _StopSpeakTts();
                                   setState(() {
                                     initialConsonantsIndex =
                                         index; // Update the selected index

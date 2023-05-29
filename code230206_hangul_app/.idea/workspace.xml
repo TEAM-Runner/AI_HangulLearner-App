@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Refactor code of screen_select_TtsButton.dart&#10;&#10;- Word 클래스를 정의하고 word, isSelected, sentenceIndex, wordIndex, wordIndexInSentence 속성을 둠. 별도로 인덱스를 계산하거나 isSelected 리스트를 정의할 필요가 없어짐.&#10;- 모든 단어들을 wordList로 관리해 코드의 복잡성을 낮춤. isSelected는 wordList에서 업데이트되므로 별도로 정의할 필요가 없음.&#10;- 문장 읽기 기능이 _speakSentence 함수 하나로 통합됨. 기존에는 한 문장만 읽는 _speakSentence 함수와 전체 문장을 읽는 _speakAllSentences 함수를 따로 두었으나, _speakAllSentences는 제거하고 하나의 함수에서 TTS 기능 수행하도록 함">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update TTS control function&#10;&#10;- TTS 제어를 위해 _stopflag와 _playflag 사용&#10;- _playflag에 따라 FloatingActionButton의 아이콘 변경&#10;- _playflag에 따라 상태를 전환하도록 FloatingActionButton의 onPressed 콜백 수정&#10;- _stopflag에 따라 TTS를 재생하거나 중단함">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685345257827</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Update TTS control function&#10;&#10;- TTS 제어를 위해 _stopflag와 _playflag 사용&#10;- _playflag에 따라 FloatingActionButton의 아이콘 변경&#10;- _playflag에 따라 상태를 전환하도록 FloatingActionButton의 onPressed 콜백 수정&#10;- _stopflag에 따라 TTS를 재생하거나 중단함">
+      <created>1685351829873</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1685351829873</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -342,7 +349,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add all sentences read button in screen_select_TtsButton.dart&#10;&#10;- 글자인식한 모든 문장을 읽는 FloatingActionButton 추가&#10;- _speakAllSentences: 글자인식한 모든 문장을 읽어주는 함수" />
     <MESSAGE value="Add TTS speed control button in screen_select_TtsButton.dart&#10;&#10;- TTS 속도를 조절하는 AnimatedToggleSwitch 추가&#10;- 느림/보통/빠름의 3단계로 조절" />
     <MESSAGE value="Add Text recognition result editing function in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 기능 추가&#10;- 사전/음성출력 버튼 클릭하면 수정한 텍스트를 전달함" />
     <MESSAGE value="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일" />
@@ -367,6 +373,7 @@
     <MESSAGE value="update ui" />
     <MESSAGE value="update UI in screen_vacabularyList.dart&#10;&#10;- update _randomOrderStarredWords &#10;- update DropdownButton" />
     <MESSAGE value="Refactor code of screen_select_TtsButton.dart&#10;&#10;- Word 클래스를 정의하고 word, isSelected, sentenceIndex, wordIndex, wordIndexInSentence 속성을 둠. 별도로 인덱스를 계산하거나 isSelected 리스트를 정의할 필요가 없어짐.&#10;- 모든 단어들을 wordList로 관리해 코드의 복잡성을 낮춤. isSelected는 wordList에서 업데이트되므로 별도로 정의할 필요가 없음.&#10;- 문장 읽기 기능이 _speakSentence 함수 하나로 통합됨. 기존에는 한 문장만 읽는 _speakSentence 함수와 전체 문장을 읽는 _speakAllSentences 함수를 따로 두었으나, _speakAllSentences는 제거하고 하나의 함수에서 TTS 기능 수행하도록 함" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor code of screen_select_TtsButton.dart&#10;&#10;- Word 클래스를 정의하고 word, isSelected, sentenceIndex, wordIndex, wordIndexInSentence 속성을 둠. 별도로 인덱스를 계산하거나 isSelected 리스트를 정의할 필요가 없어짐.&#10;- 모든 단어들을 wordList로 관리해 코드의 복잡성을 낮춤. isSelected는 wordList에서 업데이트되므로 별도로 정의할 필요가 없음.&#10;- 문장 읽기 기능이 _speakSentence 함수 하나로 통합됨. 기존에는 한 문장만 읽는 _speakSentence 함수와 전체 문장을 읽는 _speakAllSentences 함수를 따로 두었으나, _speakAllSentences는 제거하고 하나의 함수에서 TTS 기능 수행하도록 함" />
+    <MESSAGE value="Update TTS control function&#10;&#10;- TTS 제어를 위해 _stopflag와 _playflag 사용&#10;- _playflag에 따라 FloatingActionButton의 아이콘 변경&#10;- _playflag에 따라 상태를 전환하도록 FloatingActionButton의 onPressed 콜백 수정&#10;- _stopflag에 따라 TTS를 재생하거나 중단함" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update TTS control function&#10;&#10;- TTS 제어를 위해 _stopflag와 _playflag 사용&#10;- _playflag에 따라 FloatingActionButton의 아이콘 변경&#10;- _playflag에 따라 상태를 전환하도록 FloatingActionButton의 onPressed 콜백 수정&#10;- _stopflag에 따라 TTS를 재생하거나 중단함" />
   </component>
 </project>
