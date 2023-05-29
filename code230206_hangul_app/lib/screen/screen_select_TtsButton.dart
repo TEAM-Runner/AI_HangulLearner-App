@@ -36,13 +36,16 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   StreamController<List<Word>> _streamController = StreamController<List<Word>>.broadcast();
   Stream<List<Word>> get stream => _streamController.stream;
 
+  bool _stopflag = true; // TTS speak or not
+  bool _playflag = false; // TTS stop or play
+
   int _toggleSwitchvalue = 1; // tts 속도를 지정하는 토글 스위치 인덱스
   List<String> _speaktype = ["one", "all"];
 
 
   // init
   _SelectTtsButtonScreenState(this._text) {
-    _sentences = _text.split(RegExp('[.!?]')); // 문장 리스트 -> '.', '?', '!' 문장 단위로 split
+    _sentences = _text.split(RegExp('(?<=[.!?])\\s*')); // 문장 리스트 -> '.', '?', '!' 문장 단위로 split
     int wordIndex = -1;
     for (int i = 0; i < _sentences.length; i++) {
       final words = _sentences[i].trim().split(' ');
@@ -61,7 +64,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   }
 
   void _speakWord(int sentenceIndex, int wordIndex, String speaktype) async {
-    if (_currentSentenceIndex != sentenceIndex) {
+    print("_speakWord is called");
+    print("_speakWord _currentSentenceIndex: $_currentSentenceIndex");
+
+    if (sentenceIndex != -1) {
       setState(() {
         _currentSentenceIndex = sentenceIndex;
         _updateIsSelected(-1);
@@ -87,6 +93,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       if (speaktype == "all"){
         sentenceFirstIndex = 0;
         sentenceLastIndex = wordList.length - 1;
+        print("_speakWord sentenceFirstIndex: $sentenceFirstIndex");
+
       }
       _speakSentence(sentenceFirstIndex, sentenceLastIndex);
     }
@@ -99,20 +107,30 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       _updateIsSelected(-1);
     });
 
+    // E/flutter ( 7310): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: setState() called after dispose(): _SelectTtsButtonScreenState#5560a(lifecycle state: defunct, not mounted)
+    // 위 오류 때문에 추가
+    if (!mounted) return; // Check if the widget is still mounted
+
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // tts - 읽기 속도
-    _stopSpeakTts();
     await _tts.awaitSpeakCompletion(true);
 
     for (int i = sentenceFirstIndex; i <= sentenceLastIndex; i++){
       _updateIsSelected(i);
-      await _tts.speak(wordList[i].word);
+
+      if (_stopflag) {
+        _playflag = true;
+        await _tts.speak(wordList[i].word);
+      }
 
       if (_currentSentenceIndex == -1){
         break;
       }
       _updateIsSelected(i);
+      if (!mounted) return; // Check if the widget is still mounted
       setState(() {});
     }
+    _playflag = false;
+    _updateIsSelected(-1);
   }
 
   void _updateIsSelected(int highlightIndex) {
@@ -128,6 +146,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   }
 
   void _stopSpeakTts() async {
+    // _stopflag = false;
     await _tts.stop();
   }
 
@@ -201,6 +220,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   radiusStyle: true,
                   onToggle: (index) {
                     if (index == 0) {
+                      _stopflag = false; // Stop all TTS
+                      _stopSpeakTts(); // Stop ongoing TTS
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -209,6 +230,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                         ),
                       );
                     } else if (index == 1) {
+                      _stopflag = false; // Stop all TTS
+                      _stopSpeakTts(); // Stop ongoing TTS
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -217,6 +240,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                         ),
                       );
                     } else if (index == 2) {
+                      _stopflag = false; // Stop all TTS
+                      _stopSpeakTts(); // Stop ongoing TTS
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -254,6 +279,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
                           return GestureDetector(
                             onTap: () {
+                              _stopflag = true;
                               _speakWord(entry.value.sentenceIndex, entry.value.wordIndex, _speaktype[0]);
                             },
                             child: Container(
@@ -274,10 +300,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   ),
                 )
             ),
-
-
             SizedBox(height: 16.0),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -290,10 +313,21 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   child: FloatingActionButton(
                     onPressed: () {
                       setState(() {
+                        _playflag = !_playflag;
                       });
-                      _speakWord(0, 0, _speaktype[1]);
+                      if (_playflag) {
+                        _stopflag = true;
+                        _speakWord(0, 0, _speaktype[1]);
+
+                      } else {
+                        _stopflag = false; // Stop all TTS
+                        _stopSpeakTts(); // Stop ongoing TTS
+                      }
+                      // _speakWord(0, 0, _speaktype[1]);
                     },
-                    child: Icon(Icons.volume_up_outlined, color: Colors.black,),
+                    child: _playflag
+                        ? Icon(Icons.stop, color: Colors.black)
+                        : Icon(Icons.volume_up_outlined, color: Colors.black),
                     backgroundColor: Color(0xFFC0EB75),
                   ),
                 ),
