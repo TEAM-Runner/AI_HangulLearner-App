@@ -57,6 +57,7 @@ dependencies:
   cloud_firestore: ^4.4.3
   email_validator: ^2.1.17
   firebase_core: ^2.7.1
+  intl: ^0.17.0
 
   #vocabulary_list
   hangul: ^0.4.0

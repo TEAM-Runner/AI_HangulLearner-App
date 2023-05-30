@@ -14,7 +14,6 @@ import 'package:code230206_hangul_app/configuration/hangul_scroll.dart';
 import 'package:code230206_hangul_app/configuration/my_style.dart';
 
 
-
 class VocabularyListScreen extends StatefulWidget {
   const VocabularyListScreen({Key? key}) : super(key: key);
 
@@ -263,282 +262,291 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     final double width = screenSize.width;
     final double height = screenSize.height;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFFF3F3F3),
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(
-          "I HANGUL",
-          style: TextStyle(
-            color: Colors.black,
+    return WillPopScope(
+        onWillPop: () async {
+          _StopSpeakTts(); // Stop TTS when back button is pressed
+          return true; // Allow navigation to occur
+        },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xFFF3F3F3),
+          elevation: 0.0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              _StopSpeakTts();
+              Navigator.of(context).pop();
+            },
           ),
-        ),
-        centerTitle: true,
-      ),
-
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // // Init Floating Action Bubble
-      // floatingActionButton: FloatingActionBubble(
-      //   // Menu items
-      //   items: <Widget>[
-      //     BubbleMenu(
-      //         title: "    Order",
-      //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
-      //         iconColor: Color.fromARGB(255, 51, 153, 255),
-      //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
-      //         icon: Icons.bar_chart,
-      //         onPressed: _consonantOrderStarredWords),
-      //     BubbleMenu(
-      //         title: "Random",
-      //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
-      //         iconColor: Color.fromARGB(255, 51, 153, 255),
-      //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
-      //         icon: Icons.bar_chart,
-      //         onPressed: _randomOrderStarredWords),
-      //     BubbleMenu(
-      //         title: "전체 읽기",
-      //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
-      //         iconColor: Color.fromARGB(255, 51, 153, 255),
-      //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
-      //         icon: Icons.volume_up_outlined,
-      //         onPressed: _speakTTS),
-      //     BubbleMenu(
-      //         title: "읽기 중단",
-      //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
-      //         iconColor: Color.fromARGB(255, 51, 153, 255),
-      //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
-      //         icon: Icons.stop,
-      //         onPressed: _StopSpeakTts),
-      //   ],
-      //
-      //   // animation controller
-      //   animation: _animation,
-      //
-      //   // On pressed change animation state
-      //   onPressed: () => _animationController.isCompleted
-      //       ? _animationController.reverse()
-      //       : _animationController.forward(),
-      //
-      //   // Floating Action button Icon color
-      //   iconColor: Colors.blue,
-      //
-      //   // Flaoting Action button Icon
-      //   iconData: Icons.add_circle_outline,
-      //   backgroundColor: Colors.white,
-      // ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Spacer(),
-              Checkbox(
-                value: _hiddenWord,
-                onChanged: (value) {
-                  if(_hiddenWord==false&&_hiddenMeaning==false){
-                    setState(() {
-                      _hiddenWord = true;
-                    });
-                  }else if(_hiddenWord==true&&_hiddenMeaning==false){
-                    setState(() {
-                      _hiddenWord = false;
-                    });
-                  }else if(_hiddenWord==false&&_hiddenMeaning==true){
-                    setState(() {
-                      _hiddenWord = true;
-                      _hiddenMeaning=false;
-                    });
-                  }
-                },
-              ),
-              Text("단어숨김"),
-              Spacer(),
-              Checkbox(
-                value: _hiddenMeaning,
-                onChanged: (value) {
-                  if(_hiddenWord==false&&_hiddenMeaning==false){
-                    setState(() {
-                      _hiddenMeaning = true;
-                    });
-                  }else if(_hiddenWord==false&&_hiddenMeaning==true){
-                    setState(() {
-                      _hiddenMeaning = false;
-                    });
-                  }else if(_hiddenWord==true&&_hiddenMeaning==false){
-                    setState(() {
-                      _hiddenWord = false;
-                      _hiddenMeaning=true;
-                    });
-                  }
-                },
-              ),
-              Text("뜻숨김"),
-              Spacer(),
-              IconButton(
-                icon: Icon(isPlaysound?CupertinoIcons.pause:Icons.keyboard_voice),
-                onPressed: () {
-                  setState(() {
-                    isPlaysound=!isPlaysound;
-                  });
-                  if (isPlaysound){
-                    _speakTTS();
-                  } else {
-                    _StopSpeakTts();
-                  }
-                },
-              ),
-              Spacer(),
-              DropdownButton(
-                  items: const <DropdownMenuItem<String>>[
-                    DropdownMenuItem(child: Text("가나순", style: TextStyle(color: Colors.black),), value: "가나순",),
-                    DropdownMenuItem(child: Text("랜덤순", style: TextStyle(color: Colors.black),), value: "랜덤순",),
-                    DropdownMenuItem(child: Text("최신순", style: TextStyle(color: Colors.black),), value: "최신순",),
-                  ],
-                  value: dropdownValue,
-                  elevation: 10,
-                  icon: Icon(Icons.reorder),
-                  onChanged: (selectValue) {
-                    dropdownValue = selectValue!;
-                    if(dropdownValue == "가나순"){
-                      setState(() {
-                        _consonantOrderStarredWords();
-                      });
-                    }
-                    if(dropdownValue == "랜덤순"){
-                      setState(() {
-                        _randomOrderStarredWords();
-                      });
-                    }
-                    if(dropdownValue == "최신순"){
-                      setState(() {
-                        //TODO 시간순
-                      });
-                    }
-                  }),
-              Spacer(),
-            ],
+          title: Text(
+            "I HANGUL",
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
+          centerTitle: true,
+        ),
 
-          Expanded(
-            child: Padding(
-                padding: EdgeInsets.all(width * 0.01),
-                child: Row(children: [
-                  Expanded(
-                    child: Padding(
-                        padding: EdgeInsets.all(width * 0.005),
-                        child: starredWordsMap.isEmpty
-                            ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
-                            : ListView.builder(
-                          itemCount: starredWordsMap.length,
-                          itemBuilder: (_, index) {
-                            final String word =
-                            starredWordsMap.keys.elementAt(index);
-                            return Card(
-                              child: ListTile(
-                                title: Text(
-                                  starredWordsMap.keys.elementAt(index),
-                                  style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
-                                ),
-                                subtitle: Text(
-                                  starredWordsMap.values
-                                      .elementAt(index),
-                                  style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
-                                ),
-                                onTap: () {
-                                  _StopSpeakTts();
-                                  _speakTTScard((starredWordsMap.keys.elementAt(index) + '. ' + starredWordsMap.values.elementAt(index)).toString());
-                                },
-                                trailing: IconButton(
-                                    icon: Icon(Icons.star),
-                                    color: Colors.orangeAccent,
-                                    // onPressed: () {_toggleWordStarred(word);},
-                                    onPressed: () async {
-                                      showDialog(
-                                          context: context,
-                                          barrierDismissible:
-                                          true, // 바깥 터치시 close
-                                          builder:
-                                              (BuildContext context) {
-                                            return AlertDialog(
-                                              content:
-                                              Text('단어를 삭제하시겠습니까?'),
-                                              actions: [
-                                                TextButton(
-                                                  child:
-                                                  const Text('아니요'),
-                                                  onPressed: () {
-                                                    Navigator.of(
-                                                        context)
-                                                        .pop();
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child:
-                                                  const Text('네'),
-                                                  onPressed: () {
-                                                    _deleteStarredWords(
-                                                        word);
-                                                    Navigator.of(
-                                                        context)
-                                                        .pop();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          });
-                                    }),
-                              ),
-                            );
-                            // Error: A non-null value must be returned since the return type 'Widget' doesn't allow null.
-                            return Container(); // 위 에러 발생해서 추가함
-                          },
-                        )),
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width * 0.1,
-                        height: height * 0.8,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          // itemExtent: 25,
-                          itemCount: initialConsonants.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              // height: 20,
-                              child: ListTile(
-                                title: Text(initialConsonants[index]),
-                                tileColor: initialConsonantsIndex == index
-                                    ? MyColor.primaryColor
-                                    : null,
-                                dense: true,
-                                visualDensity:
-                                VisualDensity(horizontal: 0, vertical: -4),
-                                onTap: () {
-                                  _StopSpeakTts();
-                                  setState(() {
-                                    initialConsonantsIndex =
-                                        index; // Update the selected index
-                                  });
-                                  _getStarredWordsCategory(initialConsonants[index]);
-                                  if (index == 0) {
-                                    _getStarredWords();
-                                  }
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        // // Init Floating Action Bubble
+        // floatingActionButton: FloatingActionBubble(
+        //   // Menu items
+        //   items: <Widget>[
+        //     BubbleMenu(
+        //         title: "    Order",
+        //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+        //         iconColor: Color.fromARGB(255, 51, 153, 255),
+        //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
+        //         icon: Icons.bar_chart,
+        //         onPressed: _consonantOrderStarredWords),
+        //     BubbleMenu(
+        //         title: "Random",
+        //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+        //         iconColor: Color.fromARGB(255, 51, 153, 255),
+        //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
+        //         icon: Icons.bar_chart,
+        //         onPressed: _randomOrderStarredWords),
+        //     BubbleMenu(
+        //         title: "전체 읽기",
+        //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+        //         iconColor: Color.fromARGB(255, 51, 153, 255),
+        //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
+        //         icon: Icons.volume_up_outlined,
+        //         onPressed: _speakTTS),
+        //     BubbleMenu(
+        //         title: "읽기 중단",
+        //         style: TextStyle(color: Color.fromARGB(255, 51, 153, 255)),
+        //         iconColor: Color.fromARGB(255, 51, 153, 255),
+        //         bubbleColor: Color.fromARGB(255, 255, 255, 255),
+        //         icon: Icons.stop,
+        //         onPressed: _StopSpeakTts),
+        //   ],
+        //
+        //   // animation controller
+        //   animation: _animation,
+        //
+        //   // On pressed change animation state
+        //   onPressed: () => _animationController.isCompleted
+        //       ? _animationController.reverse()
+        //       : _animationController.forward(),
+        //
+        //   // Floating Action button Icon color
+        //   iconColor: Colors.blue,
+        //
+        //   // Flaoting Action button Icon
+        //   iconData: Icons.add_circle_outline,
+        //   backgroundColor: Colors.white,
+        // ),
+        body: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Spacer(),
+                Checkbox(
+                  value: _hiddenWord,
+                  onChanged: (value) {
+                    if(_hiddenWord==false&&_hiddenMeaning==false){
+                      setState(() {
+                        _hiddenWord = true;
+                      });
+                    }else if(_hiddenWord==true&&_hiddenMeaning==false){
+                      setState(() {
+                        _hiddenWord = false;
+                      });
+                    }else if(_hiddenWord==false&&_hiddenMeaning==true){
+                      setState(() {
+                        _hiddenWord = true;
+                        _hiddenMeaning=false;
+                      });
+                    }
+                  },
+                ),
+                Text("단어숨김"),
+                Spacer(),
+                Checkbox(
+                  value: _hiddenMeaning,
+                  onChanged: (value) {
+                    if(_hiddenWord==false&&_hiddenMeaning==false){
+                      setState(() {
+                        _hiddenMeaning = true;
+                      });
+                    }else if(_hiddenWord==false&&_hiddenMeaning==true){
+                      setState(() {
+                        _hiddenMeaning = false;
+                      });
+                    }else if(_hiddenWord==true&&_hiddenMeaning==false){
+                      setState(() {
+                        _hiddenWord = false;
+                        _hiddenMeaning=true;
+                      });
+                    }
+                  },
+                ),
+                Text("뜻숨김"),
+                Spacer(),
+                IconButton(
+                  icon: Icon(isPlaysound?CupertinoIcons.pause:Icons.keyboard_voice),
+                  onPressed: () {
+                    setState(() {
+                      isPlaysound=!isPlaysound;
+                    });
+                    if (isPlaysound){
+                      _speakTTS();
+                    } else {
+                      _StopSpeakTts();
+                    }
+                  },
+                ),
+                Spacer(),
+                DropdownButton(
+                    items: const <DropdownMenuItem<String>>[
+                      DropdownMenuItem(child: Text("가나순", style: TextStyle(color: Colors.black),), value: "가나순",),
+                      DropdownMenuItem(child: Text("랜덤순", style: TextStyle(color: Colors.black),), value: "랜덤순",),
+                      DropdownMenuItem(child: Text("최신순", style: TextStyle(color: Colors.black),), value: "최신순",),
                     ],
-                  )
-                ])),
-          ),
-        ],
+                    value: dropdownValue,
+                    elevation: 10,
+                    icon: Icon(Icons.reorder),
+                    onChanged: (selectValue) {
+                      dropdownValue = selectValue!;
+                      if(dropdownValue == "가나순"){
+                        setState(() {
+                          _consonantOrderStarredWords();
+                        });
+                      }
+                      if(dropdownValue == "랜덤순"){
+                        setState(() {
+                          _randomOrderStarredWords();
+                        });
+                      }
+                      if(dropdownValue == "최신순"){
+                        setState(() {
+                          //TODO 시간순
+                        });
+                      }
+                    }),
+                Spacer(),
+              ],
+            ),
+
+            Expanded(
+              child: Padding(
+                  padding: EdgeInsets.all(width * 0.01),
+                  child: Row(children: [
+                    Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.all(width * 0.005),
+                          child: starredWordsMap.isEmpty
+                              ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
+                              : ListView.builder(
+                            itemCount: starredWordsMap.length,
+                            itemBuilder: (_, index) {
+                              final String word =
+                              starredWordsMap.keys.elementAt(index);
+                              return Card(
+                                child: ListTile(
+                                  title: Text(
+                                    starredWordsMap.keys.elementAt(index),
+                                    style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
+                                  ),
+                                  subtitle: Text(
+                                    starredWordsMap.values
+                                        .elementAt(index),
+                                    style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
+                                  ),
+                                  onTap: () {
+                                    _StopSpeakTts();
+                                    _speakTTScard((starredWordsMap.keys.elementAt(index) + '. ' + starredWordsMap.values.elementAt(index)).toString());
+                                  },
+                                  trailing: IconButton(
+                                      icon: Icon(Icons.star),
+                                      color: Colors.orangeAccent,
+                                      // onPressed: () {_toggleWordStarred(word);},
+                                      onPressed: () async {
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible:
+                                            true, // 바깥 터치시 close
+                                            builder:
+                                                (BuildContext context) {
+                                              return AlertDialog(
+                                                content:
+                                                Text('단어를 삭제하시겠습니까?'),
+                                                actions: [
+                                                  TextButton(
+                                                    child:
+                                                    const Text('아니요'),
+                                                    onPressed: () {
+                                                      Navigator.of(
+                                                          context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child:
+                                                    const Text('네'),
+                                                    onPressed: () {
+                                                      _deleteStarredWords(
+                                                          word);
+                                                      Navigator.of(
+                                                          context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      }),
+                                ),
+                              );
+                              // Error: A non-null value must be returned since the return type 'Widget' doesn't allow null.
+                              return Container(); // 위 에러 발생해서 추가함
+                            },
+                          )),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          width: width * 0.1,
+                          height: height * 0.8,
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            // itemExtent: 25,
+                            itemCount: initialConsonants.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return SizedBox(
+                                // height: 20,
+                                child: ListTile(
+                                  title: Text(initialConsonants[index]),
+                                  tileColor: initialConsonantsIndex == index
+                                      ? MyColor.primaryColor
+                                      : null,
+                                  dense: true,
+                                  visualDensity:
+                                  VisualDensity(horizontal: 0, vertical: -4),
+                                  onTap: () {
+                                    _StopSpeakTts();
+                                    setState(() {
+                                      initialConsonantsIndex =
+                                          index; // Update the selected index
+                                    });
+                                    _getStarredWordsCategory(initialConsonants[index]);
+                                    if (index == 0) {
+                                      _getStarredWords();
+                                    }
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    )
+                  ])),
+            ),
+          ],
+        ),
       ),
     );
   }

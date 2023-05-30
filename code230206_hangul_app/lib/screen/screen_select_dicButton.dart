@@ -1,3 +1,4 @@
+import 'package:code230206_hangul_app/screen/screen_dic_open.dart';
 import 'package:flutter/material.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screen_select_TtsButton.dart';
 import 'screen_select_modifyButton.dart';
+import 'package:intl/intl.dart';
 
 class SelectDicButtonScreen extends StatefulWidget {
   late String text;
@@ -40,6 +42,7 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
     user = FirebaseAuth.instance.currentUser;
     userRef = FirebaseFirestore.instance.collection('users').doc(user!.uid);
     wordsRef = userRef.collection('words');
+
   }
 
   @override
@@ -57,12 +60,16 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
     setState(() {
       _starred[index] = !_starred[index];
     });
-    print('***  _starred  *** ' + _starred.toString());
 
     if (_starred[index]) {
+      // timestamp
+      final now = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+
       wordsRef.doc(word).set({
         'word': dicWords[index].txt_emph,
-        'meaning': dicWords[index].txt_mean
+        'meaning': dicWords[index].txt_mean,
+        'timestamp': formattedDate, // Add timestamp
       }); // Firestore에 단어가 없을 경우 추가
     } else {
       wordsRef.doc(word).delete(); // Firestore에서 단어 삭제
@@ -305,7 +312,6 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
 // 뜻이 하나만 있는 경우: 리다이렉트 되는 새 url에서 supid, wordid를 구해 finalUrl을 정의해야 함
 class WebScraper {
   final String searchWord;
-
   WebScraper(this.searchWord);
 
   Future<List<dicWord>> extractData() async {
@@ -331,8 +337,11 @@ class WebScraper {
 
     if (response.statusCode == 200) {
       final html = parser.parse(response.body);
-
       final container = html.querySelectorAll('.inner_top');
+
+      // timeStamp
+      final now = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
       for (final element in container) {
         // ver3 -> 한 개 뜻이 있는 경우
@@ -341,7 +350,8 @@ class WebScraper {
         //.clean_word .tit_cleantype2 .txt_cleanword
 
         if (txt_emph != null && txt_mean != null) {
-          dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean));
+          // final word = dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate);
+          dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
         }
       }
     }
@@ -353,6 +363,7 @@ class WebScraper {
 class dicWord {
   String txt_emph = 'init';
   String txt_mean = 'init';
+  String timestamp = '';
 
-  dicWord({required this.txt_emph, required this.txt_mean});
+  dicWord({required this.txt_emph, required this.txt_mean, required this.timestamp});
 }
