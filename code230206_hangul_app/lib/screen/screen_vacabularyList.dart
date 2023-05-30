@@ -5,13 +5,14 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hangul/hangul.dart';
 import 'package:floating_action_bubble_custom/floating_action_bubble_custom.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:code230206_hangul_app/configuration/hangul_scroll.dart';
 import 'package:code230206_hangul_app/configuration/my_style.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
 
 
 class VocabularyListScreen extends StatefulWidget {
@@ -184,6 +185,50 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
     setState(() {});
   }
+
+// Sort word list by newest
+  void _newestOrderStarredWords() async {
+    List<MapEntry<String, Map<String, dynamic>>> entries = [];
+    QuerySnapshot snapshot = await wordsRef.get();
+    List<DocumentSnapshot> documents = snapshot.docs;
+    for (DocumentSnapshot document in documents) {
+      dynamic data = document.data();
+      String timestamp = data['timestamp'];
+      if (data != null && data is Map<String, dynamic> && starredWordsMap. containsKey(data['word'])) {
+        // entries.add(MapEntry(data['word'], data['meaning'], timestamp));
+        entries.add(MapEntry(data['word'], {'meaning': data['meaning'], 'timestamp': timestamp}));
+      }
+    }
+    entries.sort((a, b) => b.value['timestamp'].compareTo(a.value['timestamp']));
+    starredWordsMap = {};
+    for (MapEntry<String, Map<String, dynamic>> entry in entries) {
+      starredWordsMap[entry.key] = entry.value['meaning'];
+    }
+    setState(() {});
+  }
+
+  // Sort word list by oldest
+  void _oldestOrderStarredWords() async {
+    List<MapEntry<String, Map<String, dynamic>>> entries = [];
+    QuerySnapshot snapshot = await wordsRef.get();
+    List<DocumentSnapshot> documents = snapshot.docs;
+    for (DocumentSnapshot document in documents) {
+      dynamic data = document.data();
+      String timestamp = data['timestamp'];
+      if (data != null && data is Map<String, dynamic> && starredWordsMap.containsKey(data['word'])) {
+        // entries.add(MapEntry(data['word'], data['meaning'], timestamp));
+        entries.add(MapEntry(data['word'], {'meaning': data['meaning'], 'timestamp': timestamp}));
+      }
+    }
+    entries.sort((a, b) => a.value['timestamp'].compareTo(b.value['timestamp']));
+    starredWordsMap = {};
+    for (MapEntry<String, Map<String, dynamic>> entry in entries) {
+      starredWordsMap[entry.key] = entry.value['meaning'];
+    }
+
+    setState(() {});
+  }
+
 
   //hide word
   void _hideWords() {
@@ -404,6 +449,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                       DropdownMenuItem(child: Text("가나순", style: TextStyle(color: Colors.black),), value: "가나순",),
                       DropdownMenuItem(child: Text("랜덤순", style: TextStyle(color: Colors.black),), value: "랜덤순",),
                       DropdownMenuItem(child: Text("최신순", style: TextStyle(color: Colors.black),), value: "최신순",),
+                      DropdownMenuItem(child: Text("오래된순", style: TextStyle(color: Colors.black),), value: "오래된순",),
+
                     ],
                     value: dropdownValue,
                     elevation: 10,
@@ -422,7 +469,12 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                       }
                       if(dropdownValue == "최신순"){
                         setState(() {
-                          //TODO 시간순
+                          _newestOrderStarredWords();
+                        });
+                      }
+                      if(dropdownValue == "오래된순"){
+                        setState(() {
+                          _oldestOrderStarredWords();
                         });
                       }
                     }),
