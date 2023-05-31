@@ -528,7 +528,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                                 actions: [
                                                   TextButton(
                                                     child:
-                                                    const Text('아니요'),
+                                                    const Text('아니요', style: TextStyle(color: Colors.black)),
                                                     onPressed: () {
                                                       Navigator.of(
                                                           context)
@@ -537,7 +537,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                                   ),
                                                   TextButton(
                                                     child:
-                                                    const Text('네'),
+                                                    const Text('네', style: TextStyle(color: Colors.black)),
                                                     onPressed: () {
                                                       _deleteStarredWords(
                                                           word);

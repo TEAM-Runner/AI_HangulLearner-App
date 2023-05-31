@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update to store timestamps in Firestore&#10;&#10;- Firestore에 단어를 저장할 때 timestamps도 함께 저장하도록 업데이트">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add sorting function by oldest and newest&#10;&#10;- 단어장에 최신순 정렬, 오래된순 정렬 기능 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_Camera.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_Camera.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -348,7 +350,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685417868245</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Add sorting function by oldest and newest&#10;&#10;- 단어장에 최신순 정렬, 오래된순 정렬 기능 추가">
+      <created>1685421514376</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1685421514376</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -363,7 +372,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일" />
     <MESSAGE value="Update profile screen UI in screen_profile.dart&#10;&#10;- fontSize, Button style, Button color 등 profile 스크린 ui 변경" />
     <MESSAGE value="Update dictionary search result popup UI&#10;&#10;- 사전 검색 결과를 보여주는 showModalBottomSheet 팝업창 UI 변경" />
     <MESSAGE value="Update Hint Button in screen_game.dart&#10;&#10;- 초성게임 화면에서 열쇠 클릭하면 회색으로 변경 -&gt; 힌트 보여주도록 업데이트" />
@@ -388,6 +396,7 @@
     <MESSAGE value="Update TTS control function&#10;&#10;- TTS 제어를 위해 _stopflag와 _playflag 사용&#10;- _playflag에 따라 FloatingActionButton의 아이콘 변경&#10;- _playflag에 따라 상태를 전환하도록 FloatingActionButton의 onPressed 콜백 수정&#10;- _stopflag에 따라 TTS를 재생하거나 중단함" />
     <MESSAGE value="Update TTS function in screen_vacabularyList.dart&#10;&#10;- IconButton의 onPressed가 _speakTTS를 실행하도록 업데이트&#10;- 단어 Card의 onTap이 _speakTTScard를 실행하도록 업데이트&#10;- _speakTTScard: 클릭한 단어와 뜻을 TTS로 읽어주는 함수" />
     <MESSAGE value="Update to store timestamps in Firestore&#10;&#10;- Firestore에 단어를 저장할 때 timestamps도 함께 저장하도록 업데이트" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update to store timestamps in Firestore&#10;&#10;- Firestore에 단어를 저장할 때 timestamps도 함께 저장하도록 업데이트" />
+    <MESSAGE value="Add sorting function by oldest and newest&#10;&#10;- 단어장에 최신순 정렬, 오래된순 정렬 기능 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add sorting function by oldest and newest&#10;&#10;- 단어장에 최신순 정렬, 오래된순 정렬 기능 추가" />
   </component>
 </project>

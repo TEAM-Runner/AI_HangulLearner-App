@@ -25,7 +25,7 @@ class SelectTtsButtonScreen extends StatefulWidget {
 }
 
 class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
-  final String _text; // 이전 화면에서 받아온 텍스트
+  String _text; // 이전 화면에서 받아온 텍스트
   List<Word> wordList = [];
 
   List<String> _sentences = [];
@@ -42,9 +42,9 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   int _toggleSwitchvalue = 1; // tts 속도를 지정하는 토글 스위치 인덱스
   List<String> _speaktype = ["one", "all"];
 
-
   // init
   _SelectTtsButtonScreenState(this._text) {
+    _text = _text.replaceAll('\n', ' ');
     _sentences = _text.split(RegExp('(?<=[.!?])\\s*')); // 문장 리스트 -> '.', '?', '!' 문장 단위로 split
     int wordIndex = -1;
     for (int i = 0; i < _sentences.length; i++) {
@@ -90,7 +90,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
           }
         }
       }
-      if (speaktype == "all"){
+      if (speaktype == "all") {
         sentenceFirstIndex = 0;
         sentenceLastIndex = wordList.length - 1;
         print("_speakWord sentenceFirstIndex: $sentenceFirstIndex");
@@ -281,7 +281,21 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                             onTap: () {
                               _stopflag = true;
                               _speakWord(entry.value.sentenceIndex, entry.value.wordIndex, _speaktype[0]);
-                            },
+
+                              if (_stopflag && _playflag){ // Stop on onTap during TTS playback
+                                setState(() {
+                                  _playflag = !_playflag;
+                                });
+                                if (_playflag) {
+                                  _stopflag = true;
+                                  _speakWord(0, 0, _speaktype[1]);
+                                } else {
+                                  _stopflag = false; // Stop all TTS
+                                  _stopSpeakTts(); // Stop ongoing TTS
+                                }
+                              }
+
+                              },
                             child: Container(
                               padding: EdgeInsets.all(2.0),
                               decoration: BoxDecoration(
@@ -318,7 +332,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                       if (_playflag) {
                         _stopflag = true;
                         _speakWord(0, 0, _speaktype[1]);
-
                       } else {
                         _stopflag = false; // Stop all TTS
                         _stopSpeakTts(); // Stop ongoing TTS
