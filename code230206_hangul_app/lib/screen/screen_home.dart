@@ -18,6 +18,13 @@ import 'screen_game.dart';
 import 'screen_game_result.dart';
 import 'screen_game_wrongWordList.dart';
 import 'package:tuple/tuple.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'screen_select_dicButton.dart';
+import 'text_recognition.dart';
+import 'package:camera/camera.dart';
+import 'package:code230206_hangul_app/screen/screen_Camera.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,6 +32,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final textRecogizer = TextRecognizer(script: TextRecognitionScript.korean);
+
+  final ImagePicker picker = ImagePicker();
+  // final ScanImageProcessor scanImageProcessor = ScanImageProcessor();
+
+
+
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is disposed.
+    textRecogizer.close(); // 글자인식 관련
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -114,18 +136,71 @@ class _HomeScreenState extends State<HomeScreen> {
     double width = screenSize.width;
     double height = screenSize.height;
 
+
     return Container(
       width: width*0.4,
       child: ElevatedButton(
         onPressed: ()  async {
           if (onPressNumber == 1){ //카메라 버튼 클릭
-            WidgetsFlutterBinding.ensureInitialized();
-            final cameras = await availableCameras();
-            final firstCamera = cameras.first;
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TakePictureScreen(camera: firstCamera)),
+            final picker = ImagePicker();
+            showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return SafeArea(
+                  child: Container(
+                    child: Wrap(
+                      children: <Widget>[
+
+                        // 갤러리에서 사진 선택
+                        ListTile(
+                          leading: Icon(Icons.photo_library),
+                          title: Text('갤러리에서 사진 선택'),
+                          onTap: () async {
+                            print("### log ### : onTap");
+                            final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                            if (pickedFile != null) {
+                              final file = File(pickedFile.path);
+                              final scanImageProcessor = ScanImageProcessor(
+                                context: context,
+                                onScanSuccess: (text) {
+                                  // Handle successful text recognition here
+                                  print("Scanned Text: $text");
+                                },
+                                onScanError: (error) {
+                                  // Handle text recognition error here
+                                  print("Error: $error");
+                                },
+                              );
+                              scanImageProcessor.processImage(file, textRecogizer);
+                            } else {
+                              print("### log ### : else");
+                            }
+                          },
+                        ),
+
+                            // 카메라로 촬영
+                            ListTile(
+                                leading: Icon(Icons.camera_alt),
+                                title: Text('카메라로 촬영'),
+                                onTap: () async {
+                                  Navigator.pop(context);
+                                  WidgetsFlutterBinding.ensureInitialized();
+                                  final cameras = await availableCameras();
+                                  final firstCamera = cameras.first;
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => TakePictureScreen(camera: firstCamera)),
+                                  );
+                            }
+                        ),
+
+                      ],
+                    ),
+                  ),
+                );
+              },
             );
+
           }
           if (onPressNumber == 2){ //학습게임 버튼 클릭
             // screen_game.dart로 연결
@@ -181,3 +256,5 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 }
+
+

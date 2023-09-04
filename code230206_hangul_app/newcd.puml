@@ -1,0 +1,268 @@
+@startuml
+set namespaceSeparator ::
+
+class "code230206_hangul_app::screen::screen_select_TtsButton.dart::Word" {
+  +String word
+  +bool isSelected
+  +int sentenceIndex
+  +int wordIndex
+  +int wordIndexInSentence
+}
+
+class "code230206_hangul_app::screen::screen_select_TtsButton.dart::SelectTtsButtonScreen" {
+  +String text
+  +_SelectTtsButtonScreenState createState()
+}
+
+class "code230206_hangul_app::screen::screen_select_TtsButton.dart::_SelectTtsButtonScreenState" {
+  -String _text
+  +List<Word> wordList
+  -List<String> _sentences
+  -int _currentSentenceIndex
+  -List<double> _ttsSpeed
+  -FlutterTts _tts
+  -int _ttsSpeedIndex
+  -StreamController<List<Word>> _streamController
+  -bool _stopflag
+  -bool _playflag
+  -int _toggleSwitchvalue
+  -List<String> _speaktype
+  +Stream<List<Word>> stream
+  -void _speakWord()
+  -void _speakSentence()
+  -void _updateIsSelected()
+  -void _stopSpeakTts()
+  +Widget alternativeIconBuilder()
+  +Widget build()
+}
+
+
+class "code230206_hangul_app::screen::screen_profile.dart::ProfileScreen" {
+  +_ProfileScreenState createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_profile.dart::_ProfileScreenState" {
+  -GlobalKey<FormState> _formKey
+  -TextEditingController _nameController
+  -TextEditingController _passwordController
+  -FirebaseAuth _auth
+  -void _showChangePasswordDialog()
+  +void initState()
+  +void dispose()
+  -void _loadUserData()
+  -void _updateUserName()
+  +Widget build()
+}
+
+class "code230206_hangul_app::screen::screen_home.dart::HomeScreen" {
+  +_HomeScreenState createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_home.dart::_HomeScreenState" {
+  +Widget build()
+  +Widget makeButton()
+  -dynamic _choiceIcon()
+}
+
+class "code230206_hangul_app::screen::screen_game_wrongWordList.dart::GameWrongWordListScreen" {
+  {static} +String GameWrongWordListScreenRouteName
+  +List<List<dynamic>> GameWrongWordListScreenText
+  +_GameWrongWordListScreenState createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_game_wrongWordList.dart::_GameWrongWordListScreenState" {
+  +Widget build()
+}
+
+class "code230206_hangul_app::screen::screen_game_result.dart::GameResultScreen" {
+  {static} +String GameResultScreenRouteName
+  +List<List<dynamic>> GameResultScreenText
+  +_GameResultScreenState createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_game_result.dart::_GameResultScreenState" {
+  +Widget build()
+}
+
+class "code230206_hangul_app::screen::screen_game.dart::GameScreen" {
+  +_GameScreenState createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_game.dart::_GameScreenState" {
+  +User user
+  +CollectionReference<Object?> wordsRef
+  +List<QueryDocumentSnapshot<Object?>> starredWords
+  +int index
+  +bool endGameReady
+  +List<List<dynamic>> gameWordList
+  +List<List<dynamic>> gameBasicWordList
+  +int randomSend
+  -String _buttonText
+  +int timesController
+  -TextEditingController _controller
+  -String _quizWord
+  +Color isHintClicked
+  -void _initializeUserRef()
+  -void _getStarredWords()
+  -void _generateGameWordList()
+  +void getCorrectAnswer()
+  -void _getWrongAnswer()
+  -bool _checkAnswer()
+  -bool _isKorean()
+  -String? _getFirstConsonant()
+  -void _getQuizWord()
+  -void _getHint()
+  +void initState()
+  +Widget build()
+  -Widget _buildQuizCard()
+}
+
+class "code230206_hangul_app::screen::screen_vacabularyList.dart::VocabularyListScreen" {
+  +_VocabularyListScreenState createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState" {
+  +User user
+  +CollectionReference<Object?> wordsRef
+  +List<QueryDocumentSnapshot<Object?>> starredWords
+  -Animation<double> _animation
+  -AnimationController _animationController
+  -bool _hiddenWord
+  -bool _hiddenMeaning
+  +bool isPlaysound
+  -FlutterTts _tts
+  +List<String> initialConsonants
+  +Map<String, String> starredWordsMap
+  +Map<String, String> filteredWordsMap
+  +int initialConsonantsIndex
+  +String dropdownValue
+  +void initState()
+  -void _initializeUserRef()
+  -void _getStarredWords()
+  -void _getStarredWordsCategory()
+  -String? _getFirstConsonant()
+  -void _randomOrderStarredWords()
+  -void _consonantOrderStarredWords()
+  -void _newestOrderStarredWords()
+  -void _oldestOrderStarredWords()
+  -void _hideWords()
+  -void _hideMeaning()
+  -void _fullDisplay()
+  -void _speakTTS()
+  -void _speakTTScard()
+  -void _StopSpeakTts()
+  -void _deleteStarredWords()
+  +Widget build()
+}
+
+class "code230206_hangul_app::screen::screen_tts.dart::TTSScreen" {
+  {static} +String TTSScreenRouteName
+  +String TTSScreenText
+  +_TTSScreen createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_tts.dart::_TTSScreen" {
+  +FlutterTts tts
+  +Widget build()
+  -List<Widget> _buildButtonsWithWords()
+}
+
+
+class "code230206_hangul_app::screen::screen_vacabularyList.dart::VocabularyListScreen" {
+  +_VocabularyListScreenState createState()
+}
+
+class "code230206_hangul_app::screen::screen_select_modifyButton.dart::SelectModifyButtonScreen" {
+  +String text
+  +_SelectModifyButtonScreen createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_select_modifyButton.dart::_SelectModifyButtonScreen" {
+  -String _text
+  -TextEditingController _textEditingController
+  +String returnText
+  +Widget build()
+}
+
+class "code230206_hangul_app::screen::screen_auth_SignUp.dart::SignUpWidget" {
+  +void Function() onClickedSignUp
+  +_SignUpWidget createState()
+}
+
+class "code230206_hangul_app::screen::screen_auth_SignUp.dart::_SignUpWidget" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController nameController
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  +void dispose()
+  +Widget build()
+  +Future<dynamic> signUp()
+}
+
+class "code230206_hangul_app::screen::screen_auth_Login.dart::LoginScreen" {
+  +Widget build()
+}
+
+
+class "code230206_hangul_app::screen::screen_auth_Login.dart::LoginWidget" {
+  +void Function() onClickedSignUp
+  +_LoginWidget createState()
+}
+
+class "code230206_hangul_app::screen::screen_auth_Login.dart::_LoginWidget" {
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  +void dispose()
+  +Widget build()
+  +Future<dynamic> signIn()
+}
+
+class "code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreen" {
+  +CameraDescription camera
+  +TakePictureScreenState createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreenState" {
+  -CameraController _controller
+  -Future<void> _initializeControllerFuture
+  +TextRecognizer textRecogizer
+  +void initState()
+  +void dispose()
+  +Widget build()
+  -Future<void> _scanImage()
+}
+
+class "code230206_hangul_app::screen::screen_auth_forgotPassword.dart::ForgotPasswordScreen" {
+  +_ForgotPasswordScreen createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_auth_forgotPassword.dart::_ForgotPasswordScreen" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController emailController
+  +void dispose()
+  +Widget build()
+  +Future<dynamic> resetPassword()
+}
+
+class "code230206_hangul_app::screen::screen_auth_authPage.dart::AuthPageScreen" {
+  +_AuthPageScreen createState()
+}
+
+
+class "code230206_hangul_app::screen::screen_auth_authPage.dart::_AuthPageScreen" {
+  +bool isLogin
+  +Widget build()
+  +void toggle()
+}
+
+@enduml

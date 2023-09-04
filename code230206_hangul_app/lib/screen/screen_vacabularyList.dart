@@ -140,6 +140,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
       starredWordsMap.clear();
     }
     setState(() {}); // UI Update
+    print("_getStarredWordsCategory starredWordsMap: $starredWordsMap");
+
   }
 
   // extract initial consonant

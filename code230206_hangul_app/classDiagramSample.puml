@@ -1,0 +1,565 @@
+ 
+@startuml
+set namespaceSeparator ::
+
+'class "code230206_hangul_app::configuration::firebase_options.dart::DefaultFirebaseOptions" {
+'  {static} +FirebaseOptions android
+'  {static} +FirebaseOptions currentPlatform
+'}
+'
+'"code230206_hangul_app::configuration::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+'
+'class "code230206_hangul_app::configuration::hangul_scroll.dart::AlphabetScrollView" {
+'  +List<AlphaModel> list
+'  +double itemExtent
+'  +LetterAlignment alignment
+'  +bool isAlphabetsFiltered
+'  +Widget Function(String)? overlayWidget
+'  +TextStyle selectedTextStyle
+'  +TextStyle unselectedTextStyle
+'  +double screenHeight
+'  +Widget Function(BuildContext, int, String) itemBuilder
+'  +_AlphabetScrollViewState createState()
+'}
+'
+'"code230206_hangul_app::configuration::hangul_scroll.dart::AlphabetScrollView" o-- "code230206_hangul_app::configuration::hangul_scroll.dart::LetterAlignment"
+'"code230206_hangul_app::configuration::hangul_scroll.dart::AlphabetScrollView" o-- "null::Widget Function(String)"
+'"code230206_hangul_app::configuration::hangul_scroll.dart::AlphabetScrollView" o-- "flutter::src::painting::text_style.dart::TextStyle"
+'"code230206_hangul_app::configuration::hangul_scroll.dart::AlphabetScrollView" o-- "null::Widget Function(BuildContext, int, String)"
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::configuration::hangul_scroll.dart::AlphabetScrollView"
+'
+'class "code230206_hangul_app::configuration::hangul_scroll.dart::_AlphabetScrollViewState" {
+'  +ScrollController listController
+'  -ValueNotifier<int> _selectedIndexNotifier
+'  +ValueNotifier<Offset> positionNotifer
+'  +Map<String, int> firstIndexPosition
+'  -List<String> _filteredAlphabets
+'  +GlobalKey<State<StatefulWidget>> letterKey
+'  -List<AlphaModel> _list
+'  +bool isLoading
+'  +bool isFocused
+'  +GlobalKey<State<StatefulWidget>> key
+'  +double? maxScroll
+'  +void init()
+'  +void initState()
+'  +void didUpdateWidget()
+'  +int getCurrentIndex()
+'  +void calculateFirstIndex()
+'  +String? getKoreanCharacter()
+'  +int getKoreanCharacter2()
+'  +void scrolltoIndex()
+'  +void onVerticalDrag()
+'  +Widget build()
+'}
+'
+'"code230206_hangul_app::configuration::hangul_scroll.dart::_AlphabetScrollViewState" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
+'"code230206_hangul_app::configuration::hangul_scroll.dart::_AlphabetScrollViewState" o-- "flutter::src::foundation::change_notifier.dart::ValueNotifier<int>"
+'"code230206_hangul_app::configuration::hangul_scroll.dart::_AlphabetScrollViewState" o-- "flutter::src::foundation::change_notifier.dart::ValueNotifier<Offset>"
+'"code230206_hangul_app::configuration::hangul_scroll.dart::_AlphabetScrollViewState" o-- "flutter::src::widgets::framework.dart::GlobalKey<State<StatefulWidget>>"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::configuration::hangul_scroll.dart::_AlphabetScrollViewState"
+'
+'class "code230206_hangul_app::configuration::hangul_scroll.dart::AlphaModel" {
+'  +String key
+'  +String? secondaryKey
+'}
+'
+'class "code230206_hangul_app::configuration::hangul_scroll.dart::LetterAlignment" {
+'  +int index
+'  {static} +List<LetterAlignment> values
+'  {static} +LetterAlignment left
+'  {static} +LetterAlignment right
+'}
+'
+'"code230206_hangul_app::configuration::hangul_scroll.dart::LetterAlignment" o-- "code230206_hangul_app::configuration::hangul_scroll.dart::LetterAlignment"
+'"dart::core::Enum" <|-- "code230206_hangul_app::configuration::hangul_scroll.dart::LetterAlignment"
+'
+'class "code230206_hangul_app::configuration::my_style.dart::MyColor" {
+'  {static} +Color primaryColor
+'  {static} +Color accentColor
+'}
+'
+'"code230206_hangul_app::configuration::my_style.dart::MyColor" o-- "dart::ui::Color"
+'
+'class "code230206_hangul_app::configuration::my_style.dart::MyFontStyle" {
+'}
+
+class "code230206_hangul_app::screen::screen_auth_authPage.dart::AuthPageScreen" {
+  +_AuthPageScreen createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_auth_authPage.dart::AuthPageScreen"
+
+class "code230206_hangul_app::screen::screen_auth_authPage.dart::_AuthPageScreen" {
+  +bool isLogin
+  +Widget build()
+  +void toggle()
+}
+
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_auth_authPage.dart::_AuthPageScreen"
+
+class "code230206_hangul_app::screen::screen_auth_forgotPassword.dart::ForgotPasswordScreen" {
+  +_ForgotPasswordScreen createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_auth_forgotPassword.dart::ForgotPasswordScreen"
+
+class "code230206_hangul_app::screen::screen_auth_forgotPassword.dart::_ForgotPasswordScreen" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController emailController
+  +void dispose()
+  +Widget build()
+  +Future<dynamic> resetPassword()
+}
+
+'"code230206_hangul_app::screen::screen_auth_forgotPassword.dart::_ForgotPasswordScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+'"code230206_hangul_app::screen::screen_auth_forgotPassword.dart::_ForgotPasswordScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_auth_forgotPassword.dart::_ForgotPasswordScreen"
+
+class "code230206_hangul_app::screen::screen_auth_Login.dart::LoginScreen" {
+  +Widget build()
+}
+
+'"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "code230206_hangul_app::screen::screen_auth_Login.dart::LoginScreen"
+
+class "code230206_hangul_app::screen::screen_auth_Login.dart::LoginWidget" {
+  +void Function() onClickedSignUp
+  +_LoginWidget createState()
+}
+
+'"code230206_hangul_app::screen::screen_auth_Login.dart::LoginWidget" o-- "dart::ui::void Function()"
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_auth_Login.dart::LoginWidget"
+
+class "code230206_hangul_app::screen::screen_auth_Login.dart::_LoginWidget" {
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  +void dispose()
+  +Widget build()
+  +Future<dynamic> signIn()
+}
+'
+'"code230206_hangul_app::screen::screen_auth_Login.dart::_LoginWidget" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_auth_Login.dart::_LoginWidget"
+
+class "code230206_hangul_app::screen::screen_auth_SignUp.dart::SignUpWidget" {
+  +void Function() onClickedSignUp
+  +_SignUpWidget createState()
+}
+
+'"code230206_hangul_app::screen::screen_auth_SignUp.dart::SignUpWidget" o-- "dart::ui::void Function()"
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_auth_SignUp.dart::SignUpWidget"
+
+class "code230206_hangul_app::screen::screen_auth_SignUp.dart::_SignUpWidget" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController nameController
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  +void dispose()
+  +Widget build()
+  +Future<dynamic> signUp()
+}
+
+'"code230206_hangul_app::screen::screen_auth_SignUp.dart::_SignUpWidget" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+'"code230206_hangul_app::screen::screen_auth_SignUp.dart::_SignUpWidget" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_auth_SignUp.dart::_SignUpWidget"
+
+class "code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreen" {
+  +CameraDescription camera
+  +TakePictureScreenState createState()
+}
+
+'"code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreen" o-- "camera_platform_interface::src::types::camera_description.dart::CameraDescription"
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreen"
+
+class "code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreenState" {
+  -CameraController _controller
+  -Future<void> _initializeControllerFuture
+  +TextRecognizer textRecogizer
+  +void initState()
+  +void dispose()
+  +Widget build()
+  -Future<void> _scanImage()
+}
+'
+'"code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreenState" o-- "camera::src::camera_controller.dart::CameraController"
+'"code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreenState" o-- "google_mlkit_text_recognition::src::text_recognizer.dart::TextRecognizer"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_Camera.dart::TakePictureScreenState"
+'
+'class "code230206_hangul_app::screen::screen_Camera_result.dart::ResultScreen" {
+'  +String text
+'  +_ResultScreenState createState()
+'}
+'
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_Camera_result.dart::ResultScreen"
+'
+'class "code230206_hangul_app::screen::screen_Camera_result.dart::_ResultScreenState" {
+'  -TextEditingController _textFieldController
+'  -String _text
+'  +void initState()
+'  +Widget build()
+'}
+'
+'"code230206_hangul_app::screen::screen_Camera_result.dart::_ResultScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_Camera_result.dart::_ResultScreenState"
+
+'class "code230206_hangul_app::screen::screen_dic.dart::DicScreen" {
+'  {static} +String DicScreenRouteName
+'  +String DicScreenText
+'  +_DicScreen createState()
+'}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_dic.dart::DicScreen"
+'
+'class "code230206_hangul_app::screen::screen_dic.dart::_DicScreen" {
+'  +dynamic word
+'  +Widget build()
+'  -List<Widget> _buildButtonsWithWords()
+'}
+'
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_dic.dart::_DicScreen"
+'
+'class "code230206_hangul_app::screen::screen_dic_open.dart::DicOpenScreen" {
+'  {static} +String DicOpenScreenRouteName
+'  +String DicOpenScreenText
+'  +_DicOpenScreen createState()
+'}
+'
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_dic_open.dart::DicOpenScreen"
+'
+'class "code230206_hangul_app::screen::screen_dic_open.dart::_DicOpenScreen" {
+'  +User? user
+'  +DocumentReference<Object?> userRef
+'  +CollectionReference<Object?> wordsRef
+'  +List<dicWord> dicWords
+'  -List<bool> _starred
+'  -void _initializeUserRef()
+'  +void initState()
+'  +Widget build()
+'}
+'
+'"code230206_hangul_app::screen::screen_dic_open.dart::_DicOpenScreen" o-- "firebase_auth::firebase_auth.dart::User"
+'"code230206_hangul_app::screen::screen_dic_open.dart::_DicOpenScreen" o-- "cloud_firestore::cloud_firestore.dart::DocumentReference<Object>"
+'"code230206_hangul_app::screen::screen_dic_open.dart::_DicOpenScreen" o-- "cloud_firestore::cloud_firestore.dart::CollectionReference<Object>"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_dic_open.dart::_DicOpenScreen"
+'
+'class "code230206_hangul_app::screen::screen_dic_open.dart::WebScraper" {
+'  +String searchWord
+'  +Future<List<dicWord>> extractData()
+'}
+'
+'class "code230206_hangul_app::screen::screen_dic_open.dart::dicWord" {
+'  +String txt_emph
+'  +String txt_mean
+'}
+'
+'class "code230206_hangul_app::screen::screen_dic_open.dart::StarIcon" {
+'  +bool starred
+'  +Function onPressed
+'  +_StarIconState createState()
+'}
+'
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_dic_open.dart::StarIcon"
+'
+'class "code230206_hangul_app::screen::screen_dic_open.dart::_StarIconState" {
+'  -bool _starred
+'  +void initState()
+'  +Widget build()
+'}
+'
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_dic_open.dart::_StarIconState"
+
+class "code230206_hangul_app::screen::screen_game.dart::GameScreen" {
+  +_GameScreenState createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_game.dart::GameScreen"
+
+class "code230206_hangul_app::screen::screen_game.dart::_GameScreenState" {
+  +User user
+  +CollectionReference<Object?> wordsRef
+  +List<QueryDocumentSnapshot<Object?>> starredWords
+  +int index
+  +bool endGameReady
+  +List<List<dynamic>> gameWordList
+  +List<List<dynamic>> gameBasicWordList
+  +int randomSend
+  -String _buttonText
+  +int timesController
+  -TextEditingController _controller
+  -String _quizWord
+  +Color isHintClicked
+  -void _initializeUserRef()
+  -void _getStarredWords()
+  -void _generateGameWordList()
+  +void getCorrectAnswer()
+  -void _getWrongAnswer()
+  -bool _checkAnswer()
+  -bool _isKorean()
+  -String? _getFirstConsonant()
+  -void _getQuizWord()
+  -void _getHint()
+  +void initState()
+  +Widget build()
+  -Widget _buildQuizCard()
+}
+'
+'"code230206_hangul_app::screen::screen_game.dart::_GameScreenState" o-- "firebase_auth::firebase_auth.dart::User"
+'"code230206_hangul_app::screen::screen_game.dart::_GameScreenState" o-- "cloud_firestore::cloud_firestore.dart::CollectionReference<Object>"
+'"code230206_hangul_app::screen::screen_game.dart::_GameScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+'"code230206_hangul_app::screen::screen_game.dart::_GameScreenState" o-- "dart::ui::Color"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_game.dart::_GameScreenState"
+
+class "code230206_hangul_app::screen::screen_game_result.dart::GameResultScreen" {
+  {static} +String GameResultScreenRouteName
+  +List<List<dynamic>> GameResultScreenText
+  +_GameResultScreenState createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_game_result.dart::GameResultScreen"
+
+class "code230206_hangul_app::screen::screen_game_result.dart::_GameResultScreenState" {
+  +Widget build()
+}
+
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_game_result.dart::_GameResultScreenState"
+
+class "code230206_hangul_app::screen::screen_game_wrongWordList.dart::GameWrongWordListScreen" {
+  {static} +String GameWrongWordListScreenRouteName
+  +List<List<dynamic>> GameWrongWordListScreenText
+  +_GameWrongWordListScreenState createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_game_wrongWordList.dart::GameWrongWordListScreen"
+
+class "code230206_hangul_app::screen::screen_game_wrongWordList.dart::_GameWrongWordListScreenState" {
+  +Widget build()
+}
+
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_game_wrongWordList.dart::_GameWrongWordListScreenState"
+
+class "code230206_hangul_app::screen::screen_home.dart::HomeScreen" {
+  +_HomeScreenState createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_home.dart::HomeScreen"
+
+class "code230206_hangul_app::screen::screen_home.dart::_HomeScreenState" {
+  +Widget build()
+  +Widget makeButton()
+  -dynamic _choiceIcon()
+}
+
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_home.dart::_HomeScreenState"
+
+class "code230206_hangul_app::screen::screen_profile.dart::ProfileScreen" {
+  +_ProfileScreenState createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_profile.dart::ProfileScreen"
+
+class "code230206_hangul_app::screen::screen_profile.dart::_ProfileScreenState" {
+  -GlobalKey<FormState> _formKey
+  -TextEditingController _nameController
+  -TextEditingController _passwordController
+  -FirebaseAuth _auth
+  -void _showChangePasswordDialog()
+  +void initState()
+  +void dispose()
+  -void _loadUserData()
+  -void _updateUserName()
+  +Widget build()
+}
+
+'"code230206_hangul_app::screen::screen_profile.dart::_ProfileScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+'"code230206_hangul_app::screen::screen_profile.dart::_ProfileScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+'"code230206_hangul_app::screen::screen_profile.dart::_ProfileScreenState" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_profile.dart::_ProfileScreenState"
+
+class "code230206_hangul_app::screen::screen_select_dicButton.dart::SelectDicButtonScreen" {
+  +String text
+  +_SelectDicButtonScreen createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_select_dicButton.dart::SelectDicButtonScreen"
+
+class "code230206_hangul_app::screen::screen_select_dicButton.dart::_SelectDicButtonScreen" {
+  -String _text
+  -List<String> _textWordArray
+  -String? _selectedWord
+  +User? user
+  +DocumentReference<Object?> userRef
+  +CollectionReference<Object?> wordsRef
+  +List<dicWord> dicWords
+  -List<bool> _starred
+  -void _initializeUserRef()
+  +void initState()
+  -void _toggleStarred()
+  -bool _isSelected()
+  -void _toggleSelected()
+  -void _showPopup()
+  +Widget build()
+}
+'
+'"code230206_hangul_app::screen::screen_select_dicButton.dart::_SelectDicButtonScreen" o-- "firebase_auth::firebase_auth.dart::User"
+'"code230206_hangul_app::screen::screen_select_dicButton.dart::_SelectDicButtonScreen" o-- "cloud_firestore::cloud_firestore.dart::DocumentReference<Object>"
+'"code230206_hangul_app::screen::screen_select_dicButton.dart::_SelectDicButtonScreen" o-- "cloud_firestore::cloud_firestore.dart::CollectionReference<Object>"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_select_dicButton.dart::_SelectDicButtonScreen"
+
+class "code230206_hangul_app::screen::screen_select_dicButton.dart::WebScraper" {
+  +String searchWord
+  +Future<List<dicWord>> extractData()
+}
+
+class "code230206_hangul_app::screen::screen_select_dicButton.dart::dicWord" {
+  +String txt_emph
+  +String txt_mean
+  +String timestamp
+}
+
+class "code230206_hangul_app::screen::screen_select_modifyButton.dart::SelectModifyButtonScreen" {
+  +String text
+  +_SelectModifyButtonScreen createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_select_modifyButton.dart::SelectModifyButtonScreen"
+
+class "code230206_hangul_app::screen::screen_select_modifyButton.dart::_SelectModifyButtonScreen" {
+  -String _text
+  -TextEditingController _textEditingController
+  +String returnText
+  +Widget build()
+}
+
+'"code230206_hangul_app::screen::screen_select_modifyButton.dart::_SelectModifyButtonScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_select_modifyButton.dart::_SelectModifyButtonScreen"
+
+class "code230206_hangul_app::screen::screen_select_TtsButton.dart::Word" {
+  +String word
+  +bool isSelected
+  +int sentenceIndex
+  +int wordIndex
+  +int wordIndexInSentence
+}
+
+class "code230206_hangul_app::screen::screen_select_TtsButton.dart::SelectTtsButtonScreen" {
+  +String text
+  +_SelectTtsButtonScreenState createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_select_TtsButton.dart::SelectTtsButtonScreen"
+
+class "code230206_hangul_app::screen::screen_select_TtsButton.dart::_SelectTtsButtonScreenState" {
+  -String _text
+  +List<Word> wordList
+  -List<String> _sentences
+  -int _currentSentenceIndex
+  -List<double> _ttsSpeed
+  -FlutterTts _tts
+  -int _ttsSpeedIndex
+  -StreamController<List<Word>> _streamController
+  -bool _stopflag
+  -bool _playflag
+  -int _toggleSwitchvalue
+  -List<String> _speaktype
+  +Stream<List<Word>> stream
+  -void _speakWord()
+  -void _speakSentence()
+  -void _updateIsSelected()
+  -void _stopSpeakTts()
+  +Widget alternativeIconBuilder()
+  +Widget build()
+}
+'
+'"code230206_hangul_app::screen::screen_select_TtsButton.dart::_SelectTtsButtonScreenState" o-- "flutter_tts::flutter_tts.dart::FlutterTts"
+'"code230206_hangul_app::screen::screen_select_TtsButton.dart::_SelectTtsButtonScreenState" o-- "dart::async::StreamController<List<Word>>"
+'"code230206_hangul_app::screen::screen_select_TtsButton.dart::_SelectTtsButtonScreenState" o-- "dart::async::Stream<List<Word>>"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_select_TtsButton.dart::_SelectTtsButtonScreenState"
+
+class "code230206_hangul_app::screen::screen_splash.dart::SpalshScreen" {
+  +State<SpalshScreen> createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_splash.dart::SpalshScreen"
+
+class "code230206_hangul_app::screen::screen_splash.dart::_SpalshScreenState" {
+  -Timer _timer
+  +void initState()
+  +Widget build()
+}
+
+'"code230206_hangul_app::screen::screen_splash.dart::_SpalshScreenState" o-- "dart::async::Timer"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_splash.dart::_SpalshScreenState"
+'
+class "code230206_hangul_app::screen::screen_tts.dart::TTSScreen" {
+  {static} +String TTSScreenRouteName
+  +String TTSScreenText
+  +_TTSScreen createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_tts.dart::TTSScreen"
+
+class "code230206_hangul_app::screen::screen_tts.dart::_TTSScreen" {
+  +FlutterTts tts
+  +Widget build()
+  -List<Widget> _buildButtonsWithWords()
+}
+
+'"code230206_hangul_app::screen::screen_tts.dart::_TTSScreen" o-- "flutter_tts::flutter_tts.dart::FlutterTts"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_tts.dart::_TTSScreen"
+
+class "code230206_hangul_app::screen::screen_vacabularyList.dart::VocabularyListScreen" {
+  +_VocabularyListScreenState createState()
+}
+
+'"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "code230206_hangul_app::screen::screen_vacabularyList.dart::VocabularyListScreen"
+
+class "code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState" {
+  +User user
+  +CollectionReference<Object?> wordsRef
+  +List<QueryDocumentSnapshot<Object?>> starredWords
+  -Animation<double> _animation
+  -AnimationController _animationController
+  -bool _hiddenWord
+  -bool _hiddenMeaning
+  +bool isPlaysound
+  -FlutterTts _tts
+  +List<String> initialConsonants
+  +Map<String, String> starredWordsMap
+  +Map<String, String> filteredWordsMap
+  +int initialConsonantsIndex
+  +String dropdownValue
+  +void initState()
+  -void _initializeUserRef()
+  -void _getStarredWords()
+  -void _getStarredWordsCategory()
+  -String? _getFirstConsonant()
+  -void _randomOrderStarredWords()
+  -void _consonantOrderStarredWords()
+  -void _newestOrderStarredWords()
+  -void _oldestOrderStarredWords()
+  -void _hideWords()
+  -void _hideMeaning()
+  -void _fullDisplay()
+  -void _speakTTS()
+  -void _speakTTScard()
+  -void _StopSpeakTts()
+  -void _deleteStarredWords()
+  +Widget build()
+}
+'
+'"code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState" o-- "firebase_auth::firebase_auth.dart::User"
+'"code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState" o-- "cloud_firestore::cloud_firestore.dart::CollectionReference<Object>"
+'"code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState" o-- "flutter::src::animation::animation.dart::Animation<double>"
+'"code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
+'"code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState" o-- "flutter_tts::flutter_tts.dart::FlutterTts"
+'"flutter::src::widgets::framework.dart::State" <|-- "code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState"
+'"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin" <|-- "code230206_hangul_app::screen::screen_vacabularyList.dart::_VocabularyListScreenState"
+
+'class "code230206_hangul_app::screen::snackBarWidget.dart::SnackBarWidget" {
+'  {static} +GlobalKey<ScaffoldMessengerState> messengerKey
+'  {static} +dynamic showSnackBar()
+'}
+
+'"code230206_hangul_app::screen::snackBarWidget.dart::SnackBarWidget" o-- "flutter::src::widgets::framework.dart::GlobalKey<ScaffoldMessengerState>"
+
+
+@enduml

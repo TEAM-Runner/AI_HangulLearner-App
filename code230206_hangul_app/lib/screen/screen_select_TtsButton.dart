@@ -30,9 +30,9 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   List<String> _sentences = [];
   int _currentSentenceIndex = -1; // 현재 문장의 인덱스 표시 (처음 아무것도 선택X -> -1)
-  List<double> _ttsSpeed = [0.2, 0.3, 0.5]; // tts 속도 저장 리스트. 느림 - 보통 - 빠름
+  List<double> _ttsSpeed = [0.2, 0.4, 0.6, 0.8, 1.0]; // tts 속도 저장 리스트. 느림 - 보통 - 빠름
   final FlutterTts _tts = FlutterTts(); // tts
-  int _ttsSpeedIndex = 1; // _ttsSpeed 리스트의 인덱스 저장
+  int _ttsSpeedIndex = 2; // _ttsSpeed 리스트의 인덱스 저장
   StreamController<List<Word>> _streamController = StreamController<List<Word>>.broadcast();
   Stream<List<Word>> get stream => _streamController.stream;
 
@@ -295,7 +295,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                 }
                               }
 
-                              },
+                            },
                             child: Container(
                               padding: EdgeInsets.all(2.0),
                               decoration: BoxDecoration(
