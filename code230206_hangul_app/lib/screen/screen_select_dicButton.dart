@@ -13,8 +13,9 @@ import 'package:intl/intl.dart';
 
 class SelectDicButtonScreen extends StatefulWidget {
   late String text;
+  late int initialTTSIndex;  //현재 TTS 출력 중인 인덱스 전달(기록용)
 
-  SelectDicButtonScreen({required this.text});
+  SelectDicButtonScreen({required this.text, required this.initialTTSIndex});
 
   @override
   _SelectDicButtonScreen createState() => _SelectDicButtonScreen(text);
@@ -196,6 +197,10 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
     double width = screenSize.width;
     double height = screenSize.height;
 
+    // TTS 위치 기록
+    print("SelectTtsButtonScreen - currentTTSIndex: $currentTTSIndex");
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFF3F3F3),
@@ -241,24 +246,30 @@ class _SelectDicButtonScreen extends State<SelectDicButtonScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectModifyButtonScreen(text: _text),
-                        ),
+                              SelectModifyButtonScreen(
+                                  text: _text,
+                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
+                              ),                         ),
                       );
                     } else if (index == 1) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectDicButtonScreen(text: _text),
-                        ),
+                              SelectDicButtonScreen(
+                                  text: _text,
+                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
+                              ),                        ),
                       );
                     } else if (index == 2) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectTtsButtonScreen(text: _text),
-                        ),
+                              SelectTtsButtonScreen(
+                                  text: _text,
+                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
+                              ),                        ),
                       );
                     }
                   },

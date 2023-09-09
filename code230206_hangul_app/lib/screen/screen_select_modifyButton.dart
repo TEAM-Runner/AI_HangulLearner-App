@@ -5,8 +5,9 @@ import 'package:toggle_switch/toggle_switch.dart';
 
 class SelectModifyButtonScreen extends StatefulWidget {
   late String text;
+  late int initialTTSIndex;  //현재 TTS 출력 중인 인덱스 전달(기록용)
 
-  SelectModifyButtonScreen({required this.text});
+  SelectModifyButtonScreen({required this.text, required this.initialTTSIndex});
 
   @override
   _SelectModifyButtonScreen createState() => _SelectModifyButtonScreen(text);
@@ -27,6 +28,10 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
     Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
+
+    // TTS 위치 기록
+    print("SelectTtsButtonScreen - currentTTSIndex: $currentTTSIndex");
+
 
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +78,10 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectModifyButtonScreen(text: returnText),
+                              SelectModifyButtonScreen(
+                                  text: returnText,
+                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
+                                ),
                         ),
                       );
                     } else if (index == 1) {
@@ -81,16 +89,20 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectDicButtonScreen(text: returnText),
-                        ),
+                              SelectDicButtonScreen(
+                                  text: returnText,
+                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
+                              ),                        ),
                       );
                     } else if (index == 2) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SelectTtsButtonScreen(text: returnText),
-                        ),
+                              SelectTtsButtonScreen(
+                                  text: returnText,
+                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
+                              ),                        ),
                       );
                     }
                   },
