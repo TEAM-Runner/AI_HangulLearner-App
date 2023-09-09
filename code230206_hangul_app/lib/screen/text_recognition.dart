@@ -30,7 +30,7 @@ class ScanImageProcessor {
 
           await navigator.pushReplacement(
             // 기본 코드
-              MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: recognizedText.text))
+              MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: recognizedText.text, initialTTSIndex: 0))
 
             // 1차 테스트용 코드: screen_Camera_result.dart로 연결
             // MaterialPageRoute(builder: (context) => ResultScreen(text: testtext))
