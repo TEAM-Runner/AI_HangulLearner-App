@@ -12,6 +12,7 @@ class SpalshScreen extends StatefulWidget {
 
 class _SpalshScreenState extends State<SpalshScreen> {
 
+  ///set 3s time-out
   late Timer _timer;
 
   @override
@@ -24,15 +25,18 @@ class _SpalshScreenState extends State<SpalshScreen> {
     });
     super.initState();
   }
+
+  ///set a animation and "ㅇㅇㅎㄱ" icon
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        //TODO:set a animation and "ㅇㅇㅎㄱ" icon
-        child: Text("data"),
-      ),
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: const Image(
+            image: AssetImage("assets/images/splash.png"),
+            fit: BoxFit.cover,
+          )),
     );
   }
 }
-
-
