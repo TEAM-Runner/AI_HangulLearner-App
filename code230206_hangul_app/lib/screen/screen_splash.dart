@@ -11,19 +11,18 @@ class SpalshScreen extends StatefulWidget {
 }
 
 class _SpalshScreenState extends State<SpalshScreen> {
-
-  ///set 3s time-out
-  late Timer _timer;
-
+  ///addPostFrameCallback method: when flutter widget were builded, do something
   @override
   void initState() {
-    _timer=Timer(Duration(seconds: 3), () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    });
     super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((Duration duration) {
+      Future.delayed(Duration(seconds: 2), () {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => route == null);
+      });
+    });
   }
 
   ///set a animation and "ㅇㅇㅎㄱ" icon
