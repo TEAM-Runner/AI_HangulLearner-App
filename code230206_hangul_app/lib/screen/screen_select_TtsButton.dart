@@ -5,6 +5,9 @@ import 'screen_select_dicButton.dart';
 import 'screen_select_modifyButton.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'dart:async';
 
 int currentTTSIndex = 0; // 현재 TTS 출력 중인 인덱스 0으로 초기화
@@ -52,6 +55,18 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   bool _stopflag = true; // TTS speak or not
   bool _playflag = false; // TTS stop or play
 
+  // dictionary *************************************
+  String? _dic_selectedWord; // dictionary string
+  // firestore 단어 저장 부분
+  late User? user;
+  late DocumentReference userRef;
+  late CollectionReference wordsRef;
+
+  List<dicWord> dicWords = [];
+  List<bool> _starred = [];
+
+
+
 
   int _toggleSwitchvalue = 1; // tts 속도를 지정하는 토글 스위치 인덱스
   List<String> _speaktype = ["one", "all", "record"];
@@ -98,6 +113,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     //   }
     // }
 
+
+    _dic_initializeUserRef();
 
   }
 
@@ -231,6 +248,148 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     );
   }
 
+  // ********** dictionary function **********
+  // _dic 붙은 함수는 screen_select_dicButton에 있던 함수
+  // showModalBottomSheet에서 star icon 상태 업데이트 위한 함수
+  void _dic_initializeUserRef() {
+    user = FirebaseAuth.instance.currentUser;
+    userRef = FirebaseFirestore.instance.collection('users').doc(user!.uid);
+    wordsRef = userRef.collection('words');
+
+  }
+  void _dic_toggleStarred(int index) async {
+    String word = dicWords[index].txt_emph;
+    DocumentSnapshot snapshot = await wordsRef.doc(word).get();
+    setState(() {
+      _starred[index] = !_starred[index];
+    });
+
+    if (_starred[index]) {
+      // timestamp
+      final now = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+
+      wordsRef.doc(word).set({
+        'word': dicWords[index].txt_emph,
+        'meaning': dicWords[index].txt_mean,
+        'timestamp': formattedDate, // Add timestamp
+      }); // Firestore에 단어가 없을 경우 추가
+    } else {
+      wordsRef.doc(word).delete(); // Firestore에서 단어 삭제
+    }
+  }
+  bool _dic_isSelected(String word) {
+    return _dic_selectedWord == word;
+  }
+
+  void _dic_toggleSelected(String word) {
+    setState(() {
+      if (_dic_selectedWord == word) {
+        _dic_selectedWord = null;
+      } else {
+        _dic_selectedWord = word;
+      }
+    });
+  }
+
+  void _dic_showPopup(String word) {
+    showModalBottomSheet(
+      context: context,
+      barrierColor: Colors.transparent,
+      backgroundColor: Color(0xFFEFEFEF),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+      ),
+      builder: (context) {
+        // final webScraper = WebScraper(word);
+        final WebScraper webScraper = WebScraper('$word');
+
+        return SizedBox(
+          height: 300,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return FutureBuilder(
+                future: webScraper.extractData(),
+                builder: (_, snapShot) {
+                  if (snapShot.hasData) {
+                    dicWords = snapShot.data as List<dicWord>;
+                    if (_starred.length != dicWords.length) {
+                      _starred = List.generate(dicWords.length, (_) => false);
+                    }
+
+                    return Column(
+                      children: [
+                        SizedBox(height: 10),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: dicWords.length,
+                          separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+                          itemBuilder: (_, index) {
+                            String word = dicWords[index].txt_emph;
+                            return FutureBuilder<DocumentSnapshot>(
+                              future: wordsRef.doc(word).get(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData && snapshot.data!.exists) {
+                                  _starred[index] = true;
+                                } else {
+                                  _starred[index] = false;
+                                }
+                                return Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Container(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        // add tts or ... tts 보류
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        onPrimary: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15.0),
+                                        ),                                    ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(1),
+                                        child: ListTile(
+                                          title: Text(dicWords[index].txt_emph,
+                                              style: const TextStyle(fontSize: 24)),
+                                          subtitle: Text(dicWords[index].txt_mean,
+                                              style: const TextStyle(fontSize: 20)),
+                                          trailing: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                _dic_toggleStarred(index);
+                                              });
+                                            },
+                                            icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
+                                              color: Colors.amber,),),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // 스크린 사이즈 정의
@@ -266,79 +425,103 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
             SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Container(),
                 ),
-                ToggleSwitch(
-                  initialLabelIndex: 2,
-                  labels: ['수정', '사전', '음성'],
-                  customTextStyles: [
-                    TextStyle(fontSize: width * 0.045),
-                    TextStyle(fontSize: width * 0.045),
-                    TextStyle(fontSize: width * 0.045),
-                  ],
-                  radiusStyle: true,
-                  onToggle: (index) {
-                    if (index == 0) {
-                      _stopflag = false; // Stop all TTS
-                      _stopSpeakTts(); // Stop ongoing TTS
-                      print("currentTTSIndex: $currentTTSIndex"); //현재 TTS 출력 중인 인덱스 기록
-                      Navigator.pushReplacement(
-                        context,
+                Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Color(0xFFC0EB75),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              SelectModifyButtonScreen(
-                                  text: _text,
-                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
-                              ),                         ),
-                      );
-                    } else if (index == 1) {
-                      _stopflag = false; // Stop all TTS
-                      _stopSpeakTts(); // Stop ongoing TTS
-
-                      print("currentTTSIndex: $currentTTSIndex"); //현재 TTS 출력 중인 인덱스 기록
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              SelectDicButtonScreen(
-                                  text: _text,
-                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
-                              ),                         ),
-                      );
-                    } else if (index == 2) {
-                      _stopflag = false; // Stop all TTS
-                      _stopSpeakTts(); // Stop ongoing TTS
-                      print("currentTTSIndex: $currentTTSIndex"); //현재 TTS 출력 중인 인덱스 기록
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              SelectTtsButtonScreen(
-                                  text: _text,
-                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
-                              ),
+                          builder: (context) => SelectModifyButtonScreen(text: _text, initialTTSIndex: currentTTSIndex,),
                         ),
                       );
-                    }
-                  },
-                  minWidth: 90.0,
-                  cornerRadius: 20.0,
-                  activeBgColor: [Color(0xFFC0EB75)],
-                  activeFgColor: Colors.black,
-                  inactiveBgColor: Colors.white,
-                  inactiveFgColor: Colors.black,
-                ),
-                Expanded(
-                  child: Container(),
-                ),
+                    },
+                    icon: Icon(Icons.border_color_outlined, color: Colors.black),
+                  ),
+                )
+
+
               ],
             ),
             SizedBox(height: 16.0),
 
             //원래 코드
+            // Expanded(
+            //     child: SingleChildScrollView(
+            //       child: Wrap(
+            //         spacing: 4.0,
+            //         runSpacing: 4.0,
+            //         children: wordList.asMap().entries.map((entry) {
+            //           int index = entry.key;
+            //           String wordValue = entry.value.word;
+            //           return StreamBuilder(
+            //             stream: _streamController.stream,
+            //             builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //               List<Word> isSelected = snapshot.data ?? List<Word>.generate(wordList.length, (_) => Word(word: "", isSelected: false, sentenceIndex: -1, wordIndex: -1, wordIndexInSentence: -1));
+            //
+            //               return GestureDetector(
+            //                 onTap: () {
+            //
+            //                   // dictionary
+            //                   _dic_toggleSelected(entry.value.word);
+            //                   if (_dic_isSelected(entry.value.word)) {
+            //                     _dic_showPopup(entry.value.word);
+            //                   }
+            //
+            //                   // _stopflag = true;
+            //                   // _speakWord(entry.value.sentenceIndex, entry.value.wordIndex, _speaktype[0]);
+            //                   //
+            //                   // if (_stopflag && _playflag){ // Stop on onTap during TTS playback
+            //                   //   setState(() {
+            //                   //     _playflag = !_playflag;
+            //                   //   });
+            //                   //   if (_playflag) {
+            //                   //     _stopflag = true;
+            //                   //     if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
+            //                   //       _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
+            //                   //       print("0 / TTS record is $currentTTSIndex");
+            //                   //
+            //                   //     }
+            //                   //     else { // TTS 기록이 존재하는 경우
+            //                   //       _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
+            //                   //       print("1 / TTS record is $currentTTSIndex");
+            //                   //     }
+            //                   //   } else {
+            //                   //     _stopflag = false; // Stop all TTS
+            //                   //     _stopSpeakTts(); // Stop ongoing TTS
+            //                   //
+            //                   //   }
+            //                   // }
+            //
+            //                 },
+            //                 child: Container(
+            //                   padding: EdgeInsets.all(2.0),
+            //                   decoration: BoxDecoration(
+            //                     color: isSelected[index].isSelected ? Colors.yellow : null,
+            //                     borderRadius: BorderRadius.circular(4.0),
+            //                   ),
+            //                   child: Text(
+            //                     wordValue,
+            //                     style: TextStyle(fontSize: width * 0.045),
+            //                   ),
+            //                 ),
+            //               );
+            //             },
+            //           );
+            //         }).toList(),
+            //       ),
+            //     )
+            // ),
+
             Expanded(
                 child: SingleChildScrollView(
                   child: Wrap(
@@ -347,112 +530,28 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     children: wordList.asMap().entries.map((entry) {
                       int index = entry.key;
                       String wordValue = entry.value.word;
-                      return StreamBuilder(
-                        stream: _streamController.stream,
-                        builder: (BuildContext context, AsyncSnapshot snapshot) {
-                          List<Word> isSelected = snapshot.data ?? List<Word>.generate(wordList.length, (_) => Word(word: "", isSelected: false, sentenceIndex: -1, wordIndex: -1, wordIndexInSentence: -1));
+                      bool dic_isSelected = _dic_selectedWord == entry.value.word;
 
-                          return GestureDetector(
-                            onTap: () {
-                              _stopflag = true;
-                              _speakWord(entry.value.sentenceIndex, entry.value.wordIndex, _speaktype[0]);
-
-                              if (_stopflag && _playflag){ // Stop on onTap during TTS playback
-                                setState(() {
-                                  _playflag = !_playflag;
-                                });
-                                if (_playflag) {
-                                  _stopflag = true;
-                                  if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
-                                    _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
-                                    print("0 / TTS record is $currentTTSIndex");
-
-                                  }
-                                  else { // TTS 기록이 존재하는 경우
-                                    _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
-                                    print("1 / TTS record is $currentTTSIndex");
-                                  }
-                                } else {
-                                  _stopflag = false; // Stop all TTS
-                                  _stopSpeakTts(); // Stop ongoing TTS
-
-                                }
-                              }
-
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(2.0),
-                              decoration: BoxDecoration(
-                                color: isSelected[index].isSelected ? Colors.yellow : null,
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                              child: Text(
-                                wordValue,
-                                style: TextStyle(fontSize: width * 0.045),
-                              ),
-                            ),
-                          );
+                      return GestureDetector(
+                        onTap: () {
+                          _dic_toggleSelected(entry.value.word);
+                          if (_dic_isSelected(entry.value.word)) {
+                            _dic_showPopup(entry.value.word);
+                          }
                         },
+                        child: Container(
+                          padding: EdgeInsets.all(2.0),
+                          decoration: BoxDecoration(
+                            color: dic_isSelected ? Colors.yellow : null,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Text(entry.value.word, style: TextStyle(fontSize: width * 0.045),),
+                        ),
                       );
                     }).toList(),
                   ),
                 )
             ),
-
-
-            // Sentence test
-            // Expanded(
-            //     child: SingleChildScrollView(
-            //       child: Wrap(
-            //         spacing: 4.0,
-            //         runSpacing: 4.0,
-            //         children: sentenceList.map((sentence) {
-            //           // int index = entry.key;
-            //           // String sentenceValue = entry.value.words[0].word;
-            //           return StreamBuilder(
-            //             stream: _streamController.stream,
-            //             builder: (BuildContext context, AsyncSnapshot snapshot) {
-            //               List<Word> isSelected = snapshot.data ?? List<Word>.generate(wordList.length, (_) => Word(word: "", isSelected: false, sentenceIndex: -1, wordIndex: -1, wordIndexInSentence: -1));
-            //
-            //               return GestureDetector(
-            //                 onTap: () {
-            //                   _stopflag = true;
-            //                   _speakWord(sentence.words[0].sentenceIndex, sentence.words[0].wordIndex, _speaktype[0]);
-            //
-            //                   if (_stopflag && _playflag){ // Stop on onTap during TTS playback
-            //                     setState(() {
-            //                       _playflag = !_playflag;
-            //                     });
-            //                     if (_playflag) {
-            //                       _stopflag = true;
-            //                       _speakWord(0, 0, _speaktype[1]);
-            //                     } else {
-            //                       _stopflag = false; // Stop all TTS
-            //                       _stopSpeakTts(); // Stop ongoing TTS
-            //                     }
-            //                   }
-            //
-            //                 },
-            //                 child: Container(
-            //                   padding: EdgeInsets.all(2.0),
-            //                   decoration: BoxDecoration(
-            //                     color: sentence.words.any((word) => word.isSelected) ? Colors.yellow : null,
-            //                   ),
-            //                   child: Text(
-            //                     // sentenceValue,
-            //                     sentence.words.map((word) => word.word).join(' '),
-            //                     style: TextStyle(fontSize: width * 0.045),
-            //                   ),
-            //                 ),
-            //               );
-            //
-            //             },
-            //           );
-            //         }).toList(),
-            //       ),
-            //     )
-            // ),
-
 
             SizedBox(height: 16.0),
             Row(
@@ -523,7 +622,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 ),
 
                 AnimatedToggleSwitch<int>.size(
-                  textDirection: TextDirection.rtl,
+                  // textDirection: TextDirection.rtl, // 왜 에러뜨지...
                   current: _toggleSwitchvalue,
                   values: const [0, 1, 2],
                   // iconOpacity: 0.2,

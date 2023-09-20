@@ -63,59 +63,24 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                 Expanded(
                   child: Container(),
                 ),
-                ToggleSwitch(
-                  initialLabelIndex: 0,
-                  labels: ['수정', '사전', '음성'],
-                  customTextStyles: [
-                    TextStyle(fontSize: width * 0.045),
-                    TextStyle(fontSize: width * 0.045),
-                    TextStyle(fontSize: width * 0.045),
-                  ],
-                  radiusStyle: true,
-                  onToggle: (index) {
-                    if (index == 0) {
-                      Navigator.pushReplacement(
-                        context,
+                Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Color(0xFFC0EB75),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              SelectModifyButtonScreen(
-                                  text: returnText,
-                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
-                                ),
+                          builder: (context) => SelectTtsButtonScreen(text: _text, initialTTSIndex: currentTTSIndex,),
                         ),
                       );
-                    } else if (index == 1) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              SelectDicButtonScreen(
-                                  text: returnText,
-                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
-                              ),                        ),
-                      );
-                    } else if (index == 2) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              SelectTtsButtonScreen(
-                                  text: returnText,
-                                  initialTTSIndex: currentTTSIndex // 현재 TTS 출력 중인 인덱스 전달(기록용)
-                              ),                        ),
-                      );
-                    }
-                  },
-                  minWidth: 90.0,
-                  cornerRadius: 20.0,
-                  activeBgColor: [Color(0xFFC0EB75)],
-                  activeFgColor: Colors.black,
-                  inactiveBgColor: Colors.white,
-                  inactiveFgColor: Colors.black,
-                ),
-                Expanded(
-                  child: Container(),
-                ),
+                    },
+                    icon: Icon(Icons.check, color: Colors.black),
+                  ),
+                )
               ],
             ),
             // SizedBox(height: 16.0),

@@ -7,6 +7,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'screen_dic.dart';
 import 'screen_tts.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+
 
 class ResultScreen extends StatefulWidget  {
   final String text;
@@ -23,9 +26,11 @@ class _ResultScreenState  extends State<ResultScreen> {
   @override
   void initState() {
     super.initState();
+
     // _textFieldController.text = widget.text;
     _textFieldController = TextEditingController(text: "${widget.text}");
   }
+
 
 
   @override
@@ -39,7 +44,6 @@ class _ResultScreenState  extends State<ResultScreen> {
     double height = screenSize.height;
 
     // TextEditingController _textFieldController = TextEditingController();
-
 
     //임시 전달 텍스트
     // final String testtext = '저 멀리 깊고 푸른 바다 속에, 물고기 한 마리가 살고 있었습니다. 그 물고기는 보통 물고기가 아니라 온 바다에서 가장 아름다운 물고기였습니다. 파랑, 초록, 자줏빛 바늘 사이사이에 반짝반짝 빛나는 은빛 비늘이 박혀 있었거든요. 다른 물고기들도 그 물고기의 아름다운 모습에 감탄했습니다. 물고기들은 그 물고기를 무지개 물고기라고 불렀습니다. 물고기들은 무지개 물고기에게 말을 붙였습니다.';
