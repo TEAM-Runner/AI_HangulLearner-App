@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'screen_select_dicButton.dart';
 import 'screen_select_modifyButton.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:html/parser.dart' as parser;
 
 int currentTTSIndex = 0; // 현재 TTS 출력 중인 인덱스 0으로 초기화
 
@@ -49,8 +49,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   List<double> _ttsSpeed = [0.2, 0.4, 0.6, 0.8, 1.0]; // tts 속도 저장 리스트. 느림 - 보통 - 빠름
   final FlutterTts _tts = FlutterTts(); // tts
   int _ttsSpeedIndex = 2; // _ttsSpeed 리스트의 인덱스 저장
-  StreamController<List<Word>> _streamController = StreamController<List<Word>>.broadcast();
-  Stream<List<Word>> get stream => _streamController.stream;
+  // StreamController<List<Word>> _streamController = StreamController<List<Word>>.broadcast();
+  // Stream<List<Word>> get stream => _streamController.stream;
+  StreamController<List<Sentence>> _streamController = StreamController<List<Sentence>>.broadcast();
+  Stream<List<Sentence>> get stream => _streamController.stream;
 
   bool _stopflag = true; // TTS speak or not
   bool _playflag = false; // TTS stop or play
@@ -64,6 +66,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   List<dicWord> dicWords = [];
   List<bool> _starred = [];
+
+  List<bool> _iconPlayFlags = []; // IconButton의 아이콘 제어 위한 리스트
+  StreamController<bool> _streamIconController = StreamController<bool>.broadcast();
+  Stream<bool> get iconstream => _streamIconController.stream;
 
 
 
@@ -114,10 +120,56 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     // }
 
 
+    _iconPlayFlags = List.generate(sentenceList.length, (index) => false); // IconButton의 아이콘 제어 위한 리스트
     _dic_initializeUserRef();
 
   }
 
+
+  // original
+  // void _speakWord(int sentenceIndex, int wordIndex, String speaktype) async {
+  //   print("_speakWord is called");
+  //   // print("_speakWord _currentSentenceIndex: $_currentSentenceIndex");
+  //
+  //   if (sentenceIndex != -1) {
+  //     setState(() {
+  //       _currentSentenceIndex = sentenceIndex;
+  //       _updateIsSelected(-1);
+  //     });
+  //     int sentenceFirstIndex = 0;
+  //     int sentenceLastIndex = 0;
+  //
+  //     if (speaktype == "one"){
+  //       for (int i = 0; i < wordList.length; i++) {
+  //         if (wordList[i].sentenceIndex == sentenceIndex) {
+  //           sentenceFirstIndex =  wordList[i].wordIndex;
+  //           break;
+  //         }
+  //       }
+  //
+  //       for (int i = wordList.length - 1; i >= 0; i--) {
+  //         if (wordList[i].sentenceIndex == sentenceIndex) {
+  //           sentenceLastIndex = wordList[i].wordIndex;
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     if (speaktype == "all") {
+  //       sentenceFirstIndex = 0;
+  //       sentenceLastIndex = wordList.length - 1;
+  //       print("_speakWord sentenceFirstIndex: $sentenceFirstIndex");
+  //
+  //     }
+  //
+  //     // TTS 기록이 존재하는 경우
+  //     // int sentenceIndex = 0으로, int wordIndex = currentTTSindex으로, String speaktype="currentTTSindex"으로 지정
+  //     if (speaktype == "record") {
+  //       sentenceFirstIndex = wordIndex;
+  //       sentenceLastIndex = wordList.length - 1;
+  //     }
+  //     _speakSentence(sentenceFirstIndex, sentenceLastIndex);
+  //   }
+  // }
 
   void _speakWord(int sentenceIndex, int wordIndex, String speaktype) async {
     print("_speakWord is called");
@@ -126,7 +178,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     if (sentenceIndex != -1) {
       setState(() {
         _currentSentenceIndex = sentenceIndex;
-        _updateIsSelected(-1);
+        // _updateIsSelected(-1);
       });
       int sentenceFirstIndex = 0;
       int sentenceLastIndex = 0;
@@ -167,7 +219,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     print("_speakSentence is called");
 
     setState(() {
-      _updateIsSelected(-1);
+      // _updateIsSelected(-1);
     });
 
     // E/flutter ( 7310): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: setState() called after dispose(): _SelectTtsButtonScreenState#5560a(lifecycle state: defunct, not mounted)
@@ -178,7 +230,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     await _tts.awaitSpeakCompletion(true);
 
     for (int i = sentenceFirstIndex; i <= sentenceLastIndex; i++){
-      _updateIsSelected(i);
+      // _updateIsSelected(i);
 
       if (_stopflag) {
         _playflag = true;
@@ -190,43 +242,62 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       if (_currentSentenceIndex == -1){
         break;
       }
-      _updateIsSelected(i);
+      // _updateIsSelected(i);
       if (!mounted) return; // Check if the widget is still mounted
       setState(() {});
     }
     _playflag = false;
-    _updateIsSelected(-1);
+    // _updateIsSelected(-1);
   }
 
-  void _updateIsSelected(int highlightIndex) {
-    for (final word in wordList) {
-      word.isSelected = false;
+  // 문장 옆의 재생 버튼 누르는 경우, 해당 문장만 읽어줌
+  void _speakOneSentence (int sentenceIndex, Sentence sentence) async {
+
+    setState(() {
+      _updateIsSelected(-1, -1);
+    });
+
+    _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // tts - 읽기 속도
+    await _tts.awaitSpeakCompletion(true);
+
+    for (int wordIndex = 0; wordIndex < sentence.words.length; wordIndex++) {
+      _updateIsSelected(sentenceIndex, wordIndex);
+
+      // final word = sentence.words[wordIndex].word;
+      if (_stopflag) {
+        _playflag = true;
+        await _tts.speak(sentence.words[wordIndex].word);
+      }
     }
 
-    if (highlightIndex != -1){
-      wordList[highlightIndex].isSelected = true;
+    _playflag = false;
+    _updateIsSelected(-1,-1);
+  }
 
-      // print("_updateIsSelected highlightIndex: $highlightIndex");
-      _streamController.add(wordList);
+
+  void _updateIsSelected(int highlightSentenceIndex, int highlightWordIndexInSentence) {
+    for (final sentence in sentenceList) {
+      for (final word in sentence.words) {
+        word.isSelected = false;
+        _streamController.add(sentenceList);
+        _streamIconController.add(true); // Stop speaking
+      }
+    }
+
+    if (highlightSentenceIndex != -1 && highlightWordIndexInSentence != -1) {
+      sentenceList[highlightSentenceIndex].words[highlightWordIndexInSentence].isSelected = true;
+      // print("${sentenceList[highlightSentenceIndex].words[highlightWordIndexInSentence].word}: ${sentenceList[highlightSentenceIndex].words[highlightWordIndexInSentence].isSelected}");
+      _streamController.add(sentenceList);
+      _streamIconController.add(false); // Stop speaking
+
     }
   }
+
 
   void _stopSpeakTts() async {
     // _stopflag = false;
     await _tts.stop();
   }
-
-
-  // 문장 단위로 출력
-  // Function to display the next sentence
-  void _nextSentence() {
-    if (_currentSentenceIndex < _sentences.length - 1) {
-      setState(() {
-        _currentSentenceIndex++;
-      });
-    }
-  }
-
 
   Widget alternativeIconBuilder(BuildContext context, SizeProperties<int> local,
       GlobalToggleProperties<int> global) {
@@ -418,7 +489,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       ),
       body: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -454,104 +525,129 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
             ),
             SizedBox(height: 16.0),
 
-            //원래 코드
-            // Expanded(
-            //     child: SingleChildScrollView(
-            //       child: Wrap(
-            //         spacing: 4.0,
-            //         runSpacing: 4.0,
-            //         children: wordList.asMap().entries.map((entry) {
-            //           int index = entry.key;
-            //           String wordValue = entry.value.word;
-            //           return StreamBuilder(
-            //             stream: _streamController.stream,
-            //             builder: (BuildContext context, AsyncSnapshot snapshot) {
-            //               List<Word> isSelected = snapshot.data ?? List<Word>.generate(wordList.length, (_) => Word(word: "", isSelected: false, sentenceIndex: -1, wordIndex: -1, wordIndexInSentence: -1));
-            //
-            //               return GestureDetector(
-            //                 onTap: () {
-            //
-            //                   // dictionary
-            //                   _dic_toggleSelected(entry.value.word);
-            //                   if (_dic_isSelected(entry.value.word)) {
-            //                     _dic_showPopup(entry.value.word);
-            //                   }
-            //
-            //                   // _stopflag = true;
-            //                   // _speakWord(entry.value.sentenceIndex, entry.value.wordIndex, _speaktype[0]);
-            //                   //
-            //                   // if (_stopflag && _playflag){ // Stop on onTap during TTS playback
-            //                   //   setState(() {
-            //                   //     _playflag = !_playflag;
-            //                   //   });
-            //                   //   if (_playflag) {
-            //                   //     _stopflag = true;
-            //                   //     if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
-            //                   //       _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
-            //                   //       print("0 / TTS record is $currentTTSIndex");
-            //                   //
-            //                   //     }
-            //                   //     else { // TTS 기록이 존재하는 경우
-            //                   //       _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
-            //                   //       print("1 / TTS record is $currentTTSIndex");
-            //                   //     }
-            //                   //   } else {
-            //                   //     _stopflag = false; // Stop all TTS
-            //                   //     _stopSpeakTts(); // Stop ongoing TTS
-            //                   //
-            //                   //   }
-            //                   // }
-            //
-            //                 },
-            //                 child: Container(
-            //                   padding: EdgeInsets.all(2.0),
-            //                   decoration: BoxDecoration(
-            //                     color: isSelected[index].isSelected ? Colors.yellow : null,
-            //                     borderRadius: BorderRadius.circular(4.0),
-            //                   ),
-            //                   child: Text(
-            //                     wordValue,
-            //                     style: TextStyle(fontSize: width * 0.045),
-            //                   ),
-            //                 ),
-            //               );
-            //             },
-            //           );
-            //         }).toList(),
-            //       ),
-            //     )
-            // ),
-
+            //original
             Expanded(
-                child: SingleChildScrollView(
-                  child: Wrap(
-                    spacing: 4.0,
-                    runSpacing: 4.0,
-                    children: wordList.asMap().entries.map((entry) {
-                      int index = entry.key;
-                      String wordValue = entry.value.word;
-                      bool dic_isSelected = _dic_selectedWord == entry.value.word;
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: sentenceList.length,
+                  itemBuilder: (BuildContext context, int sentenceIndex) {
+                    Sentence sentence = sentenceList[sentenceIndex];
 
-                      return GestureDetector(
-                        onTap: () {
-                          _dic_toggleSelected(entry.value.word);
-                          if (_dic_isSelected(entry.value.word)) {
-                            _dic_showPopup(entry.value.word);
-                          }
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(2.0),
-                          decoration: BoxDecoration(
-                            color: dic_isSelected ? Colors.yellow : null,
-                            borderRadius: BorderRadius.circular(4.0),
+                    List<String> words = sentence.words.map((word) => word.word).toList();
+
+
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _playflag = !_playflag;
+                              for (int i = 0; i <
+                                  _iconPlayFlags.length; i++) {
+                                _iconPlayFlags[i] =
+                                false; // Initialize each element to false
+                              }
+                            });
+                            if (_playflag) {
+                              _stopflag = true;
+                              _speakOneSentence(sentenceIndex, sentence); // 한 문장만 읽기
+                            } else {
+                              _stopflag = false; // Stop all TTS
+                              _stopSpeakTts(); // Stop ongoing TTS
+                            }
+
+                            if (_playflag && _stopflag){
+                              _iconPlayFlags[sentenceIndex] = true;
+                            } else {
+                              _iconPlayFlags[sentenceIndex] = false;
+                            }
+                            print("_stopflag: $_stopflag       _playflag: $_playflag");
+
+                          },
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFFC0EB75),
+                            ),
+                            // padding: EdgeInsets.all(8.0),
+                            child: _iconPlayFlags[sentenceIndex]
+                                ? Icon(Icons.stop, color: Colors.black)
+                                : Icon(Icons.play_arrow, color: Colors.black),
                           ),
-                          child: Text(entry.value.word, style: TextStyle(fontSize: width * 0.045),),
                         ),
-                      );
-                    }).toList(),
-                  ),
-                )
+
+
+                        Expanded(
+                            child: Wrap(
+                              spacing: 2.0,
+                              runSpacing: 2.0,
+                              children: sentenceList[sentenceIndex].words.asMap().entries.map((entry) {
+                                int index = entry.key;
+                                return StreamBuilder(
+                                    stream: _streamController.stream,
+                                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                      // tts 하이라이트 처리
+                                      // List<Word> isSelected = snapshot.data ?? List<Word>.generate(wordList.length, (_) => Word(word: "", isSelected: false, sentenceIndex: -1, wordIndex: -1, wordIndexInSentence: -1));
+
+                                      List<Sentence> isSelected_sentence = List<Sentence>.generate(sentenceList.length, (index) {
+                                        // Generate a list of Word objects with default values
+                                        List<Word> defaultWords = List<Word>.generate(
+                                          sentenceList[index].words.length,
+                                              (_) => Word(
+                                            word: "",
+                                            isSelected: false,
+                                            sentenceIndex: -1,
+                                            wordIndex: -1,
+                                            wordIndexInSentence: -1,
+                                          ),
+                                        );
+
+                                        return Sentence(
+                                          wordIndex: -1, // You may need to set this to the actual value you want.
+                                          words: defaultWords,
+                                        );
+                                      });
+
+                                      return GestureDetector(
+                                        onTap: () {
+                                          _dic_showPopup(entry.value.word);
+                                          // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
+                                          // _dic_toggleSelected(entry.value.word);
+                                          // if (_dic_isSelected(entry.value.word)) {
+                                          //   _dic_showPopup(entry.value.word);
+                                          // }
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(2.0),
+                                          decoration: BoxDecoration(
+                                            color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : null,
+                                            // color: isSelected_sentence[sentenceIndex].words[index].isSelected ? Colors.yellow : null, // tts 하이라이트처리
+                                            // color: dic_isSelected ? Colors.yellow : null, // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
+                                            borderRadius: BorderRadius.circular(4.0),
+                                          ),
+                                          child: Text(entry.value.word, style: TextStyle(fontSize: width * 0.045),), // 문장 단위 띄어쓰기 없이 나열
+                                        ),
+                                      );
+                                    }
+                                );
+                              }).toList(),
+                            )
+                        )
+                      ],
+                    );
+
+
+                  },
+                  separatorBuilder: (BuildContext ctx, int idx) {
+                    return Divider();
+                  },
+                ),
             ),
+
+
+
 
             SizedBox(height: 16.0),
             Row(
@@ -668,4 +764,64 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       ),
     );
   }
+}
+
+
+// 뜻이 하나만 있는 경우: 리다이렉트 되는 새 url에서 supid, wordid를 구해 finalUrl을 정의해야 함
+class WebScraper {
+  final String searchWord;
+  WebScraper(this.searchWord);
+
+  Future<List<dicWord>> extractData() async {
+
+    final initialUrl =
+        "https://dic.daum.net/search.do?q=${Uri.encodeComponent(searchWord)}&dic=kor";
+    var response = await http.get(Uri.parse(initialUrl));
+
+    final RegExp expSupid = RegExp('supid=(.*?)[\'"]');
+    final RegExp expWordid = RegExp('wordid=(.*?)[\'"]');
+
+    final matchSupid = expSupid.firstMatch(response.body);
+    final supid = matchSupid?.group(1);
+    final matchWordid = expWordid.firstMatch(response.body);
+    final wordid = matchWordid?.group(1);
+
+    final finalUrl =
+        'https://dic.daum.net/word/view.do?wordid=$wordid=${Uri.encodeComponent(searchWord)}&supid=$supid';
+    debugPrint('finalUrl: $finalUrl');
+
+    response = await http.get(Uri.parse(finalUrl));
+    final dicWords = <dicWord>[];
+
+    if (response.statusCode == 200) {
+      final html = parser.parse(response.body);
+      final container = html.querySelectorAll('.inner_top');
+
+      // timeStamp
+      final now = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+
+      for (final element in container) {
+        // ver3 -> 한 개 뜻이 있는 경우
+        final txt_emph = element.querySelector('.txt_cleanword')?.text?.trim();
+        final txt_mean = element.querySelector('.txt_mean')?.text?.trim();
+        //.clean_word .tit_cleantype2 .txt_cleanword
+
+        if (txt_emph != null && txt_mean != null) {
+          // final word = dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate);
+          dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
+        }
+      }
+    }
+
+    return dicWords;
+  }
+}
+
+class dicWord {
+  String txt_emph = 'init';
+  String txt_mean = 'init';
+  String timestamp = '';
+
+  dicWord({required this.txt_emph, required this.txt_mean, required this.timestamp});
 }
