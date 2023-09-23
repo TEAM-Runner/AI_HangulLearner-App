@@ -76,7 +76,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   // init
   _SelectTtsButtonScreenState(this._text) {
-    print("_SelectModifyButtonScreen $_text}");
 
     _text = _text.replaceAll('\n', ' ');
     _sentences = _text.split(RegExp('(?<=[.!?])\\s*')); // 문장 리스트 -> '.', '?', '!' 문장 단위로 split
@@ -147,7 +146,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     _updateIsSelected(-1,-1);
   }
 
-  void _speakAllSentence (int currentTTSIndex) async {
+  void _speakAllSentence () async {
     setState(() {
       _updateIsSelected(-1, -1);
     });
@@ -155,7 +154,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // tts - 읽기 속도
     await _tts.awaitSpeakCompletion(true);
 
-    if (currentTTSIndex == -1) { // 현재 저장된 TTS 기록이 없는 경우 처음부터 끝까지 TTS 출력
+    if (currentTTSIndex == 0) { // 현재 저장된 TTS 기록이 없는 경우 처음부터 끝까지 TTS 출력
       for (int sentenceIndex = 0; sentenceIndex < sentenceList.length; sentenceIndex++){
         for (int wordIndex = 0; wordIndex < sentenceList[sentenceIndex].words.length; wordIndex++) {
           _updateIsSelected(sentenceIndex, wordIndex);
@@ -163,6 +162,13 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
           if (_stopflag) {
             _playflag = true;
             await _tts.speak(sentenceList[sentenceIndex].words[wordIndex].word);
+            currentTTSIndex = sentenceList[sentenceIndex].words[wordIndex].wordIndex;
+
+            //마지막까지 출력한 경우 TTS 인덱스 다시 0
+            if (sentenceIndex == sentenceList.length - 1 && wordIndex == sentenceList[sentenceIndex].words.length - 1) {
+              currentTTSIndex = 0;
+            }
+
           }
         }
       }
@@ -175,6 +181,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
             if (_stopflag) {
               _playflag = true;
               await _tts.speak(sentenceList[sentenceIndex].words[wordIndex].word);
+              currentTTSIndex = sentenceList[sentenceIndex].words[wordIndex].wordIndex;
 
               //마지막까지 출력한 경우 TTS 인덱스 다시 0
               if (sentenceIndex == sentenceList.length - 1 && wordIndex == sentenceList[sentenceIndex].words.length - 1) {
@@ -472,12 +479,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                               _stopSpeakTts(); // Stop ongoing TTS
                             }
 
-                            if (_playflag && _stopflag){
-                              _iconPlayFlags[sentenceIndex] = true;
-                            } else {
-                              _iconPlayFlags[sentenceIndex] = false;
-                            }
-                            print("_stopflag: $_stopflag       _playflag: $_playflag");
+                            // if (_playflag && _stopflag){ // 재생 중일 때 아이콘 바꾸기 위한 부분
+                            //   _iconPlayFlags[sentenceIndex] = true;
+                            // } else {
+                            //   _iconPlayFlags[sentenceIndex] = false;
+                            // }
+                            // print("_stopflag: $_stopflag       _playflag: $_playflag");
 
                           },
                           icon: Container(
@@ -595,8 +602,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                         // _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
-                                        _speakAllSentence(currentTTSIndex);
-                                        print("1 / TTS record is $currentTTSIndex");
+                                        _speakAllSentence();
                                       }
                                   ),
                                   TextButton(
@@ -604,21 +610,18 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                         // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
-                                        _speakAllSentence(-1);
-                                        print("0 / TTS record is $currentTTSIndex");
+                                        currentTTSIndex = 0; // TTS기록을 0으로 초기화하고 _speakAllSentence 호출
+                                        _speakAllSentence();
                                       }
                                   )
                                 ],
                               );
                             },
                           );
-
                         }
                         if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
                           // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
-                          _speakAllSentence(-1);
-                          print("0 / TTS record is $currentTTSIndex");
-
+                          _speakAllSentence();
                         }
 
                       } else {
