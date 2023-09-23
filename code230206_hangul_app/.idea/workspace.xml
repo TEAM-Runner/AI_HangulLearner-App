@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Updated TTS UI to display each sentence separately&#10;&#10;- 문단에서 문장들을 따로 분리하기 위해 ListView 이용&#10;- 문장 단위 출력을 위해 각 문장 앞에 IconButton 추가">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update function to play TTS for all sentences&#10;&#10;- 텍스트를 문장 단위로 분리해 ListView에서 출력하도록 UI를 변경하면서 기존의 함수가 작동하지 않던 문제 해결&#10;- 문장 단위 TTS 재생은 _speakOneSentence(), 전체 단어 TTS 재생은 _speakAllSentence() 함수를 이용하도록 업데이트함">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_Camera.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_Camera.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,7 +389,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695367251939</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Update function to play TTS for all sentences&#10;&#10;- 텍스트를 문장 단위로 분리해 ListView에서 출력하도록 UI를 변경하면서 기존의 함수가 작동하지 않던 문제 해결&#10;- 문장 단위 TTS 재생은 _speakOneSentence(), 전체 단어 TTS 재생은 _speakAllSentence() 함수를 이용하도록 업데이트함">
+      <created>1695437457999</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1695437457999</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -402,7 +411,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update button labels in modify, dictionary, TTS screen" />
     <MESSAGE value="Update yellow highlight function in TTS&#10;&#10;- _setIsSelected: 노란색 highlight 표시할 단어를 세팅하는 함수&#10;- 전체 문장 읽기 버튼을 클릭할 때 그 전에 읽었던 문장이 highlight 되어있던 문제 해결" />
     <MESSAGE value="Update Appbar UI&#10;&#10;- Appbar 뒤로가기 버튼 UI 업데이트" />
     <MESSAGE value="Add ScrollView in modification, dictionary, TTS screen&#10;&#10;- 수정, 사전, 음성 스크린에 SingleChildScrollView 추가" />
@@ -427,6 +435,7 @@
     <MESSAGE value="Add function to select photo from gallery&#10;&#10;- '책 읽어주기' 버튼 클릭시 카메라/갤러리 선택&#10;- 갤러리 선택 시 갤러리의 이미지에서 글자인식" />
     <MESSAGE value="Merge Modify, Dictionary, and TTS screens into a single unified screen&#10;&#10;- 50% complete&#10;- 3개로 나누어져 있던 수정/사전/TTS 화면을 단일 화면으로 병합&#10;- TTS 문장 읽기 기능 수정, 인터페이스 수정이 필요함" />
     <MESSAGE value="Updated TTS UI to display each sentence separately&#10;&#10;- 문단에서 문장들을 따로 분리하기 위해 ListView 이용&#10;- 문장 단위 출력을 위해 각 문장 앞에 IconButton 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated TTS UI to display each sentence separately&#10;&#10;- 문단에서 문장들을 따로 분리하기 위해 ListView 이용&#10;- 문장 단위 출력을 위해 각 문장 앞에 IconButton 추가" />
+    <MESSAGE value="Update function to play TTS for all sentences&#10;&#10;- 텍스트를 문장 단위로 분리해 ListView에서 출력하도록 UI를 변경하면서 기존의 함수가 작동하지 않던 문제 해결&#10;- 문장 단위 TTS 재생은 _speakOneSentence(), 전체 단어 TTS 재생은 _speakAllSentence() 함수를 이용하도록 업데이트함" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update function to play TTS for all sentences&#10;&#10;- 텍스트를 문장 단위로 분리해 ListView에서 출력하도록 UI를 변경하면서 기존의 함수가 작동하지 않던 문제 해결&#10;- 문장 단위 TTS 재생은 _speakOneSentence(), 전체 단어 TTS 재생은 _speakAllSentence() 함수를 이용하도록 업데이트함" />
   </component>
 </project>

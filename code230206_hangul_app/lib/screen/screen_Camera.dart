@@ -12,6 +12,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:code230206_hangul_app/screen/screen_select_TtsButton.dart';
 import 'package:code230206_hangul_app/screen/screen_select_dicButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
@@ -156,13 +157,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         // MaterialPageRoute(builder: (context) => ResultScreen(text: testtext, initialTTSIndex: 0))
 
         // 2차 테스트용 코드: 지도교수님과 면담 후 인터페이스 수정용
-          MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: testtext, initialTTSIndex: 0))
+          MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: testtext, initialTTSIndex: 0))
 
       );
     } catch (e) {
       // 테스트용 코드
       await navigator.pushReplacement(
-          MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: testtext, initialTTSIndex: 0))
+          MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: testtext, initialTTSIndex: 0))
       );
       // 기본 코드
       // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));

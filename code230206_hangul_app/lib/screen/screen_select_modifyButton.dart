@@ -19,6 +19,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
   String returnText = '';
 
   _SelectModifyButtonScreen(this._text) {
+    print("_SelectModifyButtonScreen $_text}");
     _textEditingController.text = _text;
     returnText = _text;
   }
@@ -74,7 +75,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                     onPressed: () {
                       Navigator.pushReplacement(context,
                         MaterialPageRoute(
-                          builder: (context) => SelectTtsButtonScreen(text: _text, initialTTSIndex: currentTTSIndex,),
+                          builder: (context) => SelectTtsButtonScreen(text: returnText, initialTTSIndex: currentTTSIndex,),
                         ),
                       );
                     },

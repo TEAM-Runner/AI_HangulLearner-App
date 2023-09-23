@@ -76,6 +76,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   // init
   _SelectTtsButtonScreenState(this._text) {
+    print("_SelectModifyButtonScreen $_text}");
+
     _text = _text.replaceAll('\n', ' ');
     _sentences = _text.split(RegExp('(?<=[.!?])\\s*')); // 문장 리스트 -> '.', '?', '!' 문장 단위로 split
 
@@ -173,6 +175,11 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
             if (_stopflag) {
               _playflag = true;
               await _tts.speak(sentenceList[sentenceIndex].words[wordIndex].word);
+
+              //마지막까지 출력한 경우 TTS 인덱스 다시 0
+              if (sentenceIndex == sentenceList.length - 1 && wordIndex == sentenceList[sentenceIndex].words.length - 1) {
+                currentTTSIndex = 0;
+              }
             }
           }
         }
@@ -737,3 +744,4 @@ class dicWord {
 
   dicWord({required this.txt_emph, required this.txt_mean, required this.timestamp});
 }
+
