@@ -71,9 +71,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   StreamController<bool> _streamIconController = StreamController<bool>.broadcast();
   Stream<bool> get iconstream => _streamIconController.stream;
 
-
-
-
   int _toggleSwitchvalue = 1; // tts 속도를 지정하는 토글 스위치 인덱스
   List<String> _speaktype = ["one", "all", "record"];
 
@@ -125,134 +122,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   }
 
-
-  // original
-  // void _speakWord(int sentenceIndex, int wordIndex, String speaktype) async {
-  //   print("_speakWord is called");
-  //   // print("_speakWord _currentSentenceIndex: $_currentSentenceIndex");
-  //
-  //   if (sentenceIndex != -1) {
-  //     setState(() {
-  //       _currentSentenceIndex = sentenceIndex;
-  //       _updateIsSelected(-1);
-  //     });
-  //     int sentenceFirstIndex = 0;
-  //     int sentenceLastIndex = 0;
-  //
-  //     if (speaktype == "one"){
-  //       for (int i = 0; i < wordList.length; i++) {
-  //         if (wordList[i].sentenceIndex == sentenceIndex) {
-  //           sentenceFirstIndex =  wordList[i].wordIndex;
-  //           break;
-  //         }
-  //       }
-  //
-  //       for (int i = wordList.length - 1; i >= 0; i--) {
-  //         if (wordList[i].sentenceIndex == sentenceIndex) {
-  //           sentenceLastIndex = wordList[i].wordIndex;
-  //           break;
-  //         }
-  //       }
-  //     }
-  //     if (speaktype == "all") {
-  //       sentenceFirstIndex = 0;
-  //       sentenceLastIndex = wordList.length - 1;
-  //       print("_speakWord sentenceFirstIndex: $sentenceFirstIndex");
-  //
-  //     }
-  //
-  //     // TTS 기록이 존재하는 경우
-  //     // int sentenceIndex = 0으로, int wordIndex = currentTTSindex으로, String speaktype="currentTTSindex"으로 지정
-  //     if (speaktype == "record") {
-  //       sentenceFirstIndex = wordIndex;
-  //       sentenceLastIndex = wordList.length - 1;
-  //     }
-  //     _speakSentence(sentenceFirstIndex, sentenceLastIndex);
-  //   }
-  // }
-
-  void _speakWord(int sentenceIndex, int wordIndex, String speaktype) async {
-    print("_speakWord is called");
-    // print("_speakWord _currentSentenceIndex: $_currentSentenceIndex");
-
-    if (sentenceIndex != -1) {
-      setState(() {
-        _currentSentenceIndex = sentenceIndex;
-        // _updateIsSelected(-1);
-      });
-      int sentenceFirstIndex = 0;
-      int sentenceLastIndex = 0;
-
-      if (speaktype == "one"){
-        for (int i = 0; i < wordList.length; i++) {
-          if (wordList[i].sentenceIndex == sentenceIndex) {
-            sentenceFirstIndex =  wordList[i].wordIndex;
-            break;
-          }
-        }
-
-        for (int i = wordList.length - 1; i >= 0; i--) {
-          if (wordList[i].sentenceIndex == sentenceIndex) {
-            sentenceLastIndex = wordList[i].wordIndex;
-            break;
-          }
-        }
-      }
-      if (speaktype == "all") {
-        sentenceFirstIndex = 0;
-        sentenceLastIndex = wordList.length - 1;
-        print("_speakWord sentenceFirstIndex: $sentenceFirstIndex");
-
-      }
-
-      // TTS 기록이 존재하는 경우
-      // int sentenceIndex = 0으로, int wordIndex = currentTTSindex으로, String speaktype="currentTTSindex"으로 지정
-      if (speaktype == "record") {
-        sentenceFirstIndex = wordIndex;
-        sentenceLastIndex = wordList.length - 1;
-      }
-      _speakSentence(sentenceFirstIndex, sentenceLastIndex);
-    }
-  }
-
-  void _speakSentence(int sentenceFirstIndex, int sentenceLastIndex) async {
-    print("_speakSentence is called");
-
-    setState(() {
-      // _updateIsSelected(-1);
-    });
-
-    // E/flutter ( 7310): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: setState() called after dispose(): _SelectTtsButtonScreenState#5560a(lifecycle state: defunct, not mounted)
-    // 위 오류 때문에 추가
-    if (!mounted) return; // Check if the widget is still mounted
-
-    _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // tts - 읽기 속도
-    await _tts.awaitSpeakCompletion(true);
-
-    for (int i = sentenceFirstIndex; i <= sentenceLastIndex; i++){
-      // _updateIsSelected(i);
-
-      if (_stopflag) {
-        _playflag = true;
-        await _tts.speak(wordList[i].word);
-        currentTTSIndex = i;//현재 TTS 출력 중인 인덱스 기록
-        if (i == sentenceLastIndex) { currentTTSIndex = 0; } //마지막까지 출력한 경우 TTS 인덱스 다시 0
-      }
-
-      if (_currentSentenceIndex == -1){
-        break;
-      }
-      // _updateIsSelected(i);
-      if (!mounted) return; // Check if the widget is still mounted
-      setState(() {});
-    }
-    _playflag = false;
-    // _updateIsSelected(-1);
-  }
-
   // 문장 옆의 재생 버튼 누르는 경우, 해당 문장만 읽어줌
   void _speakOneSentence (int sentenceIndex, Sentence sentence) async {
-
     setState(() {
       _updateIsSelected(-1, -1);
     });
@@ -274,6 +145,43 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     _updateIsSelected(-1,-1);
   }
 
+  void _speakAllSentence (int currentTTSIndex) async {
+    setState(() {
+      _updateIsSelected(-1, -1);
+    });
+
+    _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // tts - 읽기 속도
+    await _tts.awaitSpeakCompletion(true);
+
+    if (currentTTSIndex == -1) { // 현재 저장된 TTS 기록이 없는 경우 처음부터 끝까지 TTS 출력
+      for (int sentenceIndex = 0; sentenceIndex < sentenceList.length; sentenceIndex++){
+        for (int wordIndex = 0; wordIndex < sentenceList[sentenceIndex].words.length; wordIndex++) {
+          _updateIsSelected(sentenceIndex, wordIndex);
+
+          if (_stopflag) {
+            _playflag = true;
+            await _tts.speak(sentenceList[sentenceIndex].words[wordIndex].word);
+          }
+        }
+      }
+    } else { // 현재 저장된 TTS 기록이 있는 경우 기록된 단어부터 끝까지 TTS 출력
+      for (int sentenceIndex = 0; sentenceIndex < sentenceList.length; sentenceIndex++) {
+        for (int wordIndex = 0; wordIndex < sentenceList[sentenceIndex].words.length; wordIndex++) {
+          if (sentenceList[sentenceIndex].words[wordIndex].wordIndex >= currentTTSIndex) {
+            _updateIsSelected(sentenceIndex, wordIndex);
+
+            if (_stopflag) {
+              _playflag = true;
+              await _tts.speak(sentenceList[sentenceIndex].words[wordIndex].word);
+            }
+          }
+        }
+      }
+    }
+
+    _playflag = false;
+    _updateIsSelected(-1,-1);
+  }
 
   void _updateIsSelected(int highlightSentenceIndex, int highlightWordIndexInSentence) {
     for (final sentence in sentenceList) {
@@ -419,7 +327,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                         onPrimary: Colors.black,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(15.0),
-                                        ),                                    ),
+                                        ),
+                                      ),
                                       child: Padding(
                                         padding: EdgeInsets.all(1),
                                         child: ListTile(
@@ -519,10 +428,9 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     icon: Icon(Icons.border_color_outlined, color: Colors.black),
                   ),
                 )
-
-
               ],
             ),
+
             SizedBox(height: 16.0),
 
             //original
@@ -533,8 +441,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   itemBuilder: (BuildContext context, int sentenceIndex) {
                     Sentence sentence = sentenceList[sentenceIndex];
 
-                    List<String> words = sentence.words.map((word) => word.word).toList();
-
+                    // List<String> words = sentence.words.map((word) => word.word).toList();
 
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -637,17 +544,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                         )
                       ],
                     );
-
-
                   },
                   separatorBuilder: (BuildContext ctx, int idx) {
                     return Divider();
                   },
                 ),
             ),
-
-
-
 
             SizedBox(height: 16.0),
             Row(
@@ -657,8 +559,15 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 Expanded(
                   child: Container(),
                 ),
+
                 Container(
-                  child: FloatingActionButton(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Color(0xFFC0EB75),
+                  ),
+                  child: IconButton(
                     onPressed: () {
                       setState(() {
                         _playflag = !_playflag;
@@ -678,7 +587,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                       child: Text("네", style: TextStyle(color: Colors.black,),),
                                       onPressed: () {
                                         Navigator.of(context).pop();
-                                        _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
+                                        // _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
+                                        _speakAllSentence(currentTTSIndex);
                                         print("1 / TTS record is $currentTTSIndex");
                                       }
                                   ),
@@ -686,7 +596,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                       child: Text("아니요", style: TextStyle(color: Colors.black,),),
                                       onPressed: () {
                                         Navigator.of(context).pop();
-                                        _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
+                                        // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
+                                        _speakAllSentence(-1);
                                         print("0 / TTS record is $currentTTSIndex");
                                       }
                                   )
@@ -695,9 +606,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                             },
                           );
 
-                          }
+                        }
                         if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
-                          _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
+                          // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
+                          _speakAllSentence(-1);
                           print("0 / TTS record is $currentTTSIndex");
 
                         }
@@ -707,12 +619,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                         _stopSpeakTts(); // Stop ongoing TTS
                       }
                     },
-                    child: _playflag
+                    icon: _playflag
                         ? Icon(Icons.stop, color: Colors.black)
                         : Icon(Icons.volume_up_outlined, color: Colors.black),
-                    backgroundColor: Color(0xFFC0EB75),
                   ),
                 ),
+
                 Expanded(
                   child: Container(),
                 ),
