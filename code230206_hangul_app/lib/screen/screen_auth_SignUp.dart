@@ -65,7 +65,9 @@ class _SignUpWidget extends State<SignUpWidget> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           labelText: '이름',
-                          prefixIcon: Icon(Icons.person_outline_sharp),
+                          labelStyle: TextStyle(color: Colors.black38),
+                          prefixIcon: Icon(Icons.person_outline_sharp,color: Colors.black38,),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(),),
                           border: OutlineInputBorder()
                       ),
 
@@ -82,7 +84,9 @@ class _SignUpWidget extends State<SignUpWidget> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           labelText: '이메일',
-                          prefixIcon: Icon(Icons.email_outlined),
+                          labelStyle: TextStyle(color: Colors.black38),
+                          prefixIcon: Icon(Icons.email_outlined,color: Colors.black38,),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(),),
                           border: OutlineInputBorder()
                       ),
 
@@ -96,17 +100,12 @@ class _SignUpWidget extends State<SignUpWidget> {
                     SizedBox(height: height * 0.01),
                     TextFormField(
                       controller: passwordController,
-                      // cursorColor: Colors.black,
                       textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
                           labelText: '비밀번호',
-                          prefixIcon: Icon(Icons.password_outlined),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              // color: Colors.deepPurple,
-                              // width: 2
-                            ),
-                          ),
+                          labelStyle: TextStyle(color: Colors.black38),
+                          prefixIcon: Icon(Icons.password_outlined,color: Colors.black38,),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(),),
                           border: OutlineInputBorder()
                       ),
                       obscureText: true,

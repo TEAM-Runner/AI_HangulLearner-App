@@ -315,7 +315,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
           return true; // Allow navigation to occur
         },
       child: Scaffold(
-        appBar: AppBar(
+        appBar:
+        AppBar(
           backgroundColor: Color(0xFFF3F3F3),
           elevation: 0.0,
           leading: IconButton(
@@ -325,12 +326,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               Navigator.of(context).pop();
             },
           ),
-          title: Text(
-            "I HANGUL",
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
+          title: Image.asset("assets/images/i_hangul.png"),
           centerTitle: true,
         ),
 

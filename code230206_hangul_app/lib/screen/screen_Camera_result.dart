@@ -55,7 +55,7 @@ class _ResultScreenState  extends State<ResultScreen> {
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             toolbarHeight: width*0.15,
-            title: Text("I HANGUL"),
+            title: Image.asset("assets/images/i_hangul.png"),
             centerTitle: true,
             flexibleSpace: Container(
               decoration: BoxDecoration(
@@ -151,8 +151,6 @@ class _ResultScreenState  extends State<ResultScreen> {
               ),
             ),
           ),
-
-
         )
     );
   }

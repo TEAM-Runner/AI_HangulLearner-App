@@ -1,3 +1,4 @@
+import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:math';
@@ -225,12 +226,7 @@ class _GameScreenState extends State<GameScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text(
-          "I HANGUL",
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
+        title:Image.asset("assets/images/i_hangul.png"),
         centerTitle: true,
       ),
       body: Center(
@@ -297,7 +293,7 @@ class _GameScreenState extends State<GameScreen> {
                                   builder: (context) => AlertDialog(
                                     title: Text('정답'),
                                     content: Image.asset('assets/images/right.png', width: 100, height: 100,),
-                                    actions: [TextButton(child: Text('OK'),
+                                    actions: [TextButton(child: Text('OK',style: TextStyle(color: MyColor.accentColor)),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                           getCorrectAnswer();
@@ -308,7 +304,7 @@ class _GameScreenState extends State<GameScreen> {
                                   builder: (context) => AlertDialog(
                                     title: Text('틀렸어요'),
                                     content: Image.asset('assets/images/wrong.png', width: 100, height: 100,),
-                                    actions: [TextButton(child: Text('OK'),
+                                    actions: [TextButton(child: Text('OK',style: TextStyle(color: MyColor.accentColor)),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                           _getWrongAnswer();

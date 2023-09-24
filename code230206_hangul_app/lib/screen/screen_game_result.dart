@@ -1,3 +1,4 @@
+import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'screen_game_wrongWordList.dart';
@@ -51,12 +52,7 @@ class _GameResultScreenState extends State<GameResultScreen> {
               icon: Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            title: Text(
-              "I HANGUL",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
+            title:Image.asset("assets/images/i_hangul.png"),
             centerTitle: true,
           ),
           body: Center(
@@ -80,6 +76,8 @@ class _GameResultScreenState extends State<GameResultScreen> {
                   width: width * 0.5,
                   height: 50,
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:MaterialStateProperty.all<Color>(Colors.white),),
                     onPressed: () {
                       Navigator.pushNamed(context,
                           GameWrongWordListScreen.GameWrongWordListScreenRouteName,
@@ -88,7 +86,7 @@ class _GameResultScreenState extends State<GameResultScreen> {
                     },
                     child: Text(
                       '단어 다시보기',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      style: TextStyle(fontSize: 20, color: MyColor.accentColor),
                     ),
                   ),
                 ),
@@ -97,6 +95,8 @@ class _GameResultScreenState extends State<GameResultScreen> {
                   width: width * 0.5, // <-- Your width
                   height: 50, // <-- Your height
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:MaterialStateProperty.all<Color>(Colors.white),),
                     onPressed: () {
                       Navigator.pushReplacement(
                           context,
@@ -104,7 +104,7 @@ class _GameResultScreenState extends State<GameResultScreen> {
                     },
                     child: Text(
                       '다시풀기',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      style: TextStyle(fontSize: 20, color: MyColor.accentColor),
                     ),
                   ),
                 ),
@@ -113,12 +113,14 @@ class _GameResultScreenState extends State<GameResultScreen> {
                   width: width * 0.5, // <-- Your width
                   height: 50, // <-- Your height
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:MaterialStateProperty.all<Color>(Colors.white),),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text(
                       '게임 나가기',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      style: TextStyle(fontSize: 20, color: MyColor.accentColor),
                     ),
                   ),
                 ),

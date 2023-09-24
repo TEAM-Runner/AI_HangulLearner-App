@@ -42,7 +42,7 @@ class _DicScreen extends State<DicScreen> {
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               toolbarHeight: width*0.15,
-              title: Text("I HANGUL"),
+              title: Image.asset("assets/images/i_hangul.png"),
               centerTitle: true,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
@@ -54,7 +54,6 @@ class _DicScreen extends State<DicScreen> {
                     )
                 ),
               ),
-
             ),
             body: SingleChildScrollView(
               padding: EdgeInsets.all(width * 0.024),

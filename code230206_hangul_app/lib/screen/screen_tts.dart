@@ -17,13 +17,11 @@ class TTSScreen extends StatefulWidget {
   @override
   _TTSScreen createState() => _TTSScreen();
 }
-
 class _TTSScreen extends State<TTSScreen> {
   // String testSentence = '저 멀리 깊고 푸른 바다 속에, 물고기 한 마리가 살고 있었습니다. 그 물고기는 보통 물고기가 아니라 온 바다에서 가장 아름다운 물고기였습니다. 파랑, 초록, 자줏빛 바늘 사이사이에 반짝반짝 빛나는 은빛 비늘이 박혀 있었거든요. 다른 물고기들도 그 물고기의 아름다운 모습에 감탄했습니다.';
 
   //TTS part
   final FlutterTts tts = FlutterTts();
-
   _TTSScreen() {
     tts.setLanguage('kor');
     tts.setSpeechRate(0.4);
@@ -50,7 +48,7 @@ class _TTSScreen extends State<TTSScreen> {
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               toolbarHeight: width*0.15,
-              title: Text("I HANGUL"),
+              title:Image.asset("assets/images/i_hangul.png"),
               centerTitle: true,
               flexibleSpace: Container(
                 decoration: BoxDecoration(

@@ -1,5 +1,6 @@
 // *** login 스크린 ***
 
+import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:code230206_hangul_app/main.dart';
@@ -79,18 +80,11 @@ class _LoginWidget extends State<LoginWidget> {
                     cursorColor: Colors.black,
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        labelText: 'Email',
-                        // labelStyle: TextStyle(color: Colors.black54),
-                        prefixIcon: Icon(
-                          Icons.email_outlined,
-                        ),
-                        // focusedBorder: OutlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //       color: Colors.black54,
-                        //       width: 2,
-                        //   ),
-                        // ),
-                        border: OutlineInputBorder()
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.black38),
+                      prefixIcon: Icon(Icons.email_outlined,color: Colors.black38,),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black,width: 1)),
+                      focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black,width: 1)),
                     ),
                   ),
                   SizedBox(height: height * 0.01),
@@ -99,9 +93,11 @@ class _LoginWidget extends State<LoginWidget> {
                     cursorColor: Colors.black,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.password_outlined),
-                        border: OutlineInputBorder()
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.black38),
+                      prefixIcon: Icon(Icons.password_outlined,color: Colors.black38,),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black,width: 1)),
+                      focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black,width: 1)),
                     ),
                     obscureText: true,
                   ),
@@ -111,7 +107,7 @@ class _LoginWidget extends State<LoginWidget> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size.fromHeight(50),
                     backgroundColor: Color(0xFFF3F3F3)),
-                    child: Text('로그인', style: TextStyle(fontSize: width * 0.045, color: Colors.black),),
+                    child: Text('로그인', style: TextStyle(fontSize: width * 0.045, color: MyColor.accentColor),),
                   ),
                   SizedBox(height: height*0.02),
                   GestureDetector(

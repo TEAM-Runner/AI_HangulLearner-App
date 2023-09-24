@@ -63,12 +63,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text(
-          "I HANGUL",
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
+        title:Image.asset("assets/images/i_hangul.png"),
         centerTitle: true,
       ),
       body: Container(

@@ -74,12 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ],
-            title: Text(
-              "I HANGUL",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
+            title: Image.asset("assets/images/i_hangul.png"),
             centerTitle: true,
           ),
 
@@ -272,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // 카메라, 학습게임, 단어장 버튼의 아이콘을 리턴하는 함수
+  // 카메라, 학습게임, 단어장 버튼의 아이콘을 -리턴하는 함수
   _choiceIcon(int num) {
     switch(num) {
       case 1:
