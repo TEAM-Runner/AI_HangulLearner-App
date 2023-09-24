@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text("사진을 가져올 방법을 선택하세요", style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.bold)),
+                  title: Text("사진을 가져올 방법을 선택하세요"),
                   backgroundColor: Color(0xFFF3F3F3),
                   content: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 40,
                                   child: Icon(Icons.camera_alt_outlined, size: 38), // icon
                                 ),
-                                Text("카메라", style: TextStyle(fontSize: width * 0.036)), // text
+                                Text("카메라"), // text
                               ],
                             ),
                           ),
@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 40,
                                   child: Icon(Icons.photo_library, size: 38), // icon
                                 ),
-                                Text("갤러리", style: TextStyle(fontSize: width * 0.036)), // text
+                                Text("갤러리"), // text
                               ],
                             ),
                           ),
@@ -251,7 +251,8 @@ class _HomeScreenState extends State<HomeScreen> {
           // mainAxisSize: MainAxisSize.min,
           children: [
             Padding(padding: EdgeInsets.only(top:width*0.12)),
-            Text(title, style: TextStyle(fontSize: width * 0.045),),
+            // Text(title, style: TextStyle(fontSize: width * 0.045),),
+            Text(title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
             Padding(padding: EdgeInsets.only(top:width*0.03)), // <-- Text
             // SizedBox(width: width*0.3,),
 
@@ -261,7 +262,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             Padding(padding: EdgeInsets.only(top:width*0.03)),
-            Text(buttonText, style: TextStyle(fontSize: width * 0.036),),
+            // Text(buttonText, style: TextStyle(fontSize: width * 0.036),),
+            Text(buttonText, style: TextStyle(fontSize: 20),),
             Padding(padding: EdgeInsets.only(top:width*0.12)),
 
           ],

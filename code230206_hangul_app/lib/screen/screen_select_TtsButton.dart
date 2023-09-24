@@ -597,7 +597,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                               // color: dic_isSelected ? Colors.yellow : null, // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
-                                            child: Text(entry.value.word, style: TextStyle(fontSize: width * 0.045),), // 문장 단위 띄어쓰기 없이 나열
+                                            child: Text(entry.value.word, style: TextStyle(fontSize: 20),), // 문장 단위 띄어쓰기 없이 나열
                                           ),
                                         );
                                       }
