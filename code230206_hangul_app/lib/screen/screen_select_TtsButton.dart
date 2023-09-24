@@ -193,8 +193,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       }
     }
 
-    _playflag = false;
+    _playflag = false; //전체 재생 버튼 아이콘 제어용
     _updateIsSelected(-1,-1);
+
+    print("_speakAllSentence: $_playflag");
   }
 
   void _speakDictionary(word, meaning) async {
@@ -486,8 +488,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                               _playflag = !_playflag;
                               for (int i = 0; i <
                                   _iconPlayFlags.length; i++) {
-                                _iconPlayFlags[i] =
-                                false; // Initialize each element to false
+                                _iconPlayFlags[i] = false; // false로 초기화
                               }
                             });
                             if (_playflag) {
@@ -600,58 +601,66 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     borderRadius: BorderRadius.circular(25.0),
                     color: Color(0xFFC0EB75),
                   ),
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _playflag = !_playflag;
-                      });
-                      if (_playflag) {
-                        _stopflag = true;
+                  child: StatefulBuilder(
+                    builder: (context, setState) {
+                      return IconButton( // 전체 문장 재생 버튼
+                        onPressed: () {
+                          print("onPressed: $_playflag");
+                          setState(() {
+                            _playflag = !_playflag;
+                            print("setState: $_playflag"); // Check if setState is changing _playflag
 
-                        // TTS 기록이 존재하는 경우 팝업창 보여줌
-                        if (currentTTSIndex != 0){ // TTS 기록이 존재하는 경우
-                          showDialog( // 팝업창 띄우기
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text("이어서 재생하시겠습니까?"),
-                                actions: <Widget>[
-                                  TextButton(
-                                      child: Text("네", style: TextStyle(color: Colors.black,),),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        // _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
-                                        _speakAllSentence();
-                                      }
-                                  ),
-                                  TextButton(
-                                      child: Text("아니요", style: TextStyle(color: Colors.black,),),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
-                                        currentTTSIndex = 0; // TTS기록을 0으로 초기화하고 _speakAllSentence 호출
-                                        _speakAllSentence();
-                                      }
-                                  )
-                                ],
+                          });
+                          if (_playflag) {
+                            _stopflag = true;
+
+                            // TTS 기록이 존재하는 경우 팝업창 보여줌
+                            if (currentTTSIndex != 0){ // TTS 기록이 존재하는 경우
+                              showDialog( // 팝업창 띄우기
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("이어서 재생하시겠습니까?"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                          child: Text("네", style: TextStyle(color: Colors.black,),),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            // _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
+                                            _speakAllSentence();
+                                          }
+                                      ),
+                                      TextButton(
+                                          child: Text("아니요", style: TextStyle(color: Colors.black,),),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
+                                            currentTTSIndex = 0; // TTS기록을 0으로 초기화하고 _speakAllSentence 호출
+                                            _speakAllSentence();
+                                          }
+                                      )
+                                    ],
+                                  );
+                                },
                               );
-                            },
-                          );
-                        }
-                        if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
-                          // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
-                          _speakAllSentence();
-                        }
+                            }
+                            if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
+                              // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
+                              _speakAllSentence();
+                            }
 
-                      } else {
-                        _stopflag = false; // Stop all TTS
-                        _stopSpeakTts(); // Stop ongoing TTS
-                      }
-                    },
-                    icon: _playflag
-                        ? Icon(Icons.stop, color: Colors.black)
-                        : Icon(Icons.volume_up_outlined, color: Colors.black),
-                  ),
+                          } else {
+                            _stopflag = false; // Stop all TTS
+                            _stopSpeakTts(); // Stop ongoing TTS
+                          }
+                        },
+                        icon: Icon(Icons.volume_up_outlined, color: Colors.black),
+                        // icon: _playflag // 제대로 동작하지 않아서 일단 주석처리
+                        //     ? Icon(Icons.stop, color: Colors.black) // TTS 재생 중일 때
+                        //     : Icon(Icons.volume_up_outlined, color: Colors.black), // TTS 중단 상태일 때
+                      );
+                    }
+                  )
                 ),
 
                 Expanded(

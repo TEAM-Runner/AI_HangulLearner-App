@@ -17,12 +17,29 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
   final String _text; // 이전 화면에서 받아온 텍스트
   TextEditingController _textEditingController = TextEditingController();
   String returnText = '';
+  FocusNode _focusNode = FocusNode(); // 키보드를 화면에 자동으로 보여주기 위해 FocusNode 정의
 
   _SelectModifyButtonScreen(this._text) {
     print("_SelectModifyButtonScreen $_text}");
     _textEditingController.text = _text;
     returnText = _text;
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+    Future.delayed(Duration.zero, () {
+      FocusScope.of(context).requestFocus(_focusNode);
+    });
+  }
+
+  void _onFocusChange() {
+    if (_focusNode.hasFocus) {
+      FocusScope.of(context).requestFocus(_focusNode);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // 스크린 사이즈 정의
@@ -32,6 +49,8 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
 
     // TTS 위치 기록
     print("SelectTtsButtonScreen - currentTTSIndex: $currentTTSIndex");
+
+
 
 
     return Scaffold(
@@ -107,6 +126,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                       returnText = text;
                       print('***  returnText  *** ' + returnText);
                     },
+                    focusNode: _focusNode, // FocusNode를 TextField에 붙이기
                   ),
                 ),
               )
