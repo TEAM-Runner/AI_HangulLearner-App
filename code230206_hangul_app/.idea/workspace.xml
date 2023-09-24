@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/text_recognition.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/text_recognition.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_Camera.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_Camera.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00002" summary="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용">
-      <created>1680424686941</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1680424686941</updated>
     </task>
     <task id="LOCAL-00003" summary="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용">
       <created>1680429606674</created>
@@ -416,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695544477214</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트">
+      <created>1695548413385</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1695548413385</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -431,7 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Set sort order,VocabularyListScreen&#10;&#10;-랜덤하고 가나다순" />
     <MESSAGE value="add Floating Button,VocabularyListScreen&#10;&#10;-random, order, hide word, hide meaning" />
     <MESSAGE value="add Function hidde word or meaning,VocabularyListScreen" />
     <MESSAGE value="Update Read all button feature in TTS&#10;&#10;- 전체 읽기 버튼을 클릭했을 때 현재 TTS로 읽고 있는 단어만 노란색 강조 표시하도록 변경" />
@@ -456,6 +454,7 @@
     <MESSAGE value="Fix TTS continuous play function bug&#10;&#10;- UI를 변경하면서 기존의 TTS 이어서 듣기 함수가 작동하지 않던 문제 해결" />
     <MESSAGE value="Add TTS functionality for dictionary search results&#10;&#10;- 사전 검색 결과를 TTS로 출력하는 함수 추가&#10;- 사전 검색 결과가 나타나는 팝업 창을 클릭하면 TTS 재생, 팝업 창이 사라지면 TTS 중단됨" />
     <MESSAGE value="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함" />
+    <MESSAGE value="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트" />
   </component>
 </project>

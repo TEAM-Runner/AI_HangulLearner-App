@@ -1,14 +1,3 @@
-// 기존버전
-// *** 카메라 스크린 ***
-// 카메라 화면, 촬영 버튼이 있는 스크린
-
-// (1) 촬영 기능
-// 촬영 버튼 클릭 -> screen_Camera_result.dart로 연결됨
-
-// (2) 글자 인식 기능
-// 사진의 글자를 google mlkit로 인식함
-// 인식한 결과(문장)을 screen_Camera_result 스크린에 넘겨줌
-
 import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
@@ -84,31 +73,63 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       body: Column(
         children: [
-          // Padding(
-          //   padding: EdgeInsets.all(width * 0.05),
-          // ),
-          FutureBuilder<void>(
-            future: _initializeControllerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                // If the Future is complete, display the preview.
-                return CameraPreview(_controller);
-              } else {
-                // Otherwise, display a loading indicator.
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
+          Expanded(
+            child: Container(
+              width: width, // Set your desired width here
+              child: FutureBuilder<void>(
+                future: _initializeControllerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    // If the Future is complete, display the preview.
+                    return CameraPreview(_controller);
+                  } else {
+                    // Otherwise, display a loading indicator.
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(width * 0.01),
           ),
           FloatingActionButton(
-              onPressed: _scanImage,
-              // onPressed: _scanImage,
-              child: Icon(Icons.camera_alt_outlined),
-              backgroundColor: const Color(0xff252525))
+            onPressed: _scanImage,
+            child: Icon(Icons.camera_alt_outlined),
+            backgroundColor: const Color(0xff252525),
+          ),
         ],
-      ),
+      )
+
+
+      // body: Column(
+      //   children: [
+      //     Container(
+      //       width: width, // Set your desired width here
+      //       child: FutureBuilder<void>(
+      //         future: _initializeControllerFuture,
+      //         builder: (context, snapshot) {
+      //           if (snapshot.connectionState == ConnectionState.done) {
+      //             // If the Future is complete, display the preview.
+      //             return CameraPreview(_controller);
+      //           } else {
+      //             // Otherwise, display a loading indicator.
+      //             return const Center(child: CircularProgressIndicator());
+      //           }
+      //         },
+      //       ),
+      //
+      //     ),
+      //     Padding(
+      //       padding: EdgeInsets.all(width * 0.01),
+      //     ),
+      //     FloatingActionButton(
+      //         onPressed: _scanImage,
+      //         // onPressed: _scanImage,
+      //         child: Icon(Icons.camera_alt_outlined),
+      //         backgroundColor: const Color(0xff252525))
+      //   ],
+      // ),
 
     );
   }
@@ -151,22 +172,22 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       await navigator.pushReplacement(
         // 기본 코드
-        //   MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: recognizedText.text, initialTTSIndex: 0))
+          MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: recognizedText.text, initialTTSIndex: 0))
 
         // 1차 테스트용 코드: screen_Camera_result.dart로 연결
         // MaterialPageRoute(builder: (context) => ResultScreen(text: testtext, initialTTSIndex: 0))
 
         // 2차 테스트용 코드: 지도교수님과 면담 후 인터페이스 수정용
-          MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: testtext, initialTTSIndex: 0))
+        //   MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: testtext, initialTTSIndex: 0))
 
       );
     } catch (e) {
       // 테스트용 코드
-      await navigator.pushReplacement(
-          MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: testtext, initialTTSIndex: 0))
-      );
+      // await navigator.pushReplacement(
+      //     MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: testtext, initialTTSIndex: 0))
+      // );
       // 기본 코드
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));
     }
   }
 
