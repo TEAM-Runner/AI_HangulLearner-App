@@ -94,7 +94,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     int sentenceIndex = 0;
     Sentence currentSentence = Sentence(wordIndex: sentenceIndex, words: []);
 
-     for (int i = 0; i < _sentences.length; i++) {
+    for (int i = 0; i < _sentences.length; i++) {
       final words = _sentences[i].trim().split(' ');
       for (int j = 0; j < words.length; j++) {
         Word newWord = Word(
@@ -339,63 +339,63 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     }
 
                     return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10),
-                          ListView.separated(
-                            shrinkWrap: true,
-                            itemCount: dicWords.length,
-                            separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
-                            itemBuilder: (_, index) {
-                              String word = dicWords[index].txt_emph;
-                              return FutureBuilder<DocumentSnapshot>(
-                                future: wordsRef.doc(word).get(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData && snapshot.data!.exists) {
-                                    _starred[index] = true;
-                                  } else {
-                                    _starred[index] = false;
-                                  }
-                                  return Padding(
-                                    padding: EdgeInsets.all(16),
-                                    child: Container(
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          _speakDictionary(dicWords[index].txt_emph, dicWords[index].txt_mean);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.white,
-                                          onPrimary: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15.0),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 10),
+                            ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: dicWords.length,
+                              separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+                              itemBuilder: (_, index) {
+                                String word = dicWords[index].txt_emph;
+                                return FutureBuilder<DocumentSnapshot>(
+                                  future: wordsRef.doc(word).get(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData && snapshot.data!.exists) {
+                                      _starred[index] = true;
+                                    } else {
+                                      _starred[index] = false;
+                                    }
+                                    return Padding(
+                                      padding: EdgeInsets.all(16),
+                                      child: Container(
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            _speakDictionary(dicWords[index].txt_emph, dicWords[index].txt_mean);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.white,
+                                            onPrimary: Colors.black,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(15.0),
+                                            ),
                                           ),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(1),
-                                          child: ListTile(
-                                            title: Text(dicWords[index].txt_emph,
-                                                style: const TextStyle(fontSize: 24)),
-                                            subtitle: Text(dicWords[index].txt_mean,
-                                                style: const TextStyle(fontSize: 20)),
-                                            trailing: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _dic_toggleStarred(index);
-                                                });
-                                              },
-                                              icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
-                                                color: Colors.amber,),),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(1),
+                                            child: ListTile(
+                                              title: Text(dicWords[index].txt_emph,
+                                                  style: const TextStyle(fontSize: 24)),
+                                              subtitle: Text(dicWords[index].txt_mean,
+                                                  style: const TextStyle(fontSize: 20)),
+                                              trailing: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _dic_toggleStarred(index);
+                                                  });
+                                                },
+                                                icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
+                                                  color: Colors.amber,),),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ],
-                      )
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        )
                     );
                   } else {
                     return const Center(
@@ -410,7 +410,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       },
     );
     if (result == null) {
-      _stopSpeakTts();
+      _dic_toggleSelected("nullnull");
     }
 
   }
@@ -574,17 +574,19 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
                                         return GestureDetector(
                                           onTap: () {
-                                            _dic_showPopup(entry.value.word);
+                                            // _dic_showPopup(entry.value.word);
                                             // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
-                                            // _dic_toggleSelected(entry.value.word);
-                                            // if (_dic_isSelected(entry.value.word)) {
-                                            //   _dic_showPopup(entry.value.word);
-                                            // }
+                                            _dic_toggleSelected(entry.value.word);
+                                            if (_dic_isSelected(entry.value.word)) {
+                                              _dic_showPopup(entry.value.word);
+                                            }
                                           },
                                           child: Container(
                                             padding: EdgeInsets.all(2.0),
                                             decoration: BoxDecoration(
-                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : null,
+                                              // color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : null, // tts 하이라이트 처리
+                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : (_dic_isSelected(entry.value.word) ? Color(0xFFC0EB75) : null),
+
                                               // color: isSelected_sentence[sentenceIndex].words[index].isSelected ? Colors.yellow : null, // tts 하이라이트처리
                                               // color: dic_isSelected ? Colors.yellow : null, // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
                                               borderRadius: BorderRadius.circular(4.0),
