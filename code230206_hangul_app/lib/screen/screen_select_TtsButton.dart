@@ -9,8 +9,7 @@ import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as parser;
-
-int currentTTSIndex = 0; // 현재 TTS 출력 중인 인덱스 0으로 초기화
+import 'screen_home.dart';
 
 
 class Word {
@@ -37,11 +36,14 @@ class SelectTtsButtonScreen extends StatefulWidget {
   SelectTtsButtonScreen({required this.text,  required this.initialTTSIndex});
 
   @override
-  _SelectTtsButtonScreenState createState() => _SelectTtsButtonScreenState(text);
+  _SelectTtsButtonScreenState createState() => _SelectTtsButtonScreenState(text, initialTTSIndex);
 }
 
 class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
+
   String _text; // 이전 화면에서 받아온 텍스트
+  int currentTTSIndex; // 현재 TTS 출력 중인 인덱스 기록
+
   List<Word> wordList = [];
   List<Sentence> sentenceList = []; // Sentences 클래스 리스트 저장
 
@@ -78,12 +80,14 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   @override
   void dispose() {
-    _stopSpeakTts(); // Stop TTS when leaving the screen
+    _stopflag = false;
+    _stopSpeakTts();
     super.dispose();
   }
 
   // init
-  _SelectTtsButtonScreenState(this._text) {
+  _SelectTtsButtonScreenState(this._text, this.currentTTSIndex) {
+    print("init _SelectTtsButtonScreenState currentTTSIndex: $currentTTSIndex");
 
     _text = _text.replaceAll('\n', ' ');
     _sentences = _text.split(RegExp('(?<=[.!?])\\s*')); // 문장 리스트 -> '.', '?', '!' 문장 단위로 split
@@ -203,11 +207,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
         }
       }
     }
+    print("_speakAllSentence currentTTSIndex: $currentTTSIndex");
 
     _playflag = false; //전체 재생 버튼 아이콘 제어용
     _updateIsSelected(-1,-1);
-
-    print("_speakAllSentence: $_playflag");
   }
 
   void _speakDictionary(word, meaning) async {
@@ -427,8 +430,11 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
     return WillPopScope(
         onWillPop: () async {
-          _stopflag = false;
-          _stopSpeakTts();
+          _stopflag = false; // TTS 중단
+          _stopSpeakTts(); // TTS 중단
+          currentTTSIndex = 0; // 페이지 나가면 TTS 이어듣기 인덱스 초기화
+          print("WillPopScope currentTTSIndex: $currentTTSIndex");
+
           return true;
         },
         child: Scaffold(

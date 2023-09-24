@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix TTS Playback Persistence Issue&#10;&#10;- TTS 화면을 벗어나도 TTS가 계속 재생되던 문제 해결&#10;- WillPopScope 위젯과 _stopflag를 이용">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update to display TTS word highlight and dictionary word highlight&#10;&#10;- 사전 검색 단어 highlight 표시와 TTS 출력 중인 단어의 highlight 표시를 동시에 할 수 있도록 업데이트&#10;- 기존의 코드는 사전 화면과 TTS 화면을 합치는 과정에서 highlight표시가 중복되는 문제 발생 -&gt; TTS 출력 중인 단어만 highlight 표시할 수 있었음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_dicButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +73,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00005" summary="build: Save the word to firestore by pressing the star icon&#10;&#10;- screen_select_dicButton.dart: &#10;  1) star_border 아이콘 클릭 -&gt; star 아이콘으로 변경, firestore에 단어와 뜻 저장됨&#10;  2) star 아이콘 클릭 -&gt; star_border 아이콘으로 변경, firestore에 저장된 단어와 뜻 삭제됨&#10;- 기존의 screen_dic.dart, screen_dic_open.dart를 통합">
-      <created>1680438751988</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1680438751988</updated>
     </task>
     <task id="LOCAL-00006" summary="build: coding screen_select_TtsButton.dart&#10;&#10;- screen_select_TtsButton.dart: 단어 클릭 -&gt; 클릭한 단어가 포함된 문장 tts로 출력&#10;- 단어로 문장의 index를 알아내는 부분에서 오류 있음 -&gt; 수정 필요&#10;- 기존의 screen_tts.dart 기반으로 수정">
       <created>1680450862327</created>
@@ -415,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695555573654</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Update to display TTS word highlight and dictionary word highlight&#10;&#10;- 사전 검색 단어 highlight 표시와 TTS 출력 중인 단어의 highlight 표시를 동시에 할 수 있도록 업데이트&#10;- 기존의 코드는 사전 화면과 TTS 화면을 합치는 과정에서 highlight표시가 중복되는 문제 발생 -&gt; TTS 출력 중인 단어만 highlight 표시할 수 있었음">
+      <created>1695559465291</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1695559465291</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -430,7 +432,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update Read all button feature in TTS&#10;&#10;- 전체 읽기 버튼을 클릭했을 때 현재 TTS로 읽고 있는 단어만 노란색 강조 표시하도록 변경" />
     <MESSAGE value="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경" />
     <MESSAGE value="Update vacabulary screen to use hangul_scroll&#10;&#10;- screen_vacabularyList.dart가 alphabet_scroll.dart를 이용하도록 수정" />
     <MESSAGE value="Add word categories to vacabulary screen&#10;&#10;- screen_vacabularyList.dart에 단어 카테고리 추가&#10;- 카테고리의 초성 버튼을 눌렀을 때 해당 초성의 단어가 있는 경우 -&gt; 그 단어들만 표시&#10;- 없는 경우 -&gt; 화면에 아무 단어도 표시하지 않음" />
@@ -455,6 +456,7 @@
     <MESSAGE value="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트" />
     <MESSAGE value="Update Camera screen UI for height&#10;&#10;- 기기에 따라 CameraPreview의 높이가 달라지도록 UI를 업데이트함" />
     <MESSAGE value="Fix TTS Playback Persistence Issue&#10;&#10;- TTS 화면을 벗어나도 TTS가 계속 재생되던 문제 해결&#10;- WillPopScope 위젯과 _stopflag를 이용" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix TTS Playback Persistence Issue&#10;&#10;- TTS 화면을 벗어나도 TTS가 계속 재생되던 문제 해결&#10;- WillPopScope 위젯과 _stopflag를 이용" />
+    <MESSAGE value="Update to display TTS word highlight and dictionary word highlight&#10;&#10;- 사전 검색 단어 highlight 표시와 TTS 출력 중인 단어의 highlight 표시를 동시에 할 수 있도록 업데이트&#10;- 기존의 코드는 사전 화면과 TTS 화면을 합치는 과정에서 highlight표시가 중복되는 문제 발생 -&gt; TTS 출력 중인 단어만 highlight 표시할 수 있었음" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update to display TTS word highlight and dictionary word highlight&#10;&#10;- 사전 검색 단어 highlight 표시와 TTS 출력 중인 단어의 highlight 표시를 동시에 할 수 있도록 업데이트&#10;- 기존의 코드는 사전 화면과 TTS 화면을 합치는 과정에서 highlight표시가 중복되는 문제 발생 -&gt; TTS 출력 중인 단어만 highlight 표시할 수 있었음" />
   </component>
 </project>

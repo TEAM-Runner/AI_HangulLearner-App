@@ -10,16 +10,18 @@ class SelectModifyButtonScreen extends StatefulWidget {
   SelectModifyButtonScreen({required this.text, required this.initialTTSIndex});
 
   @override
-  _SelectModifyButtonScreen createState() => _SelectModifyButtonScreen(text);
+  _SelectModifyButtonScreen createState() => _SelectModifyButtonScreen(text, initialTTSIndex);
 }
 
 class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
   final String _text; // 이전 화면에서 받아온 텍스트
+  int currentTTSIndex; // 현재 TTS 출력 중인 인덱스 기록
+
   TextEditingController _textEditingController = TextEditingController();
   String returnText = '';
   FocusNode _focusNode = FocusNode(); // 키보드를 화면에 자동으로 보여주기 위해 FocusNode 정의
 
-  _SelectModifyButtonScreen(this._text) {
+  _SelectModifyButtonScreen(this._text, this.currentTTSIndex) {
     print("_SelectModifyButtonScreen $_text}");
     _textEditingController.text = _text;
     returnText = _text;
