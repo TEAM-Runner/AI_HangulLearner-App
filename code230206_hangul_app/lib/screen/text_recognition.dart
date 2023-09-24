@@ -2,6 +2,7 @@
 // screen_home -> '책 읽어주기' -> 갤러리 선택 -> text_recognition.dart
 
 import 'dart:io';
+import 'package:code230206_hangul_app/screen/screen_select_TtsButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:code230206_hangul_app/screen/screen_select_dicButton.dart';
@@ -30,7 +31,7 @@ class ScanImageProcessor {
 
           await navigator.pushReplacement(
             // 기본 코드
-              MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: recognizedText.text, initialTTSIndex: 0))
+              MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: recognizedText.text, initialTTSIndex: 0))
 
             // 1차 테스트용 코드: screen_Camera_result.dart로 연결
             // MaterialPageRoute(builder: (context) => ResultScreen(text: testtext))

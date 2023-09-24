@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add TTS functionality for dictionary search results&#10;&#10;- 사전 검색 결과를 TTS로 출력하는 함수 추가&#10;- 사전 검색 결과가 나타나는 팝업 창을 클릭하면 TTS 재생, 팝업 창이 사라지면 TTS 중단됨">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/text_recognition.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/text_recognition.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,13 +72,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00001" summary="build: add screen_dic_tts_select.dart">
-      <created>1680362356175</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1680362356175</updated>
     </task>
     <task id="LOCAL-00002" summary="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용">
       <created>1680424686941</created>
@@ -416,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695540188578</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함">
+      <created>1695544477214</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1695544477214</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -431,7 +431,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update sentences split feature in dictionary, TTS screen&#10;&#10;- '\n'가 입력되었을 때 단어 리스트를 나누도록 업데이트(사전, TTS)&#10;- '?', '!'가 입력되었을 때 문장 리스트를 나누도록 업데이트(TTS)" />
     <MESSAGE value="Set sort order,VocabularyListScreen&#10;&#10;-랜덤하고 가나다순" />
     <MESSAGE value="add Floating Button,VocabularyListScreen&#10;&#10;-random, order, hide word, hide meaning" />
     <MESSAGE value="add Function hidde word or meaning,VocabularyListScreen" />
@@ -456,6 +455,7 @@
     <MESSAGE value="Fixe text editing bug&#10;&#10;- 텍스트 수정 화면에서 수정한 텍스트가 TTS/사전 화면으로 제대로 전달되지 않던 버그 수정" />
     <MESSAGE value="Fix TTS continuous play function bug&#10;&#10;- UI를 변경하면서 기존의 TTS 이어서 듣기 함수가 작동하지 않던 문제 해결" />
     <MESSAGE value="Add TTS functionality for dictionary search results&#10;&#10;- 사전 검색 결과를 TTS로 출력하는 함수 추가&#10;- 사전 검색 결과가 나타나는 팝업 창을 클릭하면 TTS 재생, 팝업 창이 사라지면 TTS 중단됨" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add TTS functionality for dictionary search results&#10;&#10;- 사전 검색 결과를 TTS로 출력하는 함수 추가&#10;- 사전 검색 결과가 나타나는 팝업 창을 클릭하면 TTS 재생, 팝업 창이 사라지면 TTS 중단됨" />
+    <MESSAGE value="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함" />
   </component>
 </project>

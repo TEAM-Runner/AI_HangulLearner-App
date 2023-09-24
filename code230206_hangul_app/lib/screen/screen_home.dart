@@ -112,9 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.all(10),
                       ),
 
-                      Text("추천단어", style: TextStyle(fontSize: width * 0.045),),
-                      //TODO: Recommended Words for Review
-                      Placeholder(),
+                      // Text("추천단어", style: TextStyle(fontSize: width * 0.045),),
+                      // //TODO: Recommended Words for Review
+                      // Placeholder(),
                       const Padding(
                         padding: EdgeInsets.all(10),
                       ),
@@ -143,64 +143,94 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: ()  async {
           if (onPressNumber == 1){ //카메라 버튼 클릭
             final picker = ImagePicker();
-            showModalBottomSheet(
+            showDialog(
               context: context,
               builder: (BuildContext context) {
-                return SafeArea(
-                  child: Container(
-                    child: Wrap(
-                      children: <Widget>[
-
-                        // 갤러리에서 사진 선택
-                        ListTile(
-                          leading: Icon(Icons.photo_library),
-                          title: Text('갤러리에서 사진 선택'),
-                          onTap: () async {
-                            print("### log ### : onTap");
-                            final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-                            if (pickedFile != null) {
-                              final file = File(pickedFile.path);
-                              final scanImageProcessor = ScanImageProcessor(
-                                context: context,
-                                onScanSuccess: (text) {
-                                  // Handle successful text recognition here
-                                  print("Scanned Text: $text");
-                                },
-                                onScanError: (error) {
-                                  // Handle text recognition error here
-                                  print("Error: $error");
-                                },
+                return AlertDialog(
+                  title: Text("사진을 가져올 방법을 선택하세요", style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.bold)),
+                  backgroundColor: Color(0xFFF3F3F3),
+                  content: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox.fromSize( // 카메라 선택
+                        size: Size(80, 80),
+                        child: Material(
+                          color: Colors.white, // button color
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          child: InkWell(
+                            onTap: () async {
+                              Navigator.pop(context);
+                              WidgetsFlutterBinding.ensureInitialized();
+                              final cameras = await availableCameras();
+                              final firstCamera = cameras.first;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => TakePictureScreen(camera: firstCamera)),
                               );
-                              scanImageProcessor.processImage(file, textRecogizer);
-                            } else {
-                              print("### log ### : else");
-                            }
-                          },
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  child: Icon(Icons.camera_alt_outlined, size: 38), // icon
+                                ),
+                                Text("카메라", style: TextStyle(fontSize: width * 0.036)), // text
+                              ],
+                            ),
+                          ),
                         ),
+                      ),
 
-                            // 카메라로 촬영
-                            ListTile(
-                                leading: Icon(Icons.camera_alt),
-                                title: Text('카메라로 촬영'),
-                                onTap: () async {
-                                  Navigator.pop(context);
-                                  WidgetsFlutterBinding.ensureInitialized();
-                                  final cameras = await availableCameras();
-                                  final firstCamera = cameras.first;
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => TakePictureScreen(camera: firstCamera)),
-                                  );
-                            }
+                      SizedBox(width: 40.0),
+
+                      SizedBox.fromSize( // 갤러리 선택
+                        size: Size(80, 80),
+                        child: Material(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          child: InkWell(
+                            // splashColor: Colors.green, // splash color
+                            onTap: () async {
+                              print("### log ### : onTap");
+                              final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                              if (pickedFile != null) {
+                                final file = File(pickedFile.path);
+                                final scanImageProcessor = ScanImageProcessor(
+                                  context: context,
+                                  onScanSuccess: (text) {
+                                    print("Scanned Text: $text");
+                                  },
+                                  onScanError: (error) {
+                                    print("Error: $error");
+                                  },
+                                );
+                                scanImageProcessor.processImage(file, textRecogizer);
+                              } else {
+                                print("### log ### : else");
+                              }
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  child: Icon(Icons.photo_library, size: 38), // icon
+                                ),
+                                Text("갤러리", style: TextStyle(fontSize: width * 0.036)), // text
+                              ],
+                            ),
+                          ),
                         ),
-
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
               },
             );
-
           }
           if (onPressNumber == 2){ //학습게임 버튼 클릭
             // screen_game.dart로 연결
