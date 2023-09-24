@@ -64,3 +64,79 @@ void main() async{
   ));
 }
 
+
+//
+// import 'package:flutter/material.dart';
+// import 'package:flutter_tts/flutter_tts.dart';
+//
+// void main() {
+//   runApp(MaterialApp(home: HomeScreen()));
+// }
+//
+// class HomeScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Screen A')),
+//       body: Center(
+//         child: ElevatedButton(
+//           onPressed: () {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => ScreenB()),
+//             );
+//           },
+//           child: Text('Go to Screen B'),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+//
+// class ScreenB extends StatefulWidget {
+//   @override
+//   _ScreenBState createState() => _ScreenBState();
+// }
+//
+// class _ScreenBState extends State<ScreenB> {
+//   final FlutterTts _tts = FlutterTts(); // TTS instance
+//
+//   void _stopSpeakTts() async {
+//     print("Stop TTS");
+//     await _tts.stop();
+//   }
+//
+//   @override
+//   void dispose() {
+//     _stopSpeakTts(); // Stop TTS when leaving the screen
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Screen B')),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             ElevatedButton(
+//               onPressed: () {
+//                 // Start TTS here
+//                 _tts.speak("Hello, this is a sample TTS message.");
+//               },
+//               child: Text('Play TTS'),
+//             ),
+//             ElevatedButton(
+//               onPressed: () {
+//                 _stopSpeakTts(); // Stop TTS
+//               },
+//               child: Text('Stop TTS'),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

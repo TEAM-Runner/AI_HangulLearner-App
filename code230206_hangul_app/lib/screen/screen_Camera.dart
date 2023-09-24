@@ -172,22 +172,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       await navigator.pushReplacement(
         // 기본 코드
-          MaterialPageRoute(builder: (context) => SelectDicButtonScreen(text: recognizedText.text, initialTTSIndex: 0))
+          MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: recognizedText.text, initialTTSIndex: 0))
 
-        // 1차 테스트용 코드: screen_Camera_result.dart로 연결
-        // MaterialPageRoute(builder: (context) => ResultScreen(text: testtext, initialTTSIndex: 0))
-
-        // 2차 테스트용 코드: 지도교수님과 면담 후 인터페이스 수정용
+        // 테스트용 코드
         //   MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: testtext, initialTTSIndex: 0))
 
       );
     } catch (e) {
+      // 기본 코드
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));
+
       // 테스트용 코드
       // await navigator.pushReplacement(
       //     MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: testtext, initialTTSIndex: 0))
       // );
-      // 기본 코드
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred when scanning text')));
     }
   }
 

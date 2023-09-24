@@ -23,8 +23,6 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'screen_select_dicButton.dart';
 import 'text_recognition.dart';
 import 'package:camera/camera.dart';
-import 'package:code230206_hangul_app/screen/screen_Camera.dart';
-
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -36,8 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final ImagePicker picker = ImagePicker();
   // final ScanImageProcessor scanImageProcessor = ScanImageProcessor();
-
-
 
   @override
   void dispose() {

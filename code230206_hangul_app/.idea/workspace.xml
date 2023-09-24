@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update Camera screen UI for height&#10;&#10;- 기기에 따라 CameraPreview의 높이가 달라지도록 UI를 업데이트함">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_Camera.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_Camera.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +74,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00003" summary="build: add dictionary, tts, modify screen&#10;&#10;- [사전 기능]screen_select_dicButton.dart: 문장에서 단어를 클릭하면 노란색으로 표시, 아래 팝업 창에 뜻과 의미를 보여줌&#10;- [음성출력 기능]screen_select_TtsButton.dart: Not coded yet&#10;- [수정 기능]screen_select_modifyButton.dart: Not coded yet&#10;- 인터페이스 수정사항: 세 스크린 사이를 편리하게 이동할 수 있도록 3-toggle-switch 사용">
-      <created>1680429606674</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1680429606674</updated>
     </task>
     <task id="LOCAL-00004" summary="update">
       <created>1680429751838</created>
@@ -415,7 +411,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695548413385</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Update Camera screen UI for height&#10;&#10;- 기기에 따라 CameraPreview의 높이가 달라지도록 UI를 업데이트함">
+      <created>1695549164293</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1695549164293</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -430,7 +433,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add Floating Button,VocabularyListScreen&#10;&#10;-random, order, hide word, hide meaning" />
     <MESSAGE value="add Function hidde word or meaning,VocabularyListScreen" />
     <MESSAGE value="Update Read all button feature in TTS&#10;&#10;- 전체 읽기 버튼을 클릭했을 때 현재 TTS로 읽고 있는 단어만 노란색 강조 표시하도록 변경" />
     <MESSAGE value="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경" />
@@ -455,6 +457,7 @@
     <MESSAGE value="Add TTS functionality for dictionary search results&#10;&#10;- 사전 검색 결과를 TTS로 출력하는 함수 추가&#10;- 사전 검색 결과가 나타나는 팝업 창을 클릭하면 TTS 재생, 팝업 창이 사라지면 TTS 중단됨" />
     <MESSAGE value="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함" />
     <MESSAGE value="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트" />
+    <MESSAGE value="Update Camera screen UI for height&#10;&#10;- 기기에 따라 CameraPreview의 높이가 달라지도록 UI를 업데이트함" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Camera screen UI for height&#10;&#10;- 기기에 따라 CameraPreview의 높이가 달라지도록 UI를 업데이트함" />
   </component>
 </project>
