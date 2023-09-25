@@ -114,9 +114,9 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                       enabledBorder: InputBorder.none,
                     ),
                     style: TextStyle(
-                      fontSize: width * 0.045,
+                      fontSize: 20,
                       height: 2.0,
-                      wordSpacing: 2.0,
+                      wordSpacing: 1.0,
                     ),
                     maxLines: null,
                     onChanged: (text) {
