@@ -55,8 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Color(0xffd9ebe5),
           appBar: AppBar(
-            backgroundColor: Color(0xFFF3F3F3),
+            backgroundColor: Color(0xffd9ebe5),
             elevation: 0.0,
             // toolbarHeight: width*0.15,
             leading: IconButton(
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ],
-            title: Image.asset("assets/images/i_hangul.png"),
+            title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
             centerTitle: true,
           ),
 
@@ -88,17 +89,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     children: <Widget>[
-                      makeButton('책 읽어주기', 1 , '궁금한 부분을 찰칵', 1),
+                      makeButton('책 읽기', 1 , '궁금한 부분을 찰칵!', 1),
                       const Padding(
                         padding: EdgeInsets.all(10),
                       ),
 
-                      makeButton('내가 찾은 단어', 3 , '내가 찾은 단어 알아보기', 3),
+                      makeButton('단어장', 3 , '내가 찾은 단어 보러 가기', 3),
                       const Padding(
                         padding: EdgeInsets.all(10),
                       ),
 
-                      makeButton('게임', 2 , '게임으로 실력 향상!', 2),
+                      makeButton('게임', 2 , '초성 게임으로 실력 향상!', 2),
                       const Padding(
                         padding: EdgeInsets.all(10),
                       ),
@@ -138,8 +139,11 @@ class _HomeScreenState extends State<HomeScreen> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text("사진을 가져올 방법을 선택하세요"),
-                  backgroundColor: Color(0xFFF3F3F3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),),
+                  title: Text("사진을 가져올 방법을 선택하세요",
+                    style: TextStyle(color: Colors.white,),),
+                  backgroundColor: Color(0xFF74b29e),
                   content: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -148,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: Size(80, 80),
                         child: Material(
                           color: Colors.white, // button color
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                           child: InkWell(
                             onTap: () async {
                               Navigator.pop(context);
@@ -181,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: Size(80, 80),
                         child: Material(
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                           child: InkWell(
                             // splashColor: Colors.green, // splash color
                             onTap: () async {
@@ -234,14 +238,16 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         style: ButtonStyle(
+          elevation:MaterialStateProperty.all<double>(0),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-          backgroundColor:
-          MaterialStateProperty.all<Color>(Colors.white),
+          backgroundColor:MaterialStateProperty.all<Color>(Colors.white),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  // side: BorderSide(color: Color(0xFFC0EB75), width: 2.0) // border line color
-              )),),
+              borderRadius: BorderRadius.circular(20.0),
+              //side: BorderSide(color: Color(0xFFa8df83), width: 2.0)
+            )
+          ),
+        ),
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           children: [
