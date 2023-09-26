@@ -69,6 +69,7 @@ class _LoginWidget extends State<LoginWidget> {
 
     return SafeArea(
         child: Scaffold(
+          backgroundColor: Color(0xffd9ebe5),
             body: SingleChildScrollView(
               padding: EdgeInsets.all(width * 0.08),
               child: Column(
@@ -79,13 +80,19 @@ class _LoginWidget extends State<LoginWidget> {
                     controller: emailController,
                     cursorColor: Colors.black,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.black38),
-                      prefixIcon: Icon(Icons.email_outlined,color: Colors.black38,),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black,width: 1)),
-                      focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black,width: 1)),
-                    ),
+                      decoration: InputDecoration(
+                        labelText: '이메일',
+                        labelStyle: TextStyle(color: Colors.black,),
+                        prefixIcon: Icon(Icons.email_outlined, color: Colors.black),
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.white, width: 1),),),
                   ),
                   SizedBox(height: height * 0.01),
                   TextFormField(
@@ -93,11 +100,21 @@ class _LoginWidget extends State<LoginWidget> {
                     cursorColor: Colors.black,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.black38),
-                      prefixIcon: Icon(Icons.password_outlined,color: Colors.black38,),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black,width: 1)),
-                      focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black,width: 1)),
+                      labelText: '비밀번호',
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                      prefixIcon: Icon(Icons.password_outlined, color: Colors.black),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide(color: Colors.white, width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide(color: Colors.white, width: 1),
+                      ),
                     ),
                     obscureText: true,
                   ),
@@ -106,17 +123,22 @@ class _LoginWidget extends State<LoginWidget> {
                     onPressed: signIn,
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size.fromHeight(50),
-                    backgroundColor: Color(0xFFF3F3F3)),
-                    child: Text('로그인', style: TextStyle(fontSize: width * 0.045, color: MyColor.accentColor),),
+                    backgroundColor: Color(0xFF74B29E),
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0), // 원하는 모서리 둥글기 값
+                    ),),
+                    child: Text('로그인', style: TextStyle(fontSize: width * 0.045, color: Colors.white),),
                   ),
                   SizedBox(height: height*0.02),
                   GestureDetector(
                     child: Text(
-                      "비밀번호를 잊으셨나요?",
+                      "비밀번호 찾기",
                       style: TextStyle(
-                        decoration: TextDecoration.underline,
+                        //decoration: TextDecoration.underline,
                         color: Colors.black,
                         fontSize: width * 0.036,
+                        fontWeight:FontWeight.bold,
                       ),
                     ),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
@@ -126,7 +148,7 @@ class _LoginWidget extends State<LoginWidget> {
                   SizedBox(height: height*0.01),
                   RichText(
                       text: TextSpan(
-                          style: TextStyle(color: Colors.black, fontSize: width * 0.036),
+                          style: TextStyle(color: Colors.black, fontSize: width * 0.036,),
                           text: '계정이 없으신가요?   ',
                           children: [
                             TextSpan(
@@ -134,7 +156,8 @@ class _LoginWidget extends State<LoginWidget> {
                                   ..onTap = widget.onClickedSignUp,
                                 text: '회원가입',
                                 style: TextStyle(
-                                  decoration: TextDecoration.underline,
+                                  fontWeight:FontWeight.bold,
+                                  //decoration: TextDecoration.underline,
                                   // color: Colors.deepPurple,
                                 )
                             )
