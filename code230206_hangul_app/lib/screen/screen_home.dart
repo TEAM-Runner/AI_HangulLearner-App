@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
               size: width*0.1,
             ),
 
-            Padding(padding: EdgeInsets.only(top:width*0.03)),
+            Padding(padding: EdgeInsets.only(top:width*0.1)),
             // Text(buttonText, style: TextStyle(fontSize: width * 0.036),),
             Text(buttonText, style: TextStyle(fontSize: 20),),
             Padding(padding: EdgeInsets.only(top:width*0.12)),
