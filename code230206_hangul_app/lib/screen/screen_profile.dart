@@ -30,19 +30,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
         String newPassword = "";
 
         return AlertDialog(
-          title: Text("Change Password"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          title: Text(
+            "비밀번호 변경",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Color(0xFF74b29e),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                decoration: InputDecoration(hintText: "Current Password"),
+                decoration: InputDecoration(
+                  hintText: "현재 비밀번호",
+                  filled: true,
+                  fillColor: Colors.white, // 바탕색 설정
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(color: Colors.white), // 테두리선 색상 설정
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(color: Colors.white), // 테두리선 색상 설정
+                  ),
+                ),
                 obscureText: true,
                 onChanged: (value) => currentPassword = value,
+                cursorColor: Colors.black,
               ),
+              SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(hintText: "New Password"),
+                decoration: InputDecoration(
+                  hintText: "새 비밀번호",
+                  filled: true,
+                  fillColor: Colors.white,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                ),
                 obscureText: true,
                 onChanged: (value) => newPassword = value,
+                cursorColor: Colors.black,
               ),
             ],
           ),
@@ -63,20 +99,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   // Show a success message
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Password updated successfully")));
+                    content: Text("Password updated successfully"),
+                  ));
                   Navigator.of(context).pop();
                 } on FirebaseAuthException catch (e) {
                   // Show an error message if there was a problem updating the password
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          "Failed to update password: ${e.message}")));
+                    content: Text("Failed to update password: ${e.message}"),
+                  ));
                 }
               },
-              child: Text("Save"),
+              child: Text("저장",style: TextStyle(
+        color: Colors.white,fontSize: 16),),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text("Cancel"),
+              child: Text("취소",style: TextStyle(
+                color: Colors.white,fontSize: 16),),
             ),
           ],
         );
@@ -172,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 8),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center, // 수평으로 중앙 정렬
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
                     width: width * 0.84,
@@ -265,7 +304,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 16),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center, // 수평으로 중앙 정렬
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
                     width: width * 0.84,
