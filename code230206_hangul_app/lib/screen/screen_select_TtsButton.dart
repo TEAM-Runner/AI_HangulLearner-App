@@ -10,6 +10,8 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as parser;
 import 'screen_home.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 
 
 class Word {
@@ -60,6 +62,16 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   bool _stopflag = true; // TTS speak or not
   bool _playflag = false; // TTS stop or play
+  bool _muteflag = true; // TTS mute or not
+  bool _currentTTSIndexResetFlag = false; // currentTTSIndex를 reset 해야할 때 true, reset 할 필요 없을때 false
+
+
+  final List<String> items = [ // for tts speed - dropdown_button_2
+    'X 0.5', 'X 0.75', 'X 1.0', 'X 1.25', 'X 1.75',
+  ];
+  String? selectedValue; // for tts speed - dropdown_button_2
+
+
 
   // dictionary *************************************
   String? _dic_selectedWord; // dictionary string
@@ -245,7 +257,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   }
 
   void _stopSpeakTts() async {
-    print("onWillPop - _stopSpeakTts");
     // _stopflag = false;
     await _tts.stop();
   }
@@ -449,6 +460,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 Navigator.of(context).pop();
               },
             ),
+
             title: Text(
               "I HANGUL",
               style: TextStyle(
@@ -471,12 +483,254 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     Expanded(
                       child: Container(),
                     ),
+
+                    // play
+                    Container(
+                        width: 50.0,
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Color(0xFF74b29e),
+                        ),
+                        child: StatefulBuilder(
+                            builder: (context, setState) {
+                              return IconButton( // 전체 문장 재생 버튼
+                                onPressed: () {
+                                  setState(() {
+                                    _playflag = !_playflag;
+                                    print("setState: $_playflag"); // Check if setState is changing _playflag
+
+                                  });
+                                  if (_playflag) {
+                                    _stopflag = true;
+
+                                    if (_currentTTSIndexResetFlag == false){ // currentTTSIndex를 reset 할 필요 없을때
+                                      if (currentTTSIndex != 0) { // TTS 기록이 존재하는 경우
+                                        _speakAllSentence();
+                                      }
+                                      if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
+                                        _speakAllSentence();
+                                      }
+                                    }
+                                    if (_currentTTSIndexResetFlag == true){ // currentTTSIndex를 reset 해야할 때
+                                      _currentTTSIndexResetFlag = false; // 다시 false로 초기화
+                                      currentTTSIndex = 0;
+                                      _speakAllSentence();
+                                    }
+
+                                  } else {
+                                    _stopflag = false; // Stop all TTS
+                                    _stopSpeakTts(); // Stop ongoing TTS
+                                  }
+                                },
+                                icon: Icon(Icons.play_arrow, color: Colors.white),
+                                // icon: _playflag // 제대로 동작하지 않아서 일단 주석처리
+                                //     ? Icon(Icons.stop, color: Colors.black) // TTS 재생 중일 때
+                                //     : Icon(Icons.volume_up_outlined, color: Colors.black), // TTS 중단 상태일 때
+                              );
+                            }
+                        )
+                    ),
+
+                    Expanded(
+                      child: Container(),
+                    ),
+
+                    // pause
+                    Container(
+                        width: 50.0,
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Color(0xFF74b29e),
+                        ),
+                        child: StatefulBuilder(
+                            builder: (context, setState) {
+                              return IconButton(
+                                onPressed: () {
+                                  _stopflag = false;
+                                  // _stopSpeakTts(); // Stop ongoing TTS
+                                },
+                                icon: Icon(Icons.pause, color: Colors.white),
+                              );
+                            }
+                        )
+                    ),
+
+                    Expanded(
+                      child: Container(),
+                    ),
+
+                    // stop
+                    Container(
+                        width: 50.0,
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Color(0xFF74b29e),
+                        ),
+                        child: StatefulBuilder(
+                            builder: (context, setState) {
+                              return IconButton(
+                                onPressed: () {
+                                  _stopflag = false;
+                                  _currentTTSIndexResetFlag = true; // currentTTSIndex를 reset 해야할 때
+                                  // currentTTSIndex = 0; // _speakAllSentence() 함수 때문에 제대로 리셋 안됨
+                                  print("currentTTSIndex : $currentTTSIndex");
+                                },
+                                icon: Icon(Icons.stop, color: Colors.white),
+                              );
+                            }
+                        )
+                    ),
+
+                    Expanded(
+                      child: Container(),
+                    ),
+
+                    // 음소거
+                    Container(
+                        width: 50.0,
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Color(0xFF74b29e),
+                        ),
+                        child: StatefulBuilder(
+                            builder: (context, setState) {
+                              return IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _muteflag = !_muteflag; // Toggle _muteflag
+
+                                    if (_muteflag) {
+                                      _tts.setVolume(1.0);
+                                    } else {
+                                      _tts.setVolume(0.0);
+                                    }
+                                  });
+                                  },
+                                icon: _muteflag
+                                    ? Icon(Icons.volume_up, color: Colors.white)
+                                    : Icon(Icons.volume_off, color: Colors.white),
+                              );
+                            }
+                        )
+                    ),
+
+                    Expanded(
+                      child: Container(),
+                    ),
+
+                    // TTS speed
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2<String>(
+                        isExpanded: true,
+                        hint: const Row(
+                          children: [
+                            // Icon(
+                            //   Icons.list, color: Colors.white,
+                            // ),
+                            // SizedBox(
+                            //   width: 4,
+                            // ),
+                            Expanded(
+                              child: Text('속도',
+                                style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        items: items.map((String item) => DropdownMenuItem<String>(
+                          value: item, child: Text(item, style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ))
+                            .toList(),
+                        value: selectedValue,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedValue = value;
+
+                            print("value: $value");
+                            switch (value) {
+                              case "X 0.5": // TTS 속도 매우 느리게
+                                _ttsSpeedIndex = 0;
+                                break;
+                              case "X 0.75": // TTS 속도 느리게
+                                _ttsSpeedIndex = 1;
+                                break;
+                              case "X 1.0": // TTS 속도 보통
+                                _ttsSpeedIndex = 2;
+                                break;
+                              case "X 1.25": // TTS 속도 빠르게
+                                _ttsSpeedIndex = 3;
+                                break;
+                              case "X 1.75": // TTS 속도 매우 빠르게
+                                _ttsSpeedIndex = 4;
+                                break;
+                              default: // 기본 - TTS 속도 보통
+                                _ttsSpeedIndex = 2;
+                                break;}
+                          });
+                        },
+                        buttonStyleData: ButtonStyleData(
+                          height: 50,
+                          width: 90,
+                          padding: const EdgeInsets.only(left: 14, right: 14),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.black26,
+                            ),
+                            color: Color(0xFF74b29e),
+                          ),
+                          elevation: 2,
+                        ),
+                        iconStyleData: const IconStyleData(
+                          icon: Icon(
+                            Icons.arrow_forward_ios_outlined,
+                          ),
+                          iconSize: 14,
+                          iconEnabledColor: Colors.white,
+                          iconDisabledColor: Colors.grey,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          maxHeight: 200,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Color(0xFF74b29e),
+                          ),
+                          offset: const Offset(0, 0),
+                          scrollbarTheme: ScrollbarThemeData(
+                            radius: const Radius.circular(40),
+                            thickness: MaterialStateProperty.all(6),
+                            thumbVisibility: MaterialStateProperty.all(true),
+                          ),
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(
+                          height: 40,
+                          padding: EdgeInsets.only(left: 14, right: 14),
+                        ),
+                      ),
+                    ),
+
+                    Expanded(
+                      child: Container(),
+                    ),
+
                     Container(
                       width: 50.0,
                       height: 50.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25.0),
-                        color: Color(0xFFC0EB75),
+                        color: Color(0xFF74b29e),
                       ),
                       child: IconButton(
                         onPressed: () {
@@ -487,9 +741,14 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                             ),
                           );
                         },
-                        icon: Icon(Icons.border_color_outlined, color: Colors.black),
+                        icon: Icon(Icons.border_color_outlined, color: Colors.white),
                       ),
-                    )
+                    ),
+
+                    Expanded(
+                      child: Container(),
+                    ),
+
                   ],
                 ),
 
@@ -537,12 +796,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                             icon: Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Color(0xFFC0EB75),
+                                color: Color(0xFF74b29e),
                               ),
                               // padding: EdgeInsets.all(8.0),
                               child: _iconPlayFlags[sentenceIndex]
-                                  ? Icon(Icons.stop, color: Colors.black)
-                                  : Icon(Icons.play_arrow, color: Colors.black),
+                                  ? Icon(Icons.stop, color: Colors.white)
+                                  : Icon(Icons.play_arrow, color: Colors.white),
                             ),
                           ),
 
@@ -591,7 +850,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                             padding: EdgeInsets.all(2.0),
                                             decoration: BoxDecoration(
                                               // color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : null, // tts 하이라이트 처리
-                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : (_dic_isSelected(entry.value.word) ? Color(0xFFC0EB75) : null),
+                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : (_dic_isSelected(entry.value.word) ? Color(0xFF74b29e) : null),
 
                                               // color: isSelected_sentence[sentenceIndex].words[index].isSelected ? Colors.yellow : null, // tts 하이라이트처리
                                               // color: dic_isSelected ? Colors.yellow : null, // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
@@ -619,121 +878,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Container(),
-                    ),
 
-                    Container(
-                        width: 50.0,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25.0),
-                          color: Color(0xFFC0EB75),
-                        ),
-                        child: StatefulBuilder(
-                            builder: (context, setState) {
-                              return IconButton( // 전체 문장 재생 버튼
-                                onPressed: () {
-                                  print("onPressed: $_playflag");
-                                  setState(() {
-                                    _playflag = !_playflag;
-                                    print("setState: $_playflag"); // Check if setState is changing _playflag
-
-                                  });
-                                  if (_playflag) {
-                                    _stopflag = true;
-
-                                    // TTS 기록이 존재하는 경우 팝업창 보여줌
-                                    if (currentTTSIndex != 0){ // TTS 기록이 존재하는 경우
-                                      showDialog( // 팝업창 띄우기
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text("이어서 재생하시겠습니까?"),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                  child: Text("네", style: TextStyle(color: Colors.black,),),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                    // _speakWord(0, currentTTSIndex, _speaktype[2]); // 기록된 부분부터 끝까지 TTS 출력
-                                                    _speakAllSentence();
-                                                  }
-                                              ),
-                                              TextButton(
-                                                  child: Text("아니요", style: TextStyle(color: Colors.black,),),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                    // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
-                                                    currentTTSIndex = 0; // TTS기록을 0으로 초기화하고 _speakAllSentence 호출
-                                                    _speakAllSentence();
-                                                  }
-                                              )
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-                                    if (currentTTSIndex == 0){ // TTS 기록이 존재하지 않는 경우
-                                      // _speakWord(0, 0, _speaktype[1]); // 처음부터 끝까지 전체 텍스트 TTS 출력
-                                      _speakAllSentence();
-                                    }
-
-                                  } else {
-                                    _stopflag = false; // Stop all TTS
-                                    _stopSpeakTts(); // Stop ongoing TTS
-                                  }
-                                },
-                                icon: Icon(Icons.volume_up_outlined, color: Colors.black),
-                                // icon: _playflag // 제대로 동작하지 않아서 일단 주석처리
-                                //     ? Icon(Icons.stop, color: Colors.black) // TTS 재생 중일 때
-                                //     : Icon(Icons.volume_up_outlined, color: Colors.black), // TTS 중단 상태일 때
-                              );
-                            }
-                        )
-                    ),
-
-                    Expanded(
-                      child: Container(),
-                    ),
-
-                    AnimatedToggleSwitch<int>.size(
-                      // textDirection: TextDirection.rtl, // 왜 에러뜨지...
-                      current: _toggleSwitchvalue,
-                      values: const [0, 1, 2],
-                      // iconOpacity: 0.2,
-                      // indicatorSize: const Size.fromWidth(100),
-                      customIconBuilder: (context, local, global) {
-                        switch (_toggleSwitchvalue) {
-                          case 0: // TTS 속도 느리게
-                            _ttsSpeedIndex = 0;
-                            break;
-                          case 1: // TTS 속도 보통
-                            _ttsSpeedIndex = 1;
-                            break;
-                          case 2: // TTS 속도 빠르게
-                            _ttsSpeedIndex = 2;
-                            break;
-                          default: // 기본 - TTS 속도 보통
-                            _ttsSpeedIndex = 1;
-                            break;
-                        }
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            alternativeIconBuilder(context, local, global),
-                          ],
-                        );
-                      },
-                      borderColor: Color(0xFFC0EB75),
-                      colorBuilder: (i) => i.isEven ? Color(0xFFC0EB75) : Color(0xFFC0EB75),
-                      onChanged: (i) => setState(() =>
-                      _toggleSwitchvalue = i,
-                      ),
-                    ),
-
-                    Expanded(
-                      child: Container(),
-                    ),
                   ],
                 ),
                 SizedBox(height: 16.0),
