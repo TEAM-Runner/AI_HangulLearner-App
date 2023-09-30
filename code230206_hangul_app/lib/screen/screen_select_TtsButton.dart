@@ -13,7 +13,7 @@ import 'screen_home.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 
-bool _WebScraperFlag = true; // WebScraper 검색결과가 존재하는 경우 true, 존재하지 않는 경우 false
+bool _WebScraperFlag = false; // WebScraper 검색결과가 존재하는 경우 true, 존재하지 않는 경우 false
 
 class Word {
   String word; // 단어
@@ -365,58 +365,64 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                       _starred = List.generate(dicWords.length, (_) => false);
                     }
 
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: dicWords.length,
-                      separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
-                      itemBuilder: (_, index) {
-                        String word = dicWords[index].txt_emph;
-                        return FutureBuilder<DocumentSnapshot>(
-                          future: wordsRef.doc(word).get(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData && snapshot.data!.exists) {
-                              _starred[index] = true;
-                            } else {
-                              _starred[index] = false;
-                            }
-                            return Padding(
-                              padding: EdgeInsets.fromLTRB(16, 8, 16, 0), // 사전 검색 결과 ListView 사이 간격
-                              child: Container(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    _speakDictionary(dicWords[index].txt_emph, dicWords[index].txt_mean);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.white,
-                                    onPrimary: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
+                    if (_WebScraperFlag) {
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: dicWords.length,
+                        separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+                        itemBuilder: (_, index) {
+                          String word = dicWords[index].txt_emph;
+                          return FutureBuilder<DocumentSnapshot>(
+                            future: wordsRef.doc(word).get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data!.exists) {
+                                _starred[index] = true;
+                              } else {
+                                _starred[index] = false;
+                              }
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(16, 8, 16, 0), // 사전 검색 결과 ListView 사이 간격
+                                child: Container(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      _speakDictionary(dicWords[index].txt_emph, dicWords[index].txt_mean);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                      onPrimary: Colors.black,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
                                     ),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(1),
-                                    child: ListTile(
-                                      title: Text(dicWords[index].txt_emph,
-                                          style: const TextStyle(fontSize: 24)),
-                                      subtitle: Text(dicWords[index].txt_mean,
-                                          style: const TextStyle(fontSize: 20)),
-                                      trailing: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _dic_toggleStarred(index);
-                                          });
-                                        },
-                                        icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
-                                          color: Colors.amber,),),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(1),
+                                      child: ListTile(
+                                        title: Text(dicWords[index].txt_emph,
+                                            style: const TextStyle(fontSize: 24)),
+                                        subtitle: Text(dicWords[index].txt_mean,
+                                            style: const TextStyle(fontSize: 20)),
+                                        trailing: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _dic_toggleStarred(index);
+                                            });
+                                          },
+                                          icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
+                                            color: Colors.amber,),),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    );
+                              );
+                            },
+                          );
+                        },
+                      );
+                    } else {
+                      return const Center(
+                        child: Text("해당하는 단어를 찾을 수 없습니다.", style: TextStyle(fontSize: 20)),
+                      );
+                    }
 
                   } else {
                     return const Center(
@@ -925,6 +931,7 @@ class WebScraper {
     final dicWords = <dicWord>[];
 
     bool _urlflag = false; // 뜻이 여러개/하나인 경우 둘다 크롤링하면 중복된 검색결과 나오는 문제 발생. 둘중 하나만 크롤링하도록 하는 플래그
+    _WebScraperFlag = false; // 검색결과가 존재하지 않는 경우 false로 초기화
 
     if (responseInitialUrl.statusCode == 200) { // 뜻이 여러개인 경우의 URI
       print("multiful meaning");
@@ -947,6 +954,7 @@ class WebScraper {
 
           if (txt_emph != null && txt_mean != null) {
             _urlflag = true; // 크롤링하면 _urlflag를 true로 바꿈
+            _WebScraperFlag = true; // 검색결과가 존재하는 경우 true
             dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
           }
         }
@@ -958,6 +966,7 @@ class WebScraper {
 
           if (txt_emph != null && txt_mean != null) {
             _urlflag = true; // 크롤링하면 _urlflag를 true로 바꿈
+            _WebScraperFlag = true; // 검색결과가 존재하는 경우 true
             dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
           }
         }
@@ -983,13 +992,14 @@ class WebScraper {
 
           if (txt_emph != null && txt_means.isNotEmpty) {
             for (final txt_mean in txt_means) {
+              _WebScraperFlag = true; // 검색결과가 존재하는 경우 true
               dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
             }
           }
         }
       }
     } else {
-      _WebScraperFlag = false; // 검색결과가 존재하지 않는 경우 false
+      // _WebScraperFlag = false; // 검색결과가 존재하지 않는 경우 false
       print("_WebScraperFlag: $_WebScraperFlag");
     }
     return dicWords;
