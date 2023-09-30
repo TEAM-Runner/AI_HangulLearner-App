@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add buttons to TTS screen&#10;&#10;- Pause button: 일시정지 버튼. pause 버튼 클릭 후 play 버튼 다시 누르면 멈췄던 부분부터 TTS 재생됨.&#10;- Stop button: 정지 버튼. stop 버튼 클릭 후 play 버튼 다시 누르면 처음부터 TTS 재생됨.&#10;- Mute button: 음소거 버튼. 클릭하면 아이콘이 바뀌면서 mute 상태가 되었다가, 다시 누르면 mute 상태가 해제됨.&#10;- TTS speed DropdownButton: TTS 속도 제어 버튼. 기존의 animated_toggle_switch에서 DropdownButton으로 변경함.&#10;- 버튼 색상, 사전 검색 시 BoxDecoration 색상 변경.">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
     </list>
@@ -71,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Fix RangeError in screen_game.dart&#10;&#10;- index 변수 문제로 발생하던 RangeError 해결&#10;  (게임의 마지막 문제에서 index가 gameWordList의 범위를 초과하게 되는 에러가 있었음) &#10;- bool endGameReady를 추가해 에러 해결함">
-      <created>1680619006618</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1680619006618</updated>
     </task>
     <task id="LOCAL-00011" summary="Add trim strings in WebScraper class in screen_select_dicButton.dart&#10;&#10;- txt_emph, txt_mean에 trim strings 추가&#10;- 이전에는 개행문자가 함께 저장 -&gt; 초성게임에서 문제가 발생했음">
       <created>1680619976309</created>
@@ -415,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696071353353</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트">
+      <created>1696072451610</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1696072451610</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -430,7 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update screen_home.dart&#10;&#10;- SingleChildScrollView 추가&#10;- makeButton 함수 수정&#10;- UI update" />
     <MESSAGE value="update ui" />
     <MESSAGE value="update UI in screen_vacabularyList.dart&#10;&#10;- update _randomOrderStarredWords &#10;- update DropdownButton" />
     <MESSAGE value="Refactor code of screen_select_TtsButton.dart&#10;&#10;- Word 클래스를 정의하고 word, isSelected, sentenceIndex, wordIndex, wordIndexInSentence 속성을 둠. 별도로 인덱스를 계산하거나 isSelected 리스트를 정의할 필요가 없어짐.&#10;- 모든 단어들을 wordList로 관리해 코드의 복잡성을 낮춤. isSelected는 wordList에서 업데이트되므로 별도로 정의할 필요가 없음.&#10;- 문장 읽기 기능이 _speakSentence 함수 하나로 통합됨. 기존에는 한 문장만 읽는 _speakSentence 함수와 전체 문장을 읽는 _speakAllSentences 함수를 따로 두었으나, _speakAllSentences는 제거하고 하나의 함수에서 TTS 기능 수행하도록 함" />
@@ -455,6 +454,7 @@
     <MESSAGE value="Update font size for home screen and TTS ListView" />
     <MESSAGE value="Comment out unused pages" />
     <MESSAGE value="Add buttons to TTS screen&#10;&#10;- Pause button: 일시정지 버튼. pause 버튼 클릭 후 play 버튼 다시 누르면 멈췄던 부분부터 TTS 재생됨.&#10;- Stop button: 정지 버튼. stop 버튼 클릭 후 play 버튼 다시 누르면 처음부터 TTS 재생됨.&#10;- Mute button: 음소거 버튼. 클릭하면 아이콘이 바뀌면서 mute 상태가 되었다가, 다시 누르면 mute 상태가 해제됨.&#10;- TTS speed DropdownButton: TTS 속도 제어 버튼. 기존의 animated_toggle_switch에서 DropdownButton으로 변경함.&#10;- 버튼 색상, 사전 검색 시 BoxDecoration 색상 변경." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add buttons to TTS screen&#10;&#10;- Pause button: 일시정지 버튼. pause 버튼 클릭 후 play 버튼 다시 누르면 멈췄던 부분부터 TTS 재생됨.&#10;- Stop button: 정지 버튼. stop 버튼 클릭 후 play 버튼 다시 누르면 처음부터 TTS 재생됨.&#10;- Mute button: 음소거 버튼. 클릭하면 아이콘이 바뀌면서 mute 상태가 되었다가, 다시 누르면 mute 상태가 해제됨.&#10;- TTS speed DropdownButton: TTS 속도 제어 버튼. 기존의 animated_toggle_switch에서 DropdownButton으로 변경함.&#10;- 버튼 색상, 사전 검색 시 BoxDecoration 색상 변경." />
+    <MESSAGE value="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트" />
   </component>
 </project>

@@ -13,6 +13,7 @@ import 'screen_home.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 
+bool _WebScraperFlag = true; // WebScraper 검색결과가 존재하는 경우 true, 존재하지 않는 경우 false
 
 class Word {
   String word; // 단어
@@ -65,7 +66,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   bool _muteflag = true; // TTS mute or not
   bool _currentTTSIndexResetFlag = false; // currentTTSIndex를 reset 해야할 때 true, reset 할 필요 없을때 false
   bool _ttsSpeedChangedFlag = false; // TTS speed changed or not
-
 
   final List<String> items = [ // for tts speed - dropdown_button_2
     'X 0.5', 'X 0.75', 'X 1.0', 'X 1.25', 'X 1.75',
@@ -365,65 +365,59 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                       _starred = List.generate(dicWords.length, (_) => false);
                     }
 
-                    return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10),
-                            ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: dicWords.length,
-                              separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
-                              itemBuilder: (_, index) {
-                                String word = dicWords[index].txt_emph;
-                                return FutureBuilder<DocumentSnapshot>(
-                                  future: wordsRef.doc(word).get(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData && snapshot.data!.exists) {
-                                      _starred[index] = true;
-                                    } else {
-                                      _starred[index] = false;
-                                    }
-                                    return Padding(
-                                      padding: EdgeInsets.all(16),
-                                      child: Container(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            _speakDictionary(dicWords[index].txt_emph, dicWords[index].txt_mean);
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.white,
-                                            onPrimary: Colors.black,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(15.0),
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(1),
-                                            child: ListTile(
-                                              title: Text(dicWords[index].txt_emph,
-                                                  style: const TextStyle(fontSize: 24)),
-                                              subtitle: Text(dicWords[index].txt_mean,
-                                                  style: const TextStyle(fontSize: 20)),
-                                              trailing: IconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    _dic_toggleStarred(index);
-                                                  });
-                                                },
-                                                icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
-                                                  color: Colors.amber,),),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: dicWords.length,
+                      separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+                      itemBuilder: (_, index) {
+                        String word = dicWords[index].txt_emph;
+                        return FutureBuilder<DocumentSnapshot>(
+                          future: wordsRef.doc(word).get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData && snapshot.data!.exists) {
+                              _starred[index] = true;
+                            } else {
+                              _starred[index] = false;
+                            }
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(16, 8, 16, 0), // 사전 검색 결과 ListView 사이 간격
+                              child: Container(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    _speakDictionary(dicWords[index].txt_emph, dicWords[index].txt_mean);
                                   },
-                                );
-                              },
-                            ),
-                          ],
-                        )
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    onPrimary: Colors.black,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(1),
+                                    child: ListTile(
+                                      title: Text(dicWords[index].txt_emph,
+                                          style: const TextStyle(fontSize: 24)),
+                                      subtitle: Text(dicWords[index].txt_mean,
+                                          style: const TextStyle(fontSize: 20)),
+                                      trailing: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _dic_toggleStarred(index);
+                                          });
+                                        },
+                                        icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
+                                          color: Colors.amber,),),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     );
+
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -905,54 +899,99 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   }
 }
 
-
-// 뜻이 하나만 있는 경우: 리다이렉트 되는 새 url에서 supid, wordid를 구해 finalUrl을 정의해야 함
 class WebScraper {
   final String searchWord;
   WebScraper(this.searchWord);
 
   Future<List<dicWord>> extractData() async {
-
     final initialUrl =
         "https://dic.daum.net/search.do?q=${Uri.encodeComponent(searchWord)}&dic=kor";
-    var response = await http.get(Uri.parse(initialUrl));
+    var responseInitialUrl = await http.get(Uri.parse(initialUrl));
+    debugPrint('initialUrl: $initialUrl');
 
     final RegExp expSupid = RegExp('supid=(.*?)[\'"]');
     final RegExp expWordid = RegExp('wordid=(.*?)[\'"]');
 
-    final matchSupid = expSupid.firstMatch(response.body);
+    final matchSupid = expSupid.firstMatch(responseInitialUrl.body);
     final supid = matchSupid?.group(1);
-    final matchWordid = expWordid.firstMatch(response.body);
+    final matchWordid = expWordid.firstMatch(responseInitialUrl.body);
     final wordid = matchWordid?.group(1);
 
     final finalUrl =
         'https://dic.daum.net/word/view.do?wordid=$wordid=${Uri.encodeComponent(searchWord)}&supid=$supid';
     debugPrint('finalUrl: $finalUrl');
 
-    response = await http.get(Uri.parse(finalUrl));
+    var responseFinalUrl = await http.get(Uri.parse(finalUrl));
     final dicWords = <dicWord>[];
 
-    if (response.statusCode == 200) {
-      final html = parser.parse(response.body);
-      final container = html.querySelectorAll('.inner_top');
+    bool _urlflag = false; // 뜻이 여러개/하나인 경우 둘다 크롤링하면 중복된 검색결과 나오는 문제 발생. 둘중 하나만 크롤링하도록 하는 플래그
+
+    if (responseInitialUrl.statusCode == 200) { // 뜻이 여러개인 경우의 URI
+      print("multiful meaning");
+      final html = parser.parse(responseInitialUrl.body);
+
+      // 뜻이 여러개인 경우
+      final container1 = html.querySelectorAll('.search_box'); // 뜻 여러개 - 맨 위 검색결과
+      final container2 = html.querySelectorAll('div.card_word[data-target="word"][data-tiara-layer="word word"] .search_type'); // 뜻 여러개 - 아래쪽 검색 결과
+      // final container3 = html.querySelectorAll('.inner_top'); // 뜻 하나
 
       // timeStamp
       final now = DateTime.now();
       final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
-      for (final element in container) {
-        // ver3 -> 한 개 뜻이 있는 경우
-        final txt_emph = element.querySelector('.txt_cleanword')?.text?.trim();
-        final txt_mean = element.querySelector('.txt_mean')?.text?.trim();
-        //.clean_word .tit_cleantype2 .txt_cleanword
+      if (container1.isNotEmpty || container2.isNotEmpty) { // 뜻이 여러개인 경우
+        for (final element in container1) {
+          final txt_emph = element.querySelector('.txt_cleansch')?.text?.trim().replaceAll(RegExp(r'[0-9]'), '');
+          final txt_mean = element.querySelector('.txt_search')?.text?.trim();
+          print("container1: $txt_emph -  $txt_mean");
 
-        if (txt_emph != null && txt_mean != null) {
-          // final word = dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate);
-          dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
+          if (txt_emph != null && txt_mean != null) {
+            _urlflag = true; // 크롤링하면 _urlflag를 true로 바꿈
+            dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
+          }
+        }
+
+        for (final element in container2) {
+          final txt_emph = element.querySelector('.txt_searchword')?.text?.trim().replaceAll(RegExp(r'[0-9]'), '');
+          final txt_mean = element.querySelector('.txt_search')?.text?.trim();
+          print("container2: $txt_emph -  $txt_mean");
+
+          if (txt_emph != null && txt_mean != null) {
+            _urlflag = true; // 크롤링하면 _urlflag를 true로 바꿈
+            dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
+          }
         }
       }
     }
+    if (responseFinalUrl.statusCode == 200 && _urlflag == false ) { // _urlflag가 false(크롤링X)인 경우에만 if문 실행
+      print("one meaning");
+      final html = parser.parse(responseFinalUrl.body);
 
+      // 뜻이 하나인 경우
+      final container3 = html.querySelectorAll('.inner_top'); // 뜻 하나
+
+      // timeStamp
+      final now = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+
+      if (container3.isNotEmpty) {  // 뜻이 한개인 경우
+        print("container3.isNotEmpty");
+        for (final element in container3) {
+          final txt_emph = element.querySelector('.txt_cleanword')?.text?.trim();
+          final txt_meanElements = element.querySelectorAll('.txt_mean'); // 'txt_mean' 여러 개일 때
+          final txt_means = txt_meanElements.map((element) => element.text.trim()).toList();
+
+          if (txt_emph != null && txt_means.isNotEmpty) {
+            for (final txt_mean in txt_means) {
+              dicWords.add(dicWord(txt_emph: txt_emph, txt_mean: txt_mean, timestamp: formattedDate));
+            }
+          }
+        }
+      }
+    } else {
+      _WebScraperFlag = false; // 검색결과가 존재하지 않는 경우 false
+      print("_WebScraperFlag: $_WebScraperFlag");
+    }
     return dicWords;
   }
 }
