@@ -64,6 +64,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   bool _playflag = false; // TTS stop or play
   bool _muteflag = true; // TTS mute or not
   bool _currentTTSIndexResetFlag = false; // currentTTSIndex를 reset 해야할 때 true, reset 할 필요 없을때 false
+  bool _ttsSpeedChangedFlag = false; // TTS speed changed or not
 
 
   final List<String> items = [ // for tts speed - dropdown_button_2
@@ -164,6 +165,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       // final word = sentence.words[wordIndex].word;
       if (_stopflag) {
         _playflag = true;
+        if (_ttsSpeedChangedFlag == true){ // 만약 tts speed 가 변경되었다면
+          _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // 변경한 속도로 속도 세팅하고
+          _ttsSpeedChangedFlag = false; // _ttsSpeedChangedFlag는 원래대로 false로 초기화
+        }
         await _tts.speak(sentence.words[wordIndex].word);
       }
     }
@@ -188,6 +193,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
           if (_stopflag) {
             _playflag = true;
+            if (_ttsSpeedChangedFlag == true){ // 만약 tts speed 가 변경되었다면
+              _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // 변경한 속도로 속도 세팅하고
+              _ttsSpeedChangedFlag = false; // _ttsSpeedChangedFlag는 원래대로 false로 초기화
+            }
             await _tts.speak(sentenceList[sentenceIndex].words[wordIndex].word);
             currentTTSIndex = sentenceList[sentenceIndex].words[wordIndex].wordIndex;
 
@@ -207,6 +216,10 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
             if (_stopflag) {
               _playflag = true;
+              if (_ttsSpeedChangedFlag == true){ // 만약 tts speed 가 변경되었다면
+                _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // 변경한 속도로 속도 세팅하고
+                _ttsSpeedChangedFlag = false; // _ttsSpeedChangedFlag는 원래대로 false로 초기화
+              }
               await _tts.speak(sentenceList[sentenceIndex].words[wordIndex].word);
               currentTTSIndex = sentenceList[sentenceIndex].words[wordIndex].wordIndex;
 
@@ -658,6 +671,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                             selectedValue = value;
 
                             print("value: $value");
+                            _ttsSpeedChangedFlag = true; // TTS speed가 변경됨
                             switch (value) {
                               case "X 0.5": // TTS 속도 매우 느리게
                                 _ttsSpeedIndex = 0;
