@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
     </list>
@@ -71,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Add _getQuizWord and Fix _getHint functions in screen_game.dart&#10;&#10;- 힌트 기능 수정: 힌트 버튼을 클릭하면 문제의 첫 번째 초성이 글자(답)로 변경되도록 수정">
-      <created>1680623616484</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1680623616484</updated>
     </task>
     <task id="LOCAL-00013" summary="Add all sentences read button in screen_select_TtsButton.dart&#10;&#10;- 글자인식한 모든 문장을 읽는 FloatingActionButton 추가&#10;- _speakAllSentences: 글자인식한 모든 문장을 읽어주는 함수">
       <created>1680668671195</created>
@@ -415,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696087530440</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Update Pop-Up Message for Empty Dictionary Results&#10;&#10;- 사전 검색 결과가 없는 경우 팝업창에 &quot;해당하는 단어를 찾을 수 없습니다.&quot;라는 메시지를 표시하도록 업데이트">
+      <created>1696088355771</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1696088355771</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -430,8 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update UI in screen_vacabularyList.dart&#10;&#10;- update _randomOrderStarredWords &#10;- update DropdownButton" />
-    <MESSAGE value="Refactor code of screen_select_TtsButton.dart&#10;&#10;- Word 클래스를 정의하고 word, isSelected, sentenceIndex, wordIndex, wordIndexInSentence 속성을 둠. 별도로 인덱스를 계산하거나 isSelected 리스트를 정의할 필요가 없어짐.&#10;- 모든 단어들을 wordList로 관리해 코드의 복잡성을 낮춤. isSelected는 wordList에서 업데이트되므로 별도로 정의할 필요가 없음.&#10;- 문장 읽기 기능이 _speakSentence 함수 하나로 통합됨. 기존에는 한 문장만 읽는 _speakSentence 함수와 전체 문장을 읽는 _speakAllSentences 함수를 따로 두었으나, _speakAllSentences는 제거하고 하나의 함수에서 TTS 기능 수행하도록 함" />
     <MESSAGE value="Update TTS control function&#10;&#10;- TTS 제어를 위해 _stopflag와 _playflag 사용&#10;- _playflag에 따라 FloatingActionButton의 아이콘 변경&#10;- _playflag에 따라 상태를 전환하도록 FloatingActionButton의 onPressed 콜백 수정&#10;- _stopflag에 따라 TTS를 재생하거나 중단함" />
     <MESSAGE value="Update TTS function in screen_vacabularyList.dart&#10;&#10;- IconButton의 onPressed가 _speakTTS를 실행하도록 업데이트&#10;- 단어 Card의 onTap이 _speakTTScard를 실행하도록 업데이트&#10;- _speakTTScard: 클릭한 단어와 뜻을 TTS로 읽어주는 함수" />
     <MESSAGE value="Update to store timestamps in Firestore&#10;&#10;- Firestore에 단어를 저장할 때 timestamps도 함께 저장하도록 업데이트" />
@@ -455,6 +453,8 @@
     <MESSAGE value="Add buttons to TTS screen&#10;&#10;- Pause button: 일시정지 버튼. pause 버튼 클릭 후 play 버튼 다시 누르면 멈췄던 부분부터 TTS 재생됨.&#10;- Stop button: 정지 버튼. stop 버튼 클릭 후 play 버튼 다시 누르면 처음부터 TTS 재생됨.&#10;- Mute button: 음소거 버튼. 클릭하면 아이콘이 바뀌면서 mute 상태가 되었다가, 다시 누르면 mute 상태가 해제됨.&#10;- TTS speed DropdownButton: TTS 속도 제어 버튼. 기존의 animated_toggle_switch에서 DropdownButton으로 변경함.&#10;- 버튼 색상, 사전 검색 시 BoxDecoration 색상 변경." />
     <MESSAGE value="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트" />
     <MESSAGE value="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용" />
+    <MESSAGE value="Update Pop-Up Message for Empty Dictionary Results&#10;&#10;- 사전 검색 결과가 없는 경우 팝업창에 &quot;해당하는 단어를 찾을 수 없습니다.&quot;라는 메시지를 표시하도록 업데이트" />
+    <MESSAGE value="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정" />
   </component>
 </project>

@@ -75,7 +75,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
 
   // dictionary *************************************
-  String? _dic_selectedWord; // dictionary string
+  String? _dic_selectedWord; // dictionary word string
+  String? _dic_selectedMeaning; // dictionary Meaning string
   // firestore 단어 저장 부분
   late User? user;
   late DocumentReference userRef;
@@ -243,7 +244,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       _updateIsSelected(-1, -1);
     });
 
-    _tts.setSpeechRate(_ttsSpeed[_ttsSpeedIndex]); // tts - 읽기 속도
+    _tts.setSpeechRate(_ttsSpeed[1]); // tts - 읽기 속도
     await _tts.awaitSpeakCompletion(true);
 
     await _tts.speak(word);
@@ -274,26 +275,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     await _tts.stop();
   }
 
-  Widget alternativeIconBuilder(BuildContext context, SizeProperties<int> local,
-      GlobalToggleProperties<int> global) {
-    IconData data = Icons.access_time_rounded;
-    switch (local.value) {
-      case 0: // TTS 속도 빠르게
-        data = Icons.arrow_forward_ios;
-        break;
-      case 1: // TTS 속도 보통
-        data = Icons.play_arrow_outlined;
-        break;
-      case 2: // TTS 속도 느리게
-        data = Icons.arrow_back_ios;
-        break;
-    }
-    return Icon(
-      data,
-      size: local.iconSize.shortestSide,
-    );
-  }
-
   // ********** dictionary function **********
   // _dic 붙은 함수는 screen_select_dicButton에 있던 함수
   // showModalBottomSheet에서 star icon 상태 업데이트 위한 함수
@@ -303,6 +284,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     wordsRef = userRef.collection('words');
 
   }
+
   void _dic_toggleStarred(int index) async {
     String word = dicWords[index].txt_emph;
     DocumentSnapshot snapshot = await wordsRef.doc(word).get();
@@ -324,6 +306,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       wordsRef.doc(word).delete(); // Firestore에서 단어 삭제
     }
   }
+
   bool _dic_isSelected(String word) {
     return _dic_selectedWord == word;
   }
@@ -371,17 +354,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                         itemCount: dicWords.length,
                         separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
                         itemBuilder: (_, index) {
-                          String word = dicWords[index].txt_emph;
+                          // String word = dicWords[index].txt_emph;
                           return FutureBuilder<DocumentSnapshot>(
                             future: wordsRef.doc(word).get(),
                             builder: (context, snapshot) {
-                              if (snapshot.hasData && snapshot.data!.exists) {
-                                _starred[index] = true;
-                              } else {
-                                _starred[index] = false;
-                              }
                               return Padding(
-                                padding: EdgeInsets.fromLTRB(16, 8, 16, 0), // 사전 검색 결과 ListView 사이 간격
+                                padding: EdgeInsets.fromLTRB(16, 16, 16, 0), // 사전 검색 결과 ListView 사이 간격
                                 child: Container(
                                   child: ElevatedButton(
                                     onPressed: () {
@@ -833,7 +811,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                         // List<Word> isSelected = snapshot.data ?? List<Word>.generate(wordList.length, (_) => Word(word: "", isSelected: false, sentenceIndex: -1, wordIndex: -1, wordIndexInSentence: -1));
 
                                         List<Sentence> isSelected_sentence = List<Sentence>.generate(sentenceList.length, (index) {
-                                          // Generate a list of Word objects with default values
                                           List<Word> defaultWords = List<Word>.generate(
                                             sentenceList[index].words.length,
                                                 (_) => Word(
@@ -846,7 +823,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                           );
 
                                           return Sentence(
-                                            wordIndex: -1, // You may need to set this to the actual value you want.
+                                            wordIndex: -1,
                                             words: defaultWords,
                                           );
                                         });
@@ -863,11 +840,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                           child: Container(
                                             padding: EdgeInsets.all(2.0),
                                             decoration: BoxDecoration(
-                                              // color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : null, // tts 하이라이트 처리
                                               color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : (_dic_isSelected(entry.value.word) ? Color(0xFF74b29e) : null),
-
-                                              // color: isSelected_sentence[sentenceIndex].words[index].isSelected ? Colors.yellow : null, // tts 하이라이트처리
-                                              // color: dic_isSelected ? Colors.yellow : null, // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(entry.value.word, style: TextStyle(fontSize: 20),), // 문장 단위 띄어쓰기 없이 나열
@@ -934,7 +907,7 @@ class WebScraper {
     _WebScraperFlag = false; // 검색결과가 존재하지 않는 경우 false로 초기화
 
     if (responseInitialUrl.statusCode == 200) { // 뜻이 여러개인 경우의 URI
-      print("multiful meaning");
+      // print("multiful meaning");
       final html = parser.parse(responseInitialUrl.body);
 
       // 뜻이 여러개인 경우
@@ -950,7 +923,7 @@ class WebScraper {
         for (final element in container1) {
           final txt_emph = element.querySelector('.txt_cleansch')?.text?.trim().replaceAll(RegExp(r'[0-9]'), '');
           final txt_mean = element.querySelector('.txt_search')?.text?.trim();
-          print("container1: $txt_emph -  $txt_mean");
+          // print("container1: $txt_emph -  $txt_mean");
 
           if (txt_emph != null && txt_mean != null) {
             _urlflag = true; // 크롤링하면 _urlflag를 true로 바꿈
@@ -962,7 +935,7 @@ class WebScraper {
         for (final element in container2) {
           final txt_emph = element.querySelector('.txt_searchword')?.text?.trim().replaceAll(RegExp(r'[0-9]'), '');
           final txt_mean = element.querySelector('.txt_search')?.text?.trim();
-          print("container2: $txt_emph -  $txt_mean");
+          // print("container2: $txt_emph -  $txt_mean");
 
           if (txt_emph != null && txt_mean != null) {
             _urlflag = true; // 크롤링하면 _urlflag를 true로 바꿈
@@ -973,7 +946,7 @@ class WebScraper {
       }
     }
     if (responseFinalUrl.statusCode == 200 && _urlflag == false ) { // _urlflag가 false(크롤링X)인 경우에만 if문 실행
-      print("one meaning");
+      // print("one meaning");
       final html = parser.parse(responseFinalUrl.body);
 
       // 뜻이 하나인 경우
@@ -984,7 +957,7 @@ class WebScraper {
       final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
       if (container3.isNotEmpty) {  // 뜻이 한개인 경우
-        print("container3.isNotEmpty");
+        // print("container3.isNotEmpty");
         for (final element in container3) {
           final txt_emph = element.querySelector('.txt_cleanword')?.text?.trim();
           final txt_meanElements = element.querySelectorAll('.txt_mean'); // 'txt_mean' 여러 개일 때
@@ -1000,7 +973,7 @@ class WebScraper {
       }
     } else {
       // _WebScraperFlag = false; // 검색결과가 존재하지 않는 경우 false
-      print("_WebScraperFlag: $_WebScraperFlag");
+      // print("_WebScraperFlag: $_WebScraperFlag");
     }
     return dicWords;
   }
