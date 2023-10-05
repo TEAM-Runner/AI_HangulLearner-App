@@ -34,6 +34,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
     return SafeArea(
         child: Scaffold(
           body: Scaffold(
+            backgroundColor: Color(0xffd9ebe5),
             body: Padding(
               padding: EdgeInsets.all(16),
               child: Form(
@@ -43,15 +44,24 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 40),
+                      SizedBox(height: height * 0.2),
                       TextFormField(
                         controller: emailController,
                         cursorColor: Colors.black,
                         textInputAction: TextInputAction.done,
                         decoration: InputDecoration(
                             labelText: '이메일',
-                            prefixIcon: Icon(Icons.email_outlined),
-                            border: OutlineInputBorder()
+                          labelStyle: TextStyle(color: Colors.black,),
+                            prefixIcon: Icon(Icons.email_outlined,color: Colors.black),
+                            fillColor: Colors.white,
+                            filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Colors.white, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Colors.white, width: 1),),
                         ),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (email) =>
@@ -65,9 +75,13 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         onPressed: resetPassword,
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size.fromHeight(50),
-                            backgroundColor: Color(0xFFF3F3F3)),
-                        child: Text('비밀번호 재설정', style: TextStyle(fontSize: width * 0.045, color: MyColor.accentColor),),
+                            backgroundColor: Color(0xFF74B29E),
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
+                        ),
+                        child: Text('비밀번호 재설정', style: TextStyle(fontSize: width * 0.045, color: Colors.white),),
                       ),
+
                     ],
                   ),
                 ),
