@@ -50,18 +50,27 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         cursorColor: Colors.black,
                         textInputAction: TextInputAction.done,
                         decoration: InputDecoration(
-                            labelText: '이메일',
-                          labelStyle: TextStyle(color: Colors.black,),
-                            prefixIcon: Icon(Icons.email_outlined,color: Colors.black),
-                            fillColor: Colors.white,
-                            filled: true,
+                          labelText: '이메일',
+                          labelStyle: TextStyle(color: Colors.black),
+                          prefixIcon: Icon(Icons.email_outlined, color: Colors.black),
+                          fillColor: Colors.white,
+                          filled: true,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
                             borderSide: BorderSide(color: Colors.white, width: 1),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.white, width: 1),),
+                            borderSide: BorderSide(color: Colors.white, width: 1),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Colors.red, width: 1),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Colors.red, width: 1),
+                          ),
                         ),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (email) =>
