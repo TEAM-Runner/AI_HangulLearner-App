@@ -30,11 +30,15 @@ class _SpalshScreenState extends State<SpalshScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          color: Color(0xff74b29e),
-        ),
+        color: Color(0xff74b29e),
         child: Center(
-          child: Image.asset('assets/images/brand_logo.png'),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Colors.white, // 로고를 흰색으로 변경할 색상
+              BlendMode.srcATop, // 블렌딩 모드
+            ),
+            child: Image.asset('assets/images/brand_logo.png'), // 로고 이미지 파일 경로로 변경해야 합니다.
+          ),
         ),
       ),
     );
