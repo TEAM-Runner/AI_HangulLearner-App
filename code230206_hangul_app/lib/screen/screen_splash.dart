@@ -30,12 +30,13 @@ class _SpalshScreenState extends State<SpalshScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: const Image(
-            image: AssetImage("assets/images/splash.png"),
-            fit: BoxFit.cover,
-          )),
+        decoration: BoxDecoration(
+          color: Color(0xff74b29e),
+        ),
+        child: Center(
+          child: Image.asset('assets/images/brand_logo.png'),
+        ),
+      ),
     );
   }
 }
