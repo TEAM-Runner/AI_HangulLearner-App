@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in screen_vacabularyList.dart">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +72,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Add Text recognition result editing function in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 기능 추가&#10;- 사전/음성출력 버튼 클릭하면 수정한 텍스트를 전달함">
-      <created>1680702989499</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1680702989499</updated>
     </task>
     <task id="LOCAL-00016" summary="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일">
       <created>1680704322195</created>
@@ -415,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696773532667</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Update UI in screen_vacabularyList.dart">
+      <created>1696774587934</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1696774587934</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -430,7 +431,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update TTS function in screen_vacabularyList.dart&#10;&#10;- IconButton의 onPressed가 _speakTTS를 실행하도록 업데이트&#10;- 단어 Card의 onTap이 _speakTTScard를 실행하도록 업데이트&#10;- _speakTTScard: 클릭한 단어와 뜻을 TTS로 읽어주는 함수" />
     <MESSAGE value="Update to store timestamps in Firestore&#10;&#10;- Firestore에 단어를 저장할 때 timestamps도 함께 저장하도록 업데이트" />
     <MESSAGE value="Add sorting function by oldest and newest&#10;&#10;- 단어장에 최신순 정렬, 오래된순 정렬 기능 추가" />
     <MESSAGE value="Update TTS stop function in screen_select_TtsButton.dart&#10;&#10;- TTS 재생 중, 다른 문장을 누르면 TTS 멈추도록 업데이트" />
@@ -455,6 +455,7 @@
     <MESSAGE value="Update Pop-Up Message for Empty Dictionary Results&#10;&#10;- 사전 검색 결과가 없는 경우 팝업창에 &quot;해당하는 단어를 찾을 수 없습니다.&quot;라는 메시지를 표시하도록 업데이트" />
     <MESSAGE value="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정" />
     <MESSAGE value="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경" />
+    <MESSAGE value="Update UI in screen_vacabularyList.dart" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update UI in screen_vacabularyList.dart" />
   </component>
 </project>

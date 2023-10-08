@@ -353,56 +353,66 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     }
 
                     if (_WebScraperFlag) {
-                      return ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: dicWords.length,
-                        separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
-                        itemBuilder: (_, index) {
-                          // String word = dicWords[index].txt_emph;
-                          return FutureBuilder<DocumentSnapshot>(
-                            future: wordsRef.doc(word).get(),
-                            builder: (context, snapshot) {
-                              return Padding(
-                                padding: EdgeInsets.fromLTRB(16, 0, 16, 16), // 사전 검색 결과 ListView 사이 간격
-                                child: Container(
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      _speakDictionary(dicWords[index].txt_emph, dicWords[index].txt_mean);
+                      return Column(
+                        children: [
+                          SizedBox(height: 16,),
+                          Expanded(
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                itemCount: dicWords.length,
+                                separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+                                itemBuilder: (_, index) {
+                                  // String word = dicWords[index].txt_emph;
+                                  return FutureBuilder<DocumentSnapshot>(
+                                    future: wordsRef.doc(word).get(),
+                                    builder: (context, snapshot) {
+                                      return Padding(
+                                        padding: EdgeInsets.fromLTRB(16, 0, 16, 2), // 사전 검색 결과 ListView 사이 간격
+                                        child: Container(
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              _speakDictionary(dicWords[index].txt_emph, dicWords[index].txt_mean);
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.white,
+                                              onPrimary: Colors.black,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(15.0),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(1),
+                                              child: ListTile(
+                                                  title: Text(dicWords[index].txt_emph,
+                                                      style: const TextStyle(fontSize: 20)),
+                                                  subtitle: Text(dicWords[index].txt_mean,
+                                                      style: const TextStyle(fontSize: 16)),
+                                                  trailing: Container(
+                                                    width: 30,
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          _dic_toggleStarred(index);
+                                                        });
+                                                      },
+                                                      icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
+                                                        color: Colors.amber,),),
+                                                  )
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.white,
-                                      onPrimary: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15.0),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(1),
-                                      child: ListTile(
-                                        title: Text(dicWords[index].txt_emph,
-                                            style: const TextStyle(fontSize: 24)),
-                                        subtitle: Text(dicWords[index].txt_mean,
-                                            style: const TextStyle(fontSize: 20)),
-                                        trailing: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _dic_toggleStarred(index);
-                                            });
-                                          },
-                                          icon: Icon(_starred[index] ? Icons.star : Icons.star_border,
-                                            color: Colors.amber,),),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                                  );
+                                },
+                              )
+                          )
+                        ],
                       );
                     } else {
                       return const Center(
-                        child: Text("해당하는 단어를 찾을 수 없습니다.", style: TextStyle(fontSize: 20)),
+                        child: Text("해당하는 단어를 찾을 수 없습니다.", style: TextStyle(fontSize: 18)),
                       );
                     }
 
@@ -844,11 +854,14 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                           child: Container(
                                             padding: EdgeInsets.all(2.0),
                                             decoration: BoxDecoration(
-                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : (_dic_isSelected(entry.value.word) ? Color(0xFF74b29e) : null),
+                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : (_dic_isSelected(entry.value.word) ? Color(0xffd9ebe5) : null),
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
-                                            child: Text(entry.value.word, style: TextStyle(fontSize: 20),), // 문장 단위 띄어쓰기 없이 나열
-                                          ),
+                                            child: Text(entry.value.word,
+                                              style: TextStyle(fontSize: 18,
+                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.black
+                                                      : (_dic_isSelected(entry.value.word) ? Colors.black : null),), // 문장 단위 띄어쓰기 없이 나열
+                                          ),)
                                         );
                                       }
                                   );
