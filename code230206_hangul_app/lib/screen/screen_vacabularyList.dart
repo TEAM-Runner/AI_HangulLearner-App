@@ -80,6 +80,10 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   Map<String, String> starredWordsMap = {}; // List of words/meanings displayed on the screen
   Map<String, String> filteredWordsMap = {}; // List for initial consonant category filtering
 
+  List<List<String>> starredWordsList = []; // List of words/meanings displayed on the screen
+  List<List<String>> filteredWordsList = []; // List for initial consonant category filtering
+
+
   // Function to display the entire list of words
   // When '모두' category is selected
   void _getStarredWords() async {
@@ -87,60 +91,52 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     setState(() {
       starredWords = querySnapshot.docs;
     });
-    print(starredWords[0]['word']);
-    starredWordsMap.clear();
+
+    starredWordsList.clear();
     for (int i = 0; i < starredWords.length; i++){
       String word = starredWords[i]['word'];
       String meaning = starredWords[i]['meaning'];
-      starredWordsMap[word] = meaning;
-      print("_getStarredWords word: $word");
+      starredWordsList.add([word, meaning]);
     }
-    print("_getStarredWords starredWordsMap: $starredWordsMap");
     setState(() {}); // UI Update
   }
 
   // Function that shows only the words of the corresponding initial consonant category
   // When 'ㄱ'~'ㅎ' category is selected
   void _getStarredWordsCategory(String initialConsonant) async {
-
     final QuerySnapshot querySnapshot = await wordsRef.get();
     setState(() {
       starredWords = querySnapshot.docs;
     });
-    print(starredWords[0]['word']);
-    starredWordsMap.clear();
+    starredWordsList.clear();
+
     for (int i = 0; i < starredWords.length; i++){
       String word = starredWords[i]['word'];
       String meaning = starredWords[i]['meaning'];
-      starredWordsMap[word] = meaning;
+      starredWordsList.add([word, meaning]);
     }
 
-    //
-
-    filteredWordsMap = {};
+    filteredWordsList = [];
     bool checkConsonant = false; // 단어 카테고리에 표시할 단어가 있는지 체크
 
-    final List<String> starredWordsList = [];
-    for (final doc in starredWords) {
-      starredWordsList.add('${doc['word']}. ${doc['meaning']}.');
-    }
     for (int i = 0; i < starredWordsList.length; i++) {
-      String word = starredWords[i]['word'];
-      String meaning = starredWords[i]['meaning'];
+      String word = starredWordsList[i][0];
+      String meaning = starredWordsList[i][1];
       String? firstConsonant = _getFirstConsonant(word.characters.first);
 
       if (firstConsonant == initialConsonant) {
-        filteredWordsMap[word] = meaning;
-        starredWordsMap = Map<String, String>.from(filteredWordsMap);
+        filteredWordsList.add([word, meaning]);
         checkConsonant = true;
       }
     }
+
+    starredWordsList = List.from(filteredWordsList);
+
     if (!checkConsonant) {
-      filteredWordsMap.clear();
-      starredWordsMap.clear();
+      filteredWordsList.clear();
     }
+
     setState(() {}); // UI Update
-    print("_getStarredWordsCategory starredWordsMap: $starredWordsMap");
 
   }
 
@@ -171,66 +167,77 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
   //sort word list random
   void _randomOrderStarredWords() {
-
-    List<MapEntry<String, String>> entries = starredWordsMap.entries.toList();
+    List<List<String>> entries = starredWordsList.toList();
     entries.shuffle();
-    starredWordsMap = Map.fromEntries(entries);
+    starredWordsList  = entries;
 
     setState(() {});
   }
 
   //sort word list consonant order
   void _consonantOrderStarredWords() {
-    List<MapEntry<String, String>> entries = starredWordsMap.entries.toList()
-      ..sort((a, b) => a.key.compareTo(b.key));
-    starredWordsMap = Map.fromEntries(entries);
+    List<List<String>> entries = starredWordsList.toList();
+    entries.sort((a, b) {
+      String firstConsonantA = _getFirstConsonant(a[0].characters.first) ?? '';
+      String firstConsonantB = _getFirstConsonant(b[0].characters.first) ?? '';
+      return firstConsonantA.compareTo(firstConsonantB);
+    });
+    starredWordsList = entries;
 
     setState(() {});
   }
 
 // Sort word list by newest
   void _newestOrderStarredWords() async {
-    List<MapEntry<String, Map<String, dynamic>>> entries = [];
+    List<Map<String, dynamic>> entries = [];
+
     QuerySnapshot snapshot = await wordsRef.get();
     List<DocumentSnapshot> documents = snapshot.docs;
+
     for (DocumentSnapshot document in documents) {
       dynamic data = document.data();
       String timestamp = data['timestamp'];
-      if (data != null && data is Map<String, dynamic> && starredWordsMap. containsKey(data['word'])) {
-        // entries.add(MapEntry(data['word'], data['meaning'], timestamp));
-        entries.add(MapEntry(data['word'], {'meaning': data['meaning'], 'timestamp': timestamp}));
+
+      if (data != null) {
+        String word = data['word'];
+        String meaning = data['meaning'];
+        Map<String, dynamic> entry = {'word': word, 'meaning': meaning, 'timestamp': timestamp};
+        entries.add(entry);
       }
     }
-    entries.sort((a, b) => b.value['timestamp'].compareTo(a.value['timestamp']));
-    starredWordsMap = {};
-    for (MapEntry<String, Map<String, dynamic>> entry in entries) {
-      starredWordsMap[entry.key] = entry.value['meaning'];
+    entries.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
+    starredWordsList = [];
+    for (var entry in entries) {
+      starredWordsList.add([entry['word'], entry['meaning']]);
     }
     setState(() {});
   }
 
   // Sort word list by oldest
   void _oldestOrderStarredWords() async {
-    List<MapEntry<String, Map<String, dynamic>>> entries = [];
+    List<Map<String, dynamic>> entries = [];
+
     QuerySnapshot snapshot = await wordsRef.get();
     List<DocumentSnapshot> documents = snapshot.docs;
+
     for (DocumentSnapshot document in documents) {
       dynamic data = document.data();
       String timestamp = data['timestamp'];
-      if (data != null && data is Map<String, dynamic> && starredWordsMap.containsKey(data['word'])) {
-        // entries.add(MapEntry(data['word'], data['meaning'], timestamp));
-        entries.add(MapEntry(data['word'], {'meaning': data['meaning'], 'timestamp': timestamp}));
+
+      if (data != null) {
+        String word = data['word'];
+        String meaning = data['meaning'];
+        Map<String, dynamic> entry = {'word': word, 'meaning': meaning, 'timestamp': timestamp};
+        entries.add(entry);
       }
     }
-    entries.sort((a, b) => a.value['timestamp'].compareTo(b.value['timestamp']));
-    starredWordsMap = {};
-    for (MapEntry<String, Map<String, dynamic>> entry in entries) {
-      starredWordsMap[entry.key] = entry.value['meaning'];
+    entries.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+    starredWordsList = [];
+    for (var entry in entries) {
+      starredWordsList.add([entry['word'], entry['meaning']]);
     }
-
     setState(() {});
   }
-
 
   //hide word
   void _hideWords() {
@@ -255,17 +262,12 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
   //Read words and meanings in TTS
   void _speakTTS() async {
-    String speakWords = "";
-    starredWordsMap.forEach((word, meaning) {
-      speakWords += word + '. ' + meaning + '. ';
-    });
+    String speakWords = starredWordsList.map((value) => '${value[0]}. ${value[1]}.').join(' ');
     _tts.speak(speakWords);
-    print("_speakTTS speakWords: $speakWords");
   }
 
   void _speakTTScard(String cardString) async {
     _tts.speak(cardString);
-    print("_speakTTScard cardString: $cardString");
   }
 
   //Stop speaking TTS
@@ -487,27 +489,24 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                     Expanded(
                       child: Padding(
                           padding: EdgeInsets.all(width * 0.005),
-                          child: starredWordsMap.isEmpty
+                          child: starredWordsList.isEmpty
                               ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
                               : ListView.builder(
-                            itemCount: starredWordsMap.length,
+                            itemCount: starredWordsList.length,
                             itemBuilder: (_, index) {
-                              final String word =
-                              starredWordsMap.keys.elementAt(index);
+                              final String word = starredWordsList[index][0];
+                              final String meaning = starredWordsList[index][1];
                               return Card(
                                 child: ListTile(
                                   title: Text(
-                                    starredWordsMap.keys.elementAt(index),
-                                    style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
+                                      word, style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
                                   ),
                                   subtitle: Text(
-                                    starredWordsMap.values
-                                        .elementAt(index),
-                                    style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
+                                      meaning, style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
                                   ),
                                   onTap: () {
                                     _StopSpeakTts();
-                                    _speakTTScard((starredWordsMap.keys.elementAt(index) + '. ' + starredWordsMap.values.elementAt(index)).toString());
+                                    _speakTTScard('$word. $meaning');
                                   },
                                   trailing: IconButton(
                                       icon: Icon(Icons.star),
@@ -578,8 +577,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                   onTap: () {
                                     _StopSpeakTts();
                                     setState(() {
-                                      initialConsonantsIndex =
-                                          index; // Update the selected index
+                                      initialConsonantsIndex = index; // Update the selected index
                                     });
                                     _getStarredWordsCategory(initialConsonants[index]);
                                     if (index == 0) {

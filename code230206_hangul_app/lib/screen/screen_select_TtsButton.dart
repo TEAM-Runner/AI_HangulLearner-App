@@ -287,7 +287,11 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
   void _dic_toggleStarred(int index) async {
     String word = dicWords[index].txt_emph;
-    DocumentSnapshot snapshot = await wordsRef.doc(word).get();
+    String meaning = dicWords[index].txt_mean;
+    String identifier = '$word-$meaning'; // 추가/삭제 위한 식별자 추가
+    print("identifier: $identifier");
+
+    DocumentSnapshot snapshot = await wordsRef.doc(identifier).get();
     setState(() {
       _starred[index] = !_starred[index];
     });
@@ -297,13 +301,13 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
       final now = DateTime.now();
       final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
-      wordsRef.doc(word).set({
+      wordsRef.doc(identifier).set({
         'word': dicWords[index].txt_emph,
         'meaning': dicWords[index].txt_mean,
         'timestamp': formattedDate, // Add timestamp
       }); // Firestore에 단어가 없을 경우 추가
     } else {
-      wordsRef.doc(word).delete(); // Firestore에서 단어 삭제
+      wordsRef.doc(identifier).delete(); // Firestore에서 단어 삭제
     }
   }
 
@@ -359,7 +363,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                             future: wordsRef.doc(word).get(),
                             builder: (context, snapshot) {
                               return Padding(
-                                padding: EdgeInsets.fromLTRB(16, 16, 16, 0), // 사전 검색 결과 ListView 사이 간격
+                                padding: EdgeInsets.fromLTRB(16, 0, 16, 16), // 사전 검색 결과 ListView 사이 간격
                                 child: Container(
                                   child: ElevatedButton(
                                     onPressed: () {
