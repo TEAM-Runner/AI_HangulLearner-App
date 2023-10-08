@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Add TTS speed control button in screen_select_TtsButton.dart&#10;&#10;- TTS 속도를 조절하는 AnimatedToggleSwitch 추가&#10;- 느림/보통/빠름의 3단계로 조절">
-      <created>1680678701177</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1680678701177</updated>
     </task>
     <task id="LOCAL-00015" summary="Add Text recognition result editing function in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 기능 추가&#10;- 사전/음성출력 버튼 클릭하면 수정한 텍스트를 전달함">
       <created>1680702989499</created>
@@ -416,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696325885182</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경">
+      <created>1696773532667</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1696773532667</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -431,7 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update TTS control function&#10;&#10;- TTS 제어를 위해 _stopflag와 _playflag 사용&#10;- _playflag에 따라 FloatingActionButton의 아이콘 변경&#10;- _playflag에 따라 상태를 전환하도록 FloatingActionButton의 onPressed 콜백 수정&#10;- _stopflag에 따라 TTS를 재생하거나 중단함" />
     <MESSAGE value="Update TTS function in screen_vacabularyList.dart&#10;&#10;- IconButton의 onPressed가 _speakTTS를 실행하도록 업데이트&#10;- 단어 Card의 onTap이 _speakTTScard를 실행하도록 업데이트&#10;- _speakTTScard: 클릭한 단어와 뜻을 TTS로 읽어주는 함수" />
     <MESSAGE value="Update to store timestamps in Firestore&#10;&#10;- Firestore에 단어를 저장할 때 timestamps도 함께 저장하도록 업데이트" />
     <MESSAGE value="Add sorting function by oldest and newest&#10;&#10;- 단어장에 최신순 정렬, 오래된순 정렬 기능 추가" />
@@ -456,6 +454,7 @@
     <MESSAGE value="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용" />
     <MESSAGE value="Update Pop-Up Message for Empty Dictionary Results&#10;&#10;- 사전 검색 결과가 없는 경우 팝업창에 &quot;해당하는 단어를 찾을 수 없습니다.&quot;라는 메시지를 표시하도록 업데이트" />
     <MESSAGE value="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정" />
+    <MESSAGE value="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경" />
   </component>
 </project>

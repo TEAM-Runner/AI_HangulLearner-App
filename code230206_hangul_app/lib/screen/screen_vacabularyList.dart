@@ -328,7 +328,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               Navigator.of(context).pop();
             },
           ),
-          title: Image.asset("assets/images/i_hangul.png"),
+          title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
           centerTitle: true,
         ),
 
@@ -492,65 +492,58 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                           child: starredWordsList.isEmpty
                               ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
                               : ListView.builder(
-                            itemCount: starredWordsList.length,
-                            itemBuilder: (_, index) {
+                                itemCount: starredWordsList.length,
+                                itemBuilder: (_, index) {
                               final String word = starredWordsList[index][0];
                               final String meaning = starredWordsList[index][1];
                               return Card(
                                 child: ListTile(
                                   title: Text(
-                                      word, style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
+                                    word, style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
                                   ),
                                   subtitle: Text(
-                                      meaning, style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
+                                    meaning, style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
                                   ),
                                   onTap: () {
                                     _StopSpeakTts();
                                     _speakTTScard('$word. $meaning');
                                   },
-                                  trailing: IconButton(
-                                      icon: Icon(Icons.star),
-                                      color: Colors.orangeAccent,
-                                      // onPressed: () {_toggleWordStarred(word);},
-                                      onPressed: () async {
-                                        showDialog(
-                                            context: context,
-                                            barrierDismissible:
-                                            true, // 바깥 터치시 close
-                                            builder:
-                                                (BuildContext context) {
-                                              return AlertDialog(
-                                                content:
-                                                Text('단어를 삭제하시겠습니까?'),
-                                                actions: [
-                                                  TextButton(
-                                                    child:
-                                                    const Text('아니요', style: TextStyle(color: Colors.black)),
-                                                    onPressed: () {
-                                                      Navigator.of(
-                                                          context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                  TextButton(
-                                                    child:
-                                                    const Text('네', style: TextStyle(color: Colors.black)),
-                                                    onPressed: () {
-                                                      _deleteStarredWords(
-                                                          word);
-                                                      Navigator.of(
-                                                          context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            });
-                                      }),
+                                  trailing: Container(
+                                    width: 30,
+                                    child: IconButton(
+                                        icon: Icon(Icons.star),
+                                        color: Colors.orangeAccent,
+                                        // onPressed: () {_toggleWordStarred(word);},
+                                        onPressed: () async {
+                                          showDialog(
+                                              context: context,
+                                              barrierDismissible:
+                                              true, // 바깥 터치시 close
+                                              builder:
+                                                  (BuildContext context) {
+                                                return AlertDialog(
+                                                  content:
+                                                  Text('단어를 삭제하시겠습니까?'),
+                                                  actions: [
+                                                    TextButton(
+                                                      child:
+                                                      const Text('아니요', style: TextStyle(color: Colors.black)),
+                                                      onPressed: () {Navigator.of(context).pop();},
+                                                    ),
+                                                    TextButton(
+                                                      child:
+                                                      const Text('네', style: TextStyle(color: Colors.black)),
+                                                      onPressed: () {_deleteStarredWords(word);
+                                                      Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        }),
+                                  )
                                 ),
                               );
-                              // Error: A non-null value must be returned since the return type 'Widget' doesn't allow null.
-                              return Container(); // 위 에러 발생해서 추가함
                             },
                           )),
                     ),
@@ -567,9 +560,10 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                               return SizedBox(
                                 // height: 20,
                                 child: ListTile(
-                                  title: Text(initialConsonants[index]),
+                                  title: Text(initialConsonants[index],
+                                    style: TextStyle(color: initialConsonantsIndex == index ? Colors.white : Colors.black,),),
                                   tileColor: initialConsonantsIndex == index
-                                      ? MyColor.primaryColor
+                                      ? Color(0xFF74b29e)
                                       : null,
                                   dense: true,
                                   visualDensity:
