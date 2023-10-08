@@ -34,10 +34,10 @@ class _SpalshScreenState extends State<SpalshScreen> {
         child: Center(
           child: ColorFiltered(
             colorFilter: ColorFilter.mode(
-              Colors.white, // 로고를 흰색으로 변경할 색상
-              BlendMode.srcATop, // 블렌딩 모드
+              Colors.white,
+              BlendMode.srcATop,
             ),
-            child: Image.asset('assets/images/brand_logo.png'), // 로고 이미지 파일 경로로 변경해야 합니다.
+            child: Image.asset('assets/images/brand_logo.png', width: 300, height: 300,),
           ),
         ),
       ),
