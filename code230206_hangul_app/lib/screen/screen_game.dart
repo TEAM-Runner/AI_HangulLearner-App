@@ -35,16 +35,16 @@ class _GameScreenState extends State<GameScreen> {
 
   // 게임에 사용할 기본 단어 리스트. Firestore에 저장된 단어가 10개 이하일 경우 사용
   List<List<dynamic>> gameBasicWordList = [
-    ['사과', 'mean1', false],
-    ['바나나', 'mean2', false],
-    ['딸기', 'mean3', false],
-    ['포도', 'mean4', false],
-    ['오렌지', 'mean5', false],
-    ['배', 'mean6', false],
-    ['키위', 'mean7', false],
-    ['블루베리', 'mean8', false],
-    ['복숭아', 'mean9', false],
-    ['오렌지', 'mean10', false],
+    ['필통', '연필이나 볼펜, 지우개 따위의 필기도구를 넣어 가지고 다니는 작은 통', false],
+    ['연필', '흑연과 점토를 재료로 심을 나무판 속에 넣어 만든 필기도구', false],
+    ['지우개', '글씨나 그림 따위를 지우는 데 쓰는 물건', false],
+    ['분필', '칠판에 글씨를 쓰는 데 사용하는 필기구', false],
+    ['책상', '주로 글을 읽거나 쓸 때에 이용하기 위한 상', false],
+    ['색연필', '빛깔이 있는 심을 넣어 만든 연필', false],
+    ['쓰레기통', '쓰레기를 담거나 모아 두는 통', false],
+    ['우산', '비가 올 때 머리에 받쳐 비를 가리는 물건', false],
+    ['공책', '무엇을 쓰거나 그릴 수 있도록 매어 놓은 백지 묶음', false],
+    ['책꽂이', '책을 세워서 꽂아 두는 물건이나 장치', false],
   ];
 
   int randomSend = 0;
@@ -93,6 +93,7 @@ class _GameScreenState extends State<GameScreen> {
         gameWordList[i] = gameBasicWordList[i];
       }
     }
+
     _getQuizWord();
   }
 
