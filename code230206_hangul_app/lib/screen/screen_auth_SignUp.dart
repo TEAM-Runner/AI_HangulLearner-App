@@ -51,6 +51,7 @@ class _SignUpWidget extends State<SignUpWidget> {
 
     return SafeArea(
         child: Scaffold(
+          backgroundColor: Color(0xffd9ebe5),
           body: SingleChildScrollView(
               padding: EdgeInsets.all(width * 0.08),
               child: Form (
@@ -64,13 +65,28 @@ class _SignUpWidget extends State<SignUpWidget> {
                       cursorColor: Colors.black,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                          labelText: '이름',
-                          labelStyle: TextStyle(color: Colors.black38),
-                          prefixIcon: Icon(Icons.person_outline_sharp,color: Colors.black38,),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(),),
-                          border: OutlineInputBorder()
+                        labelText: '이름',
+                        labelStyle: TextStyle(color: Colors.black),
+                        prefixIcon: Icon(Icons.person_outline_sharp,color: Colors.black),
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red, width: 1),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red, width: 1),
+                        ),
                       ),
-
                       // name 입력되었는지 확인
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) => value != null && value.length < 1
@@ -83,13 +99,28 @@ class _SignUpWidget extends State<SignUpWidget> {
                       cursorColor: Colors.black,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                          labelText: '이메일',
-                          labelStyle: TextStyle(color: Colors.black38),
-                          prefixIcon: Icon(Icons.email_outlined,color: Colors.black38,),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(),),
-                          border: OutlineInputBorder()
+                        labelText: '이메일',
+                        labelStyle: TextStyle(color: Colors.black),
+                        prefixIcon: Icon(Icons.email_outlined, color: Colors.black),
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red, width: 1),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red, width: 1),
+                        ),
                       ),
-
                       // email 중복 확인
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) =>
@@ -100,13 +131,30 @@ class _SignUpWidget extends State<SignUpWidget> {
                     SizedBox(height: height * 0.01),
                     TextFormField(
                       controller: passwordController,
+                      cursorColor: Colors.black,
                       textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                          labelText: '비밀번호',
-                          labelStyle: TextStyle(color: Colors.black38),
-                          prefixIcon: Icon(Icons.password_outlined,color: Colors.black38,),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(),),
-                          border: OutlineInputBorder()
+                      decoration: InputDecoration(
+                        labelText: '비밀번호',
+                        labelStyle: TextStyle(color: Colors.black),
+                        prefixIcon: Icon(Icons.password_outlined, color: Colors.black),
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red, width: 1),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red, width: 1),
+                        ),
                       ),
                       obscureText: true,
 
@@ -120,9 +168,12 @@ class _SignUpWidget extends State<SignUpWidget> {
                     ElevatedButton(
                       onPressed: signUp,
                       style: ElevatedButton.styleFrom(
-                          minimumSize: Size.fromHeight(50),
-                          backgroundColor: Color(0xFFF3F3F3)),
-                      child: Text('회원가입', style: TextStyle(fontSize: width * 0.045,  color: MyColor.accentColor),),
+                        minimumSize: Size.fromHeight(50),
+                        backgroundColor: Color(0xFF74B29E),
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
+                      ),
+                      child: Text('회원가입', style: TextStyle(fontSize: width * 0.045,  color: Colors.white),),
                     ),
                     SizedBox(height: height*0.02),
                     RichText(
@@ -135,8 +186,9 @@ class _SignUpWidget extends State<SignUpWidget> {
                                     ..onTap = widget.onClickedSignUp,
                                   text: '로그인',
                                   style: TextStyle(
-                                    decoration: TextDecoration.underline,
                                     color: Colors.black,
+                                    fontSize: width * 0.036,
+                                    fontWeight:FontWeight.bold,
                                   )
                               )
                             ]
