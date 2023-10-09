@@ -110,12 +110,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }
               },
               child: Text("저장",style: TextStyle(
-        color: Colors.white,fontSize: 16),),
+                  color: Colors.white,fontSize: 16),),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text("취소",style: TextStyle(
-                color: Colors.white,fontSize: 16),),
+                  color: Colors.white,fontSize: 16),),
             ),
           ],
         );
@@ -169,174 +169,171 @@ class _ProfileScreenState extends State<ProfileScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
-        centerTitle: true,
+        //title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
+        //centerTitle: true,
       ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(width * 0.08),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: height * 0.14),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(width * 0.08),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: height * 0.14),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center, // 수평으로 중앙 정렬
-                children: [
-                  SizedBox(
-                    width: width * 0.84,
-                    height: 60,
-                    child: TextFormField(
-                      initialValue: _auth.currentUser!.email,
-                      decoration: InputDecoration(
-                        labelText: "이메일",
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            //width: 2.0,
-                            color: Colors.black,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center, // 수평으로 중앙 정렬
+                  children: [
+                    SizedBox(
+                      width: width * 0.84,
+                      height: 60,
+                      child: TextFormField(
+                        initialValue: _auth.currentUser!.email,
+                        decoration: InputDecoration(
+                          labelText: "이메일",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(
+                              //width: 2.0,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
-                      ),
-                      ),
-                      enabled: false,
-                      style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: width * 0.84,
-                    height: 60,
-                    child: TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: "이름",
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            width: 1.0,
-                            color: Colors.black,
-                        ),
-                        ),
-                        labelStyle: TextStyle(color: Colors.black),
-                        errorStyle: TextStyle(fontSize: 16),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "이름을 입력해주세요";
-                        }
-                        return null;
-                      },
-                      style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,),
-                      cursorColor: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 55),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: width * 0.84,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _updateUserName();
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("수정되었습니다"),
-                          ));
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        elevation: 0,
-                        primary: Color(0xFF74B29E),
-                      ),
-                      child: Text(
-                        "이름 변경",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        enabled: false,
+                        style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center, // 수평으로 중앙 정렬
-                children: [
-                  SizedBox(
-                    width: width * 0.84,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: _showChangePasswordDialog,
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: width * 0.84,
+                      height: 60,
+                      child: TextFormField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          labelText: "이름",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(
+                              width: 1.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                          labelStyle: TextStyle(color: Colors.black),
+                          errorStyle: TextStyle(fontSize: 16),
                         ),
-                        elevation: 0,
-                        primary: Color(0xFF74B29E),
-                      ),
-                      child: Text(
-                        "비밀번호 변경",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "이름을 입력해주세요";
+                          }
+                          return null;
+                        },
+                        style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,),
+                        cursorColor: Colors.black,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: width * 0.84,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.pop(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+                  ],
+                ),
+                SizedBox(height: 55),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: width * 0.84,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _updateUserName();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("수정되었습니다"),
+                            ));
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          elevation: 0,
+                          primary: Color(0xFF74B29E),
                         ),
-                        elevation: 0,
-                        primary: Color(0xFF74B29E),
-                      ),
-                      child: Text(
-                        "로그아웃",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        child: Text(
+                          "이름 변경",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center, // 수평으로 중앙 정렬
+                  children: [
+                    SizedBox(
+                      width: width * 0.84,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: _showChangePasswordDialog,
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          elevation: 0,
+                          primary: Color(0xFF74B29E),
+                        ),
+                        child: Text(
+                          "비밀번호 변경",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: width * 0.84,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          elevation: 0,
+                          primary: Color(0xFF74B29E),
+                        ),
+                        child: Text(
+                          "로그아웃",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 }
-
-
-
