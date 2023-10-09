@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update gameBasicWordList in screen_game.dart">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix Home Screen Scroll">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Update dictionary search result popup UI&#10;&#10;- 사전 검색 결과를 보여주는 showModalBottomSheet 팝업창 UI 변경">
-      <created>1680709606817</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1680709606818</updated>
     </task>
     <task id="LOCAL-00019" summary="Update Hint Button in screen_game.dart&#10;&#10;- 초성게임 화면에서 열쇠 클릭하면 회색으로 변경 -&gt; 힌트 보여주도록 업데이트">
       <created>1680714773657</created>
@@ -415,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696778483039</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Fix Home Screen Scroll">
+      <created>1696831400405</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1696831400405</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -430,7 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update TTS stop function in screen_select_TtsButton.dart&#10;&#10;- TTS 재생 중, 다른 문장을 누르면 TTS 멈추도록 업데이트" />
     <MESSAGE value="Add function to select photo from gallery&#10;&#10;- '책 읽어주기' 버튼 클릭시 카메라/갤러리 선택&#10;- 갤러리 선택 시 갤러리의 이미지에서 글자인식" />
     <MESSAGE value="Merge Modify, Dictionary, and TTS screens into a single unified screen&#10;&#10;- 50% complete&#10;- 3개로 나누어져 있던 수정/사전/TTS 화면을 단일 화면으로 병합&#10;- TTS 문장 읽기 기능 수정, 인터페이스 수정이 필요함" />
     <MESSAGE value="Updated TTS UI to display each sentence separately&#10;&#10;- 문단에서 문장들을 따로 분리하기 위해 ListView 이용&#10;- 문장 단위 출력을 위해 각 문장 앞에 IconButton 추가" />
@@ -455,6 +454,7 @@
     <MESSAGE value="Update UI in screen_vacabularyList.dart" />
     <MESSAGE value="Update UI in screen_select_TtsButton.dart" />
     <MESSAGE value="Update gameBasicWordList in screen_game.dart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update gameBasicWordList in screen_game.dart" />
+    <MESSAGE value="Fix Home Screen Scroll" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Home Screen Scroll" />
   </component>
 </project>
