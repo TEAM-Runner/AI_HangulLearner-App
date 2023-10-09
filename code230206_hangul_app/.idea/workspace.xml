@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in screen_select_TtsButton.dart">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update gameBasicWordList in screen_game.dart">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Update profile screen UI in screen_profile.dart&#10;&#10;- fontSize, Button style, Button color 등 profile 스크린 ui 변경">
-      <created>1680705729118</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1680705729118</updated>
     </task>
     <task id="LOCAL-00018" summary="Update dictionary search result popup UI&#10;&#10;- 사전 검색 결과를 보여주는 showModalBottomSheet 팝업창 UI 변경">
       <created>1680709606817</created>
@@ -415,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696777796159</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Update gameBasicWordList in screen_game.dart">
+      <created>1696778483038</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1696778483039</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -430,7 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add sorting function by oldest and newest&#10;&#10;- 단어장에 최신순 정렬, 오래된순 정렬 기능 추가" />
     <MESSAGE value="Update TTS stop function in screen_select_TtsButton.dart&#10;&#10;- TTS 재생 중, 다른 문장을 누르면 TTS 멈추도록 업데이트" />
     <MESSAGE value="Add function to select photo from gallery&#10;&#10;- '책 읽어주기' 버튼 클릭시 카메라/갤러리 선택&#10;- 갤러리 선택 시 갤러리의 이미지에서 글자인식" />
     <MESSAGE value="Merge Modify, Dictionary, and TTS screens into a single unified screen&#10;&#10;- 50% complete&#10;- 3개로 나누어져 있던 수정/사전/TTS 화면을 단일 화면으로 병합&#10;- TTS 문장 읽기 기능 수정, 인터페이스 수정이 필요함" />
@@ -455,6 +454,7 @@
     <MESSAGE value="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경" />
     <MESSAGE value="Update UI in screen_vacabularyList.dart" />
     <MESSAGE value="Update UI in screen_select_TtsButton.dart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update UI in screen_select_TtsButton.dart" />
+    <MESSAGE value="Update gameBasicWordList in screen_game.dart" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update gameBasicWordList in screen_game.dart" />
   </component>
 </project>

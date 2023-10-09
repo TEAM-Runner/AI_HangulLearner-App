@@ -80,43 +80,35 @@ class _HomeScreenState extends State<HomeScreen> {
             //centerTitle: true,
           ),
 
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-                  height: height*1.0,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      makeButton('책 읽기', 1 , '궁금한 부분을 찰칵!', 1),
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
+          body: ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+            // height: height*1.0,
+            children: <Widget>[
+              makeButton('책 읽기', 1 , '궁금한 부분을 찰칵!', 1),
+              const Padding(
+                padding: EdgeInsets.all(10),
+              ),
 
-                      makeButton('단어장', 3 , '내가 찾은 단어 보러 가기', 3),
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
+              makeButton('단어장', 3 , '내가 찾은 단어 보러 가기', 3),
+              const Padding(
+                padding: EdgeInsets.all(10),
+              ),
 
-                      makeButton('게임', 2 , '초성 게임으로 실력 향상!', 2),
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
+              makeButton('게임', 2 , '초성 게임으로 실력 향상!', 2),
+              const Padding(
+                padding: EdgeInsets.all(10),
+              ),
 
-                      // Text("추천단어", style: TextStyle(fontSize: width * 0.045),),
-                      // //TODO: Recommended Words for Review
-                      // Placeholder(),
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
-                    ],
-                  ),
-                  )
-              ],
-            ),
-          )
+              // Text("추천단어", style: TextStyle(fontSize: width * 0.045),),
+              // //TODO: Recommended Words for Review
+              // Placeholder(),
+              const Padding(
+                padding: EdgeInsets.all(10),
+              ),
+            ],
+          ),
       ),
     );
   }
