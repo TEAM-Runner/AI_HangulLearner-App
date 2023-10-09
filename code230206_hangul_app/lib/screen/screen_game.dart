@@ -1,13 +1,10 @@
 import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tuple/tuple.dart';
 import 'package:card_swiper/card_swiper.dart';
-// import 'package:auto_size_text/auto_size_text.dart';
 import 'screen_game_result.dart';
 
 final quizNumber = 3; // 전체 퀴즈수
@@ -330,7 +327,7 @@ class _GameScreenState extends State<GameScreen> {
                             0,0,0,1,0,
                           ] // 회색 필터
                         ),
-                        child: Image.asset('assets/images/key.png', height: 50, width: 50,),
+                        child: Image.asset('assets/images/key_color.png', height: 50, width: 50,),
                       ),
                       onTap: () { // 힌트 1번만 클릭 가능
                         if(isHintClicked != Colors.white) {
