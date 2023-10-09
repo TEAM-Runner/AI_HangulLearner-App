@@ -330,7 +330,7 @@ class _GameScreenState extends State<GameScreen> {
                             0,0,0,1,0,
                           ] // 회색 필터
                         ),
-                        child: Image.asset('assets/images/key_color.png', height: 50, width: 50,),
+                        child: Image.asset('assets/images/key.png', height: 50, width: 50,),
                       ),
                       onTap: () { // 힌트 1번만 클릭 가능
                         if(isHintClicked != Colors.white) {
