@@ -75,8 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ],
-            title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
-            centerTitle: true,
+            //title: Image.asset('assets/images/brand_logo.png', width: 120, height: 120,),
+            //title: Text("아이 한글",style: TextStyle(color: Colors.black,),),
+            //centerTitle: true,
           ),
 
           body: SingleChildScrollView(
