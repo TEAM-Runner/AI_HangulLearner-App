@@ -14,7 +14,6 @@ import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
 
-
 class VocabularyListScreen extends StatefulWidget {
   const VocabularyListScreen({Key? key}) : super(key: key);
 
@@ -40,7 +39,6 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   //TTS
   final FlutterTts _tts = FlutterTts(); // tts
 
-
   @override
   void initState() {
     super.initState();
@@ -53,7 +51,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     );
 
     final curvedAnimation =
-    CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
     //TTS
@@ -72,17 +70,35 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   // Initial consonant category button list
   List<String> initialConsonants = [
     "모두",
-    "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ",
-    "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
-    "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ",
-    "ㅋ", "ㅌ", "ㅍ", "ㅎ",
+    "ㄱ",
+    "ㄲ",
+    "ㄴ",
+    "ㄷ",
+    "ㄸ",
+    "ㄹ",
+    "ㅁ",
+    "ㅂ",
+    "ㅃ",
+    "ㅅ",
+    "ㅆ",
+    "ㅇ",
+    "ㅈ",
+    "ㅉ",
+    "ㅊ",
+    "ㅋ",
+    "ㅌ",
+    "ㅍ",
+    "ㅎ",
   ];
-  Map<String, String> starredWordsMap = {}; // List of words/meanings displayed on the screen
-  Map<String, String> filteredWordsMap = {}; // List for initial consonant category filtering
+  Map<String, String> starredWordsMap =
+      {}; // List of words/meanings displayed on the screen
+  Map<String, String> filteredWordsMap =
+      {}; // List for initial consonant category filtering
 
-  List<List<String>> starredWordsList = []; // List of words/meanings displayed on the screen
-  List<List<String>> filteredWordsList = []; // List for initial consonant category filtering
-
+  List<List<String>> starredWordsList =
+      []; // List of words/meanings displayed on the screen
+  List<List<String>> filteredWordsList =
+      []; // List for initial consonant category filtering
 
   // Function to display the entire list of words
   // When '모두' category is selected
@@ -93,7 +109,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     });
 
     starredWordsList.clear();
-    for (int i = 0; i < starredWords.length; i++){
+    for (int i = 0; i < starredWords.length; i++) {
       String word = starredWords[i]['word'];
       String meaning = starredWords[i]['meaning'];
       starredWordsList.add([word, meaning]);
@@ -110,7 +126,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     });
     starredWordsList.clear();
 
-    for (int i = 0; i < starredWords.length; i++){
+    for (int i = 0; i < starredWords.length; i++) {
       String word = starredWords[i]['word'];
       String meaning = starredWords[i]['meaning'];
       starredWordsList.add([word, meaning]);
@@ -137,16 +153,30 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     }
 
     setState(() {}); // UI Update
-
   }
 
   // extract initial consonant
   String? _getFirstConsonant(String str) {
     final Map<int, String> initialConsonants = {
-      4352: 'ㄱ', 4353: 'ㄲ', 4354: 'ㄴ', 4355: 'ㄷ', 4356: 'ㄸ',
-      4357: 'ㄹ', 4358: 'ㅁ', 4359: 'ㅂ', 4360: 'ㅃ', 4361: 'ㅅ',
-      4362: 'ㅆ', 4363: 'ㅇ', 4364: 'ㅈ', 4365: 'ㅉ', 4366: 'ㅊ',
-      4367: 'ㅋ', 4368: 'ㅌ', 4369: 'ㅍ', 4370: 'ㅎ'
+      4352: 'ㄱ',
+      4353: 'ㄲ',
+      4354: 'ㄴ',
+      4355: 'ㄷ',
+      4356: 'ㄸ',
+      4357: 'ㄹ',
+      4358: 'ㅁ',
+      4359: 'ㅂ',
+      4360: 'ㅃ',
+      4361: 'ㅅ',
+      4362: 'ㅆ',
+      4363: 'ㅇ',
+      4364: 'ㅈ',
+      4365: 'ㅉ',
+      4366: 'ㅊ',
+      4367: 'ㅋ',
+      4368: 'ㅌ',
+      4369: 'ㅍ',
+      4370: 'ㅎ'
     };
     if (str == null) {
       throw Exception('한글이 아닙니다');
@@ -156,20 +186,20 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
       if (unicode < 44032 || unicode > 55203) {
         print("_getFirstConsonant unicode : $unicode");
-        throw Exception('unicode range error : unicode < 44032 || unicode > 55203');
+        throw Exception(
+            'unicode range error : unicode < 44032 || unicode > 55203');
       }
       int index = (unicode - 44032) ~/ 588;
       result += initialConsonants[4352 + index]!;
       return result;
     }
-
   }
 
   //sort word list random
   void _randomOrderStarredWords() {
     List<List<String>> entries = starredWordsList.toList();
     entries.shuffle();
-    starredWordsList  = entries;
+    starredWordsList = entries;
 
     setState(() {});
   }
@@ -201,7 +231,11 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
       if (data != null) {
         String word = data['word'];
         String meaning = data['meaning'];
-        Map<String, dynamic> entry = {'word': word, 'meaning': meaning, 'timestamp': timestamp};
+        Map<String, dynamic> entry = {
+          'word': word,
+          'meaning': meaning,
+          'timestamp': timestamp
+        };
         entries.add(entry);
       }
     }
@@ -227,7 +261,11 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
       if (data != null) {
         String word = data['word'];
         String meaning = data['meaning'];
-        Map<String, dynamic> entry = {'word': word, 'meaning': meaning, 'timestamp': timestamp};
+        Map<String, dynamic> entry = {
+          'word': word,
+          'meaning': meaning,
+          'timestamp': timestamp
+        };
         entries.add(entry);
       }
     }
@@ -262,7 +300,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
   //Read words and meanings in TTS
   void _speakTTS() async {
-    String speakWords = starredWordsList.map((value) => '${value[0]}. ${value[1]}.').join(' ');
+    String speakWords =
+        starredWordsList.map((value) => '${value[0]}. ${value[1]}.').join(' ');
     _tts.speak(speakWords);
   }
 
@@ -294,7 +333,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     }
 
     // If the user is selecting the 'ㄱ'~'ㅎ' category
-    if (initialConsonantsIndex > 0){
+    if (initialConsonantsIndex > 0) {
       _getStarredWordsCategory(initialConsonants[initialConsonantsIndex]);
     }
   }
@@ -302,7 +341,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   // Index of initialConsonants
   int initialConsonantsIndex = 0;
 
-  String dropdownValue = "가나순";
+  String dropdownValue = "가나다순";
 
   @override
   Widget build(BuildContext context) {
@@ -312,15 +351,15 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     final double height = screenSize.height;
 
     return WillPopScope(
-        onWillPop: () async {
-          _StopSpeakTts(); // Stop TTS when back button is pressed
-          return true; // Allow navigation to occur
-        },
+      onWillPop: () async {
+        _StopSpeakTts();
+        return true;
+      },
       child: Scaffold(
-        appBar:
-        AppBar(
-          backgroundColor: Color(0xFFF3F3F3),
-          elevation: 0.0,
+        backgroundColor: Color(0xffd9ebe5),
+        appBar: AppBar(
+          backgroundColor: Color(0xffd9ebe5),
+          elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -328,8 +367,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               Navigator.of(context).pop();
             },
           ),
-          title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
-          centerTitle: true,
+          //title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
+          //centerTitle: true,
         ),
 
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -388,55 +427,52 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Spacer(),
-                Checkbox(
-                  value: _hiddenWord,
-                  onChanged: (value) {
-                    if(_hiddenWord==false&&_hiddenMeaning==false){
-                      setState(() {
-                        _hiddenWord = true;
-                      });
-                    }else if(_hiddenWord==true&&_hiddenMeaning==false){
-                      setState(() {
-                        _hiddenWord = false;
-                      });
-                    }else if(_hiddenWord==false&&_hiddenMeaning==true){
-                      setState(() {
-                        _hiddenWord = true;
-                        _hiddenMeaning=false;
-                      });
-                    }
-                  },
-                ),
-                Text("단어숨김"),
-                Spacer(),
-                Checkbox(
-                  value: _hiddenMeaning,
-                  onChanged: (value) {
-                    if(_hiddenWord==false&&_hiddenMeaning==false){
-                      setState(() {
-                        _hiddenMeaning = true;
-                      });
-                    }else if(_hiddenWord==false&&_hiddenMeaning==true){
-                      setState(() {
-                        _hiddenMeaning = false;
-                      });
-                    }else if(_hiddenWord==true&&_hiddenMeaning==false){
-                      setState(() {
-                        _hiddenWord = false;
-                        _hiddenMeaning=true;
-                      });
-                    }
-                  },
-                ),
-                Text("뜻숨김"),
-                Spacer(),
-                IconButton(
-                  icon: Icon(isPlaysound?CupertinoIcons.pause:Icons.keyboard_voice),
+                TextButton(
                   onPressed: () {
                     setState(() {
-                      isPlaysound=!isPlaysound;
+                      _hiddenWord = !_hiddenWord;
                     });
-                    if (isPlaysound){
+                  },
+                  style: TextButton.styleFrom(
+                    primary: _hiddenWord ? Color(0xFF74B29E) : Colors.white,
+                    backgroundColor: _hiddenWord ? Colors.white : Color(0xFF74B29E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Text(_hiddenWord ? "단어 숨김" : "단어 숨김"),
+                ),
+                Spacer(),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _hiddenMeaning = !_hiddenMeaning;
+                    });
+                  },
+                  style: TextButton.styleFrom(
+                    primary: _hiddenMeaning ? Color(0xFF74B29E) : Colors.white,
+                    backgroundColor: _hiddenMeaning ? Colors.white : Color(0xFF74B29E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Text(_hiddenMeaning ? "뜻 숨김" : "뜻 숨김"),
+                ),
+                Spacer(),
+                IconButton(
+                  icon: Icon(
+                    isPlaysound
+                        ? Icons.keyboard_voice
+                        : Icons.keyboard_voice,
+                    color: isPlaysound
+                        ? Colors.white
+                        : Color(0xFF74B29E)
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isPlaysound = !isPlaysound;
+                    });
+                    if (isPlaysound) {
                       _speakTTS();
                     } else {
                       _StopSpeakTts();
@@ -444,44 +480,61 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                   },
                 ),
                 Spacer(),
-                DropdownButton(
-                    items: const <DropdownMenuItem<String>>[
-                      DropdownMenuItem(child: Text("가나순", style: TextStyle(color: Colors.black),), value: "가나순",),
-                      DropdownMenuItem(child: Text("랜덤순", style: TextStyle(color: Colors.black),), value: "랜덤순",),
-                      DropdownMenuItem(child: Text("최신순", style: TextStyle(color: Colors.black),), value: "최신순",),
-                      DropdownMenuItem(child: Text("오래된순", style: TextStyle(color: Colors.black),), value: "오래된순",),
+                PopupMenuButton<String>(
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                    PopupMenuItem<String>(
+                      value: "가나다순",
+                      child: Text("가나다순"),
+                    ),
+                    PopupMenuItem<String>(
+                      value: "랜덤순",
+                      child: Text("랜덤순"),
+                    ),
+                    PopupMenuItem<String>(
+                      value: "최신순",
+                      child: Text("최신순"),
+                    ),
+                    PopupMenuItem<String>(
+                      value: "오래된순",
+                      child: Text("오래된순"),
+                    ),
+                  ],
+                  onSelected: (String value) {
+                    setState(() {
+                      dropdownValue = value;
+                      if (dropdownValue == "가나다순") {
+                        _consonantOrderStarredWords();
+                      }
+                      if (dropdownValue == "랜덤순") {
+                        _randomOrderStarredWords();
+                      }
+                      if (dropdownValue == "최신순") {
+                        _newestOrderStarredWords();
+                      }
+                      if (dropdownValue == "오래된순") {
+                        _oldestOrderStarredWords();
+                      }
+                    });
+                  },
 
-                    ],
-                    value: dropdownValue,
-                    elevation: 10,
-                    icon: Icon(Icons.reorder),
-                    onChanged: (selectValue) {
-                      dropdownValue = selectValue!;
-                      if(dropdownValue == "가나순"){
-                        setState(() {
-                          _consonantOrderStarredWords();
-                        });
-                      }
-                      if(dropdownValue == "랜덤순"){
-                        setState(() {
-                          _randomOrderStarredWords();
-                        });
-                      }
-                      if(dropdownValue == "최신순"){
-                        setState(() {
-                          _newestOrderStarredWords();
-                        });
-                      }
-                      if(dropdownValue == "오래된순"){
-                        setState(() {
-                          _oldestOrderStarredWords();
-                        });
-                      }
-                    }),
+                  child: Container(
+                    padding: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Color(0xFF74B29E)),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.reorder, color: Color(0xFF74B29E)),
+                        SizedBox(width: 8),
+                        Text("정렬", style: TextStyle(color: Color(0xFF74B29E))),
+                      ],
+                    ),
+                  ),
+                ),
                 Spacer(),
               ],
             ),
-
             Expanded(
               child: Padding(
                   padding: EdgeInsets.all(width * 0.01),
@@ -492,60 +545,94 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                           child: starredWordsList.isEmpty
                               ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
                               : ListView.builder(
-                                itemCount: starredWordsList.length,
-                                itemBuilder: (_, index) {
-                              final String word = starredWordsList[index][0];
-                              final String meaning = starredWordsList[index][1];
-                              return Card(
-                                child: ListTile(
-                                  title: Text(
-                                    word, style:  TextStyle(fontSize: 20,color: _hiddenWord?Colors.white:Colors.black),
-                                  ),
-                                  subtitle: Text(
-                                    meaning, style:  TextStyle(fontSize: 16,color: _hiddenMeaning?Colors.white:Colors.black87),
-                                  ),
-                                  onTap: () {
-                                    _StopSpeakTts();
-                                    _speakTTScard('$word. $meaning');
+                                  itemCount: starredWordsList.length,
+                                  itemBuilder: (_, index) {
+                                    final String word =
+                                        starredWordsList[index][0];
+                                    final String meaning =
+                                        starredWordsList[index][1];
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      child: ListTile(
+                                          contentPadding: EdgeInsets.all(16.0),
+                                          title: Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 8.0),
+                                            child: Text(
+                                              word,
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: _hiddenWord
+                                                      ? Colors.white
+                                                      : Colors.black),
+                                            ),
+                                          ),
+                                          subtitle: Text(
+                                            meaning,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: _hiddenMeaning
+                                                    ? Colors.white
+                                                    : Colors.black87),
+                                          ),
+                                          onTap: () {
+                                            _StopSpeakTts();
+                                            _speakTTScard('$word. $meaning');
+                                          },
+                                          trailing: Container(
+                                            width: 30,
+                                            child: IconButton(
+                                                icon: Icon(Icons.star),
+                                                color: Colors.orangeAccent,
+                                                // onPressed: () {_toggleWordStarred(word);},
+                                                onPressed: () async {
+                                                  showDialog(
+                                                      context: context,
+                                                      barrierDismissible:
+                                                          true, // 바깥 터치시 close
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          content: Text(
+                                                              '단어를 삭제하시겠습니까?'),
+                                                          actions: [
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  '아니요',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black)),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                            ),
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  '네',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black)),
+                                                              onPressed: () {
+                                                                _deleteStarredWords(
+                                                                    word);
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      });
+                                                }),
+                                          )),
+                                    );
                                   },
-                                  trailing: Container(
-                                    width: 30,
-                                    child: IconButton(
-                                        icon: Icon(Icons.star),
-                                        color: Colors.orangeAccent,
-                                        // onPressed: () {_toggleWordStarred(word);},
-                                        onPressed: () async {
-                                          showDialog(
-                                              context: context,
-                                              barrierDismissible:
-                                              true, // 바깥 터치시 close
-                                              builder:
-                                                  (BuildContext context) {
-                                                return AlertDialog(
-                                                  content:
-                                                  Text('단어를 삭제하시겠습니까?'),
-                                                  actions: [
-                                                    TextButton(
-                                                      child:
-                                                      const Text('아니요', style: TextStyle(color: Colors.black)),
-                                                      onPressed: () {Navigator.of(context).pop();},
-                                                    ),
-                                                    TextButton(
-                                                      child:
-                                                      const Text('네', style: TextStyle(color: Colors.black)),
-                                                      onPressed: () {_deleteStarredWords(word);
-                                                      Navigator.of(context).pop();
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              });
-                                        }),
-                                  )
-                                ),
-                              );
-                            },
-                          )),
+                                )),
                     ),
                     Column(
                       children: <Widget>[
@@ -560,20 +647,31 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                               return SizedBox(
                                 // height: 20,
                                 child: ListTile(
-                                  title: Text(initialConsonants[index],
-                                    style: TextStyle(color: initialConsonantsIndex == index ? Colors.white : Colors.black,),),
+                                  title: Text(
+                                    initialConsonants[index],
+                                    style: TextStyle(
+                                      color: initialConsonantsIndex == index
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
                                   tileColor: initialConsonantsIndex == index
                                       ? Color(0xFF74b29e)
                                       : null,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
                                   dense: true,
-                                  visualDensity:
-                                  VisualDensity(horizontal: 0, vertical: -4),
+                                  visualDensity: VisualDensity(
+                                      horizontal: 0, vertical: -4),
                                   onTap: () {
                                     _StopSpeakTts();
                                     setState(() {
-                                      initialConsonantsIndex = index; // Update the selected index
+                                      initialConsonantsIndex =
+                                          index; // Update the selected index
                                     });
-                                    _getStarredWordsCategory(initialConsonants[index]);
+                                    _getStarredWordsCategory(
+                                        initialConsonants[index]);
                                     if (index == 0) {
                                       _getStarredWords();
                                     }
@@ -593,4 +691,3 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     );
   }
 }
-

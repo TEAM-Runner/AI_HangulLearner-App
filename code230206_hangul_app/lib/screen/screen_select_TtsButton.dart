@@ -466,7 +466,49 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
               },
             ),
 
-            title: Text(
+            actions: [
+              IconButton(
+                icon: Tooltip(
+                  richMessage: WidgetSpan(
+                      // alignment: PlaceholderAlignment.baseline,
+                      // baseline: TextBaseline.alphabetic,
+                      child: Column(
+                        children: [
+                          Container(
+                            // padding: EdgeInsets.all(10),
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: const Text("글자 읽기와 사전 검색",
+                                style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            // padding: EdgeInsets.all(10),
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: Text("버튼을 눌러 재생, 음소거, 속도 조절 기능을 사용해 보세요. 모르는 단어를 누르면 뜻을 확인할 수 있습니다.",
+                                style: TextStyle(color: Colors.black, fontSize: 14)),
+                          )
+                        ],
+                      )
+                  ),
+                  triggerMode: TooltipTriggerMode.tap,
+                  showDuration: Duration(seconds: 5),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF3F3F3),
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    border: Border.all(
+                      color: Colors.black, // Border color
+                      width: 1.0, // Border width
+                    ),
+                  ),
+                  child: Icon(Icons.question_mark_outlined, color: Colors.grey,),
+                ),
+                onPressed: () {},
+              ),
+            ],
+
+
+
+        title: Text(
               "I HANGUL",
               style: TextStyle(
                 color: Colors.black,
@@ -474,6 +516,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
             ),
             centerTitle: true,
           ),
+
           body: Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: 8.0),

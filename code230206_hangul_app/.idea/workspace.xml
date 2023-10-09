@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update font size for home screen and TTS ListView">
-      <change afterPath="$PROJECT_DIR$/assets/images/help.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/tip.png" afterDir="false" />
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in screen_select_TtsButton.dart">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/images/key_black.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/images/key_color.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,22 +41,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "E:/workspace/AndroidStudio/AI_HangulLearner-App/code230206_hangul_app/assets/images",
-    "show.migrate.to.gradle.popup": "false"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="DefaultPlantUmlFileTemplate" value="UML Class" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="com.android.tools.idea.emulator.frame.visible" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads" />
+    <property name="settings.editor.selected.configurable" value="dart.settings" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\workspace\AndroidStudio\AI_HangulLearner-App\code230206_hangul_app\assets\images" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\workspace\AndroidStudio\AI_HangulLearner-App\code230206_hangul_app\assets\images" />
       <recent name="C:\Users\DaMin\Documents\GitHub\AI_HangulLearner-App\code230206_hangul_app\assets\images" />
     </key>
   </component>
@@ -80,69 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00008" summary="build: modify screen_game.dart&#10;&#10;- 초성게임과 firestore 연동 완료&#10;  1) firstore에 저장된 단어를 gameWordList에 저장&#10;  2) firstore에 저장된 단어가 10개 미만이라면 기본적으로 저장된 gameBasicWordList 이용&#10;- 단어 전달 형태 tuple -&gt; list로 변경&#10;- 맞은 단어는 true, 틀린 단어는 false로 gameWordList에  저장&#10;- screen_game_result.dart 스크린과 연결">
-      <created>1680597752569</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1680597752569</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Add getFirstConsonant function&#10;&#10;- getFirstConsonant: 주어진 문자열에서 초성을 추출하는 함수&#10;- 오직 한국어일 경우에만 초성을 반환함">
-      <created>1680617149764</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1680617149764</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Fix RangeError in screen_game.dart&#10;&#10;- index 변수 문제로 발생하던 RangeError 해결&#10;  (게임의 마지막 문제에서 index가 gameWordList의 범위를 초과하게 되는 에러가 있었음) &#10;- bool endGameReady를 추가해 에러 해결함">
-      <created>1680619006618</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1680619006618</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Add trim strings in WebScraper class in screen_select_dicButton.dart&#10;&#10;- txt_emph, txt_mean에 trim strings 추가&#10;- 이전에는 개행문자가 함께 저장 -&gt; 초성게임에서 문제가 발생했음">
-      <created>1680619976309</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1680619976309</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Add _getQuizWord and Fix _getHint functions in screen_game.dart&#10;&#10;- 힌트 기능 수정: 힌트 버튼을 클릭하면 문제의 첫 번째 초성이 글자(답)로 변경되도록 수정">
-      <created>1680623616484</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1680623616484</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Add all sentences read button in screen_select_TtsButton.dart&#10;&#10;- 글자인식한 모든 문장을 읽는 FloatingActionButton 추가&#10;- _speakAllSentences: 글자인식한 모든 문장을 읽어주는 함수">
-      <created>1680668671195</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1680668671195</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Add TTS speed control button in screen_select_TtsButton.dart&#10;&#10;- TTS 속도를 조절하는 AnimatedToggleSwitch 추가&#10;- 느림/보통/빠름의 3단계로 조절">
-      <created>1680678701177</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1680678701177</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Add Text recognition result editing function in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 기능 추가&#10;- 사전/음성출력 버튼 클릭하면 수정한 텍스트를 전달함">
-      <created>1680702989499</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1680702989499</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Fix game result screen button size in screen_game_result.dart&#10;&#10;- 게임 결과 스크린의 '단어 다시보기', '기록 확인하기', '나가기' 버튼의 가로 사이즈 통일">
-      <created>1680704322195</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1680704322195</updated>
     </task>
     <task id="LOCAL-00017" summary="Update profile screen UI in screen_profile.dart&#10;&#10;- fontSize, Button style, Button color 등 profile 스크린 ui 변경">
       <created>1680705729118</created>
@@ -424,7 +352,70 @@
       <option name="project" value="LOCAL" />
       <updated>1695570972876</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Comment out unused pages">
+      <created>1695619526709</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1695619526709</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Add buttons to TTS screen&#10;&#10;- Pause button: 일시정지 버튼. pause 버튼 클릭 후 play 버튼 다시 누르면 멈췄던 부분부터 TTS 재생됨.&#10;- Stop button: 정지 버튼. stop 버튼 클릭 후 play 버튼 다시 누르면 처음부터 TTS 재생됨.&#10;- Mute button: 음소거 버튼. 클릭하면 아이콘이 바뀌면서 mute 상태가 되었다가, 다시 누르면 mute 상태가 해제됨.&#10;- TTS speed DropdownButton: TTS 속도 제어 버튼. 기존의 animated_toggle_switch에서 DropdownButton으로 변경함.&#10;- 버튼 색상, 사전 검색 시 BoxDecoration 색상 변경.">
+      <created>1696071353352</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1696071353353</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트">
+      <created>1696072451610</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1696072451610</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용">
+      <created>1696087530440</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1696087530440</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Update Pop-Up Message for Empty Dictionary Results&#10;&#10;- 사전 검색 결과가 없는 경우 팝업창에 &quot;해당하는 단어를 찾을 수 없습니다.&quot;라는 메시지를 표시하도록 업데이트">
+      <created>1696088355771</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1696088355771</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정">
+      <created>1696325885181</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1696325885182</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경">
+      <created>1696773532667</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1696773532667</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Update UI in screen_vacabularyList.dart">
+      <created>1696774587934</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1696774587934</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Update UI in screen_select_TtsButton.dart">
+      <created>1696777796159</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1696777796159</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -439,15 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add word categories to vacabulary screen&#10;&#10;- screen_vacabularyList.dart에 단어 카테고리 추가&#10;- 카테고리의 초성 버튼을 눌렀을 때 해당 초성의 단어가 있는 경우 -&gt; 그 단어들만 표시&#10;- 없는 경우 -&gt; 화면에 아무 단어도 표시하지 않음" />
-    <MESSAGE value="Add game replay button" />
-    <MESSAGE value="Update screen_home.dart&#10;&#10;- SingleChildScrollView 추가&#10;- makeButton 함수 수정&#10;- UI update" />
-    <MESSAGE value="update ui" />
-    <MESSAGE value="update UI in screen_vacabularyList.dart&#10;&#10;- update _randomOrderStarredWords &#10;- update DropdownButton" />
-    <MESSAGE value="Refactor code of screen_select_TtsButton.dart&#10;&#10;- Word 클래스를 정의하고 word, isSelected, sentenceIndex, wordIndex, wordIndexInSentence 속성을 둠. 별도로 인덱스를 계산하거나 isSelected 리스트를 정의할 필요가 없어짐.&#10;- 모든 단어들을 wordList로 관리해 코드의 복잡성을 낮춤. isSelected는 wordList에서 업데이트되므로 별도로 정의할 필요가 없음.&#10;- 문장 읽기 기능이 _speakSentence 함수 하나로 통합됨. 기존에는 한 문장만 읽는 _speakSentence 함수와 전체 문장을 읽는 _speakAllSentences 함수를 따로 두었으나, _speakAllSentences는 제거하고 하나의 함수에서 TTS 기능 수행하도록 함" />
-    <MESSAGE value="Update TTS control function&#10;&#10;- TTS 제어를 위해 _stopflag와 _playflag 사용&#10;- _playflag에 따라 FloatingActionButton의 아이콘 변경&#10;- _playflag에 따라 상태를 전환하도록 FloatingActionButton의 onPressed 콜백 수정&#10;- _stopflag에 따라 TTS를 재생하거나 중단함" />
-    <MESSAGE value="Update TTS function in screen_vacabularyList.dart&#10;&#10;- IconButton의 onPressed가 _speakTTS를 실행하도록 업데이트&#10;- 단어 Card의 onTap이 _speakTTScard를 실행하도록 업데이트&#10;- _speakTTScard: 클릭한 단어와 뜻을 TTS로 읽어주는 함수" />
-    <MESSAGE value="Update to store timestamps in Firestore&#10;&#10;- Firestore에 단어를 저장할 때 timestamps도 함께 저장하도록 업데이트" />
     <MESSAGE value="Add sorting function by oldest and newest&#10;&#10;- 단어장에 최신순 정렬, 오래된순 정렬 기능 추가" />
     <MESSAGE value="Update TTS stop function in screen_select_TtsButton.dart&#10;&#10;- TTS 재생 중, 다른 문장을 누르면 TTS 멈추도록 업데이트" />
     <MESSAGE value="Add function to select photo from gallery&#10;&#10;- '책 읽어주기' 버튼 클릭시 카메라/갤러리 선택&#10;- 갤러리 선택 시 갤러리의 이미지에서 글자인식" />
@@ -464,6 +446,15 @@
     <MESSAGE value="Update to display TTS word highlight and dictionary word highlight&#10;&#10;- 사전 검색 단어 highlight 표시와 TTS 출력 중인 단어의 highlight 표시를 동시에 할 수 있도록 업데이트&#10;- 기존의 코드는 사전 화면과 TTS 화면을 합치는 과정에서 highlight표시가 중복되는 문제 발생 -&gt; TTS 출력 중인 단어만 highlight 표시할 수 있었음" />
     <MESSAGE value="Fix TTS continuous play function bug 2&#10;&#10;- TTS 이어서 듣기 기능에서 사용하는 변수 currentTTSIndex가 초기화되지 않는 문제 발생&#10;- currentTTSIndex를 전역변수에서 지역변수로 변경하며 문제 해결" />
     <MESSAGE value="Update font size for home screen and TTS ListView" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update font size for home screen and TTS ListView" />
+    <MESSAGE value="Comment out unused pages" />
+    <MESSAGE value="Add buttons to TTS screen&#10;&#10;- Pause button: 일시정지 버튼. pause 버튼 클릭 후 play 버튼 다시 누르면 멈췄던 부분부터 TTS 재생됨.&#10;- Stop button: 정지 버튼. stop 버튼 클릭 후 play 버튼 다시 누르면 처음부터 TTS 재생됨.&#10;- Mute button: 음소거 버튼. 클릭하면 아이콘이 바뀌면서 mute 상태가 되었다가, 다시 누르면 mute 상태가 해제됨.&#10;- TTS speed DropdownButton: TTS 속도 제어 버튼. 기존의 animated_toggle_switch에서 DropdownButton으로 변경함.&#10;- 버튼 색상, 사전 검색 시 BoxDecoration 색상 변경." />
+    <MESSAGE value="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트" />
+    <MESSAGE value="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용" />
+    <MESSAGE value="Update Pop-Up Message for Empty Dictionary Results&#10;&#10;- 사전 검색 결과가 없는 경우 팝업창에 &quot;해당하는 단어를 찾을 수 없습니다.&quot;라는 메시지를 표시하도록 업데이트" />
+    <MESSAGE value="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정" />
+    <MESSAGE value="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경" />
+    <MESSAGE value="Update UI in screen_vacabularyList.dart" />
+    <MESSAGE value="Update UI in screen_select_TtsButton.dart" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update UI in screen_select_TtsButton.dart" />
   </component>
 </project>
