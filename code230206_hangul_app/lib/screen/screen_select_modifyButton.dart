@@ -22,7 +22,7 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
   FocusNode _focusNode = FocusNode(); // 키보드를 화면에 자동으로 보여주기 위해 FocusNode 정의
 
   _SelectModifyButtonScreen(this._text, this.currentTTSIndex) {
-    String replaceText = _text.replaceAll(".", ".\n");
+    String replaceText = _text.replaceAll(".", ".\n").replaceAll("\n ", "\n");
     print("_SelectModifyButtonScreen $replaceText}");
     _textEditingController.text = replaceText;
     returnText = replaceText;

@@ -1,10 +1,3 @@
-// *** 메인 화면 스크린 ***
-// 어플을 실행했을 때 나오는 메인 홈 화면 스크린
-// 카메라, 학습 게임 버튼이 있다
-
-// 카메라 버튼 클릭 -> screen_Camera.dart로 연결됨
-// 학습 게임 버튼 틀릭 -> 아직 기능 X
-
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -107,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  )
+                )
               ],
             ),
           )
@@ -238,9 +231,9 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor:MaterialStateProperty.all<Color>(Colors.white),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-              //side: BorderSide(color: Color(0xFFa8df83), width: 2.0)
-            )
+                borderRadius: BorderRadius.circular(20.0),
+                //side: BorderSide(color: Color(0xFFa8df83), width: 2.0)
+              )
           ),
         ),
         child: Column(
