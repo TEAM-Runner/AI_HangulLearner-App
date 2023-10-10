@@ -17,6 +17,7 @@ import 'screen_game.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'text_recognition.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -254,60 +255,55 @@ class _HomeScreenState extends State<HomeScreen> {
                     fit: StackFit.loose,
                     children: <Widget>[
                       Positioned(
-                        child: IconButton(
-                            onPressed: () {
-                              if (onPressNumber == 1) {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: Container(
-                                          width: 200,
-                                          height: 300,
-                                          child: Column(
-                                            children: <Widget>[
-                                              Image.asset("assets/images/tip.png"),
-                                              Text("새로운 단어를 외우는 것은 힘들죠?\n읽고 싶은 문장이 좔영하라!",style: TextStyle(fontSize: 20),),],
-                                          ),
-                                        ),
-                                      );
-                                    });
-                              } else if (onPressNumber == 2) {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: Container(
-                                          width: 200,
-                                          height: 300,
-                                          child: Column(
-                                            children: <Widget>[
-                                              Image.asset("assets/images/tip.png"),
-                                              Text("학습한 단어를 아직 기억하나요?\n 같이 복습 해보자!",style: TextStyle(fontSize: 20),),],
-                                          ),
-                                        ),
-                                      );
-                                    });
-                              }else if (onPressNumber == 3) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content: Container(
-                                        width: 200,
-                                        height: 300,
-                                        child: Column(
-                                          children: <Widget>[
-                                            Image.asset("assets/images/tip.png"),
-                                            Text("학습한 후에 피군하나요?\n 게임에 통해 스트레스를 풀어요!",style: TextStyle(fontSize: 20),),],
-                                        ),
-                                      ),
-                                    );
-                                  },);
-                              }
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton2(
+                            customButton: const Icon(
+                              Icons.help_outline,
+                              size: 25,
+                              color: Colors.black,
+                            ),
+                            items: onPressNumber == 1
+                                ? MenuItems.cameraItems.map(
+                                  (item) => DropdownMenuItem<MenuItem>(
+                                value: item,
+                                child: MenuItems.buildItem(item),
+                              ),
+                            ).toList()
+                                : onPressNumber == 2
+                                ? MenuItems.gameItems.map(
+                                  (item) => DropdownMenuItem<MenuItem>(
+                                value: item,
+                                child: MenuItems.buildItem(item),
+                              ),
+                            ).toList()
+                                : MenuItems.vocabularyItems.map(
+                                  (item) => DropdownMenuItem<MenuItem>(
+                                value: item,
+                                child: MenuItems.buildItem(item),
+                              ),
+                            ).toList(),
+                            onChanged: (value) {
+                              // MenuItems.onChanged(context, value! as MenuItem);
                             },
-                            icon: Icon(Icons.help_outline)),
-                      ),
+                            dropdownStyleData: DropdownStyleData(
+                              width: 270,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Color(0xFF74b29e), // Border color
+                                  width: 1.0, // Border width
+                                ),
+                                color: Colors.white,
+                              ),
+                              offset: const Offset(-245, -5),
+                            ),
+                            menuItemStyleData: const MenuItemStyleData(
+                              height: 90, // 팝업창 높이 - 메시지 수정 시 조절 필요
+                              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 )
@@ -324,13 +320,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(padding: EdgeInsets.only(top: width * 0.03)),
                 // <-- Text
                 // SizedBox(width: width*0.3,),
-
                 Icon(
                   // <-- Icon
                   _choiceIcon(iconNumber),
                   size: width * 0.1,
                 ),
-
                 Padding(padding: EdgeInsets.only(top: width * 0.1)),
                 // Text(buttonText, style: TextStyle(fontSize: width * 0.036),),
                 Text(
@@ -359,4 +353,58 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+class MenuItem {
+  const MenuItem({
+    required this.text_title,
+    required this.text_detail,
+  });
 
+  final String text_title;
+  final String text_detail;
+}
+
+abstract class MenuItems {
+  static const List<MenuItem> cameraItems = [camera];
+  static const List<MenuItem> vocabularyItems = [vocabulary];
+  static const List<MenuItem> gameItems = [game];
+
+  // 메시지 수정 시 MenuItemStyleData -> height 조절 필요
+  static const camera = MenuItem(
+      text_title: '책 읽기',
+      text_detail: '책을 읽기 어렵다면 촬영해 보세요. 문장을 듣고 단어를 검색할 수 있어요.'
+  );
+  static const vocabulary = MenuItem(
+      text_title: '단어장',
+      text_detail: '학습한 단어를 기억하고 있나요? 단어장으로 저장한 단어를 복습할 수 있어요.'
+  );
+  static const game = MenuItem(
+      text_title: '초성 게임',
+      text_detail: '단어장에 저장한 단어로 초성 게임을 할 수 있어요.'
+  );
+
+  static Widget buildItem(MenuItem item) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            item.text_title,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Text(
+          item.text_detail,
+          style: const TextStyle(
+              color: Colors.black,
+              fontSize: 15
+          ),
+        ),
+      ],
+    );
+  }
+
+}

@@ -42,7 +42,7 @@ void main() async{
       'splash':(context) => const SpalshScreen(),
 
       // '/DicScreen':(context) => DicScreen(DicScreenText: DicScreenText),
-      '/TTSScreen':(context) => TTSScreen(TTSScreenText: TTSScreenText),
+      // '/TTSScreen':(context) => TTSScreen(TTSScreenText: TTSScreenText),
       // '/DicOpenScreen':(context) => DicOpenScreen(DicOpenScreenText: DicOpenScreenText),
       '/GameResultScreen':(context) => GameResultScreen(GameResultScreenText: GameResultScreenText),
       '/GameWrongWordListScreen':(context) => GameWrongWordListScreen(GameWrongWordListScreenText: GameWrongWordListScreenText),

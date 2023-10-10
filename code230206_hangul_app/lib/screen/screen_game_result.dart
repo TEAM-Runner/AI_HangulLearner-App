@@ -32,6 +32,7 @@ class _GameResultScreenState extends State<GameResultScreen> {
       }
     }
 
+    // 10문제 기준
     String message;
     if (correctCount == 10) {
       message = '최고에요!';
@@ -52,7 +53,43 @@ class _GameResultScreenState extends State<GameResultScreen> {
               icon: Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            title:Image.asset("assets/images/i_hangul.png"),
+            actions: [
+              IconButton(
+                icon: Tooltip(
+                  richMessage: WidgetSpan(
+                      child: Column(
+                        children: [
+                          Container(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: const Text("점수 확인하기",
+                              style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: const Text("내가 맞힌 퀴즈 개수를 확인해요. 퀴즈 단어를 다시 보거나, 퀴즈를 다시 풀 수 있어요.",
+                                style: TextStyle(color: Colors.black, fontSize: 14)),
+                          )
+                        ],
+                      )
+                  ),
+                  triggerMode: TooltipTriggerMode.tap,
+                  showDuration: Duration(seconds: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    border: Border.all(
+                      color: Color(0xFF74b29e), // Border color
+                      width: 1.0, // Border width
+                    ),
+                  ),
+                  child: Icon(Icons.help_outline, color: Colors.black,),
+                ),
+                onPressed: () {},
+              ),
+            ],
+
+            // title:Image.asset("assets/images/i_hangul.png"),
             centerTitle: true,
           ),
           body: Center(

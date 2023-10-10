@@ -472,21 +472,17 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
               IconButton(
                 icon: Tooltip(
                   richMessage: WidgetSpan(
-                      // alignment: PlaceholderAlignment.baseline,
-                      // baseline: TextBaseline.alphabetic,
                       child: Column(
                         children: [
                           Container(
-                            // padding: EdgeInsets.all(10),
                             constraints: const BoxConstraints(maxWidth: 250),
                             child: const Text("글자 읽기와 사전 검색",
                                 style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
                             ),
                           ),
                           Container(
-                            // padding: EdgeInsets.all(10),
                             constraints: const BoxConstraints(maxWidth: 250),
-                            child: Text("버튼을 눌러 재생, 음소거, 속도 조절 기능을 사용해 보세요. 모르는 단어를 누르면 뜻을 확인할 수 있습니다.",
+                            child: const Text("버튼을 눌러 재생, 음소거, 속도 조절 기능을 사용해 보세요. 모르는 단어를 누르면 뜻을 확인할 수 있습니다.",
                                 style: TextStyle(color: Colors.black, fontSize: 14)),
                           )
                         ],
@@ -507,8 +503,6 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                 onPressed: () {},
               ),
             ],
-
-
 
         // title: Text(
         //       "I HANGUL",

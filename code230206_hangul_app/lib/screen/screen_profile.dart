@@ -169,6 +169,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: [
+          IconButton(
+            icon: Tooltip(
+              richMessage: WidgetSpan(
+                  child: Column(
+                    children: [
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 250),
+                        child: const Text("프로필 화면",
+                          style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 250),
+                        child: const Text("회원가입 시 입력했던 이메일과 이름을 확인해요. 이름과 비밀번호를 변경할 수 있어요.",
+                            style: TextStyle(color: Colors.black, fontSize: 14)),
+                      )
+                    ],
+                  )
+              ),
+              triggerMode: TooltipTriggerMode.tap,
+              showDuration: Duration(seconds: 5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                border: Border.all(
+                  color: Color(0xFF74b29e), // Border color
+                  width: 1.0, // Border width
+                ),
+              ),
+              child: Icon(Icons.help_outline, color: Colors.black,),
+            ),
+            onPressed: () {},
+          ),
+        ],
         //title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
         //centerTitle: true,
       ),

@@ -53,9 +53,6 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
     // TTS 위치 기록
     print("SelectTtsButtonScreen - currentTTSIndex: $currentTTSIndex");
 
-
-
-
     return Scaffold(
       backgroundColor: Color(0xffd9ebe5),
       appBar: AppBar(
@@ -71,21 +68,17 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
           IconButton(
             icon: Tooltip(
               richMessage: WidgetSpan(
-                // alignment: PlaceholderAlignment.baseline,
-                // baseline: TextBaseline.alphabetic,
                   child: Column(
                     children: [
                       Container(
-                        // padding: EdgeInsets.all(10),
                         constraints: const BoxConstraints(maxWidth: 250),
                         child: const Text("글자 고치기",
                           style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
-                        // padding: EdgeInsets.all(10),
                         constraints: const BoxConstraints(maxWidth: 250),
-                        child: Text("책과 조금 다른 부분이 있다면 글자를 고칠 수 있어요. 글자를 모두 고친 다음에는 체크 버튼을 눌러 주세요.",
+                        child: const Text("책과 조금 다른 부분이 있다면 글자를 고칠 수 있어요. 글자를 모두 고친 다음 체크 버튼을 눌러 주세요.",
                             style: TextStyle(color: Colors.black, fontSize: 14)),
                       )
                     ],

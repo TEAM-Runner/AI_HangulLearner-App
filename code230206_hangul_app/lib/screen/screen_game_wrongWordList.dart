@@ -36,7 +36,42 @@ class _GameWrongWordListScreenState extends State<GameWrongWordListScreen>{
                 icon: Icon(Icons.arrow_back, color: Colors.black),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              title:Image.asset("assets/images/i_hangul.png"),
+              actions: [
+                IconButton(
+                  icon: Tooltip(
+                    richMessage: WidgetSpan(
+                        child: Column(
+                          children: [
+                            Container(
+                              constraints: const BoxConstraints(maxWidth: 250),
+                              child: const Text("단어 다시보기",
+                                style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Container(
+                              constraints: const BoxConstraints(maxWidth: 250),
+                              child: const Text("퀴즈에 나온 단어를 다시 볼 수 있어요. 맞힌 단어는 O로, 틀린 단어는 X로 표시돼요.",
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+                            )
+                          ],
+                        )
+                    ),
+                    triggerMode: TooltipTriggerMode.tap,
+                    showDuration: Duration(seconds: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(
+                        color: Color(0xFF74b29e), // Border color
+                        width: 1.0, // Border width
+                      ),
+                    ),
+                    child: Icon(Icons.help_outline, color: Colors.black,),
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+              // title:Image.asset("assets/images/i_hangul.png"),
               centerTitle: true,
             ),
             body: Padding(

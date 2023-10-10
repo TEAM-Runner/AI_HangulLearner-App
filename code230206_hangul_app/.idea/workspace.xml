@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in screen_select_TtsButton.dart&#10;&#10;- backgroundColor, ListView, 사전 검색 결과 팝업창 UI 업데이트">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 화면 UI 업데이트&#10;- 사용자 매뉴얼 버튼 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game_result.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game_result.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game_wrongWordList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game_wrongWordList.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_tts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_tts.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +80,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Update yellow highlight function in TTS&#10;&#10;- _setIsSelected: 노란색 highlight 표시할 단어를 세팅하는 함수&#10;- 전체 문장 읽기 버튼을 클릭할 때 그 전에 읽었던 문장이 highlight 되어있던 문제 해결">
-      <created>1680784728049</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1680784728049</updated>
     </task>
     <task id="LOCAL-00023" summary="Update Appbar UI&#10;&#10;- Appbar 뒤로가기 버튼 UI 업데이트">
       <created>1680796021596</created>
@@ -415,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696943481888</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Update UI in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 화면 UI 업데이트&#10;- 사용자 매뉴얼 버튼 추가">
+      <created>1696947151898</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1696947151898</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -436,7 +445,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update function to play TTS for all sentences&#10;&#10;- 텍스트를 문장 단위로 분리해 ListView에서 출력하도록 UI를 변경하면서 기존의 함수가 작동하지 않던 문제 해결&#10;- 문장 단위 TTS 재생은 _speakOneSentence(), 전체 단어 TTS 재생은 _speakAllSentence() 함수를 이용하도록 업데이트함" />
     <MESSAGE value="Fixe text editing bug&#10;&#10;- 텍스트 수정 화면에서 수정한 텍스트가 TTS/사전 화면으로 제대로 전달되지 않던 버그 수정" />
     <MESSAGE value="Fix TTS continuous play function bug&#10;&#10;- UI를 변경하면서 기존의 TTS 이어서 듣기 함수가 작동하지 않던 문제 해결" />
     <MESSAGE value="Add TTS functionality for dictionary search results&#10;&#10;- 사전 검색 결과를 TTS로 출력하는 함수 추가&#10;- 사전 검색 결과가 나타나는 팝업 창을 클릭하면 TTS 재생, 팝업 창이 사라지면 TTS 중단됨" />
@@ -461,6 +469,7 @@
     <MESSAGE value="Fix bug in word deletion function" />
     <MESSAGE value="Update UI in screen_select_TtsButton.dart&#10;&#10;- 배경색, ListView, 사전 검색 결과 팝업창 수정" />
     <MESSAGE value="Update UI in screen_select_TtsButton.dart&#10;&#10;- backgroundColor, ListView, 사전 검색 결과 팝업창 UI 업데이트" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update UI in screen_select_TtsButton.dart&#10;&#10;- backgroundColor, ListView, 사전 검색 결과 팝업창 UI 업데이트" />
+    <MESSAGE value="Update UI in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 화면 UI 업데이트&#10;- 사용자 매뉴얼 버튼 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update UI in screen_select_modifyButton.dart&#10;&#10;- 글자인식 결과 수정 화면 UI 업데이트&#10;- 사용자 매뉴얼 버튼 추가" />
   </component>
 </project>

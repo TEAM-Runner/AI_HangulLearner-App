@@ -224,7 +224,42 @@ class _GameScreenState extends State<GameScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title:Image.asset("assets/images/i_hangul.png"),
+        actions: [
+          IconButton(
+            icon: Tooltip(
+              richMessage: WidgetSpan(
+                  child: Column(
+                    children: [
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 250),
+                        child: const Text("초성 게임",
+                          style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 250),
+                        child: const Text("초성 게임을 통해 단어를 공부할 수 있어요. 힌트를 얻고 싶다면 열쇠 버튼을 눌러 보세요.",
+                            style: TextStyle(color: Colors.black, fontSize: 14)),
+                      )
+                    ],
+                  )
+              ),
+              triggerMode: TooltipTriggerMode.tap,
+              showDuration: Duration(seconds: 5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                border: Border.all(
+                  color: Color(0xFF74b29e), // Border color
+                  width: 1.0, // Border width
+                ),
+              ),
+              child: Icon(Icons.help_outline, color: Colors.black,),
+            ),
+            onPressed: () {},
+          ),
+        ],
+        // title:Image.asset("assets/images/i_hangul.png"),
         centerTitle: true,
       ),
       body: Center(

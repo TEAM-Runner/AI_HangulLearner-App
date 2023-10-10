@@ -369,6 +369,42 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
               Navigator.of(context).pop();
             },
           ),
+          actions: [
+            IconButton(
+              icon: Tooltip(
+                richMessage: WidgetSpan(
+                    child: Column(
+                      children: [
+                        Container(
+                          constraints: const BoxConstraints(maxWidth: 250),
+                          child: const Text("단어장",
+                            style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          constraints: const BoxConstraints(maxWidth: 250),
+                          child: const Text("단어숨김, 뜻 숨김, 듣기, 정렬 기능을 통해 단어를 학습해 보세요. 별표 모양을 누르면 단어가 단어장에서 삭제됩니다.",
+                              style: TextStyle(color: Colors.black, fontSize: 14)),
+                        )
+                      ],
+                    )
+                ),
+                triggerMode: TooltipTriggerMode.tap,
+                showDuration: Duration(seconds: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  border: Border.all(
+                    color: Color(0xFF74b29e), // Border color
+                    width: 1.0, // Border width
+                  ),
+                ),
+                child: Icon(Icons.help_outline, color: Colors.black,),
+              ),
+              onPressed: () {},
+            ),
+          ],
+
           //title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
           //centerTitle: true,
         ),
