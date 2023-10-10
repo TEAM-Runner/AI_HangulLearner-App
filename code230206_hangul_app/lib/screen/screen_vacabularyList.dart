@@ -316,15 +316,15 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
   // delete StarredWords
   // When star icon is toggled
-  void _deleteStarredWords(String word) async {
-    final DocumentReference wordRef = wordsRef.doc(word);
-    final bool exists = await wordRef
-        .get()
-        .then((DocumentSnapshot snapshot) => snapshot.exists);
-    if (exists) {
-      await wordRef.delete();
-    } else {
-      await wordRef.set({'word': word});
+  void _deleteStarredWords(String word, String meaning) async {
+    final QuerySnapshot snapshot = await wordsRef
+        .where('word', isEqualTo: word)
+        .where('meaning', isEqualTo: meaning)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      final DocumentReference docRef = snapshot.docs.first.reference;
+      await docRef.delete();
     }
 
     // If the user is selecting the '모두' category
@@ -618,11 +618,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                                                       color: Colors
                                                                           .black)),
                                                               onPressed: () {
-                                                                _deleteStarredWords(
-                                                                    word);
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
+                                                                _deleteStarredWords(word, meaning);
+                                                                Navigator.of(context).pop();
                                                               },
                                                             ),
                                                           ],
