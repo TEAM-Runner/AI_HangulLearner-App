@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Add manual pop-up to TTS/dictionary screen&#10;&#10;- TTS/사전 화면의 기능을 설명하는 매뉴얼 기능 구현&#10;- Appbar의 물음표 아이콘 버튼을 클릭하면 화면의 기능을 설명하는 Tooltip이 표시됨">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in screen_select_TtsButton.dart&#10;&#10;- 배경색, ListView, 사전 검색 결과 팝업창 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,20 +72,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Update Hint Button in screen_game.dart&#10;&#10;- 초성게임 화면에서 열쇠 클릭하면 회색으로 변경 -&gt; 힌트 보여주도록 업데이트">
-      <created>1680714773657</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1680714773657</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Update login, signUp, forgotPassword UI&#10;&#10;- login, signUp, forgotPassword UI 컬러 변경&#10;- 버튼 글자, validation 메시지 한글로 변경">
-      <created>1680718970150</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1680718970150</updated>
     </task>
     <task id="LOCAL-00021" summary="Update button labels in modify, dictionary, TTS screen">
       <created>1680781153908</created>
@@ -415,7 +402,21 @@
       <option name="project" value="LOCAL" />
       <updated>1696831400405</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Fix bug in word deletion function">
+      <created>1696929338725</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1696929338725</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Update UI in screen_select_TtsButton.dart&#10;&#10;- 배경색, ListView, 사전 검색 결과 팝업창 수정">
+      <created>1696942271271</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1696942271271</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -423,15 +424,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add function to select photo from gallery&#10;&#10;- '책 읽어주기' 버튼 클릭시 카메라/갤러리 선택&#10;- 갤러리 선택 시 갤러리의 이미지에서 글자인식" />
-    <MESSAGE value="Merge Modify, Dictionary, and TTS screens into a single unified screen&#10;&#10;- 50% complete&#10;- 3개로 나누어져 있던 수정/사전/TTS 화면을 단일 화면으로 병합&#10;- TTS 문장 읽기 기능 수정, 인터페이스 수정이 필요함" />
     <MESSAGE value="Updated TTS UI to display each sentence separately&#10;&#10;- 문단에서 문장들을 따로 분리하기 위해 ListView 이용&#10;- 문장 단위 출력을 위해 각 문장 앞에 IconButton 추가" />
     <MESSAGE value="Update function to play TTS for all sentences&#10;&#10;- 텍스트를 문장 단위로 분리해 ListView에서 출력하도록 UI를 변경하면서 기존의 함수가 작동하지 않던 문제 해결&#10;- 문장 단위 TTS 재생은 _speakOneSentence(), 전체 단어 TTS 재생은 _speakAllSentence() 함수를 이용하도록 업데이트함" />
     <MESSAGE value="Fixe text editing bug&#10;&#10;- 텍스트 수정 화면에서 수정한 텍스트가 TTS/사전 화면으로 제대로 전달되지 않던 버그 수정" />
@@ -455,6 +460,8 @@
     <MESSAGE value="Update UI in screen_select_TtsButton.dart" />
     <MESSAGE value="Update gameBasicWordList in screen_game.dart" />
     <MESSAGE value="Fix Home Screen Scroll" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Home Screen Scroll" />
+    <MESSAGE value="Fix bug in word deletion function" />
+    <MESSAGE value="Update UI in screen_select_TtsButton.dart&#10;&#10;- 배경색, ListView, 사전 검색 결과 팝업창 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update UI in screen_select_TtsButton.dart&#10;&#10;- 배경색, ListView, 사전 검색 결과 팝업창 수정" />
   </component>
 </project>

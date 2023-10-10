@@ -329,7 +329,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
     final result = await showModalBottomSheet(
       context: context,
       barrierColor: Colors.transparent,
-      backgroundColor: Color(0xFFEFEFEF),
+      backgroundColor: Color(0xFF74b29e),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
@@ -355,7 +355,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     if (_WebScraperFlag) {
                       return Column(
                         children: [
-                          SizedBox(height: 16,),
+                          SizedBox(height: 16),
                           Expanded(
                               child: ListView.separated(
                                 shrinkWrap: true,
@@ -407,7 +407,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                                   );
                                 },
                               )
-                          )
+                          ),
+                          SizedBox(height: 16)
                         ],
                       );
                     } else {
@@ -454,8 +455,9 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
           return true;
         },
         child: Scaffold(
+          backgroundColor: Color(0xffd9ebe5),
           appBar: AppBar(
-            backgroundColor: Color(0xFFF3F3F3),
+            backgroundColor: Color(0xffd9ebe5),
             elevation: 0.0,
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -493,14 +495,14 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                   triggerMode: TooltipTriggerMode.tap,
                   showDuration: Duration(seconds: 5),
                   decoration: BoxDecoration(
-                    color: Color(0xFFF3F3F3),
-                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                     border: Border.all(
-                      color: Colors.black, // Border color
+                      color: Color(0xFF74b29e), // Border color
                       width: 1.0, // Border width
                     ),
                   ),
-                  child: Icon(Icons.question_mark_outlined, color: Colors.grey,),
+                  child: Icon(Icons.help_outline, color: Colors.black,),
                 ),
                 onPressed: () {},
               ),
@@ -508,12 +510,12 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
 
 
-        title: Text(
-              "I HANGUL",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
+        // title: Text(
+        //       "I HANGUL",
+        //       style: TextStyle(
+        //         color: Colors.black,
+        //       ),
+        //     ),
             centerTitle: true,
           ),
 
@@ -805,131 +807,130 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
                 //original
                 Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: sentenceList.length,
-                    itemBuilder: (BuildContext context, int sentenceIndex) {
-                      Sentence sentence = sentenceList[sentenceIndex];
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: sentenceList.length,
+                      itemBuilder: (BuildContext context, int sentenceIndex) {
+                        Sentence sentence = sentenceList[sentenceIndex];
 
-                      // List<String> words = sentence.words.map((word) => word.word).toList();
+                        // List<String> words = sentence.words.map((word) => word.word).toList();
 
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
 
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _playflag = !_playflag;
-                                for (int i = 0; i <
-                                    _iconPlayFlags.length; i++) {
-                                  _iconPlayFlags[i] = false; // false로 초기화
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _playflag = !_playflag;
+                                  for (int i = 0; i <
+                                      _iconPlayFlags.length; i++) {
+                                    _iconPlayFlags[i] = false; // false로 초기화
+                                  }
+                                });
+                                if (_playflag) {
+                                  _stopflag = true;
+                                  _speakOneSentence(sentenceIndex, sentence); // 한 문장만 읽기
+                                } else {
+                                  _stopflag = false; // Stop all TTS
+                                  _stopSpeakTts(); // Stop ongoing TTS
                                 }
-                              });
-                              if (_playflag) {
-                                _stopflag = true;
-                                _speakOneSentence(sentenceIndex, sentence); // 한 문장만 읽기
-                              } else {
-                                _stopflag = false; // Stop all TTS
-                                _stopSpeakTts(); // Stop ongoing TTS
-                              }
 
-                              // if (_playflag && _stopflag){ // 재생 중일 때 아이콘 바꾸기 위한 부분
-                              //   _iconPlayFlags[sentenceIndex] = true;
-                              // } else {
-                              //   _iconPlayFlags[sentenceIndex] = false;
-                              // }
-                              // print("_stopflag: $_stopflag       _playflag: $_playflag");
+                                // if (_playflag && _stopflag){ // 재생 중일 때 아이콘 바꾸기 위한 부분
+                                //   _iconPlayFlags[sentenceIndex] = true;
+                                // } else {
+                                //   _iconPlayFlags[sentenceIndex] = false;
+                                // }
+                                // print("_stopflag: $_stopflag       _playflag: $_playflag");
 
-                            },
-                            icon: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF74b29e),
+                              },
+                              icon: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF74b29e),
+                                ),
+                                // padding: EdgeInsets.all(8.0),
+                                child: _iconPlayFlags[sentenceIndex]
+                                    ? Icon(Icons.stop, color: Colors.white)
+                                    : Icon(Icons.play_arrow, color: Colors.white),
                               ),
-                              // padding: EdgeInsets.all(8.0),
-                              child: _iconPlayFlags[sentenceIndex]
-                                  ? Icon(Icons.stop, color: Colors.white)
-                                  : Icon(Icons.play_arrow, color: Colors.white),
                             ),
-                          ),
 
 
-                          Expanded(
-                              child: Wrap(
-                                spacing: 2.0,
-                                runSpacing: 2.0,
-                                children: sentenceList[sentenceIndex].words.asMap().entries.map((entry) {
-                                  int index = entry.key;
-                                  return StreamBuilder(
-                                      stream: _streamController.stream,
-                                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                        // tts 하이라이트 처리
-                                        // List<Word> isSelected = snapshot.data ?? List<Word>.generate(wordList.length, (_) => Word(word: "", isSelected: false, sentenceIndex: -1, wordIndex: -1, wordIndexInSentence: -1));
+                            Expanded(
+                                child: Wrap(
+                                  spacing: 2.0,
+                                  runSpacing: 2.0,
+                                  children: sentenceList[sentenceIndex].words.asMap().entries.map((entry) {
+                                    int index = entry.key;
+                                    return StreamBuilder(
+                                        stream: _streamController.stream,
+                                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                          // tts 하이라이트 처리
+                                          // List<Word> isSelected = snapshot.data ?? List<Word>.generate(wordList.length, (_) => Word(word: "", isSelected: false, sentenceIndex: -1, wordIndex: -1, wordIndexInSentence: -1));
 
-                                        List<Sentence> isSelected_sentence = List<Sentence>.generate(sentenceList.length, (index) {
-                                          List<Word> defaultWords = List<Word>.generate(
-                                            sentenceList[index].words.length,
-                                                (_) => Word(
-                                              word: "",
-                                              isSelected: false,
-                                              sentenceIndex: -1,
+                                          List<Sentence> isSelected_sentence = List<Sentence>.generate(sentenceList.length, (index) {
+                                            List<Word> defaultWords = List<Word>.generate(
+                                              sentenceList[index].words.length,
+                                                  (_) => Word(
+                                                word: "",
+                                                isSelected: false,
+                                                sentenceIndex: -1,
+                                                wordIndex: -1,
+                                                wordIndexInSentence: -1,
+                                              ),
+                                            );
+
+                                            return Sentence(
                                               wordIndex: -1,
-                                              wordIndexInSentence: -1,
-                                            ),
-                                          );
+                                              words: defaultWords,
+                                            );
+                                          });
 
-                                          return Sentence(
-                                            wordIndex: -1,
-                                            words: defaultWords,
+                                          return GestureDetector(
+                                              onTap: () {
+                                                // _dic_showPopup(entry.value.word);
+                                                // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
+                                                _dic_toggleSelected(entry.value.word);
+                                                if (_dic_isSelected(entry.value.word)) {
+                                                  _dic_showPopup(entry.value.word);
+                                                }
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.all(2.0),
+                                                decoration: BoxDecoration(
+                                                  color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : (_dic_isSelected(entry.value.word) ? Color(0xffd9ebe5) : null),
+                                                  borderRadius: BorderRadius.circular(4.0),
+                                                ),
+                                                child: Text(entry.value.word,
+                                                  style: TextStyle(fontSize: 18,
+                                                    color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.black
+                                                        : (_dic_isSelected(entry.value.word) ? Colors.black : null),), // 문장 단위 띄어쓰기 없이 나열
+                                                ),)
                                           );
-                                        });
-
-                                        return GestureDetector(
-                                          onTap: () {
-                                            // _dic_showPopup(entry.value.word);
-                                            // tts 하이라이트 처리와 사전 하이라이트 처리가 달라야 함
-                                            _dic_toggleSelected(entry.value.word);
-                                            if (_dic_isSelected(entry.value.word)) {
-                                              _dic_showPopup(entry.value.word);
-                                            }
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.all(2.0),
-                                            decoration: BoxDecoration(
-                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.yellow : (_dic_isSelected(entry.value.word) ? Color(0xffd9ebe5) : null),
-                                              borderRadius: BorderRadius.circular(4.0),
-                                            ),
-                                            child: Text(entry.value.word,
-                                              style: TextStyle(fontSize: 18,
-                                              color: sentenceList[sentenceIndex].words[index].isSelected ? Colors.black
-                                                      : (_dic_isSelected(entry.value.word) ? Colors.black : null),), // 문장 단위 띄어쓰기 없이 나열
-                                          ),)
-                                        );
-                                      }
-                                  );
-                                }).toList(),
-                              )
-                          )
-                        ],
-                      );
-                    },
-                    separatorBuilder: (BuildContext ctx, int idx) {
-                      return Divider();
-                    },
-                  ),
+                                        }
+                                    );
+                                  }).toList(),
+                                )
+                            )
+                          ],
+                        );
+                      },
+                      separatorBuilder: (BuildContext ctx, int idx) {
+                        return const Divider(
+                          color: Color(0xFF74b29e),
+                        );
+                      },
+                    ),
+                  )
                 ),
 
                 SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-
-                  ],
-                ),
-                SizedBox(height: 16.0),
-
               ],
             ),
           ),
