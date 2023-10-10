@@ -51,7 +51,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     );
 
     final curvedAnimation =
-        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
     //TTS
@@ -91,14 +91,14 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     "ㅎ",
   ];
   Map<String, String> starredWordsMap =
-      {}; // List of words/meanings displayed on the screen
+  {}; // List of words/meanings displayed on the screen
   Map<String, String> filteredWordsMap =
-      {}; // List for initial consonant category filtering
+  {}; // List for initial consonant category filtering
 
   List<List<String>> starredWordsList =
-      []; // List of words/meanings displayed on the screen
+  []; // List of words/meanings displayed on the screen
   List<List<String>> filteredWordsList =
-      []; // List for initial consonant category filtering
+  []; // List for initial consonant category filtering
 
   // Function to display the entire list of words
   // When '모두' category is selected
@@ -301,7 +301,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   //Read words and meanings in TTS
   void _speakTTS() async {
     String speakWords =
-        starredWordsList.map((value) => '${value[0]}. ${value[1]}.').join(' ');
+    starredWordsList.map((value) => '${value[0]}. ${value[1]}.').join(' ');
     _tts.speak(speakWords);
   }
 
@@ -346,7 +346,9 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   @override
   Widget build(BuildContext context) {
     // 스크린 사이즈 정의
-    final Size screenSize = MediaQuery.of(context).size;
+    final Size screenSize = MediaQuery
+        .of(context)
+        .size;
     final double width = screenSize.width;
     final double height = screenSize.height;
 
@@ -435,7 +437,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                   },
                   style: TextButton.styleFrom(
                     primary: _hiddenWord ? Color(0xFF74B29E) : Colors.white,
-                    backgroundColor: _hiddenWord ? Colors.white : Color(0xFF74B29E),
+                    backgroundColor: _hiddenWord ? Colors.white : Color(
+                        0xFF74B29E),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -451,7 +454,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                   },
                   style: TextButton.styleFrom(
                     primary: _hiddenMeaning ? Color(0xFF74B29E) : Colors.white,
-                    backgroundColor: _hiddenMeaning ? Colors.white : Color(0xFF74B29E),
+                    backgroundColor: _hiddenMeaning ? Colors.white : Color(
+                        0xFF74B29E),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -461,12 +465,12 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                 Spacer(),
                 IconButton(
                   icon: Icon(
-                    isPlaysound
-                        ? Icons.keyboard_voice
-                        : Icons.keyboard_voice,
-                    color: isPlaysound
-                        ? Colors.white
-                        : Color(0xFF74B29E)
+                      isPlaysound
+                          ? Icons.keyboard_voice
+                          : Icons.keyboard_voice,
+                      color: isPlaysound
+                          ? Colors.white
+                          : Color(0xFF74B29E)
                   ),
                   onPressed: () {
                     setState(() {
@@ -481,7 +485,8 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                 ),
                 Spacer(),
                 PopupMenuButton<String>(
-                  itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  itemBuilder: (BuildContext context) =>
+                  <PopupMenuEntry<String>>[
                     PopupMenuItem<String>(
                       value: "가나다순",
                       child: Text("가나다순"),
@@ -545,91 +550,99 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                           child: starredWordsList.isEmpty
                               ? Center(child: const Text('단어장에 단어가 존재하지 않습니다'))
                               : ListView.builder(
-                                  itemCount: starredWordsList.length,
-                                  itemBuilder: (_, index) {
-                                    final String word =
-                                        starredWordsList[index][0];
-                                    final String meaning =
-                                        starredWordsList[index][1];
-                                    return Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
+                            itemCount: starredWordsList.length,
+                            itemBuilder: (_, index) {
+                              final String word =
+                              starredWordsList[index][0];
+                              final String meaning =
+                              starredWordsList[index][1];
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(20.0),
+                                ),
+                                child: ListTile(
+                                    contentPadding: EdgeInsets.all(16.0),
+                                    title: Padding(
+                                      padding:
+                                      EdgeInsets.only(bottom: 8.0),
+                                      child: Text(
+                                        word,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: _hiddenWord
+                                                ? Colors.white
+                                                : Colors.black),
                                       ),
-                                      child: ListTile(
-                                          contentPadding: EdgeInsets.all(16.0),
-                                          title: Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 8.0),
-                                            child: Text(
-                                              word,
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: _hiddenWord
-                                                      ? Colors.white
-                                                      : Colors.black),
-                                            ),
-                                          ),
-                                          subtitle: Text(
-                                            meaning,
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: _hiddenMeaning
-                                                    ? Colors.white
-                                                    : Colors.black87),
-                                          ),
-                                          onTap: () {
-                                            _StopSpeakTts();
-                                            _speakTTScard('$word. $meaning');
-                                          },
-                                          trailing: Container(
-                                            width: 30,
-                                            child: IconButton(
-                                                icon: Icon(Icons.star),
-                                                color: Colors.orangeAccent,
-                                                // onPressed: () {_toggleWordStarred(word);},
-                                                onPressed: () async {
-                                                  showDialog(
-                                                      context: context,
-                                                      barrierDismissible:
-                                                          true, // 바깥 터치시 close
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return AlertDialog(
-                                                          content: Text(
-                                                              '단어를 삭제하시겠습니까?'),
-                                                          actions: [
-                                                            TextButton(
-                                                              child: const Text(
-                                                                  '아니요',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .black)),
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                            ),
-                                                            TextButton(
-                                                              child: const Text(
-                                                                  '네',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .black)),
-                                                              onPressed: () {
-                                                                _deleteStarredWords(word, meaning);
-                                                                Navigator.of(context).pop();
-                                                              },
-                                                            ),
-                                                          ],
-                                                        );
-                                                      });
-                                                }),
-                                          )),
-                                    );
-                                  },
-                                )),
+                                    ),
+                                    subtitle: Text(
+                                      meaning,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: _hiddenMeaning
+                                              ? Colors.white
+                                              : Colors.black87),
+                                    ),
+                                    onTap: () {
+                                      _StopSpeakTts();
+                                      _speakTTScard('$word. $meaning');
+                                    },
+                                    trailing: Container(
+                                      width: 30,
+                                      child: IconButton(
+                                          icon: Icon(Icons.star),
+                                          color: Colors.orangeAccent,
+                                          // onPressed: () {_toggleWordStarred(word);},
+                                          onPressed: () async {
+                                            showDialog(
+                                                context: context,
+                                                barrierDismissible:
+                                                true, // 바깥 터치시 close
+                                                builder: (BuildContext
+                                                context) {
+                                                  return AlertDialog(
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius
+                                                          .circular(20.0),),
+                                                    title: Text("단어를 삭제하시겠습니까?",
+                                                      style: TextStyle(
+                                                        color: Colors.white,),),
+                                                    backgroundColor: Color(
+                                                        0xFF74b29e),
+                                                    actions: [
+                                                      TextButton(
+                                                        child: const Text(
+                                                            '아니요',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white)),
+                                                        onPressed: () {
+                                                          Navigator.of(
+                                                              context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: const Text(
+                                                            '네',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white)),
+                                                        onPressed: () {
+                                                          _deleteStarredWords(
+                                                              word, meaning);
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          }),
+                                    )),
+                              );
+                            },
+                          )),
                     ),
                     Column(
                       children: <Widget>[
