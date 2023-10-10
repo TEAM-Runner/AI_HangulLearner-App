@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in screen_select_TtsButton.dart&#10;&#10;- 배경색, ListView, 사전 검색 결과 팝업창 수정">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in screen_select_TtsButton.dart&#10;&#10;- backgroundColor, ListView, 사전 검색 결과 팝업창 UI 업데이트">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_modifyButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Update button labels in modify, dictionary, TTS screen">
-      <created>1680781153908</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1680781153908</updated>
     </task>
     <task id="LOCAL-00022" summary="Update yellow highlight function in TTS&#10;&#10;- _setIsSelected: 노란색 highlight 표시할 단어를 세팅하는 함수&#10;- 전체 문장 읽기 버튼을 클릭할 때 그 전에 읽었던 문장이 highlight 되어있던 문제 해결">
       <created>1680784728049</created>
@@ -416,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696942271271</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Update UI in screen_select_TtsButton.dart&#10;&#10;- backgroundColor, ListView, 사전 검색 결과 팝업창 UI 업데이트">
+      <created>1696943481888</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1696943481888</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -437,7 +436,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated TTS UI to display each sentence separately&#10;&#10;- 문단에서 문장들을 따로 분리하기 위해 ListView 이용&#10;- 문장 단위 출력을 위해 각 문장 앞에 IconButton 추가" />
     <MESSAGE value="Update function to play TTS for all sentences&#10;&#10;- 텍스트를 문장 단위로 분리해 ListView에서 출력하도록 UI를 변경하면서 기존의 함수가 작동하지 않던 문제 해결&#10;- 문장 단위 TTS 재생은 _speakOneSentence(), 전체 단어 TTS 재생은 _speakAllSentence() 함수를 이용하도록 업데이트함" />
     <MESSAGE value="Fixe text editing bug&#10;&#10;- 텍스트 수정 화면에서 수정한 텍스트가 TTS/사전 화면으로 제대로 전달되지 않던 버그 수정" />
     <MESSAGE value="Fix TTS continuous play function bug&#10;&#10;- UI를 변경하면서 기존의 TTS 이어서 듣기 함수가 작동하지 않던 문제 해결" />
@@ -462,6 +460,7 @@
     <MESSAGE value="Fix Home Screen Scroll" />
     <MESSAGE value="Fix bug in word deletion function" />
     <MESSAGE value="Update UI in screen_select_TtsButton.dart&#10;&#10;- 배경색, ListView, 사전 검색 결과 팝업창 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update UI in screen_select_TtsButton.dart&#10;&#10;- 배경색, ListView, 사전 검색 결과 팝업창 수정" />
+    <MESSAGE value="Update UI in screen_select_TtsButton.dart&#10;&#10;- backgroundColor, ListView, 사전 검색 결과 팝업창 UI 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update UI in screen_select_TtsButton.dart&#10;&#10;- backgroundColor, ListView, 사전 검색 결과 팝업창 UI 업데이트" />
   </component>
 </project>

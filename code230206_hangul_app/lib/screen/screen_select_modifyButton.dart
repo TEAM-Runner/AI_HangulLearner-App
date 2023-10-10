@@ -22,9 +22,10 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
   FocusNode _focusNode = FocusNode(); // 키보드를 화면에 자동으로 보여주기 위해 FocusNode 정의
 
   _SelectModifyButtonScreen(this._text, this.currentTTSIndex) {
-    print("_SelectModifyButtonScreen $_text}");
-    _textEditingController.text = _text;
-    returnText = _text;
+    String replaceText = _text.replaceAll(".", ".\n");
+    print("_SelectModifyButtonScreen $replaceText}");
+    _textEditingController.text = replaceText;
+    returnText = replaceText;
   }
 
   @override
@@ -56,19 +57,59 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
 
 
     return Scaffold(
+      backgroundColor: Color(0xffd9ebe5),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF3F3F3),
+        backgroundColor: Color(0xffd9ebe5),
         elevation: 0.0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title:Image.asset("assets/images/i_hangul.png"),
+        // title:Image.asset("assets/images/i_hangul.png"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Tooltip(
+              richMessage: WidgetSpan(
+                // alignment: PlaceholderAlignment.baseline,
+                // baseline: TextBaseline.alphabetic,
+                  child: Column(
+                    children: [
+                      Container(
+                        // padding: EdgeInsets.all(10),
+                        constraints: const BoxConstraints(maxWidth: 250),
+                        child: const Text("글자 고치기",
+                          style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        // padding: EdgeInsets.all(10),
+                        constraints: const BoxConstraints(maxWidth: 250),
+                        child: Text("책과 조금 다른 부분이 있다면 글자를 고칠 수 있어요. 글자를 모두 고친 다음에는 체크 버튼을 눌러 주세요.",
+                            style: TextStyle(color: Colors.black, fontSize: 14)),
+                      )
+                    ],
+                  )
+              ),
+              triggerMode: TooltipTriggerMode.tap,
+              showDuration: Duration(seconds: 5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                border: Border.all(
+                  color: Color(0xFF74b29e), // Border color
+                  width: 1.0, // Border width
+                ),
+              ),
+              child: Icon(Icons.help_outline, color: Colors.black,),
+            ),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -77,15 +118,22 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Container(),
+                Container(
+                    width: 50.0,
+                    height: 50.0
+                ),
+                const Expanded(
+                  child: Center(
+                    child: Text("글자를 고칠 수 있어요", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                    ), // Center the text
+                  ),
                 ),
                 Container(
                   width: 50.0,
                   height: 50.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25.0),
-                    color: Color(0xFFC0EB75),
+                    color: Color(0xFF74b29e),
                   ),
                   child: IconButton(
                     onPressed: () {
@@ -95,39 +143,46 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                         ),
                       );
                     },
-                    icon: Icon(Icons.check, color: Colors.black),
+                    icon: Icon(Icons.check, color: Colors.white),
                   ),
-                )
+                ),
               ],
             ),
-            // SizedBox(height: 16.0),
+            SizedBox(height: 16.0),
             Expanded(child:
-              SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(left: 6.0, right: 6.0, bottom: 6.0, top: 0.0),
-                  child: TextField(
-                    controller: _textEditingController,
-                    decoration: const InputDecoration(
-                      // labelText: 'modify text',
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.0),
+                  color: Colors.white,
+                ),
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 2),
+                    child: TextField(
+                      controller: _textEditingController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                      ),
+                      style: TextStyle(
+                        fontSize: 18,
+                        height: 2.0,
+                        // wordSpacing: 1.0,
+                      ),
+                      maxLines: null,
+                      onChanged: (text) {
+                        returnText = text;
+                        print('***  returnText  *** ' + returnText);
+                      },
+                      focusNode: _focusNode, // FocusNode를 TextField에 붙이기
                     ),
-                    style: TextStyle(
-                      fontSize: 20,
-                      height: 2.0,
-                      wordSpacing: 1.0,
-                    ),
-                    maxLines: null,
-                    onChanged: (text) {
-                      returnText = text;
-                      print('***  returnText  *** ' + returnText);
-                    },
-                    focusNode: _focusNode, // FocusNode를 TextField에 붙이기
                   ),
                 ),
               )
-            )
+            ),
+            SizedBox(height: 16.0),
+
           ],
         ),
       ),
