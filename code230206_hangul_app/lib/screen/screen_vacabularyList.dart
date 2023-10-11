@@ -13,6 +13,7 @@ import 'package:code230206_hangul_app/configuration/hangul_scroll.dart';
 import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class VocabularyListScreen extends StatefulWidget {
   const VocabularyListScreen({Key? key}) : super(key: key);
@@ -90,15 +91,18 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     "ㅍ",
     "ㅎ",
   ];
-  Map<String, String> starredWordsMap =
-  {}; // List of words/meanings displayed on the screen
-  Map<String, String> filteredWordsMap =
-  {}; // List for initial consonant category filtering
 
-  List<List<String>> starredWordsList =
-  []; // List of words/meanings displayed on the screen
-  List<List<String>> filteredWordsList =
-  []; // List for initial consonant category filtering
+  List<List<String>> starredWordsList = []; // List of words/meanings displayed on the screen
+  List<List<String>> filteredWordsList = []; // List for initial consonant category filtering
+
+  // dropdownbutton2
+  final List<String> items = [
+    '가나다순',
+    '랜덤순',
+    '최신순',
+    '오래된순',
+  ];
+  String? selectedValue;
 
   // Function to display the entire list of words
   // When '모두' category is selected
@@ -464,116 +468,180 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Spacer(),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _hiddenWord = !_hiddenWord;
-                    });
-                  },
-                  style: TextButton.styleFrom(
-                    primary: _hiddenWord ? Color(0xFF74B29E) : Colors.white,
-                    backgroundColor: _hiddenWord ? Colors.white : Color(
-                        0xFF74B29E),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                Expanded(
+                  child: Container(),
+                ),                Container(
+                  height: 50,
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _hiddenWord = !_hiddenWord;
+                        _hiddenMeaning = false;
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                      primary: _hiddenWord ? Color(0xFF74B29E) : Colors.white,
+                      backgroundColor: _hiddenWord ? Colors.white : Color(
+                          0xFF74B29E),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
+                    child: Text(_hiddenWord ? " 단어 숨김 " : " 단어 숨김 "),
                   ),
-                  child: Text(_hiddenWord ? "단어 숨김" : "단어 숨김"),
                 ),
-                Spacer(),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _hiddenMeaning = !_hiddenMeaning;
-                    });
-                  },
-                  style: TextButton.styleFrom(
-                    primary: _hiddenMeaning ? Color(0xFF74B29E) : Colors.white,
-                    backgroundColor: _hiddenMeaning ? Colors.white : Color(
-                        0xFF74B29E),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                Expanded(
+                  child: Container(),
+                ),
+                Container(
+                  height: 50,
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _hiddenMeaning = !_hiddenMeaning;
+                        _hiddenWord = false;
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                      primary: _hiddenMeaning ? Color(0xFF74B29E) : Colors.white,
+                      backgroundColor: _hiddenMeaning ? Colors.white : Color(
+                          0xFF74B29E),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
+                    child: Text(_hiddenMeaning ? " 뜻 숨김 " : " 뜻 숨김 "),
+                  )
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+                Container(
+                  height: 50,
+                  width: 50,
+                  child: IconButton(
+                    icon: Icon(
+                        isPlaysound
+                            ? Icons.keyboard_voice
+                            : Icons.keyboard_voice,
+                        color: isPlaysound
+                            ? Colors.white
+                            : Color(0xFF74B29E)
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isPlaysound = !isPlaysound;
+                      });
+                      if (isPlaysound) {
+                        _speakTTS();
+                      } else {
+                        _StopSpeakTts();
+                      }
+                    },
                   ),
-                  child: Text(_hiddenMeaning ? "뜻 숨김" : "뜻 숨김"),
                 ),
-                Spacer(),
-                IconButton(
-                  icon: Icon(
-                      isPlaysound
-                          ? Icons.keyboard_voice
-                          : Icons.keyboard_voice,
-                      color: isPlaysound
-                          ? Colors.white
-                          : Color(0xFF74B29E)
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isPlaysound = !isPlaysound;
-                    });
-                    if (isPlaysound) {
-                      _speakTTS();
-                    } else {
-                      _StopSpeakTts();
-                    }
-                  },
+                Expanded(
+                  child: Container(),
                 ),
-                Spacer(),
-                PopupMenuButton<String>(
-                  itemBuilder: (BuildContext context) =>
-                  <PopupMenuEntry<String>>[
-                    PopupMenuItem<String>(
-                      value: "가나다순",
-                      child: Text("가나다순"),
-                    ),
-                    PopupMenuItem<String>(
-                      value: "랜덤순",
-                      child: Text("랜덤순"),
-                    ),
-                    PopupMenuItem<String>(
-                      value: "최신순",
-                      child: Text("최신순"),
-                    ),
-                    PopupMenuItem<String>(
-                      value: "오래된순",
-                      child: Text("오래된순"),
-                    ),
-                  ],
-                  onSelected: (String value) {
-                    setState(() {
-                      dropdownValue = value;
-                      if (dropdownValue == "가나다순") {
-                        _consonantOrderStarredWords();
-                      }
-                      if (dropdownValue == "랜덤순") {
-                        _randomOrderStarredWords();
-                      }
-                      if (dropdownValue == "최신순") {
-                        _newestOrderStarredWords();
-                      }
-                      if (dropdownValue == "오래된순") {
-                        _oldestOrderStarredWords();
-                      }
-                    });
-                  },
-
-                  child: Container(
-                    padding: EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xFF74B29E)),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Row(
+                DropdownButtonHideUnderline(
+                  child: DropdownButton2<String>(
+                    isExpanded: true,
+                    hint: const Row(
                       children: [
-                        Icon(Icons.reorder, color: Color(0xFF74B29E)),
-                        SizedBox(width: 8),
-                        Text("정렬", style: TextStyle(color: Color(0xFF74B29E))),
+                        Icon(
+                          Icons.list,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Expanded(
+                          child: Text(
+                            '정렬',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ],
                     ),
+                    items: items
+                        .map((String item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ))
+                        .toList(),
+                    value: selectedValue,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value;
+                        if (selectedValue == "가나다순"){
+                          _consonantOrderStarredWords();
+                        }
+                        if (selectedValue == "랜덤순"){
+                          _randomOrderStarredWords();
+                        }
+                        if (selectedValue == "최신순"){
+                          _newestOrderStarredWords();
+                        }
+                        if (selectedValue == "오래된순"){
+                          _oldestOrderStarredWords();
+                        }
+                      });
+                    },
+                    buttonStyleData: ButtonStyleData(
+                      height: 50,
+                      width: 100,
+                      padding: const EdgeInsets.only(left: 14, right: 14),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Color(0xFF74b29e),
+                      ),
+                      elevation: 2,
+                    ),
+                    iconStyleData: const IconStyleData(
+                      icon: Icon(
+                        Icons.arrow_forward_ios_outlined,
+                      ),
+                      iconSize: 14,
+                      iconEnabledColor: Colors.white,
+                      iconDisabledColor: Colors.grey,
+                    ),
+                    dropdownStyleData: DropdownStyleData(
+                      maxHeight: 200,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Color(0xFF74b29e),
+                      ),
+                      offset: const Offset(0, 0),
+                      scrollbarTheme: ScrollbarThemeData(
+                        radius: const Radius.circular(40),
+                        thickness: MaterialStateProperty.all(6),
+                        thumbVisibility: MaterialStateProperty.all(true),
+                      ),
+                    ),
+                    menuItemStyleData: const MenuItemStyleData(
+                      height: 40,
+                      padding: EdgeInsets.only(left: 14, right: 14),
+                    ),
                   ),
                 ),
-                Spacer(),
+                Expanded(
+                  child: Container(),
+                ),
               ],
             ),
             Expanded(

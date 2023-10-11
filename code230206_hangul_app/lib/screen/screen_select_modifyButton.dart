@@ -117,7 +117,12 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                 ),
                 const Expanded(
                   child: Center(
-                    child: Text("글자를 고칠 수 있어요", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                    child: Text("글자를 고칠 수 있어요",
+                        style: TextStyle(
+                            color: Color(0xFF74b29e),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                        )
                     ), // Center the text
                   ),
                 ),

@@ -730,9 +730,9 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                           padding: const EdgeInsets.only(left: 14, right: 14),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: Colors.black26,
-                            ),
+                            // border: Border.all(
+                            //   color: Colors.black26,
+                            // ),
                             color: Color(0xFF74b29e),
                           ),
                           elevation: 2,
@@ -809,6 +809,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     child: ListView.separated(
                       shrinkWrap: true,
                       itemCount: sentenceList.length,
+                      padding: EdgeInsets.all(3),
                       itemBuilder: (BuildContext context, int sentenceIndex) {
                         Sentence sentence = sentenceList[sentenceIndex];
 
