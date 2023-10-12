@@ -484,7 +484,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                       backgroundColor: _hiddenWord ? Colors.white : Color(
                           0xFF74B29E),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                     child: Text(_hiddenWord ? " 단어 숨김 " : " 단어 숨김 "),
@@ -507,7 +507,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                       backgroundColor: _hiddenMeaning ? Colors.white : Color(
                           0xFF74B29E),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                     child: Text(_hiddenMeaning ? " 뜻 숨김 " : " 뜻 숨김 "),
@@ -606,7 +606,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                       width: 80,
                       padding: const EdgeInsets.only(left: 14, right: 14),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                         color: Color(0xFF74b29e),
                       ),
                       //elevation: 2,
@@ -623,7 +623,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                       maxHeight: 200,
                       width: 80,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                         color: Color(0xFF74b29e),
                       ),
                       offset: const Offset(0, 0),
@@ -773,7 +773,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                                       ? Color(0xFF74b29e)
                                       : null,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(20.0),
                                   ),
                                   dense: true,
                                   visualDensity: VisualDensity(
