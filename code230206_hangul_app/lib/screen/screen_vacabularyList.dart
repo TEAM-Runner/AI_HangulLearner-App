@@ -471,7 +471,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                 Expanded(
                   child: Container(),
                 ),                Container(
-                  height: 50,
+                  height: 40,
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -494,7 +494,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                   child: Container(),
                 ),
                 Container(
-                  height: 50,
+                  height: 40,
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -548,11 +548,11 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                     isExpanded: true,
                     hint: const Row(
                       children: [
-                        Icon(
+                        /*Icon(
                           Icons.list,
                           size: 16,
                           color: Colors.white,
-                        ),
+                        ),*/
                         SizedBox(
                           width: 4,
                         ),
@@ -602,14 +602,14 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                       });
                     },
                     buttonStyleData: ButtonStyleData(
-                      height: 50,
-                      width: 100,
+                      height: 40,
+                      width: 80,
                       padding: const EdgeInsets.only(left: 14, right: 14),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(10),
                         color: Color(0xFF74b29e),
                       ),
-                      elevation: 2,
+                      //elevation: 2,
                     ),
                     iconStyleData: const IconStyleData(
                       icon: Icon(
@@ -621,9 +621,9 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                     ),
                     dropdownStyleData: DropdownStyleData(
                       maxHeight: 200,
-                      width: 100,
+                      width: 80,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(10),
                         color: Color(0xFF74b29e),
                       ),
                       offset: const Offset(0, 0),
