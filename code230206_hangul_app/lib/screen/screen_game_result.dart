@@ -46,8 +46,9 @@ class _GameResultScreenState extends State<GameResultScreen> {
 
     return SafeArea(
         child: Scaffold(
+          backgroundColor: Color(0xffd9ebe5),
           appBar: AppBar(
-            backgroundColor: Color(0xFFF3F3F3),
+            backgroundColor: Color(0xffd9ebe5),
             elevation: 0.0,
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -101,20 +102,26 @@ class _GameResultScreenState extends State<GameResultScreen> {
                 ),
                 Text(
                   '$correctCount/${words.length}',
-                  style: TextStyle(fontSize: 48),
+                  style: TextStyle(fontSize: 100,color:Colors.white,fontWeight:FontWeight.bold,),
                 ),
                 SizedBox(height: 16),
                 Text(
                   message,
                   style: TextStyle(fontSize: 24),
                 ),
-                SizedBox(height: 32),
+                SizedBox(height: 64),
                 SizedBox(
                   width: width * 0.5,
                   height: 50,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:MaterialStateProperty.all<Color>(Colors.white),),
+                      backgroundColor:MaterialStateProperty.all<Color>(Color(0xFF74B29E),),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      ),
                     onPressed: () {
                       Navigator.pushNamed(context,
                           GameWrongWordListScreen.GameWrongWordListScreenRouteName,
@@ -123,17 +130,26 @@ class _GameResultScreenState extends State<GameResultScreen> {
                     },
                     child: Text(
                       '단어 다시보기',
-                      style: TextStyle(fontSize: 20, color: MyColor.accentColor),
+                      style: TextStyle(fontSize: width * 0.045, color: Colors.white),
                     ),
                   ),
                 ),
+
+
+
                 SizedBox(height: 16),
                 SizedBox(
                   width: width * 0.5, // <-- Your width
                   height: 50, // <-- Your height
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:MaterialStateProperty.all<Color>(Colors.white),),
+                      backgroundColor:MaterialStateProperty.all<Color>(Color(0xFF74B29E),),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.pushReplacement(
                           context,
@@ -141,7 +157,7 @@ class _GameResultScreenState extends State<GameResultScreen> {
                     },
                     child: Text(
                       '다시풀기',
-                      style: TextStyle(fontSize: 20, color: MyColor.accentColor),
+                      style: TextStyle(fontSize: width * 0.045, color: Colors.white),
                     ),
                   ),
                 ),
@@ -151,13 +167,19 @@ class _GameResultScreenState extends State<GameResultScreen> {
                   height: 50, // <-- Your height
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:MaterialStateProperty.all<Color>(Colors.white),),
+                      backgroundColor:MaterialStateProperty.all<Color>(Color(0xFF74B29E),),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text(
                       '게임 나가기',
-                      style: TextStyle(fontSize: 20, color: MyColor.accentColor),
+                      style: TextStyle(fontSize: width * 0.045, color: Colors.white),
                     ),
                   ),
                 ),
