@@ -603,7 +603,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                     },
                     buttonStyleData: ButtonStyleData(
                       height: 40,
-                      width: 80,
+                      width: 100,
                       padding: const EdgeInsets.only(left: 14, right: 14),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -621,7 +621,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
                     ),
                     dropdownStyleData: DropdownStyleData(
                       maxHeight: 200,
-                      width: 80,
+                      width: 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Color(0xFF74b29e),
