@@ -63,8 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ],
-            title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
-            centerTitle: true,
+            //title: Text("I HANGUL",style: TextStyle(color: Colors.black,),),
+            //centerTitle: true,
           ),
 
           body: SingleChildScrollView(
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.all(10),
                       ),
 
-                      makeButton('단어장', 3 , '내가 찾은 단어 보러 가기', 3),
+                      makeButton('단어장', 3 , '내가 찾은 단어 보러 가기!', 3),
                       const Padding(
                         padding: EdgeInsets.all(10),
                       ),
