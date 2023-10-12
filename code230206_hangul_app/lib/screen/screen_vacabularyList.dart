@@ -70,7 +70,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
 
   // Initial consonant category button list
   List<String> initialConsonants = [
-    "모두",
+    "★",
     "ㄱ",
     "ㄲ",
     "ㄴ",
