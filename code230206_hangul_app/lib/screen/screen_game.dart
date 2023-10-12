@@ -217,8 +217,9 @@ class _GameScreenState extends State<GameScreen> {
     final double height = screenSize.height;
 
     return Scaffold(
+      backgroundColor: Color(0xffd9ebe5),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF3F3F3),
+        backgroundColor: Color(0xFFD9EBE5),
         elevation: 0.0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -250,7 +251,7 @@ class _GameScreenState extends State<GameScreen> {
                 color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
                 border: Border.all(
-                  color: Color(0xFF74b29e), // Border color
+                  color: Color(0xFF74B29E), // Border color
                   width: 1.0, // Border width
                 ),
               ),
@@ -263,20 +264,22 @@ class _GameScreenState extends State<GameScreen> {
         centerTitle: true,
       ),
       body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white)),
-          width: width * 0.85,
-          height: height * 0.55,
-          child: Swiper(physics: NeverScrollableScrollPhysics(),
-          loop: false,
-          itemCount: 11,
-          itemBuilder: (BuildContext context, int index) {
-            return index < quizNumber
-                ? _buildQuizCard(gameWordList, width, height)
-                : Container(); // empty container to return nothing
-          },
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),),
+            width: width * 0.85,
+            height: height * 0.55,
+
+            child: Swiper(physics: NeverScrollableScrollPhysics(),
+            loop: false,
+            itemCount: 11,
+            itemBuilder: (BuildContext context, int index) {
+              return index < quizNumber
+                  ? _buildQuizCard(gameWordList, width, height)
+                  : Container(); // empty container to return nothing
+            },
+            ),
           ),
         ),
       ),
@@ -287,8 +290,8 @@ class _GameScreenState extends State<GameScreen> {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Color(0xFFF3F3F3)),
-            color: Color(0xFFF3F3F3),
+            border: Border.all(color: Color(0xFFD9EBE5)),
+            color: Color(0xFFD9EBE5),
         ),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -300,23 +303,49 @@ class _GameScreenState extends State<GameScreen> {
                 padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 30.0),
                 child: Column(
                   children: <Widget>[
-                    Text('Q' + (index+1).toString() + '.', //퀴즈 번호
-                      style: TextStyle(fontSize: width*0.06, fontWeight: FontWeight.bold),),
-                    SizedBox(height: 10),
-                    Text(_quizWord, style: TextStyle(fontSize: 46)), // 퀴즈 초성
-                    SizedBox(height: 10),
+                    Text('퀴즈 ' + (index+1).toString() , //퀴즈 번호
+                      style: TextStyle(fontSize: width*0.1, fontWeight: FontWeight.bold,color:Color(0xff74b29e),)),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: _quizWord.runes.map((int codeUnit) {
+                        final character = String.fromCharCode(codeUnit);
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 2),
+                          child: Text(
+                            character,
+                            style: TextStyle(fontSize: 46),
+                          ),
+                        );
+                      }).toList(),
+                    ), // 퀴즈 초성
+                    SizedBox(height: 20),
                     Text(gameWordList[index][1],
                         style: TextStyle(fontSize: 22), textAlign: TextAlign.center,), // 퀴즈 단어의 뜻
-                    SizedBox(height: 30),
+                    SizedBox(height: 40),
                     SizedBox(
                       width: width * 0.5,
                       child: TextField(
                           controller: _controller,
                           decoration: InputDecoration(
-                              hintText: '정답을 입력해주세요.',
-                              hintStyle: TextStyle(fontSize: 20)),
-                          style: TextStyle(fontSize: 20),
+                            //hintText: _controller.text.isEmpty ? '정답을 입력해 주세요' : '',
+                            //hintStyle: TextStyle(fontSize: 20),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                          style: TextStyle(fontSize: 25),
                           textAlign: TextAlign.center,
+                          cursorColor: Colors.black,
 
 
                           onSubmitted: (input) {
@@ -346,7 +375,7 @@ class _GameScreenState extends State<GameScreen> {
                           }
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     InkWell(
                       child: ColorFiltered(
                         colorFilter: ColorFilter.matrix(
