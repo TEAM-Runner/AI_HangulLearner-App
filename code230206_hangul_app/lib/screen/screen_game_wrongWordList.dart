@@ -29,8 +29,9 @@ class _GameWrongWordListScreenState extends State<GameWrongWordListScreen>{
 
     return SafeArea(
         child: Scaffold(
+            backgroundColor: Color(0xffd9ebe5),
             appBar: AppBar(
-              backgroundColor: Color(0xFFF3F3F3),
+              backgroundColor: Color(0xffd9ebe5),
               elevation: 0.0,
               leading: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -80,16 +81,24 @@ class _GameWrongWordListScreenState extends State<GameWrongWordListScreen>{
                 itemCount: words.length,
                 itemBuilder: (context, index) {
                   return Card(
-
+                      shape: RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.circular(20.0),),
                     // ***** ver 1: 옆에 O/X 아이콘 표시
                     child: ListTile(
-                      title: Text(words[index][0], style: const TextStyle(fontSize: 20)),
-                      subtitle: Text(words[index][1], style: const TextStyle(fontSize: 20)),
+                      contentPadding: EdgeInsets.all(16.0),
+                      title: Padding(
+                        padding:EdgeInsets.only(bottom: 8.0),
+                        child: Text(words[index][0], style: const TextStyle(fontSize: 20)),
+                      ),
+                      subtitle: Text(words[index][1], style: const TextStyle(fontSize: 16)),
                       trailing: Icon(
                         words[index][2] ? Icons.circle_outlined : Icons.close,
-                        color: words[index][2] ? Colors.blue: Colors.red,
+                        color: words[index][2] ? Color(0xFF74b29e): Color(0xFF74b29e)
                       ),
                     ),
+
+
 
                     // ***** ver 2: 글자색 변경
                     // child: ListTile(
