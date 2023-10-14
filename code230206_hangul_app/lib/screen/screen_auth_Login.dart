@@ -92,7 +92,22 @@ class _LoginWidget extends State<LoginWidget> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: Colors.white, width: 1),),),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red, width: 1),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red, width: 1),
+                        ),
+                      ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (email) =>
+                    email != null && !EmailValidator.validate(email)
+                        ? '유효한 이메일을 입력해 주세요'
+                        : null,
                   ),
                   SizedBox(height: height * 0.01),
                   TextFormField(
@@ -177,14 +192,55 @@ class _LoginWidget extends State<LoginWidget> {
         barrierDismissible: false,
         builder: (context) => Center(child: CircularProgressIndicator())
     );
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim()
       );
     } on FirebaseException catch (e) {
-      print(e);
-      SnackBarWidget.showSnackBar(e.message);
+      String errorMessage;
+
+      print("e: ${e}");
+      print("e.message: ${e.message}");
+
+      switch (e.message) {
+        case 'The email address is badly formatted.':
+          errorMessage = '이메일 형식이 잘못되었습니다.';
+          break;
+        case 'Unable to establish connection on channel.':
+          errorMessage = '이메일과 비밀번호를 입력해 주세요.';
+          break;
+        case 'There is no user record corresponding to this identifier. The user may have been deleted.':
+          errorMessage = '등록되지 않은 아이디이거나 아이디를 잘못 입력했습니다.';
+          break;
+        case 'The password is invalid or the user does not have a password.':
+          errorMessage = '비밀번호를 잘못 입력했습니다.';
+          break;
+        default:
+          errorMessage = '일시적인 오류로 로그인을 할 수 없습니다. 잠시 후 다시 이용해 주세요.';
+      }
+      print("errorMessage: $errorMessage");
+
+      // 에러 메시지 출력 팝업
+      await showDialog(
+          context: this.context,
+          barrierDismissible: true,
+          builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
+              title: Center(child: Text("로그인 실패", style: TextStyle(color: Colors.white,),),),
+              content: Text(errorMessage, style: TextStyle(color: Colors.white,)),
+              backgroundColor: Color(0xFF74b29e),
+              actions: [
+                TextButton(
+                  child: const Text('확인', style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ]
+          )
+      );
     }
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
