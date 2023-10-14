@@ -110,11 +110,64 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
     try {
      await FirebaseAuth.instance
          .sendPasswordResetEmail(email: emailController.text.trim());
-     SnackBarWidget.showSnackBar('비밀번호 재설정 이메일이 발송되었습니다');
-     Navigator.of(context).popUntil((route) => route.isFirst);
+     // SnackBarWidget.showSnackBar('비밀번호 재설정 이메일이 발송되었습니다');
+     await showDialog(
+         context: this.context,
+         barrierDismissible: true,
+         builder: (context) => AlertDialog(
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
+             title: Center(child: Text("비밀번호 재설정 이메일이 발송되었습니다", style: TextStyle(color: Colors.white,),),),
+             backgroundColor: Color(0xFF74b29e),
+             actions: [
+               TextButton(
+                 child: const Text('확인', style: TextStyle(color: Colors.white)),
+                 onPressed: () {
+                   Navigator.of(context).popUntil((route) => route.isFirst);
+                 },
+               ),
+             ]
+         )
+     );
    } on FirebaseAuthException catch (e) {
-      print(e);
-      SnackBarWidget.showSnackBar(e.message);
+      String errorMessage;
+
+      print("e: ${e}");
+      print("e.message: ${e.message}");
+
+      switch (e.message) {
+        case 'The email address is badly formatted.':
+          errorMessage = '이메일 형식이 잘못되었습니다.';
+          break;
+        case 'Unable to establish connection on channel.':
+          errorMessage = '이메일을 입력해 주세요.';
+          break;
+        case 'There is no user record corresponding to this identifier. The user may have been deleted.':
+          errorMessage = '등록되지 않은 이메일이거나 이메일를 잘못 입력했습니다.';
+          break;
+        default:
+          errorMessage = '일시적인 오류로 비밀번호 재설정 기능을 이용 할 수 없습니다. 잠시 후 다시 이용해 주세요.';
+      }
+
+      await showDialog(
+          context: this.context,
+          barrierDismissible: true,
+          builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
+              title: Center(child: Text("비밀번호 재설정 실패", style: TextStyle(color: Colors.white,),),),
+              content: Text(errorMessage, style: TextStyle(color: Colors.white,)),
+              backgroundColor: Color(0xFF74b29e),
+              actions: [
+                TextButton(
+                  child: const Text('확인', style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ]
+          )
+      );
+
+      // SnackBarWidget.showSnackBar(e.message);
       Navigator.of(context).pop();
     }
   }

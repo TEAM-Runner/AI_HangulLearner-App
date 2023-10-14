@@ -212,7 +212,7 @@ class _LoginWidget extends State<LoginWidget> {
           errorMessage = '이메일과 비밀번호를 입력해 주세요.';
           break;
         case 'There is no user record corresponding to this identifier. The user may have been deleted.':
-          errorMessage = '등록되지 않은 아이디이거나 아이디를 잘못 입력했습니다.';
+          errorMessage = '등록되지 않은 이메일이거나 이메일을 잘못 입력했습니다.';
           break;
         case 'The password is invalid or the user does not have a password.':
           errorMessage = '비밀번호를 잘못 입력했습니다.';

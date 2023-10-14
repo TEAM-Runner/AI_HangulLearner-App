@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update number of quizzes and result messages&#10;&#10;- 퀴즈 개수 3개 -&gt; 5개로 변경&#10;- 게임 결과 화면의 메시지 변경">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix login failure pop-up&#10;&#10;- 로그인 실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/snackBarWidget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/snackBarWidget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_forgotPassword.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_forgotPassword.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,13 +72,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Add word categories to vacabulary screen&#10;&#10;- screen_vacabularyList.dart에 단어 카테고리 추가&#10;- 카테고리의 초성 버튼을 눌렀을 때 해당 초성의 단어가 있는 경우 -&gt; 그 단어들만 표시&#10;- 없는 경우 -&gt; 화면에 아무 단어도 표시하지 않음">
-      <created>1685017704404</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1685017704404</updated>
     </task>
     <task id="LOCAL-00033" summary="Add game replay button">
       <created>1685018420605</created>
@@ -416,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697273374547</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Fix login failure pop-up&#10;&#10;- 로그인 실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경">
+      <created>1697277221561</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1697277221561</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -437,7 +437,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update font size for home screen and TTS ListView" />
     <MESSAGE value="Comment out unused pages" />
     <MESSAGE value="Add buttons to TTS screen&#10;&#10;- Pause button: 일시정지 버튼. pause 버튼 클릭 후 play 버튼 다시 누르면 멈췄던 부분부터 TTS 재생됨.&#10;- Stop button: 정지 버튼. stop 버튼 클릭 후 play 버튼 다시 누르면 처음부터 TTS 재생됨.&#10;- Mute button: 음소거 버튼. 클릭하면 아이콘이 바뀌면서 mute 상태가 되었다가, 다시 누르면 mute 상태가 해제됨.&#10;- TTS speed DropdownButton: TTS 속도 제어 버튼. 기존의 animated_toggle_switch에서 DropdownButton으로 변경함.&#10;- 버튼 색상, 사전 검색 시 BoxDecoration 색상 변경." />
     <MESSAGE value="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트" />
@@ -462,6 +461,7 @@
     <MESSAGE value="Fix _getWrongAnswer in screen_game.dart&#10;&#10;- 문제를 틀렸을 때 카운트가 제대로 되지 않던 에러 수정" />
     <MESSAGE value="Update game screen pop-up&#10;&#10;- O/X 팝업이 1.5초 동안 나타났다가 사라지도록 게임 화면 팝업 업데이트" />
     <MESSAGE value="Update number of quizzes and result messages&#10;&#10;- 퀴즈 개수 3개 -&gt; 5개로 변경&#10;- 게임 결과 화면의 메시지 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update number of quizzes and result messages&#10;&#10;- 퀴즈 개수 3개 -&gt; 5개로 변경&#10;- 게임 결과 화면의 메시지 변경" />
+    <MESSAGE value="Fix login failure pop-up&#10;&#10;- 로그인 실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix login failure pop-up&#10;&#10;- 로그인 실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
   </component>
 </project>
