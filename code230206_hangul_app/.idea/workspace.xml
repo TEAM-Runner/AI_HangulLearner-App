@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update UI in edit, TTS/dictionary, vocabulary screen">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update edit screen button size">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,20 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Set sort order,VocabularyListScreen&#10;&#10;-랜덤하고 가나다순">
-      <created>1682942588806</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1682942588806</updated>
-    </task>
-    <task id="LOCAL-00027" summary="add Floating Button,VocabularyListScreen&#10;&#10;-random, order, hide word, hide meaning">
-      <created>1683520921051</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1683520921051</updated>
     </task>
     <task id="LOCAL-00028" summary="add Function hidde word or meaning,VocabularyListScreen">
       <created>1683522179047</created>
@@ -415,7 +401,21 @@
       <option name="project" value="LOCAL" />
       <updated>1697001200597</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Update TTS/dictionary screen button size">
+      <created>1697260125761</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1697260125762</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Update edit screen button size">
+      <created>1697260271338</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1697260271338</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -436,8 +436,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add FocusNode to edit function&#10;&#10;- 수정 페이지로 이동하면 바로 키보드가 보이도록 FocusNode를 추가함" />
-    <MESSAGE value="Update Camera/Gallery selection pop-up UI&#10;&#10;- '책 읽어주기' 버튼 클릭시 나오는 카메라/갤러리 선택 팝업의 UI 업데이트" />
     <MESSAGE value="Update Camera screen UI for height&#10;&#10;- 기기에 따라 CameraPreview의 높이가 달라지도록 UI를 업데이트함" />
     <MESSAGE value="Fix TTS Playback Persistence Issue&#10;&#10;- TTS 화면을 벗어나도 TTS가 계속 재생되던 문제 해결&#10;- WillPopScope 위젯과 _stopflag를 이용" />
     <MESSAGE value="Update to display TTS word highlight and dictionary word highlight&#10;&#10;- 사전 검색 단어 highlight 표시와 TTS 출력 중인 단어의 highlight 표시를 동시에 할 수 있도록 업데이트&#10;- 기존의 코드는 사전 화면과 TTS 화면을 합치는 과정에서 highlight표시가 중복되는 문제 발생 -&gt; TTS 출력 중인 단어만 highlight 표시할 수 있었음" />
@@ -461,6 +459,8 @@
     <MESSAGE value="Add manual pop-up to all screens&#10;&#10;- TTS/사전, 수정, 단어장, 게임, 프로필 화면에 매뉴얼 팝업 추가 (Tooltip 사용)&#10;- 홈 화면의 메뉴얼 팝업 업데이트 (DropdownButton2를 이용해 구현)" />
     <MESSAGE value="Fix newline formatting in screen_select_modifyButton.dart&#10;&#10;- 개행 문자 앞에 공백이 추가되지 않도록 줄바꿈 형식 수정" />
     <MESSAGE value="Update UI in edit, TTS/dictionary, vocabulary screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update UI in edit, TTS/dictionary, vocabulary screen" />
+    <MESSAGE value="Update TTS/dictionary screen button size" />
+    <MESSAGE value="Update edit screen button size" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update edit screen button size" />
   </component>
 </project>

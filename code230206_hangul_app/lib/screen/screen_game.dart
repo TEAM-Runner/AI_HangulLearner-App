@@ -15,7 +15,6 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-
   // firestore 저장된 단어 가져오기
   late User user;
   late CollectionReference wordsRef;
@@ -28,7 +27,8 @@ class _GameScreenState extends State<GameScreen> {
   bool endGameReady = false;
 
   // 게임에 사용할 단어 리스트. bool은 모두 false로 초기화
-  List<List<dynamic>> gameWordList = List.generate(quizNumber, (_) => ['', '', false]);
+  List<List<dynamic>> gameWordList =
+      List.generate(quizNumber, (_) => ['', '', false]);
 
   // 게임에 사용할 기본 단어 리스트. Firestore에 저장된 단어가 10개 이하일 경우 사용
   List<List<dynamic>> gameBasicWordList = [
@@ -79,7 +79,7 @@ class _GameScreenState extends State<GameScreen> {
         int index;
         do {
           index = random.nextInt(starredWords.length);
-        } while(uniqueWordIndices.contains(index));
+        } while (uniqueWordIndices.contains(index));
         uniqueWordIndices.add(index);
         gameWordList[i] = [
           starredWords[index]['word'],
@@ -102,7 +102,7 @@ class _GameScreenState extends State<GameScreen> {
       timesController = 0;
       isHintClicked = Colors.white;
 
-      if (index < quizNumber - 1 ){
+      if (index < quizNumber - 1) {
         index++;
         _getQuizWord();
       } else {
@@ -111,10 +111,8 @@ class _GameScreenState extends State<GameScreen> {
 
       if (endGameReady) {
         Navigator.pushReplacementNamed(
-            context,
-            GameResultScreen.GameResultScreenRouteName,
-            arguments: GameResultScreen(GameResultScreenText: gameWordList)
-        );
+            context, GameResultScreen.GameResultScreenRouteName,
+            arguments: GameResultScreen(GameResultScreenText: gameWordList));
       }
     });
   }
@@ -128,7 +126,7 @@ class _GameScreenState extends State<GameScreen> {
         timesController = 0;
         isHintClicked = Colors.white;
 
-        if (index < quizNumber - 1 ){
+        if (index < quizNumber - 1) {
           index++;
           _getQuizWord();
         } else {
@@ -137,17 +135,13 @@ class _GameScreenState extends State<GameScreen> {
 
         if (endGameReady) {
           Navigator.pushReplacementNamed(
-              context,
-              GameResultScreen.GameResultScreenRouteName,
-              arguments: GameResultScreen(GameResultScreenText: gameWordList)
-          );
-        }}
-      );
+              context, GameResultScreen.GameResultScreenRouteName,
+              arguments: GameResultScreen(GameResultScreenText: gameWordList));
+        }
+      });
     }
     timesController++;
-
   }
-
 
   // 답 체크
   bool _checkAnswer(String input) {
@@ -164,10 +158,25 @@ class _GameScreenState extends State<GameScreen> {
   // 초성 추출 함수
   String? _getFirstConsonant(String str) {
     final Map<int, String> initialConsonants = {
-      4352: 'ㄱ', 4353: 'ㄲ', 4354: 'ㄴ', 4355: 'ㄷ', 4356: 'ㄸ',
-      4357: 'ㄹ', 4358: 'ㅁ', 4359: 'ㅂ', 4360: 'ㅃ', 4361: 'ㅅ',
-      4362: 'ㅆ', 4363: 'ㅇ', 4364: 'ㅈ', 4365: 'ㅉ', 4366: 'ㅊ',
-      4367: 'ㅋ', 4368: 'ㅌ', 4369: 'ㅍ', 4370: 'ㅎ'
+      4352: 'ㄱ',
+      4353: 'ㄲ',
+      4354: 'ㄴ',
+      4355: 'ㄷ',
+      4356: 'ㄸ',
+      4357: 'ㄹ',
+      4358: 'ㅁ',
+      4359: 'ㅂ',
+      4360: 'ㅃ',
+      4361: 'ㅅ',
+      4362: 'ㅆ',
+      4363: 'ㅇ',
+      4364: 'ㅈ',
+      4365: 'ㅉ',
+      4366: 'ㅊ',
+      4367: 'ㅋ',
+      4368: 'ㅌ',
+      4369: 'ㅍ',
+      4370: 'ㅎ'
     };
 
     if (str == null) {
@@ -186,7 +195,6 @@ class _GameScreenState extends State<GameScreen> {
       }
       return result;
     }
-
   }
 
   // 힌트
@@ -200,7 +208,6 @@ class _GameScreenState extends State<GameScreen> {
     _quizWord = _quizWord.replaceFirst(_quizWord[0], gameWordList[index][0][0]);
     print('***  _quizWord  *** ' + _quizWord.toString());
   }
-
 
   @override
   void initState() {
@@ -230,21 +237,25 @@ class _GameScreenState extends State<GameScreen> {
             icon: Tooltip(
               richMessage: WidgetSpan(
                   child: Column(
-                    children: [
-                      Container(
-                        constraints: const BoxConstraints(maxWidth: 250),
-                        child: const Text("초성 게임",
-                          style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Container(
-                        constraints: const BoxConstraints(maxWidth: 250),
-                        child: const Text("초성 게임을 통해 단어를 공부할 수 있어요. 힌트를 얻고 싶다면 열쇠 버튼을 눌러 보세요.",
-                            style: TextStyle(color: Colors.black, fontSize: 14)),
-                      )
-                    ],
+                children: [
+                  Container(
+                    constraints: const BoxConstraints(maxWidth: 250),
+                    child: const Text(
+                      "초성 게임",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    constraints: const BoxConstraints(maxWidth: 250),
+                    child: const Text(
+                        "초성 게임을 통해 단어를 공부할 수 있어요. 힌트를 얻고 싶다면 열쇠 버튼을 눌러 보세요.",
+                        style: TextStyle(color: Colors.black, fontSize: 14)),
                   )
-              ),
+                ],
+              )),
               triggerMode: TooltipTriggerMode.tap,
               showDuration: Duration(seconds: 5),
               decoration: BoxDecoration(
@@ -255,7 +266,10 @@ class _GameScreenState extends State<GameScreen> {
                   width: 1.0, // Border width
                 ),
               ),
-              child: Icon(Icons.help_outline, color: Colors.black,),
+              child: Icon(
+                Icons.help_outline,
+                color: Colors.black,
+              ),
             ),
             onPressed: () {},
           ),
@@ -267,44 +281,69 @@ class _GameScreenState extends State<GameScreen> {
         child: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),),
+              borderRadius: BorderRadius.circular(20),),
             width: width * 0.85,
             height: height * 0.55,
 
             child: Swiper(physics: NeverScrollableScrollPhysics(),
-            loop: false,
-            itemCount: 11,
-            itemBuilder: (BuildContext context, int index) {
-              return index < quizNumber
-                  ? _buildQuizCard(gameWordList, width, height)
-                  : Container(); // empty container to return nothing
-            },
+              loop: false,
+              itemCount: 11,
+              itemBuilder: (BuildContext context, int index) {
+                return index < quizNumber
+                    ? _buildQuizCard(gameWordList, width, height)
+                    : Container(); // empty container to return nothing
+              },
             ),
           ),
         ),
-      ),
+      )
+      // Center(
+      //   child: SingleChildScrollView(
+      //     child: Container(
+      //       child: Swiper(
+      //         physics: NeverScrollableScrollPhysics(),
+      //         loop: false,
+      //         itemCount: 11,
+      //         itemBuilder: (BuildContext context, int index) {
+      //           return index < quizNumber
+      //               ? Padding(
+      //             padding: EdgeInsets.all(30),
+      //             child: Center(
+      //               child: _buildQuizCard(gameWordList, width, height),
+      //             ),
+      //           )
+      //               : Container(); // empty container to return nothing
+      //         },
+      //       ),
+      //     ),
+      //   ),
+      // )
     );
   }
 
   Widget _buildQuizCard(List gameWordList, double width, double height) {
     return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Color(0xFFD9EBE5)),
-            color: Color(0xFFD9EBE5),
-        ),
+      height: height * 0.6,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40),
+        border: Border.all(color: Color(0xFF74B29E), width: 3),
+        color: Color(0xFF74B29E),
+      ),
       child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            // Expanded(
-            //   child: Container(),
-            // ),
             Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 30.0),
+                padding: EdgeInsets.only(
+                    left: 20.0, right: 20.0, bottom: 10.0, top: 10.0), // all 16
                 child: Column(
                   children: <Widget>[
-                    Text('퀴즈 ' + (index+1).toString() , //퀴즈 번호
-                      style: TextStyle(fontSize: width*0.1, fontWeight: FontWeight.bold,color:Color(0xff74b29e),)),
+                    Text('퀴즈 ' + (index + 1).toString(), //퀴즈 번호
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        )),
                     SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -312,22 +351,32 @@ class _GameScreenState extends State<GameScreen> {
                       children: _quizWord.runes.map((int codeUnit) {
                         final character = String.fromCharCode(codeUnit);
                         return Container(
+                          alignment: Alignment.center,
+                          width: 70,
+                          height: 70,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
                           ),
-                          padding: EdgeInsets.all(10),
+                          // padding: EdgeInsets.all(10),
                           margin: EdgeInsets.symmetric(horizontal: 2),
                           child: Text(
                             character,
-                            style: TextStyle(fontSize: 46),
+                            style: const TextStyle(
+                                fontSize: 46,
+                                fontWeight: FontWeight.bold,
+                                // color: Color(0xFF74B29E)
+                            ),
                           ),
                         );
                       }).toList(),
                     ), // 퀴즈 초성
                     SizedBox(height: 20),
-                    Text(gameWordList[index][1],
-                        style: TextStyle(fontSize: 22), textAlign: TextAlign.center,), // 퀴즈 단어의 뜻
+                    Text(
+                      gameWordList[index][1],
+                      style: TextStyle(fontSize: 22, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ), // 퀴즈 단어의 뜻
                     SizedBox(height: 40),
                     SizedBox(
                       width: width * 0.5,
@@ -339,15 +388,13 @@ class _GameScreenState extends State<GameScreen> {
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                              borderRadius: BorderRadius.circular(20.0),
                               borderSide: BorderSide.none,
                             ),
                           ),
                           style: TextStyle(fontSize: 25),
                           textAlign: TextAlign.center,
                           cursorColor: Colors.black,
-
-
                           onSubmitted: (input) {
                             if (_checkAnswer(input)){
                               showDialog( // true - 정답인 경우
@@ -379,22 +426,27 @@ class _GameScreenState extends State<GameScreen> {
                     InkWell(
                       child: ColorFiltered(
                         colorFilter: ColorFilter.matrix(
-                          isHintClicked == Colors.white ? [
-                            1, 0, 0, 0, 0,
-                            0, 1, 0, 0, 0,
-                            0, 0, 1, 0, 0,
-                            0, 0, 0, 1, 0,
-                          ] : [ // 필터 없는 경우
-                            0.2126,0.7152,0.0722,0,0,
-                            0.2126,0.7152,0.0722,0,0,
-                            0.2126,0.7152,0.0722,0,0,
-                            0,0,0,1,0,
-                          ] // 회색 필터
+                            isHintClicked == Colors.white ? [
+                              1, 0, 0, 0, 0,
+                              0, 1, 0, 0, 0,
+                              0, 0, 1, 0, 0,
+                              0, 0, 0, 1, 0,
+                            ] : [ // 필터 없는 경우
+                              0.2126,0.7152,0.0722,0,0,
+                              0.2126,0.7152,0.0722,0,0,
+                              0.2126,0.7152,0.0722,0,0,
+                              0,0,0,1,0,
+                            ] // 회색 필터
                         ),
-                        child: Image.asset('assets/images/key_color.png', height: 50, width: 50,),
+                        child: Image.asset(
+                          'assets/images/key_color.png',
+                          height: 50,
+                          width: 50,
+                        ),
                       ),
-                      onTap: () { // 힌트 1번만 클릭 가능
-                        if(isHintClicked != Colors.white) {
+                      onTap: () {
+                        // 힌트 1번만 클릭 가능
+                        if (isHintClicked != Colors.white) {
                           return;
                         }
                         isHintClicked = Colors.grey;
@@ -405,11 +457,7 @@ class _GameScreenState extends State<GameScreen> {
                   ],
                 )
             ),
-            Expanded(
-              child: Container(),
-            ),
-          ]
-      )
+          ]),
     );
   }
 }
