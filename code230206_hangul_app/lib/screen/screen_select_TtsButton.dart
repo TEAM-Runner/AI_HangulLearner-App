@@ -413,7 +413,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                       );
                     } else {
                       return const Center(
-                        child: Text("해당하는 단어를 찾을 수 없습니다.", style: TextStyle(fontSize: 18)),
+                        child: Text("해당하는 단어를 찾을 수 없습니다.", style: TextStyle(fontSize: 18, color: Colors.white)),
                       );
                     }
 
@@ -530,8 +530,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
                     // play
                     Container(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 40.0,
+                        height: 40.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25.0),
                           color: Color(0xFF74b29e),
@@ -582,8 +582,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
                     // pause
                     Container(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 40.0,
+                        height: 40.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25.0),
                           color: Color(0xFF74b29e),
@@ -607,8 +607,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
                     // stop
                     Container(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 40.0,
+                        height: 40.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25.0),
                           color: Color(0xFF74b29e),
@@ -634,8 +634,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
 
                     // 음소거
                     Container(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 40.0,
+                        height: 40.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25.0),
                           color: Color(0xFF74b29e),
@@ -725,7 +725,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                           });
                         },
                         buttonStyleData: ButtonStyleData(
-                          height: 50,
+                          height: 40,
                           width: 90,
                           padding: const EdgeInsets.only(left: 14, right: 14),
                           decoration: BoxDecoration(
@@ -771,8 +771,8 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                     ),
 
                     Container(
-                      width: 50.0,
-                      height: 50.0,
+                      width: 40.0,
+                      height: 40.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25.0),
                         color: Color(0xFF74b29e),
