@@ -122,7 +122,7 @@ class _GameScreenState extends State<GameScreen> {
       setState(() {
         gameWordList[index][2] = false;
         _controller.clear();
-        _buttonText = 'hint 받기';
+        // _buttonText = 'hint 받기';
         timesController = 0;
         isHintClicked = Colors.white;
 
@@ -139,8 +139,9 @@ class _GameScreenState extends State<GameScreen> {
               arguments: GameResultScreen(GameResultScreenText: gameWordList));
         }
       });
+    } else {
+      timesController++;
     }
-    timesController++;
   }
 
   // 답 체크
@@ -297,27 +298,6 @@ class _GameScreenState extends State<GameScreen> {
           ),
         ),
       )
-      // Center(
-      //   child: SingleChildScrollView(
-      //     child: Container(
-      //       child: Swiper(
-      //         physics: NeverScrollableScrollPhysics(),
-      //         loop: false,
-      //         itemCount: 11,
-      //         itemBuilder: (BuildContext context, int index) {
-      //           return index < quizNumber
-      //               ? Padding(
-      //             padding: EdgeInsets.all(30),
-      //             child: Center(
-      //               child: _buildQuizCard(gameWordList, width, height),
-      //             ),
-      //           )
-      //               : Container(); // empty container to return nothing
-      //         },
-      //       ),
-      //     ),
-      //   ),
-      // )
     );
   }
 
@@ -329,135 +309,137 @@ class _GameScreenState extends State<GameScreen> {
         border: Border.all(color: Color(0xFF74B29E), width: 3),
         color: Color(0xFF74B29E),
       ),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(
-                    left: 20.0, right: 20.0, bottom: 10.0, top: 10.0), // all 16
-                child: Column(
-                  children: <Widget>[
-                    Text('퀴즈 ' + (index + 1).toString(), //퀴즈 번호
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        )),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: _quizWord.runes.map((int codeUnit) {
-                        final character = String.fromCharCode(codeUnit);
-                        return Container(
-                          alignment: Alignment.center,
-                          width: 70,
-                          height: 70,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+      child: SingleChildScrollView(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(
+                      left: 20.0, right: 20.0, bottom: 10.0, top: 10.0), // all 16
+                  child: Column(
+                    children: <Widget>[
+                      Text('퀴즈 ' + (index + 1).toString(), //퀴즈 번호
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
                             color: Colors.white,
-                          ),
-                          // padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.symmetric(horizontal: 2),
-                          child: Text(
-                            character,
-                            style: const TextStyle(
+                          )),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: _quizWord.runes.map((int codeUnit) {
+                          final character = String.fromCharCode(codeUnit);
+                          return Container(
+                            alignment: Alignment.center,
+                            width: 70,
+                            height: 70,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                            ),
+                            // padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.symmetric(horizontal: 2),
+                            child: Text(
+                              character,
+                              style: const TextStyle(
                                 fontSize: 46,
                                 fontWeight: FontWeight.bold,
                                 // color: Color(0xFF74B29E)
+                              ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                    ), // 퀴즈 초성
-                    SizedBox(height: 20),
-                    Text(
-                      gameWordList[index][1],
-                      style: TextStyle(fontSize: 22, color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ), // 퀴즈 단어의 뜻
-                    SizedBox(height: 40),
-                    SizedBox(
-                      width: width * 0.5,
-                      child: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            //hintText: _controller.text.isEmpty ? '정답을 입력해 주세요' : '',
-                            //hintStyle: TextStyle(fontSize: 20),
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                              borderSide: BorderSide.none,
+                          );
+                        }).toList(),
+                      ), // 퀴즈 초성
+                      SizedBox(height: 20),
+                      Text(
+                        gameWordList[index][1],
+                        style: TextStyle(fontSize: 22, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ), // 퀴즈 단어의 뜻
+                      SizedBox(height: 40),
+                      SizedBox(
+                        width: width * 0.5,
+                        child: TextField(
+                            controller: _controller,
+                            decoration: InputDecoration(
+                              //hintText: _controller.text.isEmpty ? '정답을 입력해 주세요' : '',
+                              //hintStyle: TextStyle(fontSize: 20),
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
-                          ),
-                          style: TextStyle(fontSize: 25),
-                          textAlign: TextAlign.center,
-                          cursorColor: Colors.black,
-                          onSubmitted: (input) {
-                            if (_checkAnswer(input)){
-                              showDialog( // true - 정답인 경우
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text('정답'),
-                                    content: Image.asset('assets/images/right.png', width: 100, height: 100,),
-                                    actions: [TextButton(child: Text('OK',style: TextStyle(color: MyColor.accentColor)),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          getCorrectAnswer();
-                                        })],));
-                            } else {
-                              showDialog( // false - 오답인 경우
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text('틀렸어요'),
-                                    content: Image.asset('assets/images/wrong.png', width: 100, height: 100,),
-                                    actions: [TextButton(child: Text('OK',style: TextStyle(color: MyColor.accentColor)),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          _getWrongAnswer();
-                                        })],));
+                            style: TextStyle(fontSize: 25),
+                            textAlign: TextAlign.center,
+                            cursorColor: Colors.black,
+                            onSubmitted: (input) {
+                              if (_checkAnswer(input)){
+                                showDialog( // true - 정답인 경우
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('정답'),
+                                      content: Image.asset('assets/images/right.png', width: 100, height: 100,),
+                                      actions: [TextButton(child: Text('OK',style: TextStyle(color: MyColor.accentColor)),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            getCorrectAnswer();
+                                          })],));
+                              } else {
+                                showDialog( // false - 오답인 경우
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('틀렸어요'),
+                                      content: Image.asset('assets/images/wrong.png', width: 100, height: 100,),
+                                      actions: [TextButton(child: Text('OK',style: TextStyle(color: MyColor.accentColor)),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            _getWrongAnswer();
+                                          })],));
+                              }
                             }
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      InkWell(
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.matrix(
+                              isHintClicked == Colors.white ? [
+                                1, 0, 0, 0, 0,
+                                0, 1, 0, 0, 0,
+                                0, 0, 1, 0, 0,
+                                0, 0, 0, 1, 0,
+                              ] : [ // 필터 없는 경우
+                                0.2126,0.7152,0.0722,0,0,
+                                0.2126,0.7152,0.0722,0,0,
+                                0.2126,0.7152,0.0722,0,0,
+                                0,0,0,1,0,
+                              ] // 회색 필터
+                          ),
+                          child: Image.asset(
+                            'assets/images/key_color.png',
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                        onTap: () {
+                          // 힌트 1번만 클릭 가능
+                          if (isHintClicked != Colors.white) {
+                            return;
                           }
+                          isHintClicked = Colors.grey;
+                          setState(() {});
+                          _getHint();
+                        },
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    InkWell(
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.matrix(
-                            isHintClicked == Colors.white ? [
-                              1, 0, 0, 0, 0,
-                              0, 1, 0, 0, 0,
-                              0, 0, 1, 0, 0,
-                              0, 0, 0, 1, 0,
-                            ] : [ // 필터 없는 경우
-                              0.2126,0.7152,0.0722,0,0,
-                              0.2126,0.7152,0.0722,0,0,
-                              0.2126,0.7152,0.0722,0,0,
-                              0,0,0,1,0,
-                            ] // 회색 필터
-                        ),
-                        child: Image.asset(
-                          'assets/images/key_color.png',
-                          height: 50,
-                          width: 50,
-                        ),
-                      ),
-                      onTap: () {
-                        // 힌트 1번만 클릭 가능
-                        if (isHintClicked != Colors.white) {
-                          return;
-                        }
-                        isHintClicked = Colors.grey;
-                        setState(() {});
-                        _getHint();
-                      },
-                    ),
-                  ],
-                )
-            ),
-          ]),
+                    ],
+                  )
+              ),
+            ]),
+      )
     );
   }
 }

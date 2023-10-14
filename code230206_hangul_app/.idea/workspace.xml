@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update edit screen button size">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update game screen color and alignment">
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,13 +70,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00028" summary="add Function hidde word or meaning,VocabularyListScreen">
-      <created>1683522179047</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1683522179047</updated>
     </task>
     <task id="LOCAL-00029" summary="Update Read all button feature in TTS&#10;&#10;- 전체 읽기 버튼을 클릭했을 때 현재 TTS로 읽고 있는 단어만 노란색 강조 표시하도록 변경">
       <created>1683635808122</created>
@@ -415,7 +407,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697260271338</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Update game screen color and alignment">
+      <created>1697265142216</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1697265142216</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -436,7 +435,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update Camera screen UI for height&#10;&#10;- 기기에 따라 CameraPreview의 높이가 달라지도록 UI를 업데이트함" />
     <MESSAGE value="Fix TTS Playback Persistence Issue&#10;&#10;- TTS 화면을 벗어나도 TTS가 계속 재생되던 문제 해결&#10;- WillPopScope 위젯과 _stopflag를 이용" />
     <MESSAGE value="Update to display TTS word highlight and dictionary word highlight&#10;&#10;- 사전 검색 단어 highlight 표시와 TTS 출력 중인 단어의 highlight 표시를 동시에 할 수 있도록 업데이트&#10;- 기존의 코드는 사전 화면과 TTS 화면을 합치는 과정에서 highlight표시가 중복되는 문제 발생 -&gt; TTS 출력 중인 단어만 highlight 표시할 수 있었음" />
     <MESSAGE value="Fix TTS continuous play function bug 2&#10;&#10;- TTS 이어서 듣기 기능에서 사용하는 변수 currentTTSIndex가 초기화되지 않는 문제 발생&#10;- currentTTSIndex를 전역변수에서 지역변수로 변경하며 문제 해결" />
@@ -461,6 +459,7 @@
     <MESSAGE value="Update UI in edit, TTS/dictionary, vocabulary screen" />
     <MESSAGE value="Update TTS/dictionary screen button size" />
     <MESSAGE value="Update edit screen button size" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update edit screen button size" />
+    <MESSAGE value="Update game screen color and alignment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update game screen color and alignment" />
   </component>
 </project>
