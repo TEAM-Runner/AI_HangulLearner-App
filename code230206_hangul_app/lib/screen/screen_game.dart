@@ -94,7 +94,7 @@ class _GameScreenState extends State<GameScreen> {
     _getQuizWord();
   }
 
-  void getCorrectAnswer() {
+  void _getCorrectAnswer() {
     setState(() {
       gameWordList[index][2] = true;
       _controller.clear();
@@ -377,28 +377,56 @@ class _GameScreenState extends State<GameScreen> {
                             textAlign: TextAlign.center,
                             cursorColor: Colors.black,
                             onSubmitted: (input) {
-                              if (_checkAnswer(input)){
-                                showDialog( // true - 정답인 경우
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      title: Text('정답'),
-                                      content: Image.asset('assets/images/right.png', width: 100, height: 100,),
-                                      actions: [TextButton(child: Text('OK',style: TextStyle(color: MyColor.accentColor)),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            getCorrectAnswer();
-                                          })],));
-                              } else {
-                                showDialog( // false - 오답인 경우
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      title: Text('틀렸어요'),
-                                      content: Image.asset('assets/images/wrong.png', width: 100, height: 100,),
-                                      actions: [TextButton(child: Text('OK',style: TextStyle(color: MyColor.accentColor)),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            _getWrongAnswer();
-                                          })],));
+                              if (_checkAnswer(input)){ // true - 정답인 경우
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return const Dialog(
+                                      backgroundColor: Colors.transparent, // Transparent background
+                                      elevation: 0, // No shadow
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.circle_outlined,
+                                            size: 200, // Adjust the size as needed
+                                            color: Colors.blue, // Change the icon color
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                                Future.delayed(Duration(milliseconds: 1500), () {
+                                  Navigator.of(context).pop();
+                                  _getCorrectAnswer();
+                                });
+                              } else { // false - 오답인 경우
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return const Dialog(
+                                      backgroundColor: Colors.transparent, // Transparent background
+                                      elevation: 0, // No shadow
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.close,
+                                            size: 200, // Adjust the size as needed
+                                            color: Colors.red, // Change the icon color
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                                Future.delayed(Duration(milliseconds: 1500), () {
+                                  Navigator.of(context).pop();
+                                  _getWrongAnswer();
+                                });
                               }
                             }
                         ),
