@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'screen_game_result.dart';
 
-final quizNumber = 3; // 전체 퀴즈수
+final quizNumber = 5; // 전체 퀴즈수
 
 class GameScreen extends StatefulWidget {
   @override
@@ -90,7 +90,7 @@ class _GameScreenState extends State<GameScreen> {
         gameWordList[i] = gameBasicWordList[i];
       }
     }
-
+    print(gameWordList);
     _getQuizWord();
   }
 
@@ -355,7 +355,7 @@ class _GameScreenState extends State<GameScreen> {
                       SizedBox(height: 20),
                       Text(
                         gameWordList[index][1],
-                        style: TextStyle(fontSize: 22, color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                         textAlign: TextAlign.center,
                       ), // 퀴즈 단어의 뜻
                       SizedBox(height: 40),
@@ -390,15 +390,15 @@ class _GameScreenState extends State<GameScreen> {
                                         children: <Widget>[
                                           Icon(
                                             Icons.circle_outlined,
-                                            size: 200, // Adjust the size as needed
-                                            color: Colors.blue, // Change the icon color
+                                            size: 200,
+                                            color: Colors.blue,
                                           ),
                                         ],
                                       ),
                                     );
                                   },
                                 );
-                                Future.delayed(Duration(milliseconds: 1500), () {
+                                Future.delayed(Duration(milliseconds: 1000), () {
                                   Navigator.of(context).pop();
                                   _getCorrectAnswer();
                                 });
@@ -415,8 +415,8 @@ class _GameScreenState extends State<GameScreen> {
                                         children: <Widget>[
                                           Icon(
                                             Icons.close,
-                                            size: 200, // Adjust the size as needed
-                                            color: Colors.red, // Change the icon color
+                                            size: 200,
+                                            color: Colors.red,
                                           ),
                                         ],
                                       ),

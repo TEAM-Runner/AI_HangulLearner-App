@@ -32,16 +32,28 @@ class _GameResultScreenState extends State<GameResultScreen> {
       }
     }
 
-    // 10문제 기준
-    String message;
-    if (correctCount == 10) {
-      message = '최고에요!';
-    } else if (correctCount >= 7) {
-      message = '훌륭해요!';
-    } else if (correctCount >= 5) {
-      message = '잘했어요!';
-    } else {
-      message = '조금만 더 노력해 봐요!';
+    // 5문제 기준
+    String first_message;
+    String second_message;
+
+    if (correctCount == 5) {
+      first_message = '최고에요!';
+      second_message = '퀴즈를 모두 맞혔어요';
+    } else if (correctCount == 4) {
+      first_message = '훌륭해요!';
+      second_message = '하나만 더 맞혀 봐요!';
+    } else if (correctCount == 3) {
+      first_message = '잘했어요!';
+      second_message = '계속 공부해 봐요!';
+    }else if (correctCount == 2) {
+      first_message = '아쉬워요';
+      second_message = '계속 공부해 봐요!';
+    } else if (correctCount == 1) {
+      first_message = '아쉬워요';
+      second_message = '더 잘할 수 있어요!';
+    }  else {
+      first_message = '아쉬워요';
+      second_message = '조금만 더 노력해 봐요!';
     }
 
     return SafeArea(
@@ -102,12 +114,24 @@ class _GameResultScreenState extends State<GameResultScreen> {
                 ),
                 Text(
                   '$correctCount/${words.length}',
-                  style: TextStyle(fontSize: 100,color:Colors.white,fontWeight:FontWeight.bold,),
+                  style: const TextStyle(fontSize: 100, color:Color(0xFF74b29e), fontWeight:FontWeight.bold),
                 ),
                 SizedBox(height: 16),
                 Text(
-                  message,
-                  style: TextStyle(fontSize: 24),
+                  first_message,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight:FontWeight.bold,
+                    // color:Color(0xFF74b29e),
+                  ),
+                ),
+                Text(
+                  second_message,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight:FontWeight.bold,
+                    // color:Color(0xFF74b29e),
+                  ),
                 ),
                 SizedBox(height: 64),
                 SizedBox(

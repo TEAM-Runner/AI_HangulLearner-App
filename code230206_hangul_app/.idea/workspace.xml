@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix _getWrongAnswer in screen_game.dart&#10;&#10;- 문제를 틀렸을 때 카운트가 제대로 되지 않던 에러 수정">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update game screen pop-up&#10;&#10;- O/X 팝업이 1.5초 동안 나타났다가 사라지도록 게임 화면 팝업 업데이트">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game_result.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game_result.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +72,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Add hangul_scroll.dart&#10;&#10;- alphabet_scroll_view 패키지의 alphabet_scroll.dart 파일을 수정해 작성&#10;- 기존의 alphabet_scroll_view 패키지는 알파벳 스크롤을 보여줌 -&gt; 한글 자음(초성)을 보여주도록 변경">
-      <created>1684775875712</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1684775875712</updated>
     </task>
     <task id="LOCAL-00031" summary="Update vacabulary screen to use hangul_scroll&#10;&#10;- screen_vacabularyList.dart가 alphabet_scroll.dart를 이용하도록 수정">
       <created>1684863504016</created>
@@ -415,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697266171976</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Update game screen pop-up&#10;&#10;- O/X 팝업이 1.5초 동안 나타났다가 사라지도록 게임 화면 팝업 업데이트">
+      <created>1697269935681</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1697269935681</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -436,7 +437,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update to display TTS word highlight and dictionary word highlight&#10;&#10;- 사전 검색 단어 highlight 표시와 TTS 출력 중인 단어의 highlight 표시를 동시에 할 수 있도록 업데이트&#10;- 기존의 코드는 사전 화면과 TTS 화면을 합치는 과정에서 highlight표시가 중복되는 문제 발생 -&gt; TTS 출력 중인 단어만 highlight 표시할 수 있었음" />
     <MESSAGE value="Fix TTS continuous play function bug 2&#10;&#10;- TTS 이어서 듣기 기능에서 사용하는 변수 currentTTSIndex가 초기화되지 않는 문제 발생&#10;- currentTTSIndex를 전역변수에서 지역변수로 변경하며 문제 해결" />
     <MESSAGE value="Update font size for home screen and TTS ListView" />
     <MESSAGE value="Comment out unused pages" />
@@ -461,6 +461,7 @@
     <MESSAGE value="Update edit screen button size" />
     <MESSAGE value="Update game screen color and alignment" />
     <MESSAGE value="Fix _getWrongAnswer in screen_game.dart&#10;&#10;- 문제를 틀렸을 때 카운트가 제대로 되지 않던 에러 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix _getWrongAnswer in screen_game.dart&#10;&#10;- 문제를 틀렸을 때 카운트가 제대로 되지 않던 에러 수정" />
+    <MESSAGE value="Update game screen pop-up&#10;&#10;- O/X 팝업이 1.5초 동안 나타났다가 사라지도록 게임 화면 팝업 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update game screen pop-up&#10;&#10;- O/X 팝업이 1.5초 동안 나타났다가 사라지도록 게임 화면 팝업 업데이트" />
   </component>
 </project>
