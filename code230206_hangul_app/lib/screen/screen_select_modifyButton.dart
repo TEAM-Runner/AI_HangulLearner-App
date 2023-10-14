@@ -112,8 +112,8 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                    width: 50.0,
-                    height: 50.0
+                    width: 40.0,
+                    height: 40.0
                 ),
                 const Expanded(
                   child: Center(
@@ -127,8 +127,8 @@ class _SelectModifyButtonScreen extends State<SelectModifyButtonScreen> {
                   ),
                 ),
                 Container(
-                  width: 50.0,
-                  height: 50.0,
+                  width: 40.0,
+                  height: 40.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25.0),
                     color: Color(0xFF74b29e),
