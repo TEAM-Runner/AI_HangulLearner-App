@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix login failure pop-up&#10;&#10;- 로그인 실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix success/failure pop-up in forgotPassword screen&#10;&#10;- 비밀번호 재설정 화면의 성공/실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_Login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_auth_forgotPassword.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_auth_forgotPassword.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +49,7 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads" />
-    <property name="settings.editor.selected.configurable" value="dart.settings" />
+    <property name="settings.editor.selected.configurable" value="configuration.execution" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -72,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Add game replay button">
-      <created>1685018420605</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1685018420605</updated>
     </task>
     <task id="LOCAL-00034" summary="Update screen_home.dart&#10;&#10;- SingleChildScrollView 추가&#10;- makeButton 함수 수정&#10;- UI update">
       <created>1685019777465</created>
@@ -416,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697277221561</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="Fix success/failure pop-up in forgotPassword screen&#10;&#10;- 비밀번호 재설정 화면의 성공/실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경">
+      <created>1697278275539</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1697278275539</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -437,7 +436,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Comment out unused pages" />
     <MESSAGE value="Add buttons to TTS screen&#10;&#10;- Pause button: 일시정지 버튼. pause 버튼 클릭 후 play 버튼 다시 누르면 멈췄던 부분부터 TTS 재생됨.&#10;- Stop button: 정지 버튼. stop 버튼 클릭 후 play 버튼 다시 누르면 처음부터 TTS 재생됨.&#10;- Mute button: 음소거 버튼. 클릭하면 아이콘이 바뀌면서 mute 상태가 되었다가, 다시 누르면 mute 상태가 해제됨.&#10;- TTS speed DropdownButton: TTS 속도 제어 버튼. 기존의 animated_toggle_switch에서 DropdownButton으로 변경함.&#10;- 버튼 색상, 사전 검색 시 BoxDecoration 색상 변경." />
     <MESSAGE value="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트" />
     <MESSAGE value="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용" />
@@ -462,6 +460,7 @@
     <MESSAGE value="Update game screen pop-up&#10;&#10;- O/X 팝업이 1.5초 동안 나타났다가 사라지도록 게임 화면 팝업 업데이트" />
     <MESSAGE value="Update number of quizzes and result messages&#10;&#10;- 퀴즈 개수 3개 -&gt; 5개로 변경&#10;- 게임 결과 화면의 메시지 변경" />
     <MESSAGE value="Fix login failure pop-up&#10;&#10;- 로그인 실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix login failure pop-up&#10;&#10;- 로그인 실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
+    <MESSAGE value="Fix success/failure pop-up in forgotPassword screen&#10;&#10;- 비밀번호 재설정 화면의 성공/실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix success/failure pop-up in forgotPassword screen&#10;&#10;- 비밀번호 재설정 화면의 성공/실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
   </component>
 </project>
