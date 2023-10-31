@@ -14,6 +14,8 @@ import 'package:code230206_hangul_app/configuration/my_style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:intl/intl.dart';
+
 
 class VocabularyListScreen extends StatefulWidget {
   const VocabularyListScreen({Key? key}) : super(key: key);
@@ -204,6 +206,7 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
     List<List<String>> entries = starredWordsList.toList();
     entries.shuffle();
     starredWordsList = entries;
+    print("_randomOrderStarredWords: $starredWordsList");
 
     setState(() {});
   }
@@ -211,18 +214,14 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
   //sort word list consonant order
   void _consonantOrderStarredWords() {
     List<List<String>> entries = starredWordsList.toList();
-    entries.sort((a, b) {
-      String firstConsonantA = _getFirstConsonant(a[0].characters.first) ?? '';
-      String firstConsonantB = _getFirstConsonant(b[0].characters.first) ?? '';
-      return firstConsonantA.compareTo(firstConsonantB);
-    });
+    entries.sort((a,b) => a[0].characters.first.compareTo(b[0].characters.first));
     starredWordsList = entries;
-
     setState(() {});
   }
 
 // Sort word list by newest
   void _newestOrderStarredWords() async {
+    List<List<String>> filteredEntries = starredWordsList.toList();
     List<Map<String, dynamic>> entries = [];
 
     QuerySnapshot snapshot = await wordsRef.get();
@@ -244,15 +243,23 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
       }
     }
     entries.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
-    starredWordsList = [];
+
+    List<List<String>> updatedStarredWordsList = [];
     for (var entry in entries) {
-      starredWordsList.add([entry['word'], entry['meaning']]);
+      for (var filteredEntry in filteredEntries) {
+        if (entry['word'] == filteredEntry[0]) {
+          updatedStarredWordsList.add([entry['word'], entry['meaning']]);
+          break;
+        }
+      }
     }
+    starredWordsList = updatedStarredWordsList;
     setState(() {});
   }
 
   // Sort word list by oldest
   void _oldestOrderStarredWords() async {
+    List<List<String>> filteredEntries = starredWordsList.toList();
     List<Map<String, dynamic>> entries = [];
 
     QuerySnapshot snapshot = await wordsRef.get();
@@ -274,10 +281,17 @@ class _VocabularyListScreenState extends State<VocabularyListScreen>
       }
     }
     entries.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
-    starredWordsList = [];
+
+    List<List<String>> updatedStarredWordsList = [];
     for (var entry in entries) {
-      starredWordsList.add([entry['word'], entry['meaning']]);
+      for (var filteredEntry in filteredEntries) {
+        if (entry['word'] == filteredEntry[0]) {
+          updatedStarredWordsList.add([entry['word'], entry['meaning']]);
+          break;
+        }
+      }
     }
+    starredWordsList = updatedStarredWordsList;
     setState(() {});
   }
 
