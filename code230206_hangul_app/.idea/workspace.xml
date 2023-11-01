@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update TTS speed">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix sorting bugs in vocabularyList&#10;&#10;- 가나다순 정렬: sort 함수 버그 해결&#10;- 최신순/오래된순 정렬: 단어 카테고리를 선택한 후 정렬 버튼을 눌렀을 때 선택한 단어 카테고리의 단어뿐만 아니라 Firestore의 모든 단어를 정렬해 보여주던 문제 해결">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_vacabularyList.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +71,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00035" summary="update ui">
-      <created>1685028055051</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1685028055051</updated>
     </task>
     <task id="LOCAL-00036" summary="update UI in screen_vacabularyList.dart&#10;&#10;- update _randomOrderStarredWords &#10;- update DropdownButton">
       <created>1685039608238</created>
@@ -415,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697439778607</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Fix sorting bugs in vocabularyList&#10;&#10;- 가나다순 정렬: sort 함수 버그 해결&#10;- 최신순/오래된순 정렬: 단어 카테고리를 선택한 후 정렬 버튼을 눌렀을 때 선택한 단어 카테고리의 단어뿐만 아니라 Firestore의 모든 단어를 정렬해 보여주던 문제 해결">
+      <created>1698759540674</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1698759540674</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -436,7 +436,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add real-time TTS speed adjustment function&#10;&#10;- 사용자가 TTS speed DropdownButton에서 TTS 재생 속도를 변경하면, 현재 재생 중인 TTS에 변경된 속도가 바로 반영되도록 업데이트" />
     <MESSAGE value="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용" />
     <MESSAGE value="Update Pop-Up Message for Empty Dictionary Results&#10;&#10;- 사전 검색 결과가 없는 경우 팝업창에 &quot;해당하는 단어를 찾을 수 없습니다.&quot;라는 메시지를 표시하도록 업데이트" />
     <MESSAGE value="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정" />
@@ -461,6 +460,7 @@
     <MESSAGE value="Fix login failure pop-up&#10;&#10;- 로그인 실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
     <MESSAGE value="Fix success/failure pop-up in forgotPassword screen&#10;&#10;- 비밀번호 재설정 화면의 성공/실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
     <MESSAGE value="Update TTS speed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update TTS speed" />
+    <MESSAGE value="Fix sorting bugs in vocabularyList&#10;&#10;- 가나다순 정렬: sort 함수 버그 해결&#10;- 최신순/오래된순 정렬: 단어 카테고리를 선택한 후 정렬 버튼을 눌렀을 때 선택한 단어 카테고리의 단어뿐만 아니라 Firestore의 모든 단어를 정렬해 보여주던 문제 해결" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix sorting bugs in vocabularyList&#10;&#10;- 가나다순 정렬: sort 함수 버그 해결&#10;- 최신순/오래된순 정렬: 단어 카테고리를 선택한 후 정렬 버튼을 눌렀을 때 선택한 단어 카테고리의 단어뿐만 아니라 Firestore의 모든 단어를 정렬해 보여주던 문제 해결" />
   </component>
 </project>

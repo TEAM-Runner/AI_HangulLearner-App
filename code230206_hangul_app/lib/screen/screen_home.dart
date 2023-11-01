@@ -241,9 +241,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               textDirection: TextDirection.rtl,
               children: <Widget>[
+                SizedBox(height: 40.0),
                 ConstrainedBox(
                   constraints: BoxConstraints(
-                      maxWidth: width * 0.05, maxHeight: height * 0.05),
+                      maxWidth: width * 0.1, maxHeight: height * 0.05),
                   child: Stack(
                     fit: StackFit.loose,
                     children: <Widget>[
@@ -291,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               offset: const Offset(-245, -5),
                             ),
                             menuItemStyleData: const MenuItemStyleData(
-                              height: 90, // 팝업창 높이 - 메시지 수정 시 조절 필요
+                              height: 70, // 팝업창 높이 - 메시지 수정 시 조절 필요
                               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                             ),
                           ),
@@ -318,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _choiceIcon(iconNumber),
                   size: width * 0.1,
                 ),
-                Padding(padding: EdgeInsets.only(top: width * 0.1)),
+                Padding(padding: EdgeInsets.only(top: width * 0.04)),
                 // Text(buttonText, style: TextStyle(fontSize: width * 0.036),),
                 Text(
                   buttonText,
