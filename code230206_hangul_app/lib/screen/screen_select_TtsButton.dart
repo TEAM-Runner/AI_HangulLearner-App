@@ -68,7 +68,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
   bool _ttsSpeedChangedFlag = false; // TTS speed changed or not
 
   final List<String> items = [ // for tts speed - dropdown_button_2
-    'X 0.5', 'X 0.75', 'X 1.0', 'X 1.25', 'X 1.75',
+    'X 0.5', 'X 0.75', 'X 1.0', 'X 1.25', 'X 1.5',
   ];
   String? selectedValue; // for tts speed - dropdown_button_2
 
@@ -716,7 +716,7 @@ class _SelectTtsButtonScreenState extends State<SelectTtsButtonScreen> {
                               case "X 1.25": // TTS 속도 빠르게
                                 _ttsSpeedIndex = 3;
                                 break;
-                              case "X 1.75": // TTS 속도 매우 빠르게
+                              case "X 1.5": // TTS 속도 매우 빠르게
                                 _ttsSpeedIndex = 4;
                                 break;
                               default: // 기본 - TTS 속도 보통

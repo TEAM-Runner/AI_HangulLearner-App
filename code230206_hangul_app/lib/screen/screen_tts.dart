@@ -1,7 +1,3 @@
-// // *** 음성(TTS) 출력 스크린 ***
-// // 인식한 문장들을 '.'(온점) 단위로 나눈 문장 버튼으로 보여주는 스크린
-// // 각 문장 버튼 클릭 -> 문장을 음성(TTS)으로 출력
-//
 // import 'dart:async';
 // import 'dart:io';
 // import 'package:flutter/material.dart';

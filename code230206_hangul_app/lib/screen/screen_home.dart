@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),),
                   title: Text("사진을 가져올 방법을 선택하세요",
-                    style: TextStyle(color: Colors.white,),),
+                    style: TextStyle(color: Colors.white, fontSize: 19)),
                   backgroundColor: Color(0xFF74b29e),
                   content: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -365,11 +365,11 @@ abstract class MenuItems {
   // 메시지 수정 시 MenuItemStyleData -> height 조절 필요
   static const camera = MenuItem(
       text_title: '책 읽기',
-      text_detail: '책을 읽기 어렵다면 촬영해 보세요. 문장을 듣고 단어를 검색할 수 있어요.'
+      text_detail: '책을 읽기 어렵다면 촬영해 보세요. 문장을 듣고 단어를 검색해요.'
   );
   static const vocabulary = MenuItem(
       text_title: '단어장',
-      text_detail: '학습한 단어를 기억하고 있나요? 단어장으로 저장한 단어를 복습할 수 있어요.'
+      text_detail: '학습한 단어를 기억하고 있나요? 저장한 단어를 복습할 수 있어요.'
   );
   static const game = MenuItem(
       text_title: '초성 게임',

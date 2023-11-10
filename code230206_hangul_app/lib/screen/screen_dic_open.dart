@@ -1,6 +1,3 @@
-// // *** 사전 open 스크린 ***
-// // screen_dic.dart에서 클릭한 단어에 대한 다음 사전 검색 결과를 보여주는 스크린
-//
 // import 'dart:async';
 // import 'dart:io';
 // import 'package:flutter/material.dart';

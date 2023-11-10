@@ -1,8 +1,3 @@
-// // *** 카메라 결과 스크린 ***
-// // 사진에서 인식한 글자와 사전 버튼, 음성 버튼을 보여주는 스크린
-// // 사전 버튼 -> screen_dic.dart로 연결됨
-// // 음성 버튼 -> screen_tts.dart로 연결됨
-//
 // import 'package:camera/camera.dart';
 // import 'package:flutter/material.dart';
 // import 'screen_dic.dart';

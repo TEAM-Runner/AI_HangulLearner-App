@@ -152,24 +152,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       final inputImage = InputImage.fromFile(file);
       final recognizedText = await textRecogizer.processImage(inputImage);
 
-      // 사진 갤러리에 저장
-      // await GallerySaver.saveImage(file.path);
-      // try {
-      //   final isSuccess = await GallerySaver.saveImage(file.path);
-      //   if (isSuccess == true) {
-      //     // Image saved successfully
-      //     print('Image saved to gallery: ${file.path}');
-      //   } else {
-      //     // Handle the case where saving the image failed
-      //     print('Failed to save image to gallery');
-      //   }
-      // } catch (e) {
-      //   // Handle any exceptions that occurred during saving
-      //   print('Error saving image: $e');
-      // }
-
-
-
       await navigator.pushReplacement(
         // 기본 코드
           MaterialPageRoute(builder: (context) => SelectTtsButtonScreen(text: recognizedText.text, initialTTSIndex: 0))

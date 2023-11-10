@@ -1,7 +1,3 @@
-// // *** 사전 스크린 ***
-// // 인식한 문장들을 ' '(띄어쓰기) 단위로 나눈 단어 버튼으로 보여주는 스크린
-// // 각 단어 버튼 클릭 -> screen_dic_open.dart로 연결됨
-//
 // import 'dart:async';
 // import 'dart:io';
 // import 'package:flutter/material.dart';

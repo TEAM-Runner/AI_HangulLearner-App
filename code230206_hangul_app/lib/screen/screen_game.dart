@@ -28,7 +28,7 @@ class _GameScreenState extends State<GameScreen> {
 
   // 게임에 사용할 단어 리스트. bool은 모두 false로 초기화
   List<List<dynamic>> gameWordList =
-      List.generate(quizNumber, (_) => ['', '', false]);
+  List.generate(quizNumber, (_) => ['', '', false]);
 
   // 게임에 사용할 기본 단어 리스트. Firestore에 저장된 단어가 10개 이하일 경우 사용
   List<List<dynamic>> gameBasicWordList = [
@@ -225,249 +225,249 @@ class _GameScreenState extends State<GameScreen> {
     final double height = screenSize.height;
 
     return Scaffold(
-      backgroundColor: Color(0xffd9ebe5),
-      appBar: AppBar(
-        backgroundColor: Color(0xFFD9EBE5),
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        actions: [
-          IconButton(
-            icon: Tooltip(
-              richMessage: WidgetSpan(
-                  child: Column(
-                children: [
-                  Container(
-                    constraints: const BoxConstraints(maxWidth: 250),
-                    child: const Text(
-                      "초성 게임",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
+        backgroundColor: Color(0xffd9ebe5),
+        appBar: AppBar(
+          backgroundColor: Color(0xFFD9EBE5),
+          elevation: 0.0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          actions: [
+            IconButton(
+              icon: Tooltip(
+                richMessage: WidgetSpan(
+                    child: Column(
+                      children: [
+                        Container(
+                          constraints: const BoxConstraints(maxWidth: 250),
+                          child: const Text(
+                            "초성 게임",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          constraints: const BoxConstraints(maxWidth: 250),
+                          child: const Text(
+                              "초성 게임을 통해 단어를 공부할 수 있어요. 힌트를 얻고 싶다면 열쇠 버튼을 눌러 보세요.",
+                              style: TextStyle(color: Colors.black, fontSize: 14)),
+                        )
+                      ],
+                    )),
+                triggerMode: TooltipTriggerMode.tap,
+                showDuration: Duration(seconds: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  border: Border.all(
+                    color: Color(0xFF74B29E), // Border color
+                    width: 1.0, // Border width
                   ),
-                  Container(
-                    constraints: const BoxConstraints(maxWidth: 250),
-                    child: const Text(
-                        "초성 게임을 통해 단어를 공부할 수 있어요. 힌트를 얻고 싶다면 열쇠 버튼을 눌러 보세요.",
-                        style: TextStyle(color: Colors.black, fontSize: 14)),
-                  )
-                ],
-              )),
-              triggerMode: TooltipTriggerMode.tap,
-              showDuration: Duration(seconds: 5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                border: Border.all(
-                  color: Color(0xFF74B29E), // Border color
-                  width: 1.0, // Border width
+                ),
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
                 ),
               ),
-              child: Icon(
-                Icons.help_outline,
-                color: Colors.black,
+              onPressed: () {},
+            ),
+          ],
+          // title:Image.asset("assets/images/i_hangul.png"),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),),
+              width: width * 0.85,
+              height: height * 0.55,
+
+              child: Swiper(physics: NeverScrollableScrollPhysics(),
+                loop: false,
+                itemCount: 11,
+                itemBuilder: (BuildContext context, int index) {
+                  return index < quizNumber
+                      ? _buildQuizCard(gameWordList, width, height)
+                      : Container(); // empty container to return nothing
+                },
               ),
             ),
-            onPressed: () {},
           ),
-        ],
-        // title:Image.asset("assets/images/i_hangul.png"),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),),
-            width: width * 0.85,
-            height: height * 0.55,
-
-            child: Swiper(physics: NeverScrollableScrollPhysics(),
-              loop: false,
-              itemCount: 11,
-              itemBuilder: (BuildContext context, int index) {
-                return index < quizNumber
-                    ? _buildQuizCard(gameWordList, width, height)
-                    : Container(); // empty container to return nothing
-              },
-            ),
-          ),
-        ),
-      )
+        )
     );
   }
 
   Widget _buildQuizCard(List gameWordList, double width, double height) {
     return Container(
-      height: height * 0.6,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        border: Border.all(color: Color(0xFF74B29E), width: 3),
-        color: Color(0xFF74B29E),
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(
-                      left: 20.0, right: 20.0, bottom: 10.0, top: 10.0), // all 16
-                  child: Column(
-                    children: <Widget>[
-                      Text('퀴즈 ' + (index + 1).toString(), //퀴즈 번호
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          )),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: _quizWord.runes.map((int codeUnit) {
-                          final character = String.fromCharCode(codeUnit);
-                          return Container(
-                            alignment: Alignment.center,
-                            width: 70,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+        height: height * 0.6,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
+          border: Border.all(color: Color(0xFF74B29E), width: 3),
+          color: Color(0xFF74B29E),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(
+                        left: 20.0, right: 20.0, bottom: 10.0, top: 10.0), // all 16
+                    child: Column(
+                      children: <Widget>[
+                        Text('퀴즈 ' + (index + 1).toString(), //퀴즈 번호
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
                               color: Colors.white,
-                            ),
-                            // padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.symmetric(horizontal: 2),
-                            child: Text(
-                              character,
-                              style: const TextStyle(
-                                fontSize: 46,
-                                fontWeight: FontWeight.bold,
-                                // color: Color(0xFF74B29E)
+                            )),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: _quizWord.runes.map((int codeUnit) {
+                            final character = String.fromCharCode(codeUnit);
+                            return Container(
+                              alignment: Alignment.center,
+                              width: 70,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
                               ),
-                            ),
-                          );
-                        }).toList(),
-                      ), // 퀴즈 초성
-                      SizedBox(height: 20),
-                      Text(
-                        gameWordList[index][1],
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                        textAlign: TextAlign.center,
-                      ), // 퀴즈 단어의 뜻
-                      SizedBox(height: 40),
-                      SizedBox(
-                        width: width * 0.5,
-                        child: TextField(
-                            controller: _controller,
-                            decoration: InputDecoration(
-                              //hintText: _controller.text.isEmpty ? '정답을 입력해 주세요' : '',
-                              //hintStyle: TextStyle(fontSize: 20),
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: BorderSide.none,
+                              // padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(horizontal: 2),
+                              child: Text(
+                                character,
+                                style: const TextStyle(
+                                  fontSize: 46,
+                                  fontWeight: FontWeight.bold,
+                                  // color: Color(0xFF74B29E)
+                                ),
                               ),
-                            ),
-                            style: TextStyle(fontSize: 25),
-                            textAlign: TextAlign.center,
-                            cursorColor: Colors.black,
-                            onSubmitted: (input) {
-                              if (_checkAnswer(input)){ // true - 정답인 경우
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) {
-                                    return const Dialog(
-                                      backgroundColor: Colors.transparent, // Transparent background
-                                      elevation: 0, // No shadow
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.circle_outlined,
-                                            size: 200,
-                                            color: Colors.blue,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                                Future.delayed(Duration(milliseconds: 1000), () {
-                                  Navigator.of(context).pop();
-                                  _getCorrectAnswer();
-                                });
-                              } else { // false - 오답인 경우
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) {
-                                    return const Dialog(
-                                      backgroundColor: Colors.transparent, // Transparent background
-                                      elevation: 0, // No shadow
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.close,
-                                            size: 200,
-                                            color: Colors.red,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                                Future.delayed(Duration(milliseconds: 1500), () {
-                                  Navigator.of(context).pop();
-                                  _getWrongAnswer();
-                                });
+                            );
+                          }).toList(),
+                        ), // 퀴즈 초성
+                        SizedBox(height: 20),
+                        Text(
+                          gameWordList[index][1],
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ), // 퀴즈 단어의 뜻
+                        SizedBox(height: 40),
+                        SizedBox(
+                          width: width * 0.5,
+                          child: TextField(
+                              controller: _controller,
+                              decoration: InputDecoration(
+                                //hintText: _controller.text.isEmpty ? '정답을 입력해 주세요' : '',
+                                //hintStyle: TextStyle(fontSize: 20),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              style: TextStyle(fontSize: 25),
+                              textAlign: TextAlign.center,
+                              cursorColor: Colors.black,
+                              onSubmitted: (input) {
+                                if (_checkAnswer(input)){ // true - 정답인 경우
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const Dialog(
+                                        backgroundColor: Colors.transparent, // Transparent background
+                                        elevation: 0, // No shadow
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.circle_outlined,
+                                              size: 200,
+                                              color: Colors.blue,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  Future.delayed(Duration(milliseconds: 1000), () {
+                                    Navigator.of(context).pop();
+                                    _getCorrectAnswer();
+                                  });
+                                } else { // false - 오답인 경우
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const Dialog(
+                                        backgroundColor: Colors.transparent, // Transparent background
+                                        elevation: 0, // No shadow
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.close,
+                                              size: 200,
+                                              color: Colors.red,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  Future.delayed(Duration(milliseconds: 1500), () {
+                                    Navigator.of(context).pop();
+                                    _getWrongAnswer();
+                                  });
+                                }
                               }
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        InkWell(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.matrix(
+                                isHintClicked == Colors.white ? [
+                                  1, 0, 0, 0, 0,
+                                  0, 1, 0, 0, 0,
+                                  0, 0, 1, 0, 0,
+                                  0, 0, 0, 1, 0,
+                                ] : [ // 필터 없는 경우
+                                  0.2126,0.7152,0.0722,0,0,
+                                  0.2126,0.7152,0.0722,0,0,
+                                  0.2126,0.7152,0.0722,0,0,
+                                  0,0,0,1,0,
+                                ] // 회색 필터
+                            ),
+                            child: Image.asset(
+                              'assets/images/key_color.png',
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                          onTap: () {
+                            // 힌트 1번만 클릭 가능
+                            if (isHintClicked != Colors.white) {
+                              return;
                             }
+                            isHintClicked = Colors.grey;
+                            setState(() {});
+                            _getHint();
+                          },
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      InkWell(
-                        child: ColorFiltered(
-                          colorFilter: ColorFilter.matrix(
-                              isHintClicked == Colors.white ? [
-                                1, 0, 0, 0, 0,
-                                0, 1, 0, 0, 0,
-                                0, 0, 1, 0, 0,
-                                0, 0, 0, 1, 0,
-                              ] : [ // 필터 없는 경우
-                                0.2126,0.7152,0.0722,0,0,
-                                0.2126,0.7152,0.0722,0,0,
-                                0.2126,0.7152,0.0722,0,0,
-                                0,0,0,1,0,
-                              ] // 회색 필터
-                          ),
-                          child: Image.asset(
-                            'assets/images/key_color.png',
-                            height: 50,
-                            width: 50,
-                          ),
-                        ),
-                        onTap: () {
-                          // 힌트 1번만 클릭 가능
-                          if (isHintClicked != Colors.white) {
-                            return;
-                          }
-                          isHintClicked = Colors.grey;
-                          setState(() {});
-                          _getHint();
-                        },
-                      ),
-                    ],
-                  )
-              ),
-            ]),
-      )
+                      ],
+                    )
+                ),
+              ]),
+        )
     );
   }
 }

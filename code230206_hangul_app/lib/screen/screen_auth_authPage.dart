@@ -11,12 +11,6 @@ import 'package:email_validator/email_validator.dart';
 import 'screen_auth_Login.dart';
 import 'screen_auth_SignUp.dart';
 
-// login, signUp, forgetPassword 참고
-// https://www.youtube.com/watch?v=4vKiJZNPhss&list=PL1WkZqhlAdC9TgTee50FWiiwVZ6kQg4W7&index=3
-
-// UI 참고
-// https://www.youtube.com/watch?v=rcRppzsY-yw
-
 class AuthPageScreen extends StatefulWidget {
   @override
   _AuthPageScreen createState() => _AuthPageScreen();

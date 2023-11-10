@@ -1,6 +1,3 @@
-// 사용자가 갤러리에서 사진을 선택하면 이미지 속 글자를 인식하는 클래스
-// screen_home -> '책 읽어주기' -> 갤러리 선택 -> text_recognition.dart
-
 import 'dart:io';
 import 'package:code230206_hangul_app/screen/screen_select_TtsButton.dart';
 import 'package:flutter/material.dart';

@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Fix sorting bugs in vocabularyList&#10;&#10;- 가나다순 정렬: sort 함수 버그 해결&#10;- 최신순/오래된순 정렬: 단어 카테고리를 선택한 후 정렬 버튼을 눌렀을 때 선택한 단어 카테고리의 단어뿐만 아니라 Firestore의 모든 단어를 정렬해 보여주던 문제 해결">
+    <list default="true" id="c8238a28-6a0d-4799-af38-e7c013836a7f" name="Changes" comment="Update screen_home.dart UI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_game.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/screen_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/screen_select_TtsButton.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +73,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680270469581</updated>
-    </task>
-    <task id="LOCAL-00036" summary="update UI in screen_vacabularyList.dart&#10;&#10;- update _randomOrderStarredWords &#10;- update DropdownButton">
-      <created>1685039608238</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1685039608238</updated>
     </task>
     <task id="LOCAL-00037" summary="Refactor code of screen_select_TtsButton.dart&#10;&#10;- Word 클래스를 정의하고 word, isSelected, sentenceIndex, wordIndex, wordIndexInSentence 속성을 둠. 별도로 인덱스를 계산하거나 isSelected 리스트를 정의할 필요가 없어짐.&#10;- 모든 단어들을 wordList로 관리해 코드의 복잡성을 낮춤. isSelected는 wordList에서 업데이트되므로 별도로 정의할 필요가 없음.&#10;- 문장 읽기 기능이 _speakSentence 함수 하나로 통합됨. 기존에는 한 문장만 읽는 _speakSentence 함수와 전체 문장을 읽는 _speakAllSentences 함수를 따로 두었으나, _speakAllSentences는 제거하고 하나의 함수에서 TTS 기능 수행하도록 함">
       <created>1685345257827</created>
@@ -415,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698759540674</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="Update screen_home.dart UI">
+      <created>1698849604590</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1698849604591</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -436,7 +438,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor WebScraper to Handle Multiple/Single Meanings&#10;&#10;- WebScraper 클래스가 다음 한국어 사전에서 뜻이 여러개/하나인 경우를 모두 제대로 처리하도록 업데이트함.&#10;- 뜻이 여러개인 경우 리다이렉션하지 않은 URL 사용, &quot;search_box&quot; 및 &quot;search_type&quot; 클래스에서 크롤링&#10;- 뜻이 하나인 경우에만 리다이렉션한 URL 사용" />
     <MESSAGE value="Update Pop-Up Message for Empty Dictionary Results&#10;&#10;- 사전 검색 결과가 없는 경우 팝업창에 &quot;해당하는 단어를 찾을 수 없습니다.&quot;라는 메시지를 표시하도록 업데이트" />
     <MESSAGE value="Fix star icon bug in dictionary function&#10;&#10;- word는 동일하지만 meaning이 다른 단어들의 star icon이 동시에 변경되던 버그 수정" />
     <MESSAGE value="Fix homonym storage issue and switch data format to lists&#10;&#10;- Firestore에서 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 고유 식별자를 추가하고 이를 Firestore 문서 ID로 사용함&#10;- 단어장 기능에서 key 중복으로 인해 동음이의어가 덮어쓰기 되는 문제를 해결하기 위해 데이터 저장 형식을 Map에서 2차원 List으로 변경" />
@@ -461,6 +462,7 @@
     <MESSAGE value="Fix success/failure pop-up in forgotPassword screen&#10;&#10;- 비밀번호 재설정 화면의 성공/실패 팝업을 snackBarWidget에서 AlertDialog로 변경&#10;- 영어 에러 메시지가 한글로 출력되도록 변경" />
     <MESSAGE value="Update TTS speed" />
     <MESSAGE value="Fix sorting bugs in vocabularyList&#10;&#10;- 가나다순 정렬: sort 함수 버그 해결&#10;- 최신순/오래된순 정렬: 단어 카테고리를 선택한 후 정렬 버튼을 눌렀을 때 선택한 단어 카테고리의 단어뿐만 아니라 Firestore의 모든 단어를 정렬해 보여주던 문제 해결" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix sorting bugs in vocabularyList&#10;&#10;- 가나다순 정렬: sort 함수 버그 해결&#10;- 최신순/오래된순 정렬: 단어 카테고리를 선택한 후 정렬 버튼을 눌렀을 때 선택한 단어 카테고리의 단어뿐만 아니라 Firestore의 모든 단어를 정렬해 보여주던 문제 해결" />
+    <MESSAGE value="Update screen_home.dart UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update screen_home.dart UI" />
   </component>
 </project>
